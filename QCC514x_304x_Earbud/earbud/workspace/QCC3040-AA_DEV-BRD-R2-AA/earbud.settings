@@ -9,7 +9,7 @@
         <item name="settings">
             <item name="CallSiteLocation">false</item>
             <item name="symbols">
-                <item name="lastBrowse">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/depend_debug_qcc514x_qcc304x</item>
+                <item name="lastBrowse">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/depend_debug_qcc514x_qcc304x</item>
             </item>
             <item name="devices">
                 <item name="device.1">
@@ -18,27 +18,27 @@
                         <item name="files">5</item>
                         <item name="0">
                             <item name="name">download_anc_tuning</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_anc_tuning.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_anc_tuning.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="1">
                             <item name="name">download_switched_passthrough_consumer</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_switched_passthrough_consumer.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_switched_passthrough_consumer.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="2">
                             <item name="name">download_va_graph_manager</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_va_graph_manager.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_va_graph_manager.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="3">
                             <item name="name">download_volume_control</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_volume_control.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_volume_control.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="4">
                             <item name="name">earbud</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/depend_debug_qcc514x_qcc304x/earbud.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/depend_debug_qcc514x_qcc304x/earbud.elf</item>
                             <item name="corename">app/p1</item>
                         </item>
                     </item>
@@ -49,27 +49,27 @@
                         <item name="files">5</item>
                         <item name="0">
                             <item name="name">download_anc_tuning</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_anc_tuning.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_anc_tuning.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="1">
                             <item name="name">download_switched_passthrough_consumer</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_switched_passthrough_consumer.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_switched_passthrough_consumer.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="2">
                             <item name="name">download_va_graph_manager</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_va_graph_manager.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_va_graph_manager.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="3">
                             <item name="name">download_volume_control</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_volume_control.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_volume_control.elf</item>
                             <item name="corename">audio/p0</item>
                         </item>
                         <item name="4">
                             <item name="name">earbud</item>
-                            <item name="filename">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/depend_debug_qcc514x_qcc304x/earbud.elf</item>
+                            <item name="filename">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/depend_debug_qcc514x_qcc304x/earbud.elf</item>
                             <item name="corename">app/p1</item>
                         </item>
                     </item>

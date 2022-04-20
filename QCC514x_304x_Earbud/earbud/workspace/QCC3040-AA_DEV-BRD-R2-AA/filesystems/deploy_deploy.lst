@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <files>
-	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/sys_cfg.x2p</file>
-	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/fw_cfg.x2p</file>
-	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/dev_cfg.x2p</file>
-	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/ps_cfg.x2p</file>
-	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/ro_fs.x2p</file>
-	<file configuration="prebuilt_image" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/bsp/appsp0.x2p</file>
-	<file configuration="debug" target="device">C:/Qualcomm_Prog/qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/earbud.x2p</file>
+	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/sys_cfg.x2p</file>
+	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/fw_cfg.x2p</file>
+	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/dev_cfg.x2p</file>
+	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/ps_cfg.x2p</file>
+	<file configuration="filesystem" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/filesystems/ro_fs.x2p</file>
+	<file configuration="prebuilt_image" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/bsp/appsp0.x2p</file>
+	<file configuration="debug" target="device">C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/earbud.x2p</file>
 </files>

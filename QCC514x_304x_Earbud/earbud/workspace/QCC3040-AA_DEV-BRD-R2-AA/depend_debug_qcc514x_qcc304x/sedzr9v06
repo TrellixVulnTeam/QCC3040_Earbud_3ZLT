@@ -1,0 +1,24 @@
+
+
+primary_service {
+    uuid : 0x1824,
+    name : "TRANSPORT_DISCOVERY_SERVICE",
+
+
+
+        characteristic {
+            uuid : 0x2ABC,
+            name : "TRANSPORT_DISCOVERY_CONTROL_POINT",
+            flags : [ FLAG_IRQ, FLAG_DYNLEN ],
+            properties : [ write, indicate ],
+
+            value : [0x01, 0x01, 0x110A],
+
+            client_config {
+                name : "TRANSPORT_DISCOVERY_SERVICE_CLIENT_CONFIG",
+                flags : [ FLAG_IRQ ]
+                }
+
+        }
+
+    }

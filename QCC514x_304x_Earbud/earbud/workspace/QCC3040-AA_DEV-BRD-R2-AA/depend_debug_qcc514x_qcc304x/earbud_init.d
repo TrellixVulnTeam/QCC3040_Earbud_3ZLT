@@ -244,7 +244,7 @@ depend_debug_qcc514x_qcc304x/earbud_init.o: ..\..\src\earbud_init.c \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\stream.h \
     ..\..\src\earbud_config.h \
     ..\..\src\earbud_init.h \
-    ..\..\src\..\aul\aul_common.h \
+    ..\..\src\..\echo_app\echo_common.h \
     ..\..\src\earbud_led.h \
     ..\..\..\adk\src\domains\peripheral\led_manager\led_manager.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\message.h \

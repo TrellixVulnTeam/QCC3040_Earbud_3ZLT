@@ -1,0 +1,16 @@
+
+
+primary_service {
+    uuid : 0x1803,
+    name : "LINK_LOSS_SERVICE",
+
+
+
+    characteristic {
+        uuid : 0x2A06,
+        name : "LINK_LOSS_ALERT_LEVEL",
+        properties : [read, write],
+        flags : [FLAG_IRQ, FLAG_ENCR_R, FLAG_ENCR_W],
+        value : 0x0
+    }
+},

@@ -1,0 +1,51 @@
+BUILD STARTED for 'os/makefile_project' in 'C:\Qualcomm_Prog\QCC514x_304x_Earbud\os\qcc514x_qcc304x\hydra_os\src\fw\src':
+C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\ubuild.bat -b clean -k "C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64" -p "C:\Qualcomm_Prog\QCC514x_304x_Earbud\os\qcc514x_qcc304x\hydra_os\src\fw\src\os.x2p" -w "C:\Qualcomm_Prog\QCC514x_304x_Earbud\earbud\workspace\QCC3040-AA_DEV-BRD-R2-AA\earbud.x2w" -c makefile_project -x --build_system make --special "flash=nvscmd"
+Build with Python 2
+++++++ MERGEXML +++++++++++++++
+MERGE: dkroot C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64, out_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\merge_ubuild.chk
+main C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\sdk.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\dk.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\build_system\ext.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\multi_cd\ext.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\versions\ext.xml
+Merged file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\merge_ubuild.chk
+Build using a makefile
+Added DEVKIT_ROOT=C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64 to the environment
+Running C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools/bin/make.exe -s -f Makefile -R DEVKIT_ROOT=C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64 -j7 -Otarget clean CHIP_TYPE=qcc514x_qcc304x BUILD_TYPE=MAKEFILE INCPATHS=core/include_fw ../../common/interface ../../common/interface/app bt/qbluestack/adapter bt/qbluestack/port customer/core customer/apps customer/libs gen/customer/core customer/core customer/apps customer/libs gen/customer/core core core/include gen/core bt customer/core/trap_api gen/customer/core/trap_api customer/core gen/customer/core customer/core/trap_api gen/customer/core/trap_api customer/core gen/customer/core . MAKEFILE_RULES_DIR=C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\tools in C:\Qualcomm_Prog\QCC514x_304x_Earbud\os\qcc514x_qcc304x\hydra_os\src\fw\src
+>>> [C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools/bin/make.exe -s -f Makefile -R DEVKIT_ROOT=C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64 -j7 -Otarget clean CHIP_TYPE=qcc514x_qcc304x BUILD_TYPE=MAKEFILE "INCPATHS=core/include_fw ../../common/interface ../../common/interface/app bt/qbluestack/adapter bt/qbluestack/port customer/core customer/apps customer/libs gen/customer/core customer/core customer/apps customer/libs gen/customer/core core core/include gen/core bt customer/core/trap_api gen/customer/core/trap_api customer/core gen/customer/core customer/core/trap_api gen/customer/core/trap_api customer/core gen/customer/core ." MAKEFILE_RULES_DIR=C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\tools]
+BUILD STARTED for 'libs/makefile_project' in 'C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\src\libs':
+C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\ubuild.bat -b clean -k "C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64" -p "C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\src\libs\libs_qcc514x_qcc304x.x2p" -w "C:\Qualcomm_Prog\QCC514x_304x_Earbud\earbud\workspace\QCC3040-AA_DEV-BRD-R2-AA\earbud.x2w" -c makefile_project -x --build_system make --special "flash=nvscmd"
+Build with Python 2
+++++++ MERGEXML +++++++++++++++
+MERGE: dkroot C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64, out_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\merge_ubuild.chk
+main C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\sdk.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\dk.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\build_system\ext.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\multi_cd\ext.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\versions\ext.xml
+Merged file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\merge_ubuild.chk
+Build using a makefile
+Added DEVKIT_ROOT=C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64 to the environment
+Running C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools/bin/make.exe -s -f Makefile -R DEVKIT_ROOT=C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64 -j7 -Otarget CONFIGS=qcc514x_qcc304x clean CHIP_TYPE=qcc514x_qcc304x CHIP_NAME=QCC514x_apps NUM_PIO_BANKS=3 BUILD_TYPE=DEBUG PRIVATE_LIBS= PRIVATE_LIBS_SEED=30230 INCPATHS=../installed_libs/include/profiles/default_qcc514x_qcc304x ../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs/include/firmware_qcc514x_qcc304x ../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs/include/firmware_qcc514x_qcc304x/app ../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs/include/standard MAKEFILE_RULES_DIR=C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\tools in C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\src\libs
+>>> [C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools/bin/make.exe -s -f Makefile -R DEVKIT_ROOT=C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64 -j7 -Otarget CONFIGS=qcc514x_qcc304x clean CHIP_TYPE=qcc514x_qcc304x CHIP_NAME=QCC514x_apps NUM_PIO_BANKS=3 BUILD_TYPE=DEBUG PRIVATE_LIBS= PRIVATE_LIBS_SEED=30230 "INCPATHS=../installed_libs/include/profiles/default_qcc514x_qcc304x ../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs/include/firmware_qcc514x_qcc304x ../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs/include/firmware_qcc514x_qcc304x/app ../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs/include/standard" MAKEFILE_RULES_DIR=C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\tools]
+SDK is C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64/tools
+No console scripts, using workspace tools
+BUILDING FOR qcc514x_qcc304x
+BUILD STARTED for 'earbud/debug' in 'C:\Qualcomm_Prog\QCC514x_304x_Earbud\earbud\workspace\QCC3040-AA_DEV-BRD-R2-AA':
+C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\ubuild.bat -b clean -k "C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64" -p "C:\Qualcomm_Prog\QCC514x_304x_Earbud\earbud\workspace\QCC3040-AA_DEV-BRD-R2-AA\earbud.x2p" -w "C:\Qualcomm_Prog\QCC514x_304x_Earbud\earbud\workspace\QCC3040-AA_DEV-BRD-R2-AA\earbud.x2w" -c debug -x --build_system make --special "flash=nvscmd"
+Build with Python 2
+++++++ MERGEXML +++++++++++++++
+MERGE: dkroot C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64, out_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\merge_ubuild.chk
+main C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\sdk.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\dk.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\build_system\ext.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\multi_cd\ext.xml
+ext_file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\extensions\versions\ext.xml
+Merged file C:\Qualcomm_Prog\ADK_Toolkit_1.2.10.21_x64\merge_ubuild.chk
+>>> [C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools/bin/make.exe SDK=C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools DEVKIT_ROOT=C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64 -s -j7 clean -f C:/Qualcomm_Prog/QCC514x_304x_Earbud/earbud/workspace/QCC3040-AA_DEV-BRD-R2-AA/earbud.debug.mak MAKEFILE_RULES_DIR=C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\tools]
+Using C:\Qualcomm_Prog\QCC514x_304x_Earbud\adk\tools/Makefile.rules
+SDK is C:/Qualcomm_Prog/ADK_Toolkit_1.2.10.21_x64/tools
+No console scripts, using workspace tools
+BUILDING FOR qcc514x_qcc304x
+------ Deleting intermediate files and output files for  [] ------
+----------------------------------- Clean finished -----------------------------------------

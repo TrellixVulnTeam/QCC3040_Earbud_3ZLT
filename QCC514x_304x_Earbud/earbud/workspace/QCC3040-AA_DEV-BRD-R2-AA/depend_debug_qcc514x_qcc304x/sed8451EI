@@ -1,0 +1,43 @@
+
+
+primary_service {
+    uuid : 0xF007D10211E19B2300025B00A5A5,
+    name : "LOGGING_SERVICE",
+
+
+
+        characteristic {
+            uuid : 0xF008D10211E19B2300025B00A5A5,
+            name : "LOGGING_REPORT",
+            flags : [ FLAG_IRQ, FLAG_DYNLEN ],
+            properties : [ notify ],
+            value : 0x0000,
+
+            client_config
+            {
+                name : "LOGGING_CLIENT_CONFIG",
+                flags : FLAG_IRQ
+            }
+        },
+
+
+
+        characteristic {
+            uuid : 0xF009D10211E19B2300025B00A5A5,
+            name : "LOGGING_CONTROL",
+            flags : [FLAG_IRQ, FLAG_ENCR_R, FLAG_ENCR_W],
+            properties : [ read, write ],
+            value : 0x00
+            },
+
+
+
+        characteristic {
+            uuid : 0xF00AD10211E19B2300025B00A5A5,
+            name : "LOGGING_DEBUG_CONFIGURATION",
+            flags : [ FLAG_IRQ, FLAG_ENCR_R, FLAG_ENCR_W ],
+            properties : [ read, write ],
+            size_value : 0x04,
+            value : 0x00000000
+            }
+    }

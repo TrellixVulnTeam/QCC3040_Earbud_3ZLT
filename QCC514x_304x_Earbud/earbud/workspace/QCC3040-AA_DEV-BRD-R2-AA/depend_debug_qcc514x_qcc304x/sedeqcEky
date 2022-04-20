@@ -1,0 +1,17 @@
+
+
+
+
+
+
+primary_service {
+    uuid : 0x1804,
+    name : "TRANSMIT_POWER_SERVER_SERVICE",
+    characteristic {
+        uuid : 0x2A07,
+        name : "TRANSMIT_POWER_LEVEL",
+        flags : [ FLAG_IRQ, FLAG_ENCR_R],
+        properties : [ read ],
+        value : 0x0
+    }
+},

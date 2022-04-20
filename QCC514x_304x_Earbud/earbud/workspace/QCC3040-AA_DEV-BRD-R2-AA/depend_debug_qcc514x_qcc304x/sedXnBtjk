@@ -1,0 +1,26 @@
+
+
+
+
+primary_service {
+    uuid : 0x1801,
+    name : "GATT_SERVICE",
+    characteristic {
+        uuid : 0x2A05,
+        name : "GATT_SERVICE_CHANGED",
+        properties : [ indicate ],
+        client_config
+        {
+            name : "GATT_SERVICE_CHANGED_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ ]
+        }
+    },
+
+    characteristic {
+        uuid : 0x2B29,
+        name : "GATT_CLIENT_SUPPORTED_FEATURES",
+        properties : [read, write],
+        flags : [FLAG_IRQ],
+        size_value : 1
+    }
+},

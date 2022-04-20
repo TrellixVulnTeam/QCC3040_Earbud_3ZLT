@@ -12,11 +12,11 @@
 #include "earbud_common_rules.h"
 #include "earbud_config.h"
 
-#include "..\aul\aul_common.h"
-//#include "C:\Qualcomm_Prog\qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1\earbud\aul\aul_common.h"
-//#incldue "../aul/aul_common.h"
-//#include "./aul_common.h"
-//#include "aul_common.h"
+#include "..\echo_app\echo_common.h"
+//#include "C:\Qualcomm_Prog\qcc514x-qcc304x-src-1-0_qtil_standard_oem_earbud-ADK-21.1-CS2-MR1\earbud\echo_app\echo_common.h"
+//#incldue "../echo_app/echo_common.h"
+//#include "./echo_common.h"
+//#include "echo_common.h"
 
 #include "earbud_led.h"
 #include "earbud_ui_config.h"
@@ -213,13 +213,13 @@
 #include <app/bluestack/dm_prim.h>
 
 #ifdef INCLUDE_MUSIC_PROCESSING
-    voice_ui_eq_if_t voice_ui_eq_if =
-    {
-        MusicProcessing_IsEqActive,
-        MusicProcessing_GetNumberOfActiveBands,
-        MusicProcessing_SetUserEqBands,
-        MusicProcessing_SetPreset
-    };
+voice_ui_eq_if_t voice_ui_eq_if =
+{
+    MusicProcessing_IsEqActive,
+    MusicProcessing_GetNumberOfActiveBands,
+    MusicProcessing_SetUserEqBands,
+    MusicProcessing_SetPreset
+};
 #endif /* INCLUDE_MUSIC_PROCESSING */
 
 #ifdef ENABLE_EARBUD_FIT_TEST
@@ -342,7 +342,7 @@ static bool appMessageDispatcherRegister(Task init_task)
 
 static const bt_device_default_value_callback_t property_default_values[] =
 {
-        {device_property_headset_service_config, HandsetService_SetDefaultConfig}
+    {device_property_headset_service_config, HandsetService_SetDefaultConfig}
 };
 
 static const bt_device_default_value_callback_list_t default_value_callback_list = {property_default_values, ARRAY_DIM(property_default_values)};
@@ -600,40 +600,40 @@ static bool appWatchdogInit(Task init_task)
 /*! \brief Table of initialisation functions */
 static const system_state_step_t appInitTable[] =
 {
-#ifdef INIT_DEBUG
+    #ifdef INIT_DEBUG
     {appInitDebug,          0, NULL},
-#endif
-#ifdef INCLUDE_WATCHDOG
+    #endif
+    #ifdef INCLUDE_WATCHDOG
     {appWatchdogInit,       0, NULL},
-#endif
+    #endif
     {appPioInit,            0, NULL},
     {PioMonitorInit,        0, NULL},
     {Ui_Init,               0, NULL},
     {appLicenseCheck,       0, NULL},
     {earbud_FeatureManagerInit, 0, NULL},
-#ifdef INCLUDE_TEMPERATURE
+    #ifdef INCLUDE_TEMPERATURE
     {earbud_TemperatureInit,    0, NULL},
-#endif
+    #endif
     {appBatteryInit,        MESSAGE_BATTERY_INIT_CFM, NULL},
-#ifdef INCLUDE_CHARGER
+    #ifdef INCLUDE_CHARGER
     {Charger_Init,          0, NULL},
-#endif
-#ifdef INCLUDE_CAPSENSE
+    #endif
+    #ifdef INCLUDE_CAPSENSE
     {TouchSensor_Init,      0, NULL},
-#endif
+    #endif
     //{LedManager_Init,       0, NULL},
     {earbud_BatteryRegionInit,        0, NULL},
     {appPowerInit,          APP_POWER_INIT_CFM, NULL},
     {earbud_SoCInit,        0, NULL},
     {appConnectionInit,     INIT_CL_CFM, NULL},
-    {aul_init,       0, NULL},
-#ifdef UNMAP_AFH_CH78
+    {Echo_Init,       0, NULL},
+    #ifdef UNMAP_AFH_CH78
     {earbud_RemapAfh78,       0, NULL},
-#endif
+    #endif
     {appMessageDispatcherRegister, 0, NULL},
-#ifdef USE_BDADDR_FOR_LEFT_RIGHT
+    #ifdef USE_BDADDR_FOR_LEFT_RIGHT
     {appConfigInit,         INIT_READ_LOCAL_NAME_CFM, appInitHandleReadLocalBdAddrCfm},
-#endif
+    #endif
     {appInputEventMangerInit, 0, NULL},
     {appPhyStateInit,       PHY_STATE_INIT_CFM, NULL},
     {LocalAddr_Init,        0, NULL},
@@ -663,25 +663,25 @@ static const system_state_step_t appInitTable[] =
     {TelephonyService_Init, 0, NULL},
     {HfpProfile_Init,            APP_HFP_INIT_CFM, NULL},
     {SingleEntity_Init,     0, NULL},
-#ifdef INCLUDE_QCOM_CON_MANAGER
+    #ifdef INCLUDE_QCOM_CON_MANAGER
     {QcomConManagerInit,QCOM_CON_MANAGER_INIT_CFM,NULL},
-#endif
+    #endif
     {KeySync_Init,          0, NULL},
-#ifdef INCLUDE_MIRRORING
+    #ifdef INCLUDE_MIRRORING
     {HandoverProfile_Init,  HANDOVER_PROFILE_INIT_CFM, NULL},
     {MirrorProfile_Init,    MIRROR_PROFILE_INIT_CFM, NULL},
-#endif
-#ifdef INCLUDE_USB_DEVICE
+    #endif
+    #ifdef INCLUDE_USB_DEVICE
     {UsbDevice_Init,        0, NULL},
-#endif
+    #endif
     {appKymeraInit,         0, NULL},
-#ifdef ENABLE_ANC
+    #ifdef ENABLE_ANC
     {AncStateManager_Init, 0, NULL},
-#endif
+    #endif
 
-#ifdef ENABLE_AEC_LEAKTHROUGH
+    #ifdef ENABLE_AEC_LEAKTHROUGH
     {AecLeakthrough_Init, 0, NULL},
-#endif
+    #endif
     {StateProxy_Init,       0, NULL},
     {MediaPlayer_Init,       0, NULL},
     {appInitTransportManagerInitFixup, 0, NULL},        //! \todo TransportManager does not meet expected init interface
@@ -690,135 +690,135 @@ static const system_state_step_t appInitTable[] =
     // All GATT Servers MUST be initialised after GattConnect_Init and before GattConnect_ServerInitComplete.
     {PeerPairLe_Init, INIT_PEER_PAIR_LE_CFM, NULL},
     {DeviceSync_Init,       0, NULL},
-#ifdef INCLUDE_REMOTE_NAME
+    #ifdef INCLUDE_REMOTE_NAME
     {DeviceSyncPsKey_Init,  0, NULL},
-#endif
+    #endif
     {ProfileManager_Init,   0, NULL},
     {HandsetService_Init,   0, NULL},
-#ifdef INCLUDE_CASE_COMMS
+    #ifdef INCLUDE_CASE_COMMS
     {CcWithCase_Init,             0, NULL},
-#endif
+    #endif
     {PeerFindRole_Init,     INIT_PEER_FIND_ROLE_CFM, NULL},
     {TwsTopology_Init,      TWS_TOPOLOGY_INIT_CFM, NULL},
     {PeerLinkKeys_Init,     0, NULL},
-#ifdef INCLUDE_GATT_BATTERY_SERVER
+    #ifdef INCLUDE_GATT_BATTERY_SERVER
     {GattServerBattery_Init,0, NULL},
-#endif
-#ifdef INCLUDE_GATT_DEVICE_INFO_SERVER
+    #endif
+    #ifdef INCLUDE_GATT_DEVICE_INFO_SERVER
     {GattServerDeviceInfo_Init, 0, NULL},
-#endif
+    #endif
     {GattServerGatt_Init,   0, NULL},
     {GattServerGap_Init,    0, NULL},
 
-#ifdef INCLUDE_ACCESSORY
+    #ifdef INCLUDE_ACCESSORY
     {Accessory_Init, 0, NULL},
     {Accessory_tws_Init, 0, NULL},
     {AccessoryFeature_RequestAppLaunchInit, 0, NULL},
     {Rtt_Init, 0, NULL},
-#endif
-#if defined(INCLUDE_MUSIC_PROCESSING)
+    #endif
+    #if defined(INCLUDE_MUSIC_PROCESSING)
     {MusicProcessing_Init,             0, NULL},
-#endif /* INCLUDE_MUSIC_PROCESSING */
-#ifdef INCLUDE_L2CAP_MANAGER
+    #endif /* INCLUDE_MUSIC_PROCESSING */
+    #ifdef INCLUDE_L2CAP_MANAGER
     {L2capManager_Init, 0, NULL},
-#endif
+    #endif
 
-#ifdef ENABLE_EARBUD_FIT_TEST
+    #ifdef ENABLE_EARBUD_FIT_TEST
     {FitTest_init,0,NULL},
-#endif
+    #endif
 
-#ifdef INCLUDE_GAIA
+    #ifdef INCLUDE_GAIA
     {GaiaFramework_Init,           APP_GAIA_INIT_CFM, NULL},   // Gatt needs GAIA
     {HandsetServicegGaiaPlugin_Init,  0, NULL},
-#if defined(INCLUDE_DFU)
+    #if defined(INCLUDE_DFU)
     {earbud_UpgradeGaiaPluginRegister, 0, NULL},
-#endif
-#if (defined(INCLUDE_GAIA_PYDBG_REMOTE_DEBUG) || defined(INCLUDE_GAIA_PANIC_LOG_TRANSFER))
+    #endif
+    #if (defined(INCLUDE_GAIA_PYDBG_REMOTE_DEBUG) || defined(INCLUDE_GAIA_PANIC_LOG_TRANSFER))
     {GaiaDebugPlugin_Init,  0, NULL},
-#endif
+    #endif
     {earbud_EarbudGaiaPluginRegister, 0, NULL},
-#if defined(ENABLE_ANC)
+    #if defined(ENABLE_ANC)
     {earbud_AncGaiaPluginRegister, 0, NULL},
-#endif
-#if defined(INCLUDE_MUSIC_PROCESSING) && defined (INCLUDE_GAIA)
+    #endif
+    #if defined(INCLUDE_MUSIC_PROCESSING) && defined (INCLUDE_GAIA)
     {MusicProcessingGaiaPlugin_Init,             0, NULL},
-#endif
-#if defined(INCLUDE_CVC_DEMO) && defined (INCLUDE_GAIA)
+    #endif
+    #if defined(INCLUDE_CVC_DEMO) && defined (INCLUDE_GAIA)
     {VoiceEnhancementGaiaPlugin_Init,            0, NULL},
-#endif
-#ifdef ENABLE_GAIA_USER_FEATURE_LIST_DATA
+    #endif
+    #ifdef ENABLE_GAIA_USER_FEATURE_LIST_DATA
     {EarbudGaiaUserFeature_RegisterUserFeatureData,  0, NULL},
-#endif
-#ifdef ENABLE_EARBUD_FIT_TEST
+    #endif
+    #ifdef ENABLE_EARBUD_FIT_TEST
     {earbud_FitTestGaiaPluginRegister,0,NULL},
-#endif
-#endif /* INCLUDE_GAIA */
-#ifdef INCLUDE_GAA_LE
+    #endif
+    #endif /* INCLUDE_GAIA */
+    #ifdef INCLUDE_GAA_LE
     {GattServerGaaMedia_Init, 0, NULL},
     {GattServerGaaComm_Init, 0, NULL},
     {GattServerAmsProxy_Init, 0, NULL},
     {GattServerAncsProxy_Init, 0, NULL},
-#endif
+    #endif
     {appSmInit,             0, NULL},
-#ifdef INCLUDE_DFU
+    #ifdef INCLUDE_DFU
     {Dfu_EarlyInit, 0, NULL},
     {earbud_DfuAppRegister, 0, NULL},
     {Dfu_Init,        UPGRADE_INIT_CFM, NULL},
-#endif
-#ifdef INCLUDE_DFU_PEER
+    #endif
+    #ifdef INCLUDE_DFU_PEER
     {DfuPeer_EarlyInit, 0, NULL},
     {earbud_PeerDfuAppRegister, 0, NULL},
     {DfuPeer_Init,  DFU_PEER_INIT_CFM, NULL},
-#endif
+    #endif
     {VoiceUi_Init,   0, NULL},
-#ifdef ENABLE_AUDIO_TUNING_MODE
+    #ifdef ENABLE_AUDIO_TUNING_MODE
     {VoiceAudioTuningMode_Init, 0, NULL},
-#endif
+    #endif
     {AudioCuration_Init, 0, NULL},
     {UiPrompts_Init,     0, NULL},
     {UiTones_Init,       0, NULL},
     {UiLeds_Init,        0, NULL},
     {PeerUi_Init,        0, NULL},
     {EarbudUi_Init,      0, NULL},
-#ifdef INCLUDE_REMOTE_NAME
+    #ifdef INCLUDE_REMOTE_NAME
     {RemoteName_Init,    0, NULL},
-#endif
+    #endif
 
-#ifdef INCLUDE_MIRRORING
+    #ifdef INCLUDE_MIRRORING
     {EarbudHandover_Init, 0, NULL},
-#ifdef INCLUDE_GAMING_MODE
+    #ifdef INCLUDE_GAMING_MODE
     {GamingMode_init, 0, NULL},
-#endif
-#endif
-#ifdef INCLUDE_FAST_PAIR
+    #endif
+    #endif
+    #ifdef INCLUDE_FAST_PAIR
     {appTxPowerInit, 0 , NULL},
     {FastPair_Init, 0, NULL},
 
-#endif
+    #endif
 
 
 
 
-#ifdef INCLUDE_GATT_SERVICE_DISCOVERY
+    #ifdef INCLUDE_GATT_SERVICE_DISCOVERY
     {GattServiceDiscovery_Init, 0, NULL},
-#endif
+    #endif
     // All GATT Servers MUST be initialised before GATT initialisation is complete.
     {GattConnect_ServerInitComplete, GATT_CONNECT_SERVER_INIT_COMPLETE_CFM, NULL},
-#ifdef INCLUDE_GAA
+    #ifdef INCLUDE_GAA
     {Gaa_Init, 0, NULL},
-#endif
+    #endif
 
-#ifdef INCLUDE_DEVICE_TEST_SERVICE
+    #ifdef INCLUDE_DEVICE_TEST_SERVICE
     {DeviceTestService_Init, 0, NULL},
-#endif
+    #endif
 
-#ifdef INCLUDE_AMA
+    #ifdef INCLUDE_AMA
     {Ama_Init, 0, NULL},
-#endif
+    #endif
 
-#ifdef INCLUDE_SWIFT_PAIR
+    #ifdef INCLUDE_SWIFT_PAIR
     {SwiftPair_Init, 0, NULL},
-#endif
+    #endif
 
 
     {Earbud_RegisterForBtMessages, 0, NULL},
@@ -827,7 +827,7 @@ static const system_state_step_t appInitTable[] =
 static bool finalSleepStep(Task task)
 {
 #if defined HAVE_RDP_HW_YE134 || defined HAVE_RDP_HW_18689
-bool enable_sensor_power = appPhyStateIsOutOfCase();  /* Keep touchpad powered when out of the case */
+    bool enable_sensor_power = appPhyStateIsOutOfCase();  /* Keep touchpad powered when out of the case */
 #endif
     UNUSED(task);
 
@@ -870,7 +870,7 @@ static const system_state_step_t shutdown_table[] =
 static void earbudInit_SetMessageBrokerRegistrations(void)
 {
     unsigned registrations_array_dim = (unsigned)message_broker_group_registrations_end -
-                              (unsigned)message_broker_group_registrations_begin;
+            (unsigned)message_broker_group_registrations_begin;
     PanicFalse((registrations_array_dim % sizeof(message_broker_group_registration_t)) == 0);
     registrations_array_dim /= sizeof(message_broker_group_registration_t);
 
