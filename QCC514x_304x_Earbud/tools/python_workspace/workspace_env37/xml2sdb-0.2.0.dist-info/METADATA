@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: xml2sdb
+Version: 0.2.0
+Summary: A python package for parsing chip config XML and creating an SDB database
+Home-page: https://github.qualcomm.com/bbyford/xml2sdb
+Author: Barry Byford
+Author-email: bbyford@qti.qualcomm.com
+License: Qualcomm Proprietary
+Download-URL: https://github.qualcomm.com/bbyford/xml2sdb/tarball/0.2.0
+Requires-Dist: sqlalchemy
+Requires-Dist: lxml
+
+xml2sdb
+
+

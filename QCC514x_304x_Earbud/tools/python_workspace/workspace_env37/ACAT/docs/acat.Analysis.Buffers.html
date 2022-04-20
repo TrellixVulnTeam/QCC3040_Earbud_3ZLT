@@ -1,0 +1,990 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Buffers &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="Cbops" href="acat.Analysis.Cbops.html"/>
+        <link rel="prev" title="Analysis" href="acat.Analysis.Analysis.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.AANC.html">AANC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Analysis.html">Analysis</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Cbops.html">Cbops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DebugLog.html">DebugLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DmProfiler.html">DmProfiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Dorm.html">Dorm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fats.html">Fats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fault.html">Fault</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.FaultOld1.html">FaultOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld1.html">HeapMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld2.html">HeapMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld3.html">HeapMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld1.html">HeapPmMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld2.html">HeapPmMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld3.html">HeapPmMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld4.html">HeapPmMemOld4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.IPC.html">IPC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Patches.html">Patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PatchesOld1.html">PatchesOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfo.html">PoolInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfoOld1.html">PoolInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Profiler.html">Profiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.RtpDecode.html">RtpDecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheck.html">SanityCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheckOld1.html">SanityCheckOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Sched.html">Sched</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SchedOld1.html">SchedOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.ScratchMem.html">ScratchMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SharedMem.html">SharedMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SourceSync.html">SourceSync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Splitter.html">Splitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfo.html">StackInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfoOld1.html">StackInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Heap.html">Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMem.html">HeapMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMem.html">HeapPmMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Opmgr.html">Opmgr</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>Buffers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Analysis.Buffers.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="buffers">
+<h1>Buffers<a class="headerlink" href="#buffers" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Analysis.Buffers</span></code>.</p>
+<span class="target" id="module-ACAT.Analysis.Buffers"></span><p>Buffers Analysis.</p>
+<p>Module responsible for analysing buffers in Kymera.</p>
+<dl class="class">
+<dt id="ACAT.Analysis.Buffers.Buffers">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Buffers.</code><code class="sig-name descname">Buffers</code><span class="sig-paren">(</span><em class="sig-param">**kwarg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates analysis of buffers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwarg</strong> – Arbitrary keyword arguments.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.analyse_cbuffer">
+<code class="sig-name descname">analyse_cbuffer</code><span class="sig-paren">(</span><em class="sig-param">buffer_p</em>, <em class="sig-param">title_str='None'</em>, <em class="sig-param">analyse_metadata=False</em>, <em class="sig-param">plot_content=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.analyse_cbuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.analyse_cbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a pointer to a cbuffer and inspects its contents.</p>
+<p>If True is passed to it, the contents of the metadata structures is
+also displayed, with the numbers of tags. If tag names are passed as
+a list, these tags are displayed e.g [‘index’, ‘flags’, ‘data’]. If
+empty list [] is passed  , all tags are displayed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer_p</strong> (<em>int</em>) – Buffer pointer.</p></li>
+<li><p><strong>title_str</strong> (<em>str</em>) – Description of the transform to be displayed
+as title for plot.</p></li>
+<li><p><strong>analyse_metadata</strong> (<em>bool</em>) – If True the metadata of the buffer is
+displayed. False by default.</p></li>
+<li><p><strong>plot_content</strong> (<em>bool</em>) – If True generates a diagram and display
+it.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.analyse_transform_buffers">
+<code class="sig-name descname">analyse_transform_buffers</code><span class="sig-paren">(</span><em class="sig-param">analyse_metadata=False</em>, <em class="sig-param">plot_contents=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.analyse_transform_buffers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.analyse_transform_buffers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints out the buffer details for the transform buffers.</p>
+<p>If True is passed to it, the contents of the metadata structures is
+also displayed, with the numbers of tags. If tag names are passed as
+a list, these tags are displayed e.g [‘index’, ‘flags’, ‘data’]. If
+empty list [] is passed  , all tags are displayed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>analyse_metadata</strong> (<em>bool</em>) – If True the metadata of the buffer is
+displayed. False by default.</p></li>
+<li><p><strong>plot_contents</strong> (<em>bool</em>) – Whether display the buffer’s contest in
+an image or not.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.display_content">
+<code class="sig-name descname">display_content</code><span class="sig-paren">(</span><em class="sig-param">cbuffer</em>, <em class="sig-param">start_with='base'</em>, <em class="sig-param">only_available_data=False</em>, <em class="sig-param">words_per_line=8</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.display_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.display_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the buffer content in a humanly readable manner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cbuffer</strong> (<a class="reference internal" href="#ACAT.Analysis.Buffers.Cbuffer" title="ACAT.Analysis.Buffers.Cbuffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cbuffer</span></code></a>) – Circular buffer pointer or buffer
+variable.</p></li>
+<li><p><strong>start_with</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Where to start to read the buffer.
+The following options are supported:</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">base</span></code> - Reading will start at the base address of the
+buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read</span></code> - Starting with the read address of the buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write</span></code> - Starting with the write address of the
+buffer. This can be useful when you want to
+display the oldest data in the buffer first.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>only_available_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, only the
+available data in the buffer will be displayed. If false,
+everything in the buffer is displayed (This can be useful
+if you want to see some old packets/ data in the buffer).</p></li>
+<li><p><strong>words_per_line</strong> (<em>int</em><em>, </em><em>optional</em>) – How many words will be
+displayed in one line.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>buffer content as a formatted string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.draw_cbuffer">
+<code class="sig-name descname">draw_cbuffer</code><span class="sig-paren">(</span><em class="sig-param">buffer_p</em>, <em class="sig-param">rd_side='right'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.draw_cbuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.draw_cbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the diagram of the given buffer.</p>
+<p>Optionally, provide a preference for which side of the diagram the
+read/aux_rd pointers are drawn (wr/aux_wr will be on the opposite
+side to rd).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer_p</strong> (<em>int</em>) – Buffer address.</p></li>
+<li><p><strong>rd_side</strong> (<em>str</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.get_content">
+<code class="sig-name descname">get_content</code><span class="sig-paren">(</span><em class="sig-param">cbuffer</em>, <em class="sig-param">start_with='read'</em>, <em class="sig-param">only_available_data=False</em>, <em class="sig-param">conversion_function=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.get_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.get_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the buffer content.</p>
+<p>Returns the buffer content as a list of words. Use this function
+if you want to use the buffer content in a analysis or a separate
+script/program.</p>
+<p>Examples:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The usage of this function can be something similar to below:
+
+    buffer_content =  buffers.get_content(
+        &lt;cbuffer pointer&gt;,
+        start_with=&quot;read&quot;,
+        only_available_data = True,
+        conversion_function = cu.u32_to_frac32)
+    # displaying the content using matplotlib
+    import matplotlib.pyplot as plt
+    plt.plot(buffer_content)
+    plt.show()
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cbuffer</strong> (<a class="reference internal" href="#ACAT.Analysis.Buffers.Cbuffer" title="ACAT.Analysis.Buffers.Cbuffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cbuffer</span></code></a>) – Circular buffer pointer or buffer
+variable.</p></li>
+<li><p><strong>start_with</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Where to start to read the buffer.</p>
+<p>The following options are supported:</p>
+<blockquote>
+<div><ul>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">base</span></code> - Reading will start at the base address of the</dt><dd><p>buffer.</p>
+</dd>
+</dl>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read</span></code> - Starting with the read address of the buffer.</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">write</span></code> - Starting with the write address of the</dt><dd><p>buffer. This can be useful when you want to
+display the oldest data in the buffer first.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>only_available_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, only the
+available data in the buffer will be displayed. If false,
+everything in the buffer is displayed (This can be useful
+if you want to see some old packets/ data in the buffer).</p></li>
+<li><p><strong>conversion_function</strong> (<em>obj</em><em>, </em><em>optional</em>) – A conversion function can
+be applied to the return values by setting this parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>unsigned 32 bit integer values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.get_mmu_buffer_width">
+<code class="sig-name descname">get_mmu_buffer_width</code><span class="sig-paren">(</span><em class="sig-param">handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.get_mmu_buffer_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.get_mmu_buffer_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the width of an MMU buffer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only has been tried on Crescendo.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handle</strong> – MMU buffer handle.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The width of MMU buffer in octets. i.e. 32bit -&gt; 4</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.inspect_cbuffer">
+<code class="sig-name descname">inspect_cbuffer</code><span class="sig-paren">(</span><em class="sig-param">buffer_p</em>, <em class="sig-param">analyse_metadata=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.inspect_cbuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.inspect_cbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inspect the given cbuffer.</p>
+<p>If True is passed to it, the contents of the metadata structures is
+also displayed, with the numbers of tags. If tag names are passed as
+a list, these tags are displayed e.g [‘index’, ‘flags’, ‘data’]. If
+empty list [] is passed  , all tags are displayed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer_p</strong> (<em>int</em>) – Buffer pointer.</p></li>
+<li><p><strong>analyse_metadata</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True the metadata of the
+buffer is displayed. False by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A cbuffer variable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.plot_buffers">
+<code class="sig-name descname">plot_buffers</code><span class="sig-paren">(</span><em class="sig-param">buffers</em>, <em class="sig-param">screen_width=120</em>, <em class="sig-param">live_plotting=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.plot_buffers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.plot_buffers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display buffer all the given buffers.</p>
+<p>Displays the buffer usage in a console progress bar way [####   ]
+for a given list of buffers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffers</strong> (<em>list</em>) – Each buffer described as a tuple of (name,
+address).</p></li>
+<li><p><strong>screen_width</strong> (<em>int</em>) – Screen width in characters.</p></li>
+<li><p><strong>live_plotting</strong> (<em>bool</em>) – The live_plotting mode will continuously
+display the buffer usage until an exit event is received.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.plot_cbuffer_live">
+<code class="sig-name descname">plot_cbuffer_live</code><span class="sig-paren">(</span><em class="sig-param">cbuffer_addr</em>, <em class="sig-param">conversion_function=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.plot_cbuffer_live"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.plot_cbuffer_live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the cbuffer live.</p>
+<p>Constantly reads the content of a cbuffer and displays it using
+<cite>matplotlib</cite> library. The action ends when user closes the figure
+window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cbuffer_addr</strong> (<em>int</em>) – cbuffer’s struct address.</p></li>
+<li><p><strong>conversion_function</strong> (<em>object</em>) – A conversion function. When not
+given, the method uses <cite>u32_to_frac32</cite> function in
+CoreUtils.py package.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.plot_content">
+<code class="sig-name descname">plot_content</code><span class="sig-paren">(</span><em class="sig-param">cbuffer</em>, <em class="sig-param">title_str</em>, <em class="sig-param">conversion_function=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.plot_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.plot_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the content of the buffer using matplotlib.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cbuffer</strong> (<a class="reference internal" href="#ACAT.Analysis.Buffers.Cbuffer" title="ACAT.Analysis.Buffers.Cbuffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cbuffer</span></code></a>) – Circular buffer pointer or buffer
+variable.</p></li>
+<li><p><strong>conversion_function</strong> (<em>obj</em><em>, </em><em>optional</em>) – A conversion function can
+be applied to the buffer values by setting this parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>buffer content as a formatted string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Buffers.run_all">
+<code class="sig-name descname">run_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Buffers.run_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Buffers.run_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>It does nothing.</p>
+<p>This analysis does not implement a run_all function because it is
+a helper module.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Buffers.Cbuffer">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Buffers.</code><code class="sig-name descname">Cbuffer</code><span class="sig-paren">(</span><em class="sig-param">var</em>, <em class="sig-param">is_old_version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Cbuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a circular buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>obj</strong> (<em>var</em>) – Variable): CBuffer variable that has been casted from a
+pointer.</p></li>
+<li><p><strong>is_old_version</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.is_old_version">
+<code class="sig-name descname">is_old_version</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.is_old_version" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.buffer_type">
+<code class="sig-name descname">buffer_type</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.buffer_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>SW</cite>/<cite>MMU</cite>/<cite>Remote MMU</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.buffer_size">
+<code class="sig-name descname">buffer_size</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.rd_offset">
+<code class="sig-name descname">rd_offset</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.rd_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.wr_offset">
+<code class="sig-name descname">wr_offset</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.wr_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.aux_offset">
+<code class="sig-name descname">aux_offset</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.aux_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.base_addr">
+<code class="sig-name descname">base_addr</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.base_addr" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.rd_type">
+<code class="sig-name descname">rd_type</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.rd_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>SW</cite> or <cite>MMU</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.wr_type">
+<code class="sig-name descname">wr_type</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.wr_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>SW</cite> or <cite>MMU</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.aux_type">
+<code class="sig-name descname">aux_type</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.aux_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>read</cite> or <cite>write</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.remote_rdh">
+<code class="sig-name descname">remote_rdh</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.remote_rdh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple of (SSID, index) or None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.remote_wrh">
+<code class="sig-name descname">remote_wrh</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.remote_wrh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple of (SSID, index) or None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.amt_data">
+<code class="sig-name descname">amt_data</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.amt_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.av_space">
+<code class="sig-name descname">av_space</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.av_space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.usable_octets">
+<code class="sig-name descname">usable_octets</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.usable_octets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.metadata_list">
+<code class="sig-name descname">metadata_list</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.metadata_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.in_place">
+<code class="sig-name descname">in_place</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.in_place" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.head_of_in_place_chain">
+<code class="sig-name descname">head_of_in_place_chain</code><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.head_of_in_place_chain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.get_base_address">
+<code class="sig-name descname">get_base_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Cbuffer.get_base_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.get_base_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the base address of the buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Base address.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.get_previous_address">
+<code class="sig-name descname">get_previous_address</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Cbuffer.get_previous_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.get_previous_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the previous address.</p>
+<p>Calculate the address which is before the given address in the
+buffer and return it. This will count for buffer wrap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> (<em>int</em>) – Address in the buffer.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Read address.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.get_read_address">
+<code class="sig-name descname">get_read_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Cbuffer.get_read_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.get_read_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the read address of the buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Read address.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.Cbuffer.get_write_address">
+<code class="sig-name descname">get_write_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#Cbuffer.get_write_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.Cbuffer.get_write_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the write address of the buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Write address.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Buffers.MetadataTag">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Buffers.</code><code class="sig-name descname">MetadataTag</code><span class="sig-paren">(</span><em class="sig-param">tag</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the analysis of metadata tags.</p>
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_START_SHIFT">
+<code class="sig-name descname">METADATA_STREAM_START_SHIFT</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_START_SHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_START_MASK">
+<code class="sig-name descname">METADATA_STREAM_START_MASK</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_START_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_END_SHIFT">
+<code class="sig-name descname">METADATA_STREAM_END_SHIFT</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_END_SHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_END_MASK">
+<code class="sig-name descname">METADATA_STREAM_END_MASK</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_STREAM_END_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_START_SHIFT">
+<code class="sig-name descname">METADATA_PACKET_START_SHIFT</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_START_SHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_START_MASK">
+<code class="sig-name descname">METADATA_PACKET_START_MASK</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_START_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_END_SHIFT">
+<code class="sig-name descname">METADATA_PACKET_END_SHIFT</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_END_SHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_END_MASK">
+<code class="sig-name descname">METADATA_PACKET_END_MASK</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_PACKET_END_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_TIMESTAMP_SHIFT">
+<code class="sig-name descname">METADATA_TIMESTAMP_SHIFT</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_TIMESTAMP_SHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_TIMESTAMP_MASK">
+<code class="sig-name descname">METADATA_TIMESTAMP_MASK</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_TIMESTAMP_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_TIME_OF_ARRIVAL_SHIfT">
+<code class="sig-name descname">METADATA_TIME_OF_ARRIVAL_SHIfT</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_TIME_OF_ARRIVAL_SHIfT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.METADATA_TIME_OF_ARRIVAL_MASK">
+<code class="sig-name descname">METADATA_TIME_OF_ARRIVAL_MASK</code><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.METADATA_TIME_OF_ARRIVAL_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">CoreTypes.Variable</span></code>) – </p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_empty_tag">
+<code class="sig-name descname">is_empty_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_empty_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_empty_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag is empty.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Empty tags are generated when an operator source without
+metadata support is connected to an operator sink with
+metadata support.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_packet_end_tag">
+<code class="sig-name descname">is_packet_end_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_packet_end_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_packet_end_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag is pack end tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_packet_start_tag">
+<code class="sig-name descname">is_packet_start_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_packet_start_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_packet_start_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag is pack start tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_stream_end_tag">
+<code class="sig-name descname">is_stream_end_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_stream_end_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_stream_end_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag is stream end tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_stream_start_tag">
+<code class="sig-name descname">is_stream_start_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_stream_start_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_stream_start_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag is stream start tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_time_of_arrival_tag">
+<code class="sig-name descname">is_time_of_arrival_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_time_of_arrival_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_time_of_arrival_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag holds time of arrival information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_time_to_play_tag">
+<code class="sig-name descname">is_time_to_play_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_time_to_play_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_time_to_play_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag holds time to play information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.MetadataTag.is_void_tag">
+<code class="sig-name descname">is_void_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#MetadataTag.is_void_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.MetadataTag.is_void_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the tag is void.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Samples belonging to a void tag should be played as soon as
+possible.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Buffers.PrintBufferUsage">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Buffers.</code><code class="sig-name descname">PrintBufferUsage</code><span class="sig-paren">(</span><em class="sig-param">exit_event</em>, <em class="sig-param">cbuffers</em>, <em class="sig-param">buffers_analysis</em>, <em class="sig-param">exit_message</em>, <em class="sig-param">screen_width=120</em>, <em class="sig-param">live_plotting=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#PrintBufferUsage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.PrintBufferUsage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and displays usage info about buffers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exit_event</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">threading.Event</span></code>) – Exit event.</p></li>
+<li><p><strong>cbuffers</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">tupe</span></code>) – Each tuple is
+(repr string/name, address).</p></li>
+<li><p><strong>buffers_analysis</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Analysis.Buffers.Buffers</span></code>) – </p></li>
+<li><p><strong>exit_message</strong> (<em>str</em>) – </p></li>
+<li><p><strong>screen_width</strong> (<em>int</em><em>, </em><em>optional</em>) – screen width in characters.</p></li>
+<li><p><strong>live_plotting</strong> (<em>bool</em><em>, </em><em>optional</em>) – Displays buffers.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.PrintBufferUsage.get_buffer_usage_table">
+<code class="sig-name descname">get_buffer_usage_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#PrintBufferUsage.get_buffer_usage_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.PrintBufferUsage.get_buffer_usage_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the buffer usage table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>String containing the formatted buffer usage table plus some
+information describing the table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Buffers.PrintBufferUsage.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Buffers.html#PrintBufferUsage.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Buffers.PrintBufferUsage.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the thread.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Analysis.Cbops.html" class="btn btn-neutral float-right" title="Cbops" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Analysis.Analysis.html" class="btn btn-neutral" title="Analysis" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

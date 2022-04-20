@@ -1,0 +1,8 @@
+
+StackInfo
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.StackInfo``.
+
+.. automodule:: ACAT.Analysis.StackInfo
+   :members:

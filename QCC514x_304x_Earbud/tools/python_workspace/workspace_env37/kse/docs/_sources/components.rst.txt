@@ -1,0 +1,35 @@
+
+==========
+Components
+==========
+
+Components emulate some functionality outside of kymera which is needed in kalsim emulation.
+
+.. _persistent_storage:
+
+Persistent Storage
+------------------
+
+To use the Persistent Storage it has to be enabled on invocation (by adding ``--pstore_use`` in the command line).
+
+The default location for pstore is config/pstore.cfg.json and the file is empty. The different file can be specified by adding ``--pstore_filename VAL`` in the command line.
+
+The data can be stored in the pstore in the following format::
+
+    [
+        [
+            1,
+            [
+                0,
+                1
+            ]
+        ],
+        [
+            2,
+            [
+                4
+            ]
+        ]
+    ]
+
+pstore with this content will contain two keys, key id 1 with value [0, 1] and key id 2 with value [4].

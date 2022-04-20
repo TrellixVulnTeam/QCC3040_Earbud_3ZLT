@@ -1,0 +1,8 @@
+
+DownloadedCapability
+==========================================================================
+
+This module can be imported from ``ACAT.Core.DownloadedCapability``.
+
+.. automodule:: ACAT.Core.DownloadedCapability
+   :members:

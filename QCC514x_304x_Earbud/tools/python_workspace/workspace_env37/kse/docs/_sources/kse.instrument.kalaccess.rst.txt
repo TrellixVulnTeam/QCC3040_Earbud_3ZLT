@@ -1,0 +1,22 @@
+kse.instrument.kalaccess package
+================================
+
+Submodules
+----------
+
+kse.instrument.kalaccess.kalaccess module
+-----------------------------------------
+
+.. automodule:: kse.instrument.kalaccess.kalaccess
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.instrument.kalaccess
+   :members:
+   :undoc-members:
+   :show-inheritance:

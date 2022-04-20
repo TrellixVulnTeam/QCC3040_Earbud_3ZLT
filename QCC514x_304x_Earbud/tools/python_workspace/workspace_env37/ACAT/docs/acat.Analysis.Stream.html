@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Stream &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="Heap" href="acat.Analysis.Heap.html"/>
+        <link rel="prev" title="StackInfoOld1" href="acat.Analysis.StackInfoOld1.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.AANC.html">AANC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Analysis.html">Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Buffers.html">Buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Cbops.html">Cbops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DebugLog.html">DebugLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DmProfiler.html">DmProfiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Dorm.html">Dorm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fats.html">Fats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fault.html">Fault</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.FaultOld1.html">FaultOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld1.html">HeapMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld2.html">HeapMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld3.html">HeapMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld1.html">HeapPmMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld2.html">HeapPmMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld3.html">HeapPmMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld4.html">HeapPmMemOld4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.IPC.html">IPC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Patches.html">Patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PatchesOld1.html">PatchesOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfo.html">PoolInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfoOld1.html">PoolInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Profiler.html">Profiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.RtpDecode.html">RtpDecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheck.html">SanityCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheckOld1.html">SanityCheckOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Sched.html">Sched</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SchedOld1.html">SchedOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.ScratchMem.html">ScratchMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SharedMem.html">SharedMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SourceSync.html">SourceSync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Splitter.html">Splitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfo.html">StackInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfoOld1.html">StackInfoOld1</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Heap.html">Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMem.html">HeapMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMem.html">HeapPmMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Opmgr.html">Opmgr</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>Stream</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Analysis.Stream.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stream">
+<h1>Stream<a class="headerlink" href="#stream" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Analysis.Stream</span></code>.</p>
+<span class="target" id="module-ACAT.Analysis.Stream"></span><p>Stream Analysis.</p>
+<p>Module responsible for analysing Kymera Streams.</p>
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.AudioEndpoint">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">AudioEndpoint</code><span class="sig-paren">(</span><em class="sig-param">ep</em>, <em class="sig-param">name</em>, <em class="sig-param">stream</em>, <em class="sig-param">is_state_type_equal_to_name=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#AudioEndpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.AudioEndpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Audio Endpoint.</p>
+<p>Audio endpoint is treated differently to display the associated timed
+playback module.</p>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.AudioEndpoint.desc_str">
+<em class="property">property </em><code class="sig-name descname">desc_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.AudioEndpoint.desc_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the description string of the endpoint.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.Endpoint">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">Endpoint</code><span class="sig-paren">(</span><em class="sig-param">ep</em>, <em class="sig-param">name</em>, <em class="sig-param">stream</em>, <em class="sig-param">is_state_type_equal_to_name=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class to represent an endpoint in Kymera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ep</strong> – </p></li>
+<li><p><strong>is_state_type_equal_to_name</strong> (<em>bool</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>stream</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Endpoint.compact_name">
+<code class="sig-name descname">compact_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Endpoint.compact_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Endpoint.compact_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of an endpoint object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Endpoint.connected_to">
+<em class="property">property </em><code class="sig-name descname">connected_to</code><a class="headerlink" href="#ACAT.Analysis.Stream.Endpoint.connected_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the connected_to endpoint as an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Endpoint.desc_str">
+<em class="property">property </em><code class="sig-name descname">desc_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.Endpoint.desc_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the description string of the endpoint.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Endpoint.ep_to_kick">
+<em class="property">property </em><code class="sig-name descname">ep_to_kick</code><a class="headerlink" href="#ACAT.Analysis.Stream.Endpoint.ep_to_kick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ep_to_kick endpoint as an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Endpoint.title_str">
+<em class="property">property </em><code class="sig-name descname">title_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.Endpoint.title_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the title string of the endpoint.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.GraphUpdate">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">GraphUpdate</code><span class="sig-paren">(</span><em class="sig-param">exit_event</em>, <em class="sig-param">helper</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#GraphUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.GraphUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates graph images for the html file which displays the image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exit_event</strong> – Event which stops the thread.</p></li>
+<li><p><strong>helper</strong> – Pointer to the analyses.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.GraphUpdate.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#GraphUpdate.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.GraphUpdate.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the thread.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.OperatorEndpoint">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">OperatorEndpoint</code><span class="sig-paren">(</span><em class="sig-param">ep</em>, <em class="sig-param">name</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#OperatorEndpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.OperatorEndpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operator Endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ep</strong> – </p></li>
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>stream</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.OperatorEndpoint.desc_str">
+<em class="property">property </em><code class="sig-name descname">desc_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.OperatorEndpoint.desc_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the description string of the operator.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.ScoEndpoint">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">ScoEndpoint</code><span class="sig-paren">(</span><em class="sig-param">ep</em>, <em class="sig-param">name</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#ScoEndpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.ScoEndpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>SCO/ISO Endpoint.</p>
+<p>SCO/ISO endpoint is treated differently to display the SCO driver along
+with the MMU buffer analysis.</p>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.ScoEndpoint.desc_str">
+<em class="property">property </em><code class="sig-name descname">desc_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.ScoEndpoint.desc_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the description string of the endpoint along with the
+SCO driver data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.Stream">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">Stream</code><span class="sig-paren">(</span><em class="sig-param">**kwarg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a capability for analysing Streams.</p>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_chains">
+<code class="sig-name descname">analyse_chains</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_chains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_chains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws operators with their endpoints.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_endpoint">
+<code class="sig-name descname">analyse_endpoint</code><span class="sig-paren">(</span><em class="sig-param">ep_id</em>, <em class="sig-param">cbopsanalysis_on=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the endpoint contents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ep_id</strong> – </p></li>
+<li><p><strong>cbopsanalysis_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_endpoints">
+<code class="sig-name descname">analyse_endpoints</code><span class="sig-paren">(</span><em class="sig-param">cbopsanalysis_on=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the contents of the endpoints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cbopsanalysis_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, CBOPs mgr analysis
+will also be displayed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_kick_objects">
+<code class="sig-name descname">analyse_kick_objects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_kick_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_kick_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints out the available kick objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_rm_pairs">
+<code class="sig-name descname">analyse_rm_pairs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_rm_pairs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_rm_pairs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints out the available ratematch pairs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_sco_ep_buffer">
+<code class="sig-name descname">analyse_sco_ep_buffer</code><span class="sig-paren">(</span><em class="sig-param">ep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_sco_ep_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_sco_ep_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the MMU buffer associated to the SCO/ISO endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ep</strong> (<a class="reference internal" href="#ACAT.Analysis.Stream.Endpoint" title="ACAT.Analysis.Stream.Endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Endpoint</span></code></a>) – Endpoint structure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_service_priv">
+<code class="sig-name descname">analyse_service_priv</code><span class="sig-paren">(</span><em class="sig-param">ep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_service_priv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_service_priv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the service_priv info for audio data service endpoints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ep</strong> (<a class="reference internal" href="#ACAT.Analysis.Stream.Endpoint" title="ACAT.Analysis.Stream.Endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Endpoint</span></code></a>) – Endpoint structure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_stream_connect_fault">
+<code class="sig-name descname">analyse_stream_connect_fault</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_stream_connect_fault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_stream_connect_fault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks stream connect for any fault.</p>
+<p>It checks if STREAM_CONNECT_FAULT_CODE is defined and if it is,
+its value is displayed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_system_configuration">
+<code class="sig-name descname">analyse_system_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_system_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_system_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints out the system stream configuration.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.analyse_transforms">
+<code class="sig-name descname">analyse_transforms</code><span class="sig-paren">(</span><em class="sig-param">display_buffer=False</em>, <em class="sig-param">analyse_metadata=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.analyse_transforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.analyse_transforms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the transform contents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display_buffer</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True the transform buffer
+is displayed.  False by default.</p></li>
+<li><p><strong>analyse_metadata</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True the metadata of the
+transform buffer is displayed. False by default.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.convert_ep_id">
+<em class="property">static </em><code class="sig-name descname">convert_ep_id</code><span class="sig-paren">(</span><em class="sig-param">id_to_convert</em>, <em class="sig-param">force_direction=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.convert_ep_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.convert_ep_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the id and return the internal/external version of it.</p>
+<p>This does roughly the same as the firmware macro
+TOGGLE_EP_ID_BETWEEN_INT_AND_EXT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_to_convert</strong> – </p></li>
+<li><p><strong>force_direction</strong> (<em>int</em><em>, </em><em>optional</em>) – <p>Forces the ID to be external
+or internal. It can have the following values:</p>
+<p>1: Forces the ID to be external.
+0: Forces the ID to be internal.
+None: Toggles the ID between internal/external.</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.convert_transform_id">
+<em class="property">static </em><code class="sig-name descname">convert_transform_id</code><span class="sig-paren">(</span><em class="sig-param">id_to_convert</em>, <em class="sig-param">force_direction=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.convert_transform_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.convert_transform_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the transform ID.</p>
+<p>If ‘force’ is set to 1, we will force the ID to be external;
+if ‘force’ is set to 0, we will force the ID to be internal.
+If ‘force’ isn’t set, we toggle the ID between internal/external.
+Defined as a static method so that other classes/analyses can use it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_to_convert</strong> – </p></li>
+<li><p><strong>force_direction</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The internal/external version of it.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.create_graph_img">
+<code class="sig-name descname">create_graph_img</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.create_graph_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.create_graph_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a graphical representation of streams chain.</p>
+<p>It uses graphviz. This is done by first extracting the endpoint
+details from the dictionary and drawing nodes and edges from that
+dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.create_live_graph_img">
+<code class="sig-name descname">create_live_graph_img</code><span class="sig-paren">(</span><em class="sig-param">set_refresh_interval=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.create_live_graph_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.create_live_graph_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a live graphical representation of streams chain.</p>
+<p>It uses graphviz. This is done by first extracting the endpoint
+details from the dictionary and drawing nodes and edges from that
+dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_endpoint">
+<code class="sig-name descname">get_endpoint</code><span class="sig-paren">(</span><em class="sig-param">id_to_search</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id_to_search</strong> (<em>int</em>) – It can be an endpoint ID in internal or
+external format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_endpoint_by_address">
+<code class="sig-name descname">get_endpoint_by_address</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_endpoint_by_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_endpoint_by_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the endpoint by address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_endpoints">
+<code class="sig-name descname">get_endpoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list with all available endpoints.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_ep_audio_sink_timed">
+<code class="sig-name descname">get_ep_audio_sink_timed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_ep_audio_sink_timed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_ep_audio_sink_timed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the audio sink endpoints which have time playback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All the audio sink endpoints which have time playback.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_ep_audio_sink_timed_dict">
+<code class="sig-name descname">get_ep_audio_sink_timed_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_ep_audio_sink_timed_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_ep_audio_sink_timed_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns endpoints in dictionary format.</p>
+<p>This can be used in ACATLab to draw graphs for audio sink
+endpoints which have timed playback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Containing audio sink endpoint parameters and their</dt><dd><p>addresses that need to be drawn in Matlab.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_transform">
+<code class="sig-name descname">get_transform</code><span class="sig-paren">(</span><em class="sig-param">id_to_search</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the transform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id_to_search</strong> (<em>int</em>) – It can be a transform ID in internal or
+external format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_transforms">
+<code class="sig-name descname">get_transforms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_transforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_transforms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the available transforms.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.get_transforms_buffer_pointer">
+<code class="sig-name descname">get_transforms_buffer_pointer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.get_transforms_buffer_pointer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.get_transforms_buffer_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retruns the transform buffers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of buffers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.plot_transforms_buffers">
+<code class="sig-name descname">plot_transforms_buffers</code><span class="sig-paren">(</span><em class="sig-param">screen_width=0</em>, <em class="sig-param">live_plotting=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.plot_transforms_buffers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.plot_transforms_buffers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints out buffers usages.</p>
+<p>Displays the transform buffers usage in a console progress bar way
+[####    ].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_width</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of characters.</p></li>
+<li><p><strong>live_plotting</strong> (<em>bool</em><em>, </em><em>optional</em>) – continuously display the buffer usage until an exit event
+is received.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Stream.run_all">
+<code class="sig-name descname">run_all</code><span class="sig-paren">(</span><em class="sig-param">cbopsanalysis_on=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Stream.run_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Stream.run_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a complete analysis of Streams.</p>
+<p>The complete analysis includes transforms, endpoints, chains,
+ratematch pairs and kick objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cbopsanalysis_on</strong> (<em>bool</em>) – If True, the CBOPs mgr will also be
+analysed and displayed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.Stream.Transform">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.Stream.</code><code class="sig-name descname">Transform</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/Stream.html#Transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.Stream.Transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A structure for storing transform info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – </p></li>
+<li><p><strong>stream</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Transform.desc_str">
+<em class="property">property </em><code class="sig-name descname">desc_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.Transform.desc_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the description string of the transform.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Transform.direction_str">
+<em class="property">property </em><code class="sig-name descname">direction_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.Transform.direction_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the direction string of the transform.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Transform.short_title_str">
+<em class="property">property </em><code class="sig-name descname">short_title_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.Transform.short_title_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shorter title than title_str.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.Stream.Transform.title_str">
+<em class="property">property </em><code class="sig-name descname">title_str</code><a class="headerlink" href="#ACAT.Analysis.Stream.Transform.title_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the title string of the transform.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Analysis.Heap.html" class="btn btn-neutral float-right" title="Heap" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Analysis.StackInfoOld1.html" class="btn btn-neutral" title="StackInfoOld1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

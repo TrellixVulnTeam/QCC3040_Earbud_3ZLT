@@ -1,0 +1,8 @@
+
+patch
+==========================================================================
+
+This module can be imported from ``ACAT.Core.patch``.
+
+.. automodule:: ACAT.Core.patch
+   :members:

@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuration &mdash; AANC ACAT Logging Tool 0.3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="AANC ACAT Logging Tool 0.3.0 documentation" href="index.html"/>
+        <link rel="next" title="Code Documentation" href="code.html"/>
+        <link rel="prev" title="Usage" href="usage.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AANC ACAT Logging Tool
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#flow">Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#top-level-attributes">Top-level Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#operators">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handles">Handles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defaults">Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graphs">Graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lines">Lines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">AANC ACAT Logging Tool</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Configuration</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration">
+<span id="configuration-qcomaanc"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The graphs that are plotted are configured via a JSON file. Examples reside in the
+<code class="docutils literal notranslate"><span class="pre">resources</span></code> subdirectory of <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> and can be used as a starting point for customization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See <a class="reference internal" href="usage.html#usage-example-files"><span class="std std-ref">Example Files</span></a> for the path to this folder.</p>
+</div>
+<div class="section" id="flow">
+<h3>Flow<a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h3>
+<p>The configuration flow is as follows:</p>
+<p>Define Operators ? Define Handles ? Define Graphs</p>
+</div>
+<div class="section" id="top-level-attributes">
+<h3>Top-level Attributes<a class="headerlink" href="#top-level-attributes" title="Permalink to this headline">¶</a></h3>
+<p>There are five top-level attributes in the graph configuration:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">operators</span></code>: defines the operators to query</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handles</span></code>: defines the attributes to read</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">properties</span></code>: defines the overall GUI properties</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">defaults</span></code>,: defines any default graph values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">graphs</span></code>: defines the graphs that are plotted</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">properties</span></code> apply to data capture and the figure window.</p>
+<p>Data Capture:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nplt</span></code>: Number of data points to display on the graph.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nsave</span></code>: Number of data points to save to CSV.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refresh_rate</span></code>: Nominal refresh rate for updating the graphs (ms).</p></li>
+</ul>
+<p>Figure Window:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: Title of the figure created when the tool is launched.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_x</span></code>: Default x co-ordinate for the figure.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_y</span></code>: Default y co-ordinate for the figure.</p></li>
+</ul>
+</div>
+<div class="section" id="operators">
+<span id="configuration-operators"></span><h2>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h2>
+<p>There are two attributes in <code class="docutils literal notranslate"><span class="pre">operators</span></code>: <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code>, which contain a list of operators
+to look for on the left or right device as specified in <code class="docutils literal notranslate"><span class="pre">connection.json</span></code>.</p>
+<p>The operators are defined by:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Name for the operator as used in the <code class="docutils literal notranslate"><span class="pre">handles</span></code> definitions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cap_id</span></code>: Capability ID for the operator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cap_idx</span></code>: Index of the capability in the graph (0 based).</p>
+<ul>
+<li><p>If there is only a single operator of the specified capability this will be 0.</p></li>
+<li><p>If there are multiple operators for the given capability then this should be set to the index
+for the required operator (for example if there are three operators with the same
+capability ID and the second one is the one that is under test this should be <code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="handles">
+<span id="configuration-handles"></span><h2>Handles<a class="headerlink" href="#handles" title="Permalink to this headline">¶</a></h2>
+<p>This is a list of attributes that should be plotted. They are defined by:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Name of the handle used in the <code class="docutils literal notranslate"><span class="pre">graphs</span></code> definition.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operator</span></code>: Name of the operator to query (see <a class="reference internal" href="#configuration-operators"><span class="std std-ref">Operators</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attr</span></code>: Attribute in the operator to plot.</p>
+<ul>
+<li><p>This is most commonly a descendant of the <code class="docutils literal notranslate"><span class="pre">extra_op_data</span></code> data structure in the operator and
+can be anything that can be read from ACAT.</p></li>
+<li><p>ACAT can derefence pointers with known data structures, so for example the FxLMS adaptive gain
+in AANC is <code class="docutils literal notranslate"><span class="pre">extra_op_data.ag.deref.p_fxlms.deref.adaptive_gain</span></code>.</p></li>
+<li><p>This must be a single data value: <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> does not support representing arrays or lists.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_fmt</span></code>: sprintf style logging format when saving the attribute to CSV.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conversion</span></code>: conversion to apply to the format. This can be:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitmask</span></code>: A hexadecimal string that is applied to the value via AND.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code>: number to scale the value by (or string specifying powers, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;2**-9&quot;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offset</span></code>: An offset to apply to the value. This is the last conversion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qfmt</span></code>: Q-format to apply to the value. This is applied in preference to any other
+conversion.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="defaults">
+<h2>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">defaults</span></code> are default properties used in the graph configuration section and can be overridden by
+specific entries on a given plot:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">grid</span></code>: Default state for the grid on the plots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">legend_location</span></code>: Default legend location for the plots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marker</span></code>: Default marker for the plots.</p></li>
+</ul>
+</div>
+<div class="section" id="graphs">
+<h2>Graphs<a class="headerlink" href="#graphs" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">graphs</span></code> attribute is a list of dictionaries. Each dictionary defines a subplot using a
+<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> style specifier.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: Title for the subplot</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subplot</span></code>: Subplot specification (<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> style - e.g. <code class="docutils literal notranslate"><span class="pre">[3,</span> <span class="pre">1,</span> <span class="pre">1]</span></code> for a 3x1 series
+of plots in which this defines the first plot).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ylim</span></code>: Limits to display the y axis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ylabel</span></code>: Label for the y axis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lines</span></code>: A list of dictionaries that describe the line attributes to be plotted on the given graph.</p></li>
+</ul>
+<div class="section" id="lines">
+<h3>Lines<a class="headerlink" href="#lines" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">lines</span></code> sub-attribute for a <code class="docutils literal notranslate"><span class="pre">graph</span></code> specifies what gets plotted. Each line has:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">attr</span></code>: Attribute name (see <a class="reference internal" href="#configuration-handles"><span class="std std-ref">Handles</span></a>). Note that simple operators
+(<code class="docutils literal notranslate"><span class="pre">+,</span> <span class="pre">-,</span> <span class="pre">*,</span> <span class="pre">/</span></code>) can be applied to two attributes, for example: <code class="docutils literal notranslate"><span class="pre">ed_ext_spl_max</span> <span class="pre">-</span> <span class="pre">ed_ext_spl</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code>: Label given in the legend.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: Color for the line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marker</span></code>: Marker used to plot the line.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code.html" class="btn btn-neutral float-right" title="Code Documentation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

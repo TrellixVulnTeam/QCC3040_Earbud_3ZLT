@@ -1,0 +1,8 @@
+
+Sched
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Sched``.
+
+.. automodule:: ACAT.Analysis.Sched
+   :members:

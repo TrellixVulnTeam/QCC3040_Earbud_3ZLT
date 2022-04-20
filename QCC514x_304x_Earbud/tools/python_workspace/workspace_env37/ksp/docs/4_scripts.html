@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scripts &mdash; KSP 0.5.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSP 0.5.1 documentation" href="index.html"/>
+        <link rel="next" title="Terms and definitions" href="z_definitions.html"/>
+        <link rel="prev" title="Troubleshooting" href="3_troubleshooting.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_how_to_use.html">How to Use KSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ksp-extract-script">KSP Extract Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ksp-reader-script">KSP Reader Script</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="z_definitions.html">Terms and definitions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Scripts</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/4_scripts.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scripts">
+<h1>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ksp-extract-script">
+<span id="id1"></span><h2>KSP Extract Script<a class="headerlink" href="#ksp-extract-script" title="Permalink to this headline">¶</a></h2>
+<p>KSP comes with a tool, <code class="docutils literal notranslate"><span class="pre">ksp_extract.exe</span></code>, to extract streams and headers
+from a <code class="docutils literal notranslate"><span class="pre">lrw</span></code> file, which contains data that comes from the KSP operator
+in Kymera.</p>
+<p>Normally, the extraction occurs when the KSP has finished receiving the
+data. However, if KSP terminates prematurely the extraction fails, leaving
+the <code class="docutils literal notranslate"><span class="pre">lrw</span></code> files in the output directory. In this case the
+<code class="docutils literal notranslate"><span class="pre">ksp_extract.exe</span></code> tool helps to extract audio/data from a <code class="docutils literal notranslate"><span class="pre">lrw</span></code> file.</p>
+<p>The KSP installation puts <code class="docutils literal notranslate"><span class="pre">ksp_extract.exe</span></code> in the Scripts folder of the
+Python Virtual Environment. By default, it should be in the Windows path
+when the virtual environment is activated.</p>
+<p>To get more help use <code class="docutils literal notranslate"><span class="pre">--help</span></code> switch, for example::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(ksp_env) PS &lt;CURRENT PATH&gt;&gt; ksp_extract.exe --help
+usage: extract [-h] [--sample-rates SAMPLE_RATES [SAMPLE_RATES ...]] filename
+
+Kymera Stream Probe (KSP) extract tool. It extracts Audio/Data from a recorded
+KSP lrw file.
+
+positional arguments:
+  filename              A recorded KSP lrw file.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --sample-rates SAMPLE_RATES [SAMPLE_RATES ...], -s SAMPLE_RATES [SAMPLE_RATES ...]
+                        Space separated sample rates in integer. Valid sample
+                        rates are between 8000 (8Khz) and 192000 (192Khz)
+                        inclusive. The first Sample rate will be applied to
+                        `Stream0`, the second one will be applied to `Stream1`
+                        and so on. Extra Sample Rates will be ignored. i.e. If
+                        the given lrw file has only two streams but three
+                        sample rates are given, the third sample rate will be
+                        ignored. If the sample rate is not provided, the
+                        script will produce multi channel raw file instead of
+                        wav file. Please note, in case of DATA type streams,
+                        the script ignores sample rates.
+</pre></div>
+</div>
+</div>
+<div class="section" id="ksp-reader-script">
+<h2>KSP Reader Script<a class="headerlink" href="#ksp-reader-script" title="Permalink to this headline">¶</a></h2>
+<p>KSP Reader tool, <code class="docutils literal notranslate"><span class="pre">ksp_reader.exe</span></code>, is a script to receive Audio/Data
+from a device and saves it into a LRW file.</p>
+<p>Once the KSP operator is active and configured appropriately on the chip,
+it sends out the data via an established connection. This tool is to
+capture those data on the receiving end. For the best reading, activate
+the script before starting the operator.  Otherwise, the reader may miss
+some of the incoming data.</p>
+<p>The KSP installation puts <code class="docutils literal notranslate"><span class="pre">ksp_reader.exe</span></code> in the Scripts folder of the
+Python Virtual Environment. By default, it should be in the Windows path
+when the virtual environment is activated.</p>
+<p>To get more help use <code class="docutils literal notranslate"><span class="pre">--help</span></code> switch, for example::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">ksp_env</span><span class="p">)</span> <span class="n">PS</span> <span class="o">&lt;</span><span class="n">CURRENT</span> <span class="n">PATH</span><span class="o">&gt;&gt;</span> <span class="n">ksp_reader</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">help</span>
+<span class="n">usage</span><span class="p">:</span> <span class="n">reader</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span> <span class="n">WAIT</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">TRANSACTIONS</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span>
+              <span class="n">trb_device</span> <span class="n">output</span>
+
+<span class="n">Kymera</span> <span class="n">Stream</span> <span class="n">Probe</span> <span class="p">(</span><span class="n">KSP</span><span class="p">)</span> <span class="n">TRB</span> <span class="n">tool</span><span class="o">.</span> <span class="n">It</span> <span class="n">receives</span> <span class="n">Audio</span><span class="o">/</span><span class="n">Data</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">device</span> <span class="n">URL</span>
+<span class="ow">and</span> <span class="n">saves</span> <span class="n">the</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">lrw</span> <span class="n">file</span> <span class="nb">format</span><span class="o">.</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">device</span>                <span class="n">A</span> <span class="n">device</span> <span class="n">to</span> <span class="n">read</span> <span class="n">from</span><span class="o">.</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="s1">&#39;trb:scar:0&#39;</span>
+  <span class="n">output</span>                <span class="n">A</span> <span class="n">filename</span> <span class="n">which</span> <span class="n">trb</span> <span class="n">saves</span> <span class="n">the</span> <span class="n">data</span> <span class="n">into</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">LRW</span>
+                        <span class="nb">format</span><span class="o">.</span> <span class="n">If</span> <span class="n">the</span> <span class="n">file</span> <span class="n">exists</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">overwritten</span><span class="o">.</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">-</span><span class="n">w</span> <span class="n">WAIT</span><span class="p">,</span> <span class="o">--</span><span class="n">wait</span> <span class="n">WAIT</span>  <span class="n">The</span> <span class="n">waiting</span> <span class="n">time</span> <span class="n">to</span> <span class="n">receive</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">seconds</span><span class="o">.</span> <span class="n">This</span>
+                       <span class="n">value</span> <span class="n">can</span> <span class="n">be</span> <span class="n">a</span> <span class="n">decimal</span> <span class="n">number</span><span class="o">.</span> <span class="n">The</span> <span class="n">application</span>
+                       <span class="n">terminates</span> <span class="k">if</span> <span class="n">within</span> <span class="n">this</span> <span class="n">time</span> <span class="n">no</span> <span class="n">data</span> <span class="n">has</span> <span class="n">received</span><span class="o">.</span>
+                       <span class="n">The</span> <span class="n">default</span> <span class="n">value</span> <span class="ow">is</span> <span class="mi">3600</span> <span class="n">seconds</span> <span class="ow">or</span> <span class="mi">1</span> <span class="n">hour</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">t</span> <span class="n">TRANSACTIONS</span><span class="p">,</span> <span class="o">--</span><span class="n">transactions</span> <span class="n">TRANSACTIONS</span>
+                        <span class="n">number</span> <span class="n">of</span> <span class="n">transaction</span> <span class="n">to</span> <span class="n">poll</span> <span class="n">each</span> <span class="n">time</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span>
+                        <span class="n">number</span> <span class="ow">is</span> <span class="mf">100.</span>
+  <span class="o">--</span><span class="n">version</span>             <span class="n">show</span> <span class="n">program</span><span class="s1">&#39;s version number and exit</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="z_definitions.html" class="btn btn-neutral float-right" title="Terms and definitions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="3_troubleshooting.html" class="btn btn-neutral" title="Troubleshooting" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.5.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

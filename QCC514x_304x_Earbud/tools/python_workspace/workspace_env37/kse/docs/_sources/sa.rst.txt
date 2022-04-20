@@ -1,0 +1,104 @@
+
+==========
+Standalone
+==========
+
+Standalone is when KSE is running on its own without an ADK.
+
+Installation
+------------
+
+The preferred installation method is using a dedicated virtual environment and
+manage packages with pip, which is bundled in the Windows python installer
+starting from version 3.4.
+
+**Requisites**
+
+If you don’t have pip installed, you can easily install it by downloading
+`get-pip.py <https://bootstrap.pypa.io/get-pip.py>`_ and running::
+
+    $ python get-pip.py
+
+
+**Virtual environment**
+
+To create a virtual environment, move where you want to create your directory and execute::
+
+    C:\> py -3 -m venv kse
+    $ python3 -m venv kse
+
+.. note:: When presented python, a substitution for the full python path is a safer way to create
+    virtual environments
+
+That will create a venv directory with python binaries. Remember that is not a full python
+installation it is an environment with links to your real python installation but with a detached
+set of packages.
+
+
+To activate the virtual environment execute::
+
+    C:\> kse\Scripts\activate.bat
+    $ source kse/bin/activate (on Linux bash)
+    $ source kse/bin/activate.csh (on Linux tcsh)
+
+.. note:: Every time you want to use the virtual environment it has to be previously activated in
+    your shell
+
+
+**Install KSE**
+
+Ensure you are using updated versions of pip and setuptools::
+
+    $ python -m pip install -U pip setuptools
+
+Locate within the installed Qualcomm ADK and ADK Toolkit the following files:
+
+    * ``kse-0.19.0-py3-none-any.whl`` available inside ``<ADK_version>`` folders
+    * ``kalcmd2-2.8.2-py2.py3-none-any.whl`` available inside ``<ADK_Toolkit_version>`` folders
+
+Copy these files into the current directory and execute::
+
+    $ pip install kse-0.19.0-py3-none-any.whl kalcmd2-2.8.2-py2.py3-none-any.whl
+
+Linux tcsh shell might require deactivation and activation of the virtual environment
+after installation::
+
+    $ deactivate
+    $ source kse/bin/activate.csh
+
+
+**Copy firmware**
+
+The KSE standalone does not include any sample firmware. The firmware will be
+provided separately (as inside the ADK debugbin directory).
+Create a directory called ``firmware`` inside the ``workspace`` and copy the firmware files into
+``kse/workspace/firmware``
+
+
+Execution
+---------
+
+In case not active, open a cmd prompt and activate the virtual environment.
+Set the workspace for the KSE shell by the following command::
+
+    C:\> set KATS_WORKSPACE=<FULL PATH TO kse>\workspace   (On Windows command prompt)
+    $ export KATS_WORKSPACE=<FULL PATH TO kse>/workspace   (On Linux bash shell)
+    $ setenv KATS_WORKSPACE <FULL PATH TO kse>/workspace   (On Linux tcsh shell)
+
+Launch the kse_shell by executing e.g. the following command:
+
+For platform Stretto::
+
+    kse_shell --platform stre --ks_path kalsim_qcc512x_audio --ks_firmware firmware/kymera_stre_audio --log_level 20 --hydra_ftp_server_directory firmware
+
+For platform Strettoplus::
+
+    kse_shell --platform streplus --ks_path kalsim_qcc514x_audio --ks_firmware firmware/kymera_streplus_audio --log_level 20 --hydra_ftp_server_directory firmware
+
+For platform Maorgen1::
+
+    kse_shell --platform maorgen1 --ks_path kalsim_qcc516x_audio --ks_firmware firmware/kymera_maor_audio --log_level 20 --hydra_ftp_server_directory firmware
+
+For platform Maor::
+
+    kse_shell --platform maor --ks_path kalsim_qcc517x_audio --ks_firmware firmware/kymera_maor_audio --log_level 20 --hydra_ftp_server_directory firmware

@@ -1,0 +1,32 @@
+
+
+primary_service {
+    uuid : 0x180D,
+    name : "HEART_RATE_SERVICE",
+
+
+
+        characteristic {
+            uuid : 0x2A37,
+            name : "HEART_RATE_MEASUREMENT",
+            flags : [ FLAG_IRQ, FLAG_DYNLEN ],
+            properties : [ notify ],
+            value : 0x0,
+
+            client_config
+            {
+                name : "HEART_RATE_MEASUREMENT_CLIENT_CONFIG",
+                flags : FLAG_IRQ
+            }
+        },
+
+
+
+        characteristic {
+            uuid : 0x2A38,
+            name : "BODY_SENSOR_LOCATION",
+            properties : [ read ],
+            size_value : 0x01,
+            value : 0x05
+            }
+    }

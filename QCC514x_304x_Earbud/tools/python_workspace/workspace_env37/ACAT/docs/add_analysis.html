@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Add an Analysis &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="next" title="Analyses" href="analyses.html"/>
+        <link rel="prev" title="Welcome to ACAT’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Add an Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-base-classes">Analysis Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chipdata-class">ChipData class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debuginfo-class">DebugInfo class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#formatter-class">Formatter class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-example">Analysis example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Add an Analysis</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/add_analysis.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="add-an-analysis">
+<h1>Add an Analysis<a class="headerlink" href="#add-an-analysis" title="Permalink to this headline">¶</a></h1>
+<p>Analyses help to accelerate the debugging process.
+To add an analysis to a new module that does not have any existing
+analysis:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Add a new class to the Analysis directory.</p></li>
+<li><p>Include the name of the analysis in the Interactive and Automatic
+classes under the analyses variable. (Use <code class="docutils literal notranslate"><span class="pre">CamelCase</span></code>.)</p></li>
+<li><p>Implement a <code class="docutils literal notranslate"><span class="pre">run_all()</span></code> function. Runs all of the analyses in
+automatic mode, by calling each analysis <code class="docutils literal notranslate"><span class="pre">run_all()</span></code> function.</p></li>
+</ol>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_all()</span></code> function will either:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Call all the functions that perform an analysis.</p></li>
+<li><p>Output the information needed from the analysis.</p></li>
+</ul>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_all()</span></code> function calls a separate analysis function for each
+component of the class that wires output, via the Formatter
+(<code class="docutils literal notranslate"><span class="pre">analyse_&lt;Component</span> <span class="pre">Name&gt;</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use ACAT helper functions to organise code.</p>
+</div>
+<div class="section" id="analysis-base-classes">
+<h2>Analysis Base Classes<a class="headerlink" href="#analysis-base-classes" title="Permalink to this headline">¶</a></h2>
+<p>To optimise communication with firmware, the <code class="docutils literal notranslate"><span class="pre">Analysis</span></code> Base Class
+imports three classes from the Core Module; <code class="docutils literal notranslate"><span class="pre">ChipData</span></code> to read memory
+addresses, <code class="docutils literal notranslate"><span class="pre">DebugInfo</span></code> to read constants and <code class="docutils literal notranslate"><span class="pre">Formatter</span></code> to highlight
+and differentiate the <code class="docutils literal notranslate"><span class="pre">Analysis</span></code> outputs.</p>
+<div class="section" id="chipdata-class">
+<h3>ChipData class<a class="headerlink" href="#chipdata-class" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ChipData</span></code> class is used to read Memory Addresses. However, as not
+all chips map PM into DM; use the <code class="docutils literal notranslate"><span class="pre">get_data_pm()</span></code> function to read PM.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ChipData</span></code> includes the following functions:</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">ChipData functions</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">is_volatile()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> = Live Chip, <code class="docutils literal notranslate"><span class="pre">False</span></code> = data is a Coredump.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cast()</span></code></p></td>
+<td><p>See Casting</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></p></td>
+<td><p>Gets the memory address or returns a block of data of specified
+length (in addressable units), starting with the specified
+address, for example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_data(address,</span> <span class="pre">length)</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_proc_reg()</span></code></p></td>
+<td><p>Returns the value of the Processor Register, passed as a
+parameter.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_all_proc_regs()</span></code></p></td>
+<td><p>Returns a dictionary containing the contents of all Processor
+Registers.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_firmware_id()</span></code></p></td>
+<td><p>Returns the firmware ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_firmware_id_string()</span></code></p></td>
+<td><p>Returns the firmware string.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_var_strict()</span></code></p></td>
+<td><p>See <em>Get a variable section (Interactive mode)</em> in Functions
+section.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_reg_strict()</span></code></p></td>
+<td><p>Returns the content of a register. The class takes a string as a
+parameter, with the name of the register preceded by <code class="docutils literal notranslate"><span class="pre">REGFILE_</span></code>,
+for example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_reg_strict('REGFILE_r1')</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="debuginfo-class">
+<h3>DebugInfo class<a class="headerlink" href="#debuginfo-class" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">DebugInfo</span></code> class is used to read constants. The <code class="docutils literal notranslate"><span class="pre">DebugInfo</span></code> class
+includes the following functions:</p>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">DebugInfo functions</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_constant_strict()</span></code></p></td>
+<td><p>Searches for the exact name of a constant.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_var_strict()</span></code></p></td>
+<td><p>Searches in the list of variables for the specified identifier
+(Name or address).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_dm_const()</span></code></p></td>
+<td><p>Returns the contents of NVMEM.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_source_info()</span></code></p></td>
+<td><p>Returns information about a code address (integer) or module name
+(string) in PM.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_nearest_label()</span></code></p></td>
+<td><p>Finds the nearest code label to the specified address.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_num()</span></code>: if only a name is provided.</p></td>
+<td><p>Returns a Python dictionary, mapping the members of an enumeration
+to their values.</p></td>
+</tr>
+<tr class="row-odd"><td><p>If a second argument representing the name of a member of the
+enumeration or a value is provided.</p></td>
+<td><p>Returns the member value or name respectively.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_type_info()</span></code></p></td>
+<td><p>Returns information about the Type or Type ID available in the
+type database.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="formatter-class">
+<h3>Formatter class<a class="headerlink" href="#formatter-class" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Analyses</span></code> output information via the <code class="docutils literal notranslate"><span class="pre">Formatter</span></code>, which is used to
+highlight and differentiate the analysis outputs. The <code class="docutils literal notranslate"><span class="pre">Formatter</span></code>
+includes the following functions:</p>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-text">Formatter functions</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">section_start()</span></code></p></td>
+<td><p>Marks the beginning of a section.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">section_end()</span></code></p></td>
+<td><p>Marks the end of a section.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output()</span></code></p></td>
+<td><p>Normally used for outputting the contents of an analysis.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">alert()</span></code></p></td>
+<td><p>Special formatting to emphasize the text of an alert.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="analysis-example">
+<h2>Analysis example<a class="headerlink" href="#analysis-example" title="Permalink to this headline">¶</a></h2>
+<p>The code sample illustrates a typical analysis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAnalysis</span><span class="p">(</span><span class="n">Analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">):</span>
+        <span class="c1"># Call the base class constructor. This call will set all the</span>
+        <span class="c1"># values from the dictionary as attributes.</span>
+        <span class="n">Analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formatter</span><span class="o">.</span><span class="n">section_start</span><span class="p">(</span><span class="s2">&quot;Feature Info&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analyse_feature</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formatter</span><span class="o">.</span><span class="n">section_end</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">analyse_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Analyses the feature and outputs the information regarding it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">get_feature</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formatter</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="sd">&quot;&quot;&quot;Extracts the feature.&quot;&quot;&quot;</span>
+       <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chipdata</span><span class="o">.</span><span class="n">get_var_strict</span><span class="p">(</span><span class="s1">&#39;$_feature&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">address</span>
+       <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chipdata</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">)</span>
+
+       <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="analyses.html" class="btn btn-neutral float-right" title="Analyses" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to ACAT’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

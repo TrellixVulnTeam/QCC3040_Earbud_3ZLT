@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Endpoints &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="Graphs" href="graph.html"/>
+        <link rel="next" title="Operators" href="graph_operator.html"/>
+        <link rel="prev" title="Streams" href="graph_stream.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Graph examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="graph.html">Graphs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="graph.html#streams">Streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#endpoints">Endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#operators">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#connections">Connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#creating-a-full-graph">Creating a full graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#kymera-graph">Kymera Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#playing-a-graph">Playing a Graph</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="graph.html#reference">Reference</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="graph_stream.html">Streams</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Endpoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="graph_operator.html">Operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">Command-line tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+        <li><a href="graph.html">Graphs</a> &raquo;</li>
+      
+    <li>Endpoints</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/graph_endpoint.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="endpoints">
+<span id="graph-endpoint"></span><h1>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this headline">¶</a></h1>
+<p>All endpoints must have <code class="docutils literal notranslate"><span class="pre">interface</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code> defined before setting endpoint
+properties. The possible options are as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">interface</span></code> selects the type of the stream.</dt><dd><ul>
+<li><p><a class="reference internal" href="#endpoint-pcm"><span class="std std-ref">pcm</span></a> hardware endpoint.</p></li>
+<li><p><a class="reference internal" href="#endpoint-l2cap"><span class="std std-ref">l2cap</span></a> software endpoint.</p></li>
+<li><p><a class="reference internal" href="#endpoint-file"><span class="std std-ref">file</span></a> software endpoint.</p></li>
+<li><p><a class="reference internal" href="#endpoint-timestamped"><span class="std std-ref">timestamped</span></a> software endpoint.</p></li>
+<li><p><a class="reference internal" href="#endpoint-tester"><span class="std std-ref">tester</span></a> software endpoint.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code> is the endpoint direction, read and write respectively.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code> for endpoint that pushes data into kymera</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sink</span></code> for endpoint that extracts data out of kymera</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="pcm">
+<span id="endpoint-pcm"></span><h2>pcm<a class="headerlink" href="#pcm" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Each PCM sample coming from a PCM stream can either be of 16 bits or 24 bits.
+PCM endpoints have buffers, which have the size of 4 bytes per sample. This
+means depending on the sample size, either 2 or 3 bytes of the buffer can be
+filled for any given sample pushed from the source stream. The buffer at the
+source endpoint is filled such that the most significant bytes are filled
+first, and the rest are filled with 0s.</p>
+<p>On the data that is filled in their buffer PCM endpoints carry out two operations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DC</span> <span class="pre">removal</span></code>: To remove the DC component from the data on a moving window basis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Rate</span> <span class="pre">matching</span></code>: To adjust the incoming sample rate to the rate that is specified
+in the endpoint configuration.</p></li>
+</ul>
+<p>These two operations can be controlled by a configuration key named
+<code class="docutils literal notranslate"><span class="pre">audio_disable_endpoint_processing</span></code>. A value of <code class="docutils literal notranslate"><span class="pre">0x0000</span></code> disables both
+functionalities and <code class="docutils literal notranslate"><span class="pre">0x0001</span></code> disables <code class="docutils literal notranslate"><span class="pre">DC</span> <span class="pre">removal</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sample_width</span></code> parameter in PCM endpoints can be specified by
+<code class="docutils literal notranslate"><span class="pre">audio_sample_size</span></code> parameter, which can take either <code class="docutils literal notranslate"><span class="pre">16-bit</span></code> or <code class="docutils literal notranslate"><span class="pre">24-bit</span></code> as values.
+For the <code class="docutils literal notranslate"><span class="pre">16-bit</span></code> sample width case, the same can also be indicated by
+<code class="docutils literal notranslate"><span class="pre">pcm_sample_format</span></code> parameter, which takes <code class="docutils literal notranslate"><span class="pre">1</span></code> as the value.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pcm_master_clock_rate</span></code> parameter value is the product of the following parameters:</p>
+<ul class="simple">
+<li><p>pcm_sync_rate</p></li>
+<li><p>pcm_slot_count</p></li>
+<li><p>audio_sample_size (indicated as pcm_sample_format sometimes). See the example below</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In PCM, when there are multiple source or multiple sink streams, the
+order of creation of streams and endpoints must match. This is for
+KSE to connect appropriate streams to the corresponding endpoints.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although, <code class="docutils literal notranslate"><span class="pre">pcm_master_clock_rate</span></code> can be derived as shown below from
+the other three parameters specified in the configuration, it is
+mandatory to specify the correct value for <code class="docutils literal notranslate"><span class="pre">pcm_master_clock_rate</span></code>
+as well in the configuration. For the details on parameters used
+to configure PCM endpoints, see Streams and endpoints
+configuration parameters.</p>
+</div>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.pcm.</code><code class="sig-name descname">EndpointPcmHydra</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/pcm.html#EndpointPcmHydra"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Kymera PCM Endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>instance</strong> (<em>int</em>) – PCM instance</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – Time slot, 0 to pcm_slot_count-1</p></li>
+<li><p><strong>pcm_sync_rate</strong> (<em>int</em>) – Sample clock rate in hertzs</p></li>
+<li><p><strong>pcm_master_clock_rate</strong> (<em>int</em>) – Master clock rate in hertzs</p></li>
+<li><p><strong>pcm_master_mode</strong> (<em>int</em>) – 1 for Master mode, 0 for Slave mode</p></li>
+<li><p><strong>pcm_slot_count</strong> (<em>int</em>) – Number of slots, 0 for automatic from pcm_sync_rate and
+pcm_master_clock_rate, 1-4 for explicit value</p></li>
+<li><p><strong>pcm_manchester_mode</strong> (<em>int</em>) – Manchester mode, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_short_sync_mode</strong> (<em>int</em>) – Short sync, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_manchester_slave_mode</strong> (<em>int</em>) – Manchester slave, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_sign_extend_mode</strong> (<em>int</em>) – Sign extend, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_lsb_first_mode</strong> (<em>int</em>) – LSB first, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_tx_tristate_mode</strong> (<em>int</em>) – Tx tristate, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_tx_tristate_rising_edge_mode</strong> (<em>int</em>) – Tx tristate rising edge, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_sync_suppress_enable</strong> (<em>int</em>) – Sync suppress, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_gci_mode</strong> (<em>int</em>) – GCI mode, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_mute_enable</strong> (<em>int</em>) – Mute, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_long_length_sync</strong> (<em>int</em>) – Long length sync, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_sample_rising_edge</strong> (<em>int</em>) – Sample rising, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_rx_rate_delay</strong> (<em>int</em>) – Rx rate delay, 0 to 7</p></li>
+<li><p><strong>pcm_sample_format</strong> (<em>int</em>) – <p>Sample format:</p>
+<ul>
+<li><p>0 for 13 bits in 16-bit slot</p></li>
+<li><p>1 for 16 bits in 16-bit slot</p></li>
+<li><p>2 for 8 bits in 16-bit slot</p></li>
+<li><p>3 for 8 bits in 8-bit slot</p></li>
+</ul>
+</p></li>
+<li><p><strong>pcm_manchester_mode_rx_offset</strong> (<em>int</em>) – Manchester mode rx offset, 0 to 3</p></li>
+<li><p><strong>pcm_audio_gain</strong> (<em>int</em>) – Audio gain, 0 to 7</p></li>
+<li><p><strong>audio_mute_enable</strong> (<em>int</em>) – Mute endpoint, 1 for enable, 0 for disable</p></li>
+<li><p><strong>audio_sample_size</strong> (<em>int</em>) – <p>Selects the size (width or resolution) of the audio sample on an
+audio interface.</p>
+<p>This setting controls the width of the internal data path, not just the number of bits
+per slot (on digital interfaces).
+All interfaces support the following settings:</p>
+<blockquote>
+<div><ul>
+<li><p>16: 16-bit sample size</p></li>
+<li><p>24: 24-bit sample size</p></li>
+</ul>
+</div></blockquote>
+<p>For the PCM interface, the following extra settings are supported for backward
+compatibility:</p>
+<blockquote>
+<div><ul>
+<li><p>0: 13 bits in a 16 bit slot</p></li>
+<li><p>1: 16 bits in a 16 bit slot (same as 16)</p></li>
+<li><p>2: 8 bits in a 16 bit slot</p></li>
+<li><p>3: 8 bits in an 8 bit slot</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Endpoint configured as pcm sink, to be connected to a pcm stream.
+The endpoint is in the first channel of the first instance, as pcm master with 4 slots, 16 bits
+audio samples and 48000 hertz sampling rate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pcm_sync_rate</span>         <span class="o">=</span> <span class="mi">48000</span>
+<span class="n">pcm_slot_count</span>        <span class="o">=</span> <span class="mi">4</span>
+<span class="n">audio_sample_size</span>     <span class="o">=</span> <span class="mi">16</span>
+<span class="n">pcm_master_clock_rate</span> <span class="o">=</span> <span class="mi">48000</span> <span class="n">x</span> <span class="mi">4</span> <span class="n">x</span> <span class="mi">16</span> <span class="o">=</span> <span class="mi">3072000</span>
+
+    <span class="p">{</span>
+        <span class="s2">&quot;interface&quot;</span><span class="p">:</span><span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kwargs&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_sync_rate&quot;</span><span class="p">:</span> <span class="mi">48000</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_sample_rising_edge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_master_mode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_slot_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_sample_format&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_master_clock_rate&quot;</span><span class="p">:</span> <span class="mi">3072000</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="l2cap">
+<span id="endpoint-l2cap"></span><h2>l2cap<a class="headerlink" href="#l2cap" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>l2cap endpoints contain a buffer that can be filled and cleared in terms of
+4 bytes at a time. The filling of the buffer occurs in a big-endian way with
+2 bytes of stream data. The rest 2 bytes are filled with 0’s.</p>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.l2cap.</code><code class="sig-name descname">EndpointHydraL2cap</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/l2cap.html#EndpointHydraL2cap"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Hydra l2cap endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra l2cap stream index</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Endpoint configured as hydra l2cap source, to be connected to the first hydra l2cap stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;l2cap&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="file">
+<span id="endpoint-file"></span><h2>file<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>file endpoints contain a buffer that can be filled and cleared in terms of
+4 bytes at a time. The filling of the buffer occurs in a big-endian way with
+2 bytes of stream data. The rest 2 bytes are filled with 0’s.</p>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.file.</code><code class="sig-name descname">EndpointHydraFile</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/file.html#EndpointHydraFile"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Hydra file endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra file stream index</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Endpoint configured as hydra file source, to be connected to the first hydra file stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="timestamped">
+<span id="endpoint-timestamped"></span><h2>timestamped<a class="headerlink" href="#timestamped" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>timestamped endpoints contain a buffer that can be filled and cleared in terms of
+4 bytes at a time. The filling of the buffer occurs in a big-endian way with
+2 bytes of stream data. The rest 2 bytes are filled with 0’s.</p>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.timestamped.</code><code class="sig-name descname">EndpointHydraTimestamped</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/timestamped.html#EndpointHydraTimestamped"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Hydra timestamped endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra timestamped stream index</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Endpoint configured as hydra timestamped sink, to be connected to the first hydra timestamped stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamped&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="tester">
+<span id="endpoint-tester"></span><h2>tester<a class="headerlink" href="#tester" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>tester endpoints also contain a buffer that can be filled and cleared in terms
+of 4 bytes at a time. The filling of the buffer occurs in a little-endian way with
+4 bytes of stream data</p>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.tester.</code><code class="sig-name descname">EndpointHydraTester</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/tester.html#EndpointHydraTester"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Hydra tester endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra tester stream index</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Endpoint configured as hydra tester sink, to be connected to the first hydra tester stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;tester&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="graph_operator.html" class="btn btn-neutral float-right" title="Operators" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="graph_stream.html" class="btn btn-neutral" title="Streams" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

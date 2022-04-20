@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.stream.kalsim_helper &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.stream.kalsim_helper</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.stream.kalsim_helper</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;kalsim stream helper&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">kats.core.stream_base</span> <span class="k">import</span> <span class="n">STREAM_DATA_WIDTH</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.kalsim_stream</span> <span class="k">import</span> <span class="n">STREAM_BACKING</span><span class="p">,</span> <span class="n">STREAM_BACKING_FILE</span><span class="p">,</span> \
+    <span class="n">STREAM_BACKING_KALCMD</span><span class="p">,</span> <span class="n">STREAM_FILENAME</span><span class="p">,</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">,</span> \
+    <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span><span class="p">,</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALCMD</span><span class="p">,</span> <span class="n">STREAM_FLOW_CONTROL_RATE</span><span class="p">,</span> \
+    <span class="n">STREAM_FLOW_CONTROL_BLOCK_SIZE</span><span class="p">,</span> <span class="n">STREAM_FORMAT</span>
+
+
+<div class="viewcode-block" id="get_file_kalsim_stream_config"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_helper.get_file_kalsim_stream_config">[docs]</a><span class="k">def</span> <span class="nf">get_file_kalsim_stream_config</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">frame_size</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">sample_width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get kalsim stream configuration for a file backed and kalsim controlled stream.</span>
+
+<span class="sd">    This stream could be a source or sink stream and will be fully controlled by kalsim.</span>
+<span class="sd">    The file should be supported by kalsim, currently it treats the file as a raw file.</span>
+
+<span class="sd">    Source streams do not require attention to send data. EOF generated when appropriate.</span>
+<span class="sd">    Sink streams do not require attention. No EOF is generated.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Filename</span>
+<span class="sd">        frame_size (int): Number of samples per transaction</span>
+<span class="sd">        sample_rate (int): Sampling frequency in hertzs</span>
+<span class="sd">        sample_width (int): Sample data width in bits</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Kalsim stream parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">STREAM_BACKING</span><span class="p">:</span> <span class="n">STREAM_BACKING_FILE</span><span class="p">,</span>
+        <span class="n">STREAM_FILENAME</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+        <span class="n">STREAM_FORMAT</span><span class="p">:</span> <span class="n">sample_width</span><span class="p">,</span>
+        <span class="n">STREAM_FLOW_CONTROL_RATE</span><span class="p">:</span> <span class="n">sample_rate</span><span class="p">,</span>
+        <span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">:</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span><span class="p">,</span>
+        <span class="n">STREAM_FLOW_CONTROL_BLOCK_SIZE</span><span class="p">:</span> <span class="n">frame_size</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="get_file_user_stream_config"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_helper.get_file_user_stream_config">[docs]</a><span class="k">def</span> <span class="nf">get_file_user_stream_config</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">sample_width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get kalsim stream configuration for a file backed and user controlled stream.</span>
+
+<span class="sd">    This stream could be a source or sink stream and will require calls to stream_induce to</span>
+<span class="sd">    actually read or write data. The user is responsible to generate the appropriate timings</span>
+<span class="sd">    to time stream_induce calls.</span>
+<span class="sd">    Tbe file should be supported by kalsim, currently it treats the file as a raw file.</span>
+
+<span class="sd">    Source streams require stream_induce calls to send data. EOF generated when appropriate.</span>
+<span class="sd">    Sinks streams require stream_induce calls to receive data. No EOF is generated.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Filename</span>
+<span class="sd">        sample_rate (int): Sampling frequency in hertzs, only used in wav sink streams</span>
+<span class="sd">        sample_width (int): Sample data width in bits</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Kalsim stream parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">STREAM_BACKING</span><span class="p">:</span> <span class="n">STREAM_BACKING_FILE</span><span class="p">,</span>
+        <span class="n">STREAM_FILENAME</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+        <span class="n">STREAM_FORMAT</span><span class="p">:</span> <span class="n">sample_width</span><span class="p">,</span>
+        <span class="n">STREAM_FLOW_CONTROL_RATE</span><span class="p">:</span> <span class="n">sample_rate</span><span class="p">,</span>
+        <span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">:</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALCMD</span><span class="p">,</span>
+        <span class="n">STREAM_DATA_WIDTH</span><span class="p">:</span> <span class="n">sample_width</span><span class="p">,</span>  <span class="c1"># needed for StreamBase</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="get_user_stream_config"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_helper.get_user_stream_config">[docs]</a><span class="k">def</span> <span class="nf">get_user_stream_config</span><span class="p">(</span><span class="n">sample_width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get kalsim stream configuration for a fully user controlled stream.</span>
+
+<span class="sd">    This stream could be a source or sink stream and will require calls to stream_insert or</span>
+<span class="sd">    stream_extract to actually read or write data.</span>
+<span class="sd">    The user is responsible to generate the appropriate timings to time</span>
+<span class="sd">    stream_insert/stream_extract calls.</span>
+
+<span class="sd">    Source streams require stream_insert calls to send data. No EOF is generated.</span>
+<span class="sd">    Sinks streams require stream_extract calls to receive data. No EOF is generated.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Filename</span>
+<span class="sd">        sample_width (int): Sample data width in bits</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Kalsim stream parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">STREAM_BACKING</span><span class="p">:</span> <span class="n">STREAM_BACKING_KALCMD</span><span class="p">,</span>
+        <span class="n">STREAM_FORMAT</span><span class="p">:</span> <span class="n">sample_width</span><span class="p">,</span>
+        <span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">:</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALCMD</span><span class="p">,</span>
+        <span class="n">STREAM_DATA_WIDTH</span><span class="p">:</span> <span class="n">sample_width</span><span class="p">,</span>  <span class="c1"># needed for StreamBase</span>
+    <span class="p">}</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

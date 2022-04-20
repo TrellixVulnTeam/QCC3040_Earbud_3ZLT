@@ -1,0 +1,8 @@
+
+Fats
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Fats``.
+
+.. automodule:: ACAT.Analysis.Fats
+   :members:

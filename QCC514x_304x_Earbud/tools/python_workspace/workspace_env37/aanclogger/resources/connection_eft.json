@@ -1,0 +1,15 @@
+{
+    "images": {
+        "audio_path": "./audio",
+        "chip": "qcc514x_qcc304x",
+        "kymera_audio": "kymera_streplus_audio.elf",
+        "downloadables": [
+            "download_aanc.elf",
+            "download_earbud_fit_test.elf"
+        ]
+    },
+    "transports": {
+        "left": "tc/usb2tc/100",
+        "right": ""
+    }
+}

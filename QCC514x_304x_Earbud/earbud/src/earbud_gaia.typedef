@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2021 Qualcomm Technologies International, Ltd.-->
+
+<types name="earbud_gaia" standalone="true">
+    <typedef_struct name="earbud_gaia_request_t" basic="true" doc="Data request to peer">
+        <member marshal="true" doc="Request context">uint32 context</member>
+        <member marshal="true" doc="Request ID">uint8 request_id</member>
+    </typedef_struct>
+
+    <typedef_struct name="earbud_gaia_response_t" basic="true" doc="Data response from peer">
+        <member marshal="true" doc="Request context">uint32 context</member>
+        <member marshal="true" doc="Request ID">uint8 request_id</member>
+        <member marshal="true" doc="Response status">uint8 status</member>
+        <member marshal="true" doc="Size of response data">uint8 size_data</member>
+        <member marshal="true" doc="Response data">uint8 data[32]</member>
+    </typedef_struct>
+
+</types>

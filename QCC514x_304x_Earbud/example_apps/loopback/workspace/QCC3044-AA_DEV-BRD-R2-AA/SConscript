@@ -1,0 +1,512 @@
+"""
+Copyright (c) 2019 - 2021 Qualcomm Technologies International, Ltd.
+
+Core build script
+"""
+
+from __future__ import print_function
+import os
+import sys
+import fnmatch
+import logging
+import SCons.Scanner
+
+Import('p_env')
+
+# Builder for database files
+p_env.Tool('gattdbgen')
+
+# Builder for database interface files
+p_env.Tool('gattdbifgen')
+
+# Builder for parse files
+p_env.Tool('genparse')
+
+# Builder for chain files
+p_env.Tool('chaingen')
+
+# Builder for typedef files
+p_env.Tool('typegen')
+
+# Builder for rules table files
+p_env.Tool('rulegen')
+
+# Builder for buttonxml files
+p_env.Tool('buttonparsexml')
+
+# ADK version Python
+p_env.Tool('python')
+
+# Elf to Xuv converter
+p_env.Tool('elf2xuv')
+
+def dos2unix(src):
+    """ Convert DOS style pathnames to the Unix style preferred by Make """
+    dst = src.split()
+    dst = [os.path.expandvars(f) for f in dst]
+    dst = [os.path.normpath(f) for f in dst]
+    dst = [os.path.splitdrive(f)[1] for f in dst]
+    dst = ' '.join(dst).replace('\\', '/')
+
+    return dst
+
+def translate(target_dir, source_dir, filename):
+    """ Return the filename translated from the source folder to the target
+        folder. Useful to convert source files according to VariantDir().
+        Requires that the target and source folder names have already been
+        passed through dos2unix()
+    """
+    return dos2unix(os.path.abspath(filename)).replace(source_dir, target_dir, 1)
+
+def filter_files(root, env):
+    """ Filter source files by extension """
+
+    env['C_FILES'] = []
+    env['ASM_FILES'] = []
+    env['DBS'] = []
+    env['BUTTONXML_FILES'] = []
+    env['TYPEDEF_FILES'] = []
+    env['RULES_FILES'] = []
+    env['CHAIN_FILES'] = []
+    env['PARSE_FILES'] = []
+    for file in env['source_files']:
+        file = os.path.relpath(file, start=root).replace('\\', '/')
+        fl = file.lower() # For case insensitive tests
+        if fl.endswith(".c"):
+            env.Append(C_FILES = file)
+        elif fl.endswith(".asm"):
+            env.Append(ASM_FILES = file)
+        elif fl.endswith(".db"):
+            env.Append(DBS = file)
+        elif fl.endswith(".buttonxml"):
+            env.Append(BUTTONXML_FILES = file)
+        elif fl.endswith(".typedef"):
+            env.Append(TYPEDEF_FILES = file)
+        elif fl.endswith(".rules"):
+            env.Append(RULES_FILES = file)
+        elif fl.endswith(".chain"):
+            env.Append(CHAIN_FILES = file)
+        elif fl.endswith(".parse"):
+            env.Append(PARSE_FILES = file)
+
+def announce_elfpath(target = None, source = None, env = None):
+    """ Advertise the symbol file to MDE, for the debugger """
+
+    attribs = {
+        'type':   'info',
+        'config': 'filesystem',
+        'core':   'app/p1',
+        'module': 'deploy'
+    }
+
+    import maker.exceptions as bdex
+    bdex.log_buildproc_output('elfpath', attribs, target[0].path)
+
+    return 0
+
+# Assign default values where required
+if not p_env.get('BUILD_TYPE'):
+    p_env['BUILD_TYPE'] = 'release'
+if not p_env.get('CHIP_TYPE'):
+    p_env['CHIP_TYPE'] = 'qcc512x_qcc302x'
+if not p_env.get('OS_VARIANT'):
+    p_env['OS_VARIANT'] = 'hydra_os'
+
+# Initialise folder locations
+PROJECT_ROOT = os.getcwd().replace('\\', '/')
+logging.debug("PROJECT_ROOT is %s", PROJECT_ROOT)
+
+try:
+    TOOLS_ROOT = p_env['TOOLS_ROOT']
+except KeyError:
+    print("Variable TOOLS_ROOT has not been defined. It should be set to "
+          "the location of the tools folder.")
+    Exit(1)
+logging.debug("TOOLS_ROOT is %s", TOOLS_ROOT)
+
+try:
+    ADK_ROOT = p_env['ADK_ROOT']
+except KeyError:
+    print("Variable ADK_ROOT has not been defined. It should be set to "
+          "the location of the ADK folder.")
+    Exit(1)
+logging.debug("ADK_ROOT is %s", ADK_ROOT)
+
+# Calculate the location of the source folder
+SRCDIR          = dos2unix(os.path.dirname(ADK_ROOT))
+AUDIO_ROOT      = TOOLS_ROOT + '/audio'
+
+#p_env['KSCRM']          = KCC_DIR + '/kalscramble'
+p_env['KMAP']           = '${KCC_DIR}/kmapper'
+#p_env['ELF2KAP']        = KCC_DIR + '/elf2kap'
+p_env['ELF2MEM']        = '${KCC_DIR}/kalelf2mem'
+p_env['SIZE']           = '${KCC_DIR}/ksize'
+
+# Define LIBRARY_VERSION
+LIBRARY_VERSION = p_env.get('LIBRARY_VERSION', 'default')
+p_env.Replace(LIBRARY_VERSION = LIBRARY_VERSION + '_' + p_env['CHIP_TYPE'])
+
+# Folders
+if p_env['BUILDOUTPUT_PATH']:
+    p_env.Replace(inst_dir = p_env['BUILDOUTPUT_PATH'] + '/../installed_libs')
+else:
+    p_env.Replace(inst_dir = '#installed_libs')
+p_env.Replace(profiles_inc_dir = p_env['inst_dir'] + '/include/profiles/' + p_env['LIBRARY_VERSION'])
+p_env.Replace(fw_inst_dir = '#../../os/' + p_env['CHIP_TYPE'] + '/' + p_env['OS_VARIANT'] + '/src/installed_libs')
+p_env.Replace(firmware_inc_dir = p_env['fw_inst_dir'] + '/include/firmware_' + p_env['CHIP_TYPE'])
+p_env.Replace(standard_inc_dir = p_env['fw_inst_dir'] + '/include/standard')
+p_env.Replace(firmware_app_inc_dir = p_env['firmware_inc_dir'] + '/app')
+
+# Expand ellipses in LIBPATHS and INCPATHS to include subdirectories recursively
+p_env.Replace(CPPPATH=['.'])
+for f in p_env.get('INCPATHS', '').split():
+    if f.endswith('...'):
+        for root, dir, file in os.walk(f[:-3]):
+            p_env.AppendUnique(CPPPATH=root)
+    else:
+        p_env.AppendUnique(CPPPATH=f)
+
+p_env.Replace(LIBPATH=[])
+for f in p_env.get('LIBPATHS', '').split():
+    if f.endswith('...'):
+        for root, dir, file in os.walk(f[:-3]):
+            p_env.AppendUnique(LIBPATH=root)
+    else:
+        p_env.AppendUnique(LIBPATH=f)
+
+# Add the location of the installed libraries
+LIB_DIR = p_env['inst_dir'] + '/lib/' + p_env['LIBRARY_VERSION'] + '/native'
+FW_LIB_DIR = p_env['inst_dir'] + '/lib/os/' + p_env['CHIP_TYPE']
+p_env.AppendUnique(LIBPATH=[LIB_DIR, FW_LIB_DIR])
+
+# Build output path
+build_output_folder = p_env['BUILDOUTPUT_PATH']
+if not build_output_folder:
+    build_output_folder = p_env['per_config_depend']
+
+# Output file stem
+OUTPUT_STEM = build_output_folder + '/' + p_env['OUTPUT']
+# Output file objects
+OUTPUT_OBJS = p_env.File(OUTPUT_STEM + '.objs')
+# Output map
+OUTPUT_MAP  = p_env.File(OUTPUT_STEM + '.map')
+# Output elf
+OUTPUT_ELF  = p_env.File(OUTPUT_STEM + '.elf')
+# Output pm
+OUTPUT_PM   = p_env.File(OUTPUT_STEM + '.pm')
+# Output kmap
+OUTPUT_KMAP = p_env.File(OUTPUT_STEM + '.kmap')
+# Output signed image
+OUTPUT_XUV  = p_env.File(OUTPUT_STEM + '.xuv')
+
+# Lift the objects out of the output folder
+build_output_folder += '/~obj'
+
+# Extract libraries listed in the project properties
+LIBS = set(p_env.get('LIBS',"").split())
+
+# Extract preserved libraries
+PRESERVED_LIBS = p_env['PRESERVED_LIBS'].split()
+
+# Extract default libraries
+DEFAULT_LIBS = p_env['DEFAULT_LIBS'].split()
+
+# Convert definitions into a list
+p_env.Replace(DEFS=p_env['DEFS'].split())
+
+# Filter source files according to extension
+filter_files(PROJECT_ROOT, p_env)
+
+# Optional source file containing build information
+p_env['BUILD_ID_SRC'] = ['build_id_str.c']
+
+# Check whether the build ID is to be incorporated
+if p_env['BUILD_ID'] != '':
+    p_env.Append(C_FILES=p_env['BUILD_ID_SRC'])
+
+# Source file for encryption constants has moved location, and no longer included in project
+# Should not be mandatory so check for existence
+p_env['RSA_PSS_CONSTANTS_SRC'] = 'rsa_pss_constants.c'
+if FindFile(p_env['RSA_PSS_CONSTANTS_SRC'], '.'):
+    p_env.Append(C_FILES=p_env['RSA_PSS_CONSTANTS_SRC'])
+
+MINIM_OPT = '-minim'
+SUPPORTED_EXECUTION_MODES = 'native'
+
+try:
+    CHIP_NAME_OPT = '-k' + p_env['CHIP_NAME']
+except KeyError:
+    print("CHIP_NAME property missing")
+    Exit(1)
+
+logging.debug("BUILDING FOR %s", p_env['CHIP_TYPE'])
+
+CHIP_LD_FILE = 'link_script_' + p_env['CHIP_TYPE'] + '.ld'
+
+WARNING_OPTS = p_env.get('WARNING_FLAGS',
+                       '-Wall -WAccuracyLoss -WnoConstantTest ' + \
+                       '-WCharPointerUnaligned')
+# Following warnings are left disabled when porting by commenting out the line
+if p_env.get('EXTRA_WARNINGS', 'false').lower() != 'true':
+    WARNING_OPTS += ' -Werror -WnoAccuracyLoss -WnoArgSizeLarger' + \
+                    ' -WnoPointerUnaligned -WnoExplicitQualifier' + \
+                    ' -WnoCharPointerUnaligned -WnoUnsignedCompare'
+
+PREINCLUDES = ['hydra_types.h', 'hydra_macros.h', 'hydra_dev.h']
+PREINCLUDE_OPTS = ' -preinclude '.join([''] + PREINCLUDES)
+
+# Add pre-include files to the list of dependencies
+# (hydra_macros.h requires macros.h)
+p_env.Append(depends=[p_env['profiles_inc_dir'] + '/hydra_dev.h',
+                      p_env['standard_inc_dir'] + '/hydra_types.h',
+                      p_env['firmware_inc_dir'] + '/hydra_macros.h',
+                      p_env['standard_inc_dir'] + '/macros.h'])
+
+# If the project property 'Build Type' is set to 'release' optimise for
+# speed, otherwise use debugging friendly options
+if p_env['BUILD_TYPE'].lower() == 'release':
+    OPTIMISE_OPTS = p_env.get('RELEASE_OPTIMISE_FLAGS', '-O2')
+    p_env.Append(DEFS=['RELEASE_BUILD'])
+else:
+    OPTIMISE_OPTS = p_env.get('DEBUG_OPTIMISE_FLAGS', '-O0')
+    p_env.Append(DEFS=['DEBUG_BUILD'])
+
+COMPILE_FLAGS = '-g -Xa -apply-b179745-workaround ' + \
+                ' '.join([MINIM_OPT, WARNING_OPTS, PREINCLUDE_OPTS,
+                          OPTIMISE_OPTS])
+
+# Disable building of the shim layer on certain builds.
+DISABLE_SHIM = True
+
+p_env.AppendUnique(CPPPATH=build_output_folder)
+
+LINKER_OPTS = '--relax -EL'
+
+if p_env.get('GC_SECTIONS'):
+    COMPILE_FLAGS += ' -gc-sections'
+    LINKER_OPTS += ' --print-gc-sections --gc-sections'
+    p_env.Append(DEFS=['GC_SECTIONS'])
+
+ASFLAGS = CHIP_NAME_OPT
+ELF2MEMFLAGS = '-nvmem1=lpc'
+KMAPFLAGS = 'datadump symlist disasm memusage'
+
+LINK_SCRIPT_DIR = '$ADK_TOOLS'
+LINK_SCRIPT = LINK_SCRIPT_DIR + '/' + CHIP_LD_FILE
+
+# Before the first -T command appears on the command line, a path to the directory
+# containing each INCLUDEd linkscript MUST be given using the -L option.
+# Otherwise the linker doesn't know where to search for the included linkscript files
+LINK_SCRIPT_OPTS = '-L ' + LINK_SCRIPT_DIR + ' -T ' + LINK_SCRIPT
+
+KCC_LIB_DIR = '$SDK_TOOLS/kcc/lib/' + p_env['CHIP_NAME']
+KCC_LIBS = '{0}/libc.a {0}/libfle.a {0}/libcrt.a'.format(KCC_LIB_DIR)
+
+# Extract the path for the private libraries from the project settings
+PRIVATE_LIBS_DIR = ''
+for path in p_env['LIBPATH']:
+    if path.endswith('native'):
+        PRIVATE_LIBS_DIR = os.path.abspath(path.replace('native', 'private'))
+        break
+
+# Find out which libraries have been built as private
+# The linker path search only works with libraries given with the -l option
+# the -l option doesn't support .pa extensions so we must give the full path
+PRIVATE_LIBS_FILES = None
+if PRIVATE_LIBS_DIR:
+    PRIVATE_LIBS_FILES = p_env.Glob(PRIVATE_LIBS_DIR + '/*.pa', strings=True)
+
+if PRIVATE_LIBS_FILES:
+    # Extract the names of the private libraries by taking just the file
+    # name and stripping off the "lib" and ".pa" components
+    PRIVATE_LIBS = set([os.path.basename(f)[3:-3] for f in PRIVATE_LIBS_FILES])
+
+    # Find any private libs listed in the libraries
+    PRIVATE_LIBS &= LIBS
+
+    # Convert back into filenames
+    PRIVATE_LIBS_FILES = [PRIVATE_LIBS_DIR + '/lib' + l + '.pa' for l in PRIVATE_LIBS]
+
+    # Remove the libraries that will be private, as they need a different extension
+    LIBS -= PRIVATE_LIBS
+
+# The PRIVATE_LIBS_FILES need to be wrapped in: --whole-archive --no-whole-archive
+# otherwise the linker may discard the version object file in the libraries
+# before it had a chance to look at the symbols and decide it needs to keep them
+# because they're stored in the dedicated LIB_VERSIONS section which is told to keep
+#
+LDFLAGS = '@' + OUTPUT_OBJS.path + ' --print-map > ' + OUTPUT_MAP.path + \
+          ' --start-group ' + ' -l'.join([''] + list(LIBS)) + ' --whole-archive ' + \
+          ' '.join(PRIVATE_LIBS_FILES) + ' --end-group ' + \
+          ' -l'.join([''] + PRESERVED_LIBS) + ' --no-whole-archive ' + \
+          ' -l'.join([''] + DEFAULT_LIBS) + ' ' + KCC_LIBS + ' ' + \
+          LINKER_OPTS + ' ' + LINK_SCRIPT_OPTS
+
+# Translate options variable names into SCons versions
+p_env.Replace(CFLAGS=COMPILE_FLAGS)
+p_env.Append(CPPDEFINES=p_env['DEFS'])
+p_env.Replace(CPPFLAGS=[CHIP_NAME_OPT])
+p_env.Replace(LIBS=list(LIBS) + PRESERVED_LIBS + DEFAULT_LIBS)
+p_env.Replace(LINKFLAGS=LDFLAGS)
+p_env.Replace(_LIBFLAGS=[])
+
+# Ensure object files are created separately from source files, and
+# don't create copies of the source files in the build folder
+p_env.VariantDir(build_output_folder, SRCDIR, duplicate=0)
+for var in ['C_FILES', 'ASM_FILES', 'DBS', 'BUTTONXML_FILES', \
+            'TYPEDEF_FILES', 'RULES_FILES', 'CHAIN_FILES', 'PARSE_FILES', \
+            'BUILD_ID_SRC']:
+    # Use keyword argument unpacking to use the value of var as the keyword
+    kw = {var: [translate(build_output_folder, SRCDIR, s) for s in p_env[var]]}
+    p_env.Replace(**kw)
+
+# Assign the default target so that not everything gets built by default
+if p_env.get('KEY_FILE'):
+    p_env.Default(OUTPUT_XUV)
+else:
+    p_env.Default(OUTPUT_ELF)
+
+# Compile ASM files to object code
+ASM_OBJS = []
+for f in p_env['ASM_FILES']:
+    ASM_OBJS.extend(p_env.AsmObject(f))
+
+# Compile C files to object code
+C_OBJS = []
+for f in p_env['C_FILES']:
+    C_OBJS.extend(p_env.Object(f))
+
+# Find all the database fragments from included libraries
+LIBDIR = SRCDIR + '/adk/src/libs/'
+dbi_files = [Glob(LIBDIR + d + '/*.dbi') for d in LIBS]
+# Flatten nested lists
+#dbi_files = [y for x in dbi_files for y in x]
+if 'USE_SYNERGY' in p_env['DEFS']:
+    if os.path.exists(LIBDIR + 'synergy/bt/profile_managers/le_audio'):
+        from libs.synergy.source_list import SYNERGY_LE_AUDIO_DBI
+        LIBDIR += 'synergy/'
+        for dbi_file in SYNERGY_LE_AUDIO_DBI:
+            dbi_files.append(File(LIBDIR + dbi_file))
+
+# Compile .db files to object code
+DB_OBJS = []
+for f in p_env['DBS']:
+    # Convert .db_ to .c/.h pair: Call gattdbgen
+    src, hdr, _ = p_env.DbObject(f)
+    # Add include path to list of include paths because the header file is
+    # not being created in the source folder
+    p_env.AppendUnique(CPPPATH=os.path.dirname(str(src)))
+    # Build the resultant .c file
+    DB_OBJS.extend(p_env.Object(src))
+
+    # Convert .db to _if.c/_if.h pair: Call gattdbifgen
+    dbif_h = f.replace('.db', '_if.h')
+    p_env.DbIfHObject(target=dbif_h, source=dbi_files)
+    dbif_src = p_env.DbIfObject(hdr)
+    DB_OBJS.extend(p_env.Object(dbif_src))
+
+# Generate %.[ch] files from %.chain files
+CHAIN_OBJS = []
+for f in p_env['CHAIN_FILES']:
+    # Convert .chain to .c/.h
+    src = p_env.ChainObject(f)[0]
+    # Add include path to list of include paths because the header file is
+    # not being created in the source folder
+    p_env.AppendUnique(CPPPATH=os.path.dirname(str(src)))
+    # Add parent of include path, because some sources require that instead
+    p_env.AppendUnique(CPPPATH=os.path.dirname(os.path.dirname(str(src))))
+    # Build the resultant .c file
+    CHAIN_OBJS.extend(p_env.Object(src))
+
+# Generate %.[ch] files from %.parse files
+PARSE_OBJS = []
+for f in p_env['PARSE_FILES']:
+    # Convert .parse to .c/.h
+    src = p_env.ParseObject(f)[0]
+    # Add location of .h file to include path list
+    p_env.AppendUnique(CPPPATH=os.path.dirname(str(src)))
+    # Add .c file to list of files to build
+    PARSE_OBJS.extend(p_env.Object(src))
+
+# Generate %.[ch] files from %.typedef files
+TYPEDEF_OBJS = []
+for f in p_env['TYPEDEF_FILES']:
+    # Convert .typedef to _marshal_typedef.[ch] and _typedef.h
+    src = p_env.TypeDefObject(f)[0]
+    # Add include path to list of include paths because the header file is
+    # not being created in the source folder
+    p_env.AppendUnique(CPPPATH=os.path.dirname(str(src)))
+    # Build the resultant .c file
+    TYPEDEF_OBJS.extend(p_env.Object(src))
+
+# Generate %.[ch] files from %.rules files
+RULES_OBJS = []
+for f in p_env['RULES_FILES']:
+    # Convert .rules to _rules_table.[ch]
+    src = p_env.RulesObject(f)[0]
+    # Add include path to list of include paths because the header file is
+    # not being created in the source folder
+    p_env.AppendUnique(CPPPATH=os.path.dirname(str(src)))
+    # Build the resultant .c file
+    RULES_OBJS.extend(p_env.Object(src))
+
+# Generate %.[h] and %.[c] files from %.buttonxml files
+BUTTON_PIO_XML = []
+BUTTON_XML = []
+for f in p_env['BUTTONXML_FILES']:
+    if f.endswith('.pio.buttonxml'):
+        BUTTON_PIO_XML.append(f)
+    else:
+        BUTTON_XML.append(f)
+
+BUTTONXML_OBJS = []
+for f, p in zip(BUTTON_XML, BUTTON_PIO_XML):
+    # Convert .buttonxml to .[ch]
+    src = p_env.ButtonXmlObject([f, p])[0]
+    # Add include path to list of include paths because the header file is
+    # not being created in the source folder
+    p_env.AppendUnique(CPPPATH=os.path.dirname(str(src)))
+    # Build the resultant .c file
+    BUTTONXML_OBJS.extend(p_env.Object(src))
+
+# Fall back on the standard include paths
+p_env.AppendUnique(CPPPATH=[p_env['firmware_inc_dir'], p_env['standard_inc_dir'],
+                            p_env['firmware_app_inc_dir'], p_env['profiles_inc_dir']])
+
+# List of objects to be built
+OBJS = ASM_OBJS + BUTTONXML_OBJS + CHAIN_OBJS + PARSE_OBJS + C_OBJS + \
+       DB_OBJS + TYPEDEF_OBJS + RULES_OBJS
+
+# Add pre-include dependencies
+p_env.Depends(OBJS, p_env['depends'])
+
+# Generate the Build ID source file
+build_id_env = p_env['ENV']
+build_id_env['PYTHONPATH'] = ADK_ROOT + '/tools/packages'
+p_env.Command(p_env['BUILD_ID_SRC'], p_env['BUILD_ID'],
+              '$python $SOURCE $TARGET',
+              ENV=build_id_env)
+
+# Build the elf file.
+p_env.Textfile(OUTPUT_OBJS, [f.path.replace('\\', '/') for f in OBJS])
+p_env.Depends(OUTPUT_OBJS, OBJS)
+p_env.Program(target = OUTPUT_ELF, source = [], PROGSUFFIX='.elf')
+p_env.Depends(OUTPUT_ELF, OBJS + [OUTPUT_OBJS] + PRIVATE_LIBS_FILES)
+p_env.AddPostAction(OUTPUT_ELF, '$SIZE $TARGET -B -d')
+p_env.AddPostAction(OUTPUT_ELF, Action(announce_elfpath, ' '))
+
+# Generate raw memory files .pm .dm .rom .lpc
+p_env.Command(OUTPUT_PM, OUTPUT_ELF, '$ELF2MEM $ELF2MEMFLAGS $SOURCE')
+
+# Generate .kmap image
+p_env.Command(OUTPUT_KMAP, OUTPUT_ELF, '$KMAP $KMAPFLAGS $SOURCE > $TARGET')
+
+# Generate the .xuv file
+p_env.XuvObject(OUTPUT_ELF)
+
+# Log files. Excludes the most recent .log file since that's open (logging
+# the current operation)
+LOG_FILES = p_env.Glob('*.log')[:-1]
+
+# List of objects to clean for the current build target.
+p_env.Clean(OUTPUT_ELF, [build_output_folder] + LOG_FILES)

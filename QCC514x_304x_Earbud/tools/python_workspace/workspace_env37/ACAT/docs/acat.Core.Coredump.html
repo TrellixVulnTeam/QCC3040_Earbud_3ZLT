@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Coredump &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="DebugInfo" href="acat.Core.DebugInfo.html"/>
+        <link rel="prev" title="CoreUtils" href="acat.Core.CoreUtils.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>Coredump</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.Coredump.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="coredump">
+<h1>Coredump<a class="headerlink" href="#coredump" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.Coredump</span></code>.</p>
+<span class="target" id="module-ACAT.Core.Coredump"></span><p>Coredump Parser.</p>
+<p>Module used to read a coredump</p>
+<dl class="class">
+<dt id="ACAT.Core.Coredump.BankedReg">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.Coredump.</code><code class="sig-name descname">BankedReg</code><span class="sig-paren">(</span><em class="sig-param">addr_bank_sel_reg</em>, <em class="sig-param">bank</em>, <em class="sig-param">addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#BankedReg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.BankedReg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a clear structure for storing banked registers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr_bank_sel_reg</strong> – </p></li>
+<li><p><strong>bank</strong> – </p></li>
+<li><p><strong>addr</strong> – Specific address of a register in the banks.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.Coredump.Coredump">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.Coredump.</code><code class="sig-name descname">Coredump</code><span class="sig-paren">(</span><em class="sig-param">coredump_lines</em>, <em class="sig-param">processor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides access to chip data stored in a coredump.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coredump_lines</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Lines of coredump
+file in a list.</p></li>
+<li><p><strong>processor</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_all_banked_regs">
+<code class="sig-name descname">get_all_banked_regs</code><span class="sig-paren">(</span><em class="sig-param">addr_bank_sel_reg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_all_banked_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_all_banked_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the banked registers in string format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr_bank_sel_reg</strong> – The address of the bank select register
+that controls the bank.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_all_proc_regs">
+<code class="sig-name descname">get_all_proc_regs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_all_proc_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_all_proc_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all processor registers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_banked_reg">
+<code class="sig-name descname">get_banked_reg</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">bank=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_banked_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_banked_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of a register in a specific bank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Address of the banked register.</strong> (<em>address</em>) – </p></li>
+<li><p><strong>= None</strong> (<em>bank</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em>, <em class="sig-param">ignore_overflow=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of one or more addresses in DM.</p>
+<p>This allows you to grab a chunk of memory, e.g. get_data(0x600, 50).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The length supplied is measured in addressable units.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr)</span></code> will return a single value;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr,</span> <span class="pre">1)</span></code> will return a tuple with a single member.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr,</span> <span class="pre">10)</span></code> will return a tuple with ten members
+or a tuple with three members (when the memory is octet
+addressed, 32bit words).</p></li>
+</ul>
+</div>
+<p>If the address is out of range, a KeyError exception will be raised.
+If the address is valid but the length is not (i.e. address+length
+is not a valid address) an OutOfRangeError exception will be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>ignore_overflow</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignore if the read goes out
+from the memory region and append zeros. This is useful if
+an union is at the end of the memory region.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_data_pm">
+<code class="sig-name descname">get_data_pm</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_data_pm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_data_pm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get data from PM.</p>
+<p>This method works in the exactly the same way as method, but it
+returns data from PM region instead of DM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_firmware_id">
+<code class="sig-name descname">get_firmware_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_firmware_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_firmware_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the firmware ID integer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_firmware_id_string">
+<code class="sig-name descname">get_firmware_id_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_firmware_id_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_firmware_id_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the firmware ID string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.get_proc_reg">
+<code class="sig-name descname">get_proc_reg</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.get_proc_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.get_proc_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the processor register specified in <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<p>name is a string containing the name of the register in upper or
+lower case, with or without the prefix <code class="docutils literal notranslate"><span class="pre">REGFILE_</span></code> e.g.
+<code class="docutils literal notranslate"><span class="pre">REGFILE_PC</span></code>, <code class="docutils literal notranslate"><span class="pre">rMAC</span></code>, <code class="docutils literal notranslate"><span class="pre">R10</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – When the register name is invalid.</p></li>
+<li><p><strong>AttributeError</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.Coredump.Coredump.is_volatile">
+<code class="sig-name descname">is_volatile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#Coredump.is_volatile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.Coredump.is_volatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the data is volatile.</p>
+<p>Allows the user to query whether the data is volatile (e.g.  from
+a live chip) or fixed (e.g. from a coredump).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.Coredump.main">
+<code class="sig-prename descclassname">ACAT.Core.Coredump.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/Coredump.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.Coredump.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function used to run the coredump alone.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.DebugInfo.html" class="btn btn-neutral float-right" title="DebugInfo" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.CoreUtils.html" class="btn btn-neutral" title="CoreUtils" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

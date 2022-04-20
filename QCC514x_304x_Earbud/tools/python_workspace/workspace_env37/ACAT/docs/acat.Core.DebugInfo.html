@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DebugInfo &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="DebugInfoAdapter" href="acat.Core.DebugInfoAdapter.html"/>
+        <link rel="prev" title="Coredump" href="acat.Core.Coredump.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>DebugInfo</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.DebugInfo.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="debuginfo">
+<h1>DebugInfo<a class="headerlink" href="#debuginfo" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.DebugInfo</span></code>.</p>
+<span class="target" id="module-ACAT.Core.DebugInfo"></span><p>Debug Information Interface.</p>
+<p>The interface to the debug information is defined in this module.</p>
+<dl class="class">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.DebugInfo.</code><code class="sig-name descname">DebugInfoInterface</code><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debug Info Interface.</p>
+<p>Defines an interface for extracting debug information from the build
+output.</p>
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_cap_data_type">
+<em class="property">abstract </em><code class="sig-name descname">get_cap_data_type</code><span class="sig-paren">(</span><em class="sig-param">cap_name</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_cap_data_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_cap_data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data type name for a given capability.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The data type is used to hold all the information for a
+capability.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cap_name</strong> (<em>str</em>) – Capability name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The name of the extra data type for the given capability.</dt><dd><p>returns None if no information found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_constant_strict">
+<em class="property">abstract </em><code class="sig-name descname">get_constant_strict</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_constant_strict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_constant_strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return value is a ConstSym object (which may be None).</p>
+<p>If ‘name’ is not the exact name of a known constant, a KeyError
+exception will be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the constant.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – Used by DebugInfoAdapter to select the
+debug information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_dm_const">
+<em class="property">abstract </em><code class="sig-name descname">get_dm_const</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_dm_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_dm_const" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the contents of DM const(NVMEM).</p>
+<p>If the address is out of range, a KeyError exception will be raised.
+If the address is valid but the length is not (i.e. address+length
+is not a valid address) an OutOfRangeError exception will be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_enum">
+<em class="property">abstract </em><code class="sig-name descname">get_enum</code><span class="sig-paren">(</span><em class="sig-param">enum_name</em>, <em class="sig-param">member=None</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_enum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an enum.</p>
+<p>If supplied just with a name, returns a dictionary mapping member
+name-&gt;value. If also supplied with a member name/value, returns a
+tuple containing any matching values/names.</p>
+<dl>
+<dt>e.g.</dt><dd><p>get_enum(‘ACCMD_CON_TYPE’)
+Returns a dictionary of all enum members.</p>
+<p>get_enum(‘ACCMD_CON_TYPE’, ‘ACCMD_CON_TEST’)
+Returns value of ACCMD_CON_TEST member (1 in this case)</p>
+<p>get_enum(‘ACCMD_CON_TYPE’, 1)
+Returns the name(s) of any entries with value 1
+(‘ACCMD_CON_TEST’ in this case)</p>
+</dd>
+</dl>
+<p>If either enum_name or member is not found, a KeyError exception
+will be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>enum_name</strong> – </p></li>
+<li><p><strong>member</strong> – </p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – Used by DebugInfoAdapter to select the
+debug information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_instruction">
+<em class="property">abstract </em><code class="sig-name descname">get_instruction</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_instruction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_instruction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the contents of Program Memory at the supplied address.</p>
+<p>The width of the return value depends on whether the instruction
+is encoded as Minim (16-bit) or Maxim (32-bit).</p>
+<p>Will throw a KeyError exception if the address is not in PM
+RAM/ROM, or the address is not the start of an instruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_label">
+<code class="sig-name descname">get_label</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the code label at the exact supplied address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a CodeLabel object, None if no label found at the address.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_mmap_lst">
+<em class="property">abstract </em><code class="sig-name descname">get_mmap_lst</code><span class="sig-paren">(</span><em class="sig-param">elf_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_mmap_lst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_mmap_lst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mmap_lst for the bundle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>elf_id</strong> – The bundle elf id.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_nearest_label">
+<em class="property">abstract </em><code class="sig-name descname">get_nearest_label</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_nearest_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_nearest_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the nearest code label to the supplied address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a CodeLabel object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_source_info">
+<em class="property">abstract </em><code class="sig-name descname">get_source_info</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_source_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_source_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about a code address.</p>
+<p>The address can be a real address (integer) or a module name
+(string).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a SourceInfo object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_type_info">
+<em class="property">abstract </em><code class="sig-name descname">get_type_info</code><span class="sig-paren">(</span><em class="sig-param">type_name_or_id</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_type_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_type_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Looks up information in the type database.</p>
+<p>Takes a type name (e.g. ‘ENDPOINT’ or ‘audio_buf_handle_struc’) or
+a valid typeId, and looks up information in the type database.
+Returns a tuple containing:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The (fully-qualified) name of the type.</p></li>
+<li><p>The typeid (redundant if ‘type’ is already a typeid).</p></li>
+<li><p>The pointed-to typeid (if the type is a pointer).</p></li>
+<li><p>The array length (if the type or pointed-to type is an array).</p></li>
+<li><p>The typeid which describes any members of this type (if it
+is a structure or union).</p></li>
+<li><p>Type size in addressable units (if the type or pointed-to
+type is a structure or union).</p></li>
+<li><p>The elf id of this debug information.</p></li>
+<li><p>A boolean value showing if the type has uninion.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unfortunately, a small number of types are defined as an
+array, but have a length of 0. That means to determine whether
+or not the type is an array you have to compare array length
+to None, not zero.</p>
+</div>
+<dl class="simple">
+<dt>Consider the cases:</dt><dd><ul class="simple">
+<li><p>pointer to an array (we set pointed_to_type, and also array_len</p></li>
+<li><p>array of pointers (we set array_len, but not pointed_to_type)</p></li>
+<li><p>array of pointers to structs (array length is set, members typeid
+defines pointer type, not struct type)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type_name_or_id</strong> (<em>int</em><em> or </em><em>str</em>) – Type name or id.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – Used by DebugInfoAdapter to select the
+debug information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_type_members">
+<em class="property">abstract </em><code class="sig-name descname">get_type_members</code><span class="sig-paren">(</span><em class="sig-param">type_name_or_id</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_type_members"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_type_members" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a type’s members. This will be a list of strings or an
+empty list if type has no members.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type_name_or_id</strong> (<em>str</em><em> or </em><em>int</em>) – Type name or identification number.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of member names (str). Empty list if type has no members.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>lst</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.InvalidDebuginfoTypeError" title="ACAT.Core.exceptions.InvalidDebuginfoTypeError"><strong>InvalidDebuginfoTypeError</strong></a> – When the provided type is not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_type_name">
+<em class="property">abstract </em><code class="sig-name descname">get_type_name</code><span class="sig-paren">(</span><em class="sig-param">type_id</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_type_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a type name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type_id</strong> (<em>int</em>) – Type identification number.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name of the type.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.InvalidDebuginfoTypeError" title="ACAT.Core.exceptions.InvalidDebuginfoTypeError"><strong>InvalidDebuginfoTypeError</strong></a> – When the provided id is not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.get_var_strict">
+<em class="property">abstract </em><code class="sig-name descname">get_var_strict</code><span class="sig-paren">(</span><em class="sig-param">identifier</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.get_var_strict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.get_var_strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search list of variables for the supplied identifier (name/address).</p>
+<p>If ‘identifier’ is not the exact name or start address of a known
+variable, a KeyError exception will be raised.  (‘identifier’ is
+interpreted as an address if it is an integer, and a name
+otherwise).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – </p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – Used by DebugInfoAdapter to select the
+debug information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.inspect_var">
+<em class="property">abstract </em><code class="sig-name descname">inspect_var</code><span class="sig-paren">(</span><em class="sig-param">var</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.inspect_var"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.inspect_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inspects a variable.</p>
+<p>Inspecting a variable will build the variable members.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> – Variable to inspect.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.is_maxim_pm_encoding">
+<em class="property">abstract </em><code class="sig-name descname">is_maxim_pm_encoding</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.is_maxim_pm_encoding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.is_maxim_pm_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether an address is encoded as Max or Min.</p>
+<p>Look up the contents of Program Memory at the supplied address,
+and work out whether it is encoded as Maxim or Minim.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – Address to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>True if the encoding is Maxim. False if encoding is</dt><dd><p>Minim.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>raises InvalidPmAddressError - if address is not in PM</strong> – </p></li>
+<li><p><strong>raises UnknownPmEncodingError - if address has unknown encoding.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.is_pm_private">
+<em class="property">abstract </em><code class="sig-name descname">is_pm_private</code><span class="sig-paren">(</span><em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.is_pm_private"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.is_pm_private" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the pm address is private or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>address</strong> – pm address.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if address private, false otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.DebugInfo.DebugInfoInterface.read_const_string">
+<em class="property">abstract </em><code class="sig-name descname">read_const_string</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/DebugInfo.html#DebugInfoInterface.read_const_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.DebugInfo.DebugInfoInterface.read_const_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the address of a (filename) string in const, returns a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – Used by DebugInfoAdapter to select the
+debug information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.DebugInfoAdapter.html" class="btn btn-neutral float-right" title="DebugInfoAdapter" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.Coredump.html" class="btn btn-neutral" title="Coredump" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

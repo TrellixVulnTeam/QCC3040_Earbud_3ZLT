@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CoreUtils &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="Coredump" href="acat.Core.Coredump.html"/>
+        <link rel="prev" title="CoreTypes" href="acat.Core.CoreTypes.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>CoreUtils</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.CoreUtils.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="coreutils">
+<h1>CoreUtils<a class="headerlink" href="#coreutils" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.CoreUtils</span></code>.</p>
+<span class="target" id="module-ACAT.Core.CoreUtils"></span><p>Utils.</p>
+<p>Module holding all the helper functions and classes in ACAT.</p>
+<dl class="class">
+<dt id="ACAT.Core.CoreUtils.GlobalOptions">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">GlobalOptions</code><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#GlobalOptions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.GlobalOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates all of the options supplied on the command-line.</p>
+<p>No members are defined here; they’re part of the top-level script
+(e.g. ACAT.py).</p>
+<dl class="method">
+<dt id="ACAT.Core.CoreUtils.GlobalOptions.set_defaults">
+<code class="sig-name descname">set_defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#GlobalOptions.set_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.GlobalOptions.set_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default value all the options.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreUtils.MatplotlibImporter">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">MatplotlibImporter</code><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#MatplotlibImporter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.MatplotlibImporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class imitating <cite>matplotlib</cite> library.</p>
+<p>A simple use case of this class is something similar to below:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">matplotlib</span> <span class="o">=</span> <span class="n">MatplotlibImporter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span>
+</pre></div>
+</div>
+<p>Above is similar to:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>But handles the GUI selection based on the fact whether the application
+under test or not. Since <cite>tkinter</cite>, the default GUI for matplotlib, isn’t
+thread-safe pytest crashes out if it’s unchanged.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.add_indentation">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">add_indentation</code><span class="sig-paren">(</span><em class="sig-param">input_str</em>, <em class="sig-param">nr_of_spaces</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#add_indentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.add_indentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds identation before each line in a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Spaces before each line.</strong> (<em>nr_of_spaces</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The formatted string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.all_none">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">all_none</code><span class="sig-paren">(</span><em class="sig-param">iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#all_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.all_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if all the members of the iterable are None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> – An object with iterable members.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>True if all of the items in the interator are None, False</dt><dd><p>otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.change_matplotlib_log_level">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">change_matplotlib_log_level</code><span class="sig-paren">(</span><em class="sig-param">log_level</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#change_matplotlib_log_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.change_matplotlib_log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the matplotlib logger’s logging level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>log_level</strong> (<em>int</em>) – Python standard logging level.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.connect_to_processor">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">connect_to_processor</code><span class="sig-paren">(</span><em class="sig-param">processor</em>, <em class="sig-param">setting</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#connect_to_processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.connect_to_processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects to a processor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>processor</strong> (<em>int</em>) – Processor to connect to. Currently only dual core is
+supported so this value can only be 0, main processor, or
+1, secondary processor.</p></li>
+<li><p><strong>setting</strong> (<em>dict</em>) – Setting to use to connect to the processor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An object which can be used the access the data for the specified
+processor. This object implements the ChipData interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.convert_byte_len_word">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">convert_byte_len_word</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">addr_per_word</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#convert_byte_len_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.convert_byte_len_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts the length value.</p>
+<p>For Crescendo, if the value of a length is not divisible with the
+number of addr per word, its value must be adjusted so it will be
+divisible with the number of addr per word, in order for kalelfreader
+to return the corresponding number of words.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> – </p></li>
+<li><p><strong>addr_per_word</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.create_counter">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">create_counter</code><span class="sig-paren">(</span><em class="sig-param">initial</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#create_counter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.create_counter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increments the counter if it exists otherwise create a counter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>initial</strong> – Value of the counter which has been hard coded to 0.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Incremented output parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.dict_to_ordered_dict">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">dict_to_ordered_dict</code><span class="sig-paren">(</span><em class="sig-param">dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#dict_to_ordered_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.dict_to_ordered_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an instance of built in Dict object to an ordered dictionary.</p>
+<p>The result dictionary is ordered by keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dictionary</strong> (<em>dict</em>) – A dictionary.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An OrderedDict instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.do_analysis">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">do_analysis</code><span class="sig-paren">(</span><em class="sig-param">session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#do_analysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.do_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the interpreter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>session</strong> – An instance of Interpreter class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.get_build_output_path">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">get_build_output_path</code><span class="sig-paren">(</span><em class="sig-param">chipdata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#get_build_output_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.get_build_output_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the path to the release build.</p>
+<p>Reads the build ID from the chip and tries to search for the released
+build based on the ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>chipdata</strong> – Access to the chip.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.get_correct_addr">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">get_correct_addr</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">addr_per_word</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#get_correct_addr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.get_correct_addr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixes the address and returns it.</p>
+<p>For Crescendo, sometimes the address that is supplied does not start
+at the beginning of the word. Kalelfreader only returns values in
+words, therefore this function returns the value that must be
+subtracted from the address to get to the start of the word.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>addr_per_word</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.get_elf_path">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">get_elf_path</code><span class="sig-paren">(</span><em class="sig-param">build_output_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#get_elf_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.get_elf_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the path to the elf from the build path.</p>
+<p>Reads the build ID from the chip and tries to search for the released
+build based on the ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>build_output_path</strong> (<em>str</em>) – Build output path.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(str) Path to the elf file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.get_non_rep_nuber">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">get_non_rep_nuber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ACAT.Core.CoreUtils.get_non_rep_nuber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns incremental numbers.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.get_string_from_word">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">get_string_from_word</code><span class="sig-paren">(</span><em class="sig-param">no_of_chr</em>, <em class="sig-param">word</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#get_string_from_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.get_string_from_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts number of characters from a word.</p>
+<p>It takes the number of characters that one wants to retrieve from a
+word and the word as an argument and turns it into a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_of_chr</strong> – </p></li>
+<li><p><strong>word</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.get_title">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">get_title</code><span class="sig-paren">(</span><em class="sig-param">callable_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#get_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.get_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the given callable’s docstring and extract the title.</p>
+<p>By convention, the first line of every docstring is the title. This
+method will parse that and extract it from the whole docstring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callable_obj</strong> – Any callable object with valid docstring.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string if there is a title, None otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.inspect_bitfield">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">inspect_bitfield</code><span class="sig-paren">(</span><em class="sig-param">value</em>, <em class="sig-param">parity</em>, <em class="sig-param">size_bits=24</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#inspect_bitfield"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.inspect_bitfield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inspects a bitfield.</p>
+<p>Takes an int representing a bitfield, and returns a tuple containing:</p>
+<ul class="simple">
+<li><p>parity = True: a list of which bits are set.</p></li>
+<li><p>parity = False: a list of which bits are not set (requires ‘size_bits’
+to be set).</p></li>
+</ul>
+<p>In both cases, an empty list can be returned.
+.. rubric:: Examples</p>
+<p>inspect_bitfield(0xf01, True) -&gt; (0, 8, 9, 10, 11)
+inspect_bitfield(0xf01, False, 12) -&gt; (1, 2, 3, 4, 5, 6, 7)
+inspect_bitfield(0, True) -&gt; ()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – </p></li>
+<li><p><strong>parity</strong> – </p></li>
+<li><p><strong>size_bits</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.list_to_string">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">list_to_string</code><span class="sig-paren">(</span><em class="sig-param">in_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#list_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.list_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>in_list</strong> (<em>list</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.load_ker_debuginfo">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">load_ker_debuginfo</code><span class="sig-paren">(</span><em class="sig-param">debuginfo_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#load_ker_debuginfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.load_ker_debuginfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a debug information and puts it to a dictionary which maps the
+elf_id to the debug information read from the elf file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bundle_path</strong> – Path to the bundle’s elf file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(dict) Dictionary containing the loaded debug information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.load_ker_debuginfos">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">load_ker_debuginfos</code><span class="sig-paren">(</span><em class="sig-param">kymera_path</em>, <em class="sig-param">bundle_paths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#load_ker_debuginfos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.load_ker_debuginfos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads Kymera and bundles (also known as KDCs) and puts it to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bundle_path</strong> – Path to the bundle’s elf file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(list) List containing Kymera’s debug information and a dictionary
+containing the bundles debuginfo.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.load_session">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">load_session</code><span class="sig-paren">(</span><em class="sig-param">analyses=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#load_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.load_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an interpreter loaded with the specified analyses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>analyses</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">string</span></code>) – What analyses to load. If
+none all the existent analyses will be loaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.mem_dict_to_string">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">mem_dict_to_string</code><span class="sig-paren">(</span><em class="sig-param">mem_dict</em>, <em class="sig-param">words_per_line=8</em>, <em class="sig-param">compact_mode=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#mem_dict_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.mem_dict_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts ordered dictionary of memory addresses and values into string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mem_dict</strong> (<em>OrderedDict</em>) – Memory addresses and values.</p></li>
+<li><p><strong>words_per_line</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of words to print out.
+Default value is 8 words.</p></li>
+<li><p><strong>compact_mode</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>If true, removes repeating lines in
+the middle. For example:</p>
+<blockquote>
+<div><p>line1: Something 1                line1: Something 1
+line2: Something 2                line2: Something 2
+line3: Something 2                line3: *
+line4: Something 2  &gt;conversion&gt;  line4: Something 2
+line5: Something 2                line5: Something 3
+line6: Something 3</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.mem_size_to_string">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">mem_size_to_string</code><span class="sig-paren">(</span><em class="sig-param">size_in_octets</em>, <em class="sig-param">units='okw'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#mem_size_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.mem_size_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the memory size as a formatted string in different unit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size_in_octets</strong> – Memory size in octets.</p></li>
+<li><p><strong>units</strong> (<em>str</em><em>, </em><em>optional</em>) – Contains the unit to use:
+“o” - octets
+“k” - KiB
+“w” - words</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String which contains the memory size in different units.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.open_file_with_default_app">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">open_file_with_default_app</code><span class="sig-paren">(</span><em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#open_file_with_default_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.open_file_with_default_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a file with the default application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>OSError</strong> – Unsupported OS.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.qformat_factory">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">qformat_factory</code><span class="sig-paren">(</span><em class="sig-param">integer_part</em>, <em class="sig-param">fractional_part</em>, <em class="sig-param">signed=True</em>, <em class="sig-param">multiplier=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#qformat_factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.qformat_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a function which converts Qm,n (named
+Qinteger_part, fractional_part to keep pylint happy) to floating point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>integer_part</strong> (<em>int</em>) – or m is the number of bits set aside to designate
+the two’s complement integer portion of the number</p></li>
+<li><p><strong>fractional_part</strong> (<em>int</em>) – or n is the number of bits used to designate the
+fractional portion of the number</p></li>
+<li><p><strong>signed</strong> (<em>bool</em>) – signals if the number is signed or unsigned.</p></li>
+<li><p><strong>multiplier</strong> (<em>int</em>) – A number which will be multiplied with the converted
+number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Function which converts Qm,n format to floating point.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.reset_package">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">reset_package</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#reset_package"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.reset_package" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets every global ACAT variable.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.run_plotter">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">run_plotter</code><span class="sig-paren">(</span><em class="sig-param">pt_input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#run_plotter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.run_plotter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs matplotlib plotter.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.s32_to_frac32">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">s32_to_frac32</code><span class="sig-paren">(</span><em class="sig-param">int32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#s32_to_frac32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.s32_to_frac32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts signed 32 bit integer to signed 32 bit fractional value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Signed 32 bit integer.</strong> (<em>int32</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Signed 32 bit fractional value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.strip_elf_addr">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">strip_elf_addr</code><span class="sig-paren">(</span><em class="sig-param">addr</em>, <em class="sig-param">kal_arch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#strip_elf_addr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.strip_elf_addr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strip an address.</p>
+<p>Addresses stored in the elf file have 32 bits, while the processor
+sees 24 bits. Often, the ‘invisible’ top 8 bits are used by the
+toolchain to store some flags. For example, code address 0x400000 is
+stored in the elf as 0x81400000, and const address 0xa26000 is stored
+as 0x01a26000.  This function strips off the ‘invisible’ bits of an
+elf-derived address.</p>
+<p>Kalarch4: for PM addresses the 31 bit is set (and the 30th bit is
+always unset) in the elf file, therefore the 31 bit is stripped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> – </p></li>
+<li><p><strong>kal_arch</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.swap_endianness">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">swap_endianness</code><span class="sig-paren">(</span><em class="sig-param">num</em>, <em class="sig-param">number_width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#swap_endianness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.swap_endianness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an int/long of arbitrary length to bytes reversed.</p>
+<p>In other words it does a endianness swap.</p>
+<p class="rubric">Examples</p>
+<p>swap_endianness(0x1234, 2) -&gt; 0x3412
+swap_endianness(0x1234, 4) -&gt; 0x34120000
+swap_endianness(0xaaa, 2) -&gt; 0xaa0a</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – The number</p></li>
+<li><p><strong>number_width</strong> – The width of the number in bytes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The endiannes swapped number.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.u32_to_frac32">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">u32_to_frac32</code><span class="sig-paren">(</span><em class="sig-param">uint32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#u32_to_frac32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.u32_to_frac32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts unsigned 32 bit integer to signed 32 bit fractional value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Unsigned 32 bit integer.</strong> (<em>uint32</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Signed 32 bit fractional value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.u32_to_s32">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">u32_to_s32</code><span class="sig-paren">(</span><em class="sig-param">uint32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#u32_to_s32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.u32_to_s32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an unsigned 32 bit integer to a signed 32 bit integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uint32</strong> – Unsigned 32 bit integer.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Signed 32 bit integer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.uint32_array_to_uint16">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">uint32_array_to_uint16</code><span class="sig-paren">(</span><em class="sig-param">unint32_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#uint32_array_to_uint16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.uint32_array_to_uint16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpacks a 32bit array to an array of 16bit.</p>
+<p>The values of the new 16 bit array will be calculated using the most
+significant 16 bit and the least significant 16 bit of the 32 bit
+value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>unint32_array</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>unint16_array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.uint32_array_to_uint8">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">uint32_array_to_uint8</code><span class="sig-paren">(</span><em class="sig-param">unint32_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#uint32_array_to_uint8"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.uint32_array_to_uint8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpacks a 32bit array to an array of 8bit.</p>
+<p>The values of the new 8 bit array will be calculated considering
+little-endian memory layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>unint32_array</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>unint8_array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreUtils.wait_for">
+<code class="sig-prename descclassname">ACAT.Core.CoreUtils.</code><code class="sig-name descname">wait_for</code><span class="sig-paren">(</span><em class="sig-param">test_func</em>, <em class="sig-param">timeout</em>, <em class="sig-param">error_msg=None</em>, <em class="sig-param">step=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreUtils.html#wait_for"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreUtils.wait_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a test function to come back True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_func</strong> – A callable object that returns a boolean.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – Specify seconds of how long the wait should happen.</p></li>
+<li><p><strong>error_msg</strong> (<em>str</em>) – Raises the exception with this message if timed out.</p></li>
+<li><p><strong>step</strong> (<em>int</em>) – Wait seconds of wait between each calls to the test
+function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.WaitForError" title="ACAT.Core.exceptions.WaitForError"><strong>WaitForError</strong></a> – When the operation timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.Coredump.html" class="btn btn-neutral float-right" title="Coredump" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.CoreTypes.html" class="btn btn-neutral" title="CoreTypes" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

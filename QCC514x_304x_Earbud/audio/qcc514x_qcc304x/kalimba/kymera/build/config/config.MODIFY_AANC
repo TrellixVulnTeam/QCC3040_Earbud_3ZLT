@@ -1,0 +1,28 @@
+############################################################################
+#  Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+#  All Rights Reserved.
+#  Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+#  Notifications and licenses are retained for attribution purposes only
+############################################################################
+
+#
+# Capabilities to include in the build
+#
+%list CFG_CAPABILITIES
+AANC_MONO_16K
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib_private/aanc/fxlms100
+../lib_private/aanc/ed100
+../lib_private/aanc/aanc_security
+../lib_private/aanc
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/aanc/aanc
+../lib_private/aanc/aanc
+
+
+%list MAXIM_LIBS
+../lib_private/aanc/fxlms100/fxlms100

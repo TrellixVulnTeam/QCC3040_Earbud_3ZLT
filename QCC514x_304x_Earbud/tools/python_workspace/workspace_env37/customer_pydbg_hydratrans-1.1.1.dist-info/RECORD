@@ -1,0 +1,16 @@
+csr/transport/__init__.py,sha256=TkZm9cOqe7wZ74WIbkAydpS3DYrpewdiXQQUBz6sT84,318
+csr/transport/__pycache__/__init__.cpython-37.pyc,,
+csr/transport/__pycache__/tctrans.cpython-37.pyc,,
+csr/transport/__pycache__/trbtrans.cpython-37.pyc,,
+csr/transport/tctrans.py,sha256=3Y1xjpEHzHGm1rTgxyJRzCeHnp7gTg1vRo8IssV5eck,43091
+csr/transport/trbtrans.py,sha256=adsxXcTFSu9rmm1qmqlcVPNF9X4hE-bdxOtlpk1WyNA,58620
+csr/transport/win64/EngineFrameworkCpp.dll,sha256=SgSQRTFBurXTJfo1V7R35QjOwuZy8VLgRLh64ADLU_4,436736
+csr/transport/win64/HydProtocols.dll,sha256=k19uCYzpKCXLCgiB5qvwAvvFfZjNxTwelYjuX2IXc5M,539648
+csr/transport/win64/Hydra_User.dll,sha256=iMHCidT9EQgN-xPgLZJ_YWNZ4SkcwADjaJMtTAlPdyI,35328
+csr/transport/win64/tctrans.dll,sha256=Fkz_9uCRnCMHF7KQ-u1fGwz-RHI1fOmQaizb-Zt4BBE,80384
+csr/transport/win64/trbtrans.dll,sha256=VzIg_SdD4hLSa5Bqd1OfU2s7GtLkRDoi2nz4yUjg9Qo,91648
+customer_pydbg_hydratrans-1.1.1.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+customer_pydbg_hydratrans-1.1.1.dist-info/METADATA,sha256=2prfTxVy1tL0KxLopQq11MgCUEZOfB62cQHtbxvqbfQ,952
+customer_pydbg_hydratrans-1.1.1.dist-info/RECORD,,
+customer_pydbg_hydratrans-1.1.1.dist-info/WHEEL,sha256=8e_9EhrhtMEXrRhyN2zhE8gj0hAOei24ZK6EkkdkIcY,123
+customer_pydbg_hydratrans-1.1.1.dist-info/top_level.txt,sha256=DbIi4SwtspHiEmxAMr4NyBxH4p653xdvvG6VauYCqDo,4

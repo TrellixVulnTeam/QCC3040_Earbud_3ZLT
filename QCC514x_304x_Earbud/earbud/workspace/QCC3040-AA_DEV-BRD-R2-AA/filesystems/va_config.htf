@@ -1,0 +1,5 @@
+file = audio
+
+# PSID=0x0084, capID=0x0001, UCID=0x0002, VA WUW chain basic_pass: gain +24dB
+# -> [ 1001 0001 0001 0FF1 FC35  ]
+0x000084 = [ 01 10 01 00 01 00 F1 0F 35 FC ]

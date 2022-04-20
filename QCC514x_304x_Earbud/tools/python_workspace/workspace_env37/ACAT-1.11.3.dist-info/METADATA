@@ -1,0 +1,145 @@
+Metadata-Version: 2.1
+Name: ACAT
+Version: 1.11.3
+Summary: ACAT (Audio Coredump Analysis Tool)
+Home-page: http://www.qualcomm.com/
+Author: Qualcomm
+Author-email: acat_dev@qti.qualcomm.com
+Maintainer: QCSR Audio FW
+Maintainer-email: acat_dev@qti.qualcomm.com
+License: Other/Proprietary License
+Keywords: acat,debug,coredump,live,analysis,audio,kymera
+Platform: Windows
+Platform: Linux
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Customer Service
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Manufacturing
+Classifier: Intended Audience :: Telecommunications Industry
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Software Development :: Testing
+Requires-Python: >=3.6, <4
+Requires-Dist: kal-python-tools (>=1.1.8)
+Provides-Extra: full
+Requires-Dist: graphviz (>0.8.0) ; extra == 'full'
+Requires-Dist: matplotlib (>=3.2.1) ; extra == 'full'
+
+ACAT (Audio Coredump Analysis Tool) is a Python-based debugging tool for both
+Qualcomm Kymera Capability and Framework code, which uses the Kymera
+framework on the DSP to analyze both Coredumps and live-running chips.
+
+
+**Use cases**
+
+    * ACAT provides multiple analyses, each designed to analyze a specific
+      Kymera framework module.
+    * Firmware development support.
+
+
+**Environment characteristics**
+
+    * Python 3.6+
+    * Windows and Linux support
+    * Released as a wheel and source package
+
+Changelog
+=========
+
+1.10.7
+------
+
+11 Feb 2021
+
+Major changes
+
+* Fix for the KSE and KATS connection.
+
+1.10.8
+------
+
+22 Feb 2021
+
+Major changes
+
+* Fix acat interactive mode when kalcmd2 object is the connection.
+* Fix the help output in the ADK's acat_tab
+
+1.10.9
+------
+
+11 March 2021
+
+Major changes
+
+* DM Profiler should indicate when an operator memory listing is aliased
+* Modify DmProfiler summary to exclude Transform Buffers
+* HeapPmMem: Display the slow PM heaps
+* HeapMem: Display the extra heap
+* Generate internal acat.exe
+* HeapMem: Display heap memory map
+* Create tests for DM Profiler Summary
+* The value format for the transport is unclear in --help
+* Document CACHE mechanism in the internal document
+* Reconnect does not do chipdata.reconnect
+* debug log decoding doesn't handle negative numbers correctly
+* Kalsim host and port arguments are not recognised
+
+1.11.0
+------
+
+23 April 2021
+
+Major changes
+
+* DM memory profiling lists transforms buffers as well
+* Fix HeapPmMem Mora Gen 1 failure on Mora Gen 1
+* Fix HeamMem analysis failure on Mora Gen 1
+* Remove the Crescendo tests and identify the chip as unsupported
+* Add Python3.9 support
+* Move the create_documentation_zip function to BuildSphinxCommand
+
+1.11.1
+------
+
+12 May 2021
+
+Major changes
+
+* Remove Crescendo D00 support
+* Heap Pm Memory bug fix for Mora chips
+
+
+1.11.2
+------
+
+14 June 2021
+
+Major changes
+
+* Add acat_runner script
+* Teach ACAT to use amended file_mgr to access DM Profiling tags in file data
+* Fix the reported size for P0 PM heap
+* Support MAC_OPERAND_MODE register
+* Fix RTP Decoder analysis
+* Fix the start address of the patch
+* Display PM in DM heap when it's powered off
+
+1.11.3
+------
+
+30 June 2021
+
+Major changes
+
+* Fix HeapPmMem analysis for the early versions of Auraplus1.2
+
+

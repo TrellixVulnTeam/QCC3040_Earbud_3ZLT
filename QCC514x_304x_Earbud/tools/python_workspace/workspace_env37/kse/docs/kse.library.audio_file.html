@@ -1,0 +1,824 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.library.audio_file package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.library package" href="kse.library.html"/>
+        <link rel="next" title="kse.library.graph package" href="kse.library.graph.html"/>
+        <link rel="prev" title="kse.library package" href="kse.library.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.library.html">kse.library package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.library.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.capability">kse.library.capability module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.module">kse.library.module module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.registry">kse.library.registry module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.template">kse.library.template module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.test_base">kse.library.test_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.library.html">kse.library package</a> &raquo;</li>
+      
+    <li>kse.library.audio_file package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.library.audio_file.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-library-audio-file-package">
+<h1>kse.library.audio_file package<a class="headerlink" href="#kse-library-audio-file-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.library.audio_file.audio">
+<span id="kse-library-audio-file-audio-module"></span><h2>kse.library.audio_file.audio module<a class="headerlink" href="#module-kse.library.audio_file.audio" title="Permalink to this headline">¶</a></h2>
+<p>Audio file helper</p>
+<dl class="function">
+<dt id="kse.library.audio_file.audio.audio_get_class">
+<code class="sig-prename descclassname">kse.library.audio_file.audio.</code><code class="sig-name descname">audio_get_class</code><span class="sig-paren">(</span><em class="sig-param">ext</em>, <em class="sig-param">allow_encoded=True</em><span class="sig-paren">)</span><a class="headerlink" href="#kse.library.audio_file.audio.audio_get_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get audio class an extension has registered to</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ext</strong> (<em>str</em>) – Filename extension</p></li>
+<li><p><strong>allow_encoded</strong> (<em>bool</em>) – Allow encoded data file handlers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Audio class</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kse.library.audio_file.audio_base.AudioBase" title="kse.library.audio_file.audio_base.AudioBase">AudioBase</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.audio_file.audio.audio_get_instance">
+<code class="sig-prename descclassname">kse.library.audio_file.audio.</code><code class="sig-name descname">audio_get_instance</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">mode='r'</em>, <em class="sig-param">allow_encoded=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#kse.library.audio_file.audio.audio_get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Audio file class loader</p>
+<p>This function loads the relevant audio file class.
+It supports a factory interface, defined by the filename extension, where it will try to
+autodetect a class subclassing AudioBase abstract class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – File open mode ‘r’ for read, ‘w’ for write</p></li>
+<li><p><strong>allow_encoded</strong> (<em>bool</em>) – Allow encoded data file handlers</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.audio_file.audio_base">
+<span id="kse-library-audio-file-audio-base-module"></span><h2>kse.library.audio_file.audio_base module<a class="headerlink" href="#module-kse.library.audio_file.audio_base" title="Permalink to this headline">¶</a></h2>
+<p>Audio base class</p>
+<dl class="class">
+<dt id="kse.library.audio_file.audio_base.AudioBase">
+<em class="property">class </em><code class="sig-prename descclassname">kse.library.audio_file.audio_base.</code><code class="sig-name descname">AudioBase</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">mode='r'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base audio file class handler</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">input_file</span> <span class="o">=</span> <span class="n">AudioBase</span><span class="p">(</span><span class="s1">&#39;audiofile.ext&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">channels</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">get_audio_stream_num</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;channels </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">channels</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">channels</span><span class="p">):</span>
+    <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">get_audio_stream_sample_rate</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">sample_width</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">get_audio_stream_sample_width</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">audio_data</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">get_audio_stream_data</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;channel </span><span class="si">%s</span><span class="s1"> sample_rate:</span><span class="si">%s</span><span class="s1"> sample_width:</span><span class="si">%s</span><span class="s1"> samples:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+          <span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">sample_width</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – File open mode ‘r’ for read, ‘w’ for write</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.add_audio_stream">
+<em class="property">abstract </em><code class="sig-name descname">add_audio_stream</code><span class="sig-paren">(</span><em class="sig-param">sample_rate</em>, <em class="sig-param">sample_width</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.add_audio_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.add_audio_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Frame rate in hertzs</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Sample width in bits</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Frame values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Frame values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the file is not in write mode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.default_interface">
+<em class="property">abstract property </em><code class="sig-name descname">default_interface</code><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.default_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this the default interface?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.encoded">
+<em class="property">abstract property </em><code class="sig-name descname">encoded</code><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.encoded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this an encoded format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.get_audio_stream_data">
+<em class="property">abstract </em><code class="sig-name descname">get_audio_stream_data</code><span class="sig-paren">(</span><em class="sig-param">index=0</em>, <em class="sig-param">start=0</em>, <em class="sig-param">limit=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.get_audio_stream_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.get_audio_stream_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get audio stream frames</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – Zero-based index of the first packet to retrieve</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Maximum number of packets to retrieve or 0 for all</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Frame values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.get_audio_stream_num">
+<em class="property">abstract </em><code class="sig-name descname">get_audio_stream_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.get_audio_stream_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.get_audio_stream_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of audio streams contained in the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of streams</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.get_audio_stream_sample_rate">
+<em class="property">abstract </em><code class="sig-name descname">get_audio_stream_sample_rate</code><span class="sig-paren">(</span><em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.get_audio_stream_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.get_audio_stream_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample rate of an audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample rate in hertzs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.get_audio_stream_sample_width">
+<em class="property">abstract </em><code class="sig-name descname">get_audio_stream_sample_width</code><span class="sig-paren">(</span><em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.get_audio_stream_sample_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.get_audio_stream_sample_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample width of an audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample width in bits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.get_filename">
+<em class="property">abstract </em><code class="sig-name descname">get_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.get_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.get_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Raw filename</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_base.AudioBase.write">
+<em class="property">abstract </em><code class="sig-name descname">write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_base.html#AudioBase.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_base.AudioBase.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write contents to file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the file is not in write mode</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.audio_file.audio_raw">
+<span id="kse-library-audio-file-audio-raw-module"></span><h2>kse.library.audio_file.audio_raw module<a class="headerlink" href="#module-kse.library.audio_file.audio_raw" title="Permalink to this headline">¶</a></h2>
+<p>Raw audio file utilities</p>
+<dl class="class">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw">
+<em class="property">class </em><code class="sig-prename descclassname">kse.library.audio_file.audio_raw.</code><code class="sig-name descname">AudioRaw</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">mode='r'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.library.audio_file.audio_base.AudioBase" title="kse.library.audio_file.audio_base.AudioBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.library.audio_file.audio_base.AudioBase</span></code></a></p>
+<p>Raw audio file class handler</p>
+<p>Note 8 bits samples are unsigned, 16 and 32 signed as in a wav file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – File open mode ‘r’ for read, ‘w’ for write</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – Number of channels in file (required for read mode)</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Sample rate in hertzs (required for read mode)</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Number of bits per sample (required for read mode)</p></li>
+<li><p><strong>big_endian</strong> (<em>bool</em>) – Data in PCM big endian mode</p></li>
+<li><p><strong>start_offset</strong> (<em>int</em>) – File offset position for pcm audio data location</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.add_audio_stream">
+<code class="sig-name descname">add_audio_stream</code><span class="sig-paren">(</span><em class="sig-param">sample_rate</em>, <em class="sig-param">sample_width</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.add_audio_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.add_audio_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Frame rate in hertzs</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Sample width in bits</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Frame values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Frame values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the file is not in write mode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.default_interface">
+<code class="sig-name descname">default_interface</code><em class="property"> = True</em><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.default_interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.encoded">
+<code class="sig-name descname">encoded</code><em class="property"> = False</em><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.encoded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_data">
+<code class="sig-name descname">get_audio_stream_data</code><span class="sig-paren">(</span><em class="sig-param">index=0</em>, <em class="sig-param">start=0</em>, <em class="sig-param">limit=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.get_audio_stream_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_num">
+<code class="sig-name descname">get_audio_stream_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.get_audio_stream_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of audio streams contained in the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of streams</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_sample_rate">
+<code class="sig-name descname">get_audio_stream_sample_rate</code><span class="sig-paren">(</span><em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.get_audio_stream_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample rate of an audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample rate in hertzs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_sample_width">
+<code class="sig-name descname">get_audio_stream_sample_width</code><span class="sig-paren">(</span><em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.get_audio_stream_sample_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.get_audio_stream_sample_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample width of an audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample width in bits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.get_filename">
+<code class="sig-name descname">get_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.get_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.get_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Raw filename</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'raw'</em><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'all'</em><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_raw.AudioRaw.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#AudioRaw.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.AudioRaw.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write contents to file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the file is not in write mode</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.audio_file.audio_raw.read_data">
+<code class="sig-prename descclassname">kse.library.audio_file.audio_raw.</code><code class="sig-name descname">read_data</code><span class="sig-paren">(</span><em class="sig-param">wrapper=None</em>, <em class="sig-param">enabled=None</em>, <em class="sig-param">adapter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_raw.html#read_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_raw.read_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>log exception decorator, logs an exception if any exception is raised in the decorated
+function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wrapped</strong> (<em>function</em>) – Wrapped function which needs to be called by your wrapper function.</p></li>
+<li><p><strong>instance</strong> (<em>any</em>) – Object to which the wrapped function was bound when it was called.</p></li>
+<li><p><strong>args</strong> (<em>tuple</em><em>[</em><em>any</em><em>]</em>) – Positional arguments supplied when the decorated function was called.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Keyword arguments supplied when the decorated function was called.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.audio_file.audio_wav">
+<span id="kse-library-audio-file-audio-wav-module"></span><h2>kse.library.audio_file.audio_wav module<a class="headerlink" href="#module-kse.library.audio_file.audio_wav" title="Permalink to this headline">¶</a></h2>
+<p>Wav audio file utilities</p>
+<dl class="class">
+<dt id="kse.library.audio_file.audio_wav.AudioWav">
+<em class="property">class </em><code class="sig-prename descclassname">kse.library.audio_file.audio_wav.</code><code class="sig-name descname">AudioWav</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">mode='r'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.library.audio_file.audio_base.AudioBase" title="kse.library.audio_file.audio_base.AudioBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.library.audio_file.audio_base.AudioBase</span></code></a></p>
+<p>Wav audio file class handler</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – File open mode ‘r’ for read, ‘w’ for write</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.add_audio_stream">
+<code class="sig-name descname">add_audio_stream</code><span class="sig-paren">(</span><em class="sig-param">sample_rate</em>, <em class="sig-param">sample_width</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.add_audio_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.add_audio_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Frame rate in hertzs</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Sample width in bits</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Frame values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Frame values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the file is not in write mode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.default_interface">
+<code class="sig-name descname">default_interface</code><em class="property"> = False</em><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.default_interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.encoded">
+<code class="sig-name descname">encoded</code><em class="property"> = False</em><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.encoded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_data">
+<code class="sig-name descname">get_audio_stream_data</code><span class="sig-paren">(</span><em class="sig-param">index=0</em>, <em class="sig-param">start=0</em>, <em class="sig-param">limit=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.get_audio_stream_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_num">
+<code class="sig-name descname">get_audio_stream_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.get_audio_stream_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of audio streams contained in the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of streams</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_sample_rate">
+<code class="sig-name descname">get_audio_stream_sample_rate</code><span class="sig-paren">(</span><em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.get_audio_stream_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample rate of an audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample rate in hertzs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_sample_width">
+<code class="sig-name descname">get_audio_stream_sample_width</code><span class="sig-paren">(</span><em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.get_audio_stream_sample_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.get_audio_stream_sample_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample width of an audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based index stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample width in bits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the stream does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.get_filename">
+<code class="sig-name descname">get_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.get_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.get_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Raw filename</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'wav'</em><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'all'</em><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.library.audio_file.audio_wav.AudioWav.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#AudioWav.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.AudioWav.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write contents to file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the file is not in write mode</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.audio_file.audio_wav.read_data">
+<code class="sig-prename descclassname">kse.library.audio_file.audio_wav.</code><code class="sig-name descname">read_data</code><span class="sig-paren">(</span><em class="sig-param">wrapper=None</em>, <em class="sig-param">enabled=None</em>, <em class="sig-param">adapter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/audio_file/audio_wav.html#read_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.audio_file.audio_wav.read_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator to read data when the AudioWav instance mode is MODE_READ</p>
+<p>When the ‘instance._data_read’ is already filled with data, it moves
+on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wrapped</strong> (<em>function</em>) – Wrapped function which needs to be called by your wrapper function.</p></li>
+<li><p><strong>instance</strong> (<em>any</em>) – Object to which the wrapped function was bound when it was called.</p></li>
+<li><p><strong>args</strong> (<em>tuple</em><em>[</em><em>any</em><em>]</em>) – Positional arguments supplied when the decorated function was called.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Keyword arguments supplied when the decorated function was called.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.audio_file">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.library.audio_file" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.library.graph.html" class="btn btn-neutral float-right" title="kse.library.graph package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.library.html" class="btn btn-neutral" title="kse.library package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

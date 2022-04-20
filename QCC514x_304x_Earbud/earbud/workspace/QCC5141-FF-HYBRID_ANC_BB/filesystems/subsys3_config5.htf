@@ -1,0 +1,6 @@
+file=audio5
+
+Codec0UseClassABAmplifier = true
+Codec0OutAmpQualityMode = true
+AncEnableDelay = 500
+

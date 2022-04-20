@@ -1,0 +1,15 @@
+
+.. _graph_operator:
+
+=========
+Operators
+=========
+
+Capabilities are identified by their id or their name.
+
+The matching between both is found in ``$KATS_WORKSPACE/config/capability.cfg.json``.
+That same file contains supported messages per capability.
+
+.. autoclass:: kse.kymera.capability.generic.capability_generic.CapabilityGeneric
+        :noindex:
+

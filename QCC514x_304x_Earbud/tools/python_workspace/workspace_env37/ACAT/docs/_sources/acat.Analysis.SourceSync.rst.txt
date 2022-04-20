@@ -1,0 +1,8 @@
+
+SourceSync
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.SourceSync``.
+
+.. automodule:: ACAT.Analysis.SourceSync
+   :members:

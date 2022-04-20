@@ -1,0 +1,33 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build the downloadable APVA
+
+#
+# Capabilities to include in the build
+#
+%list CFG_CAPABILITIES
+APVA
+
+%list ALL_SRCDIRS
+capabilities/wwe
+capabilities/apva
+
+%list ALL_INCDIRS
+capabilities/wwe
+capabilities/apva
+
+%list CFG_LIBS
+capabilities/apva/apva
+capabilities/wwe/wwe
+
+# Prebuilt library files (.a and .reloc) must be placed under
+#
+# \kalimba\kymera\lib_release\($CONFIG)
+
+%list PREBUILT_LIBS
+libpryon_lite.a
+libapva_processing.a

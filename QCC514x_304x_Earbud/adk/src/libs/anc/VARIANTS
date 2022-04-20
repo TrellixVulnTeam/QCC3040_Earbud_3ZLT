@@ -1,0 +1,8 @@
+
+VARIANTS := upgrade_filter debug
+
+CFLAGS_debug := -DANC_DEBUG_LIB  # flags for building debug version of A2DP lib
+
+CFLAGS_upgrade_filter := -DANC_UPGRADE_FILTER # flags for QCC517x ANC IP improvements
+
+#CFLAGS_upgrade_filter := -DANC_UPGRADE_FILTER -DANC_DEBUG_LIB # flags for QCC517x ANC IP improvements with debug enabled

@@ -1,0 +1,8 @@
+
+table
+==========================================================================
+
+This module can be imported from ``ACAT.Display.table``.
+
+.. automodule:: ACAT.Display.table
+   :members:

@@ -1,0 +1,8 @@
+
+argument_parser
+==========================================================================
+
+This module can be imported from ``ACAT.Core.argument_parser``.
+
+.. automodule:: ACAT.Core.argument_parser
+   :members:

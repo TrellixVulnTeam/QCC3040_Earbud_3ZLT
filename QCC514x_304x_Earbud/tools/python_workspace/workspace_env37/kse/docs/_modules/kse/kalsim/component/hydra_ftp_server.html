@@ -1,0 +1,895 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.component.hydra_ftp_server &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.component.hydra_ftp_server</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.component.hydra_ftp_server</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Hydra FTP Server&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.constants</span> <span class="k">import</span> <span class="n">FTP_FW_TO_SERV_CTRL</span><span class="p">,</span> <span class="n">FTP_FW_TO_SERV_DATA</span><span class="p">,</span> \
+    <span class="n">CCP_SIGNAL_ID_OPERATIONAL_IND</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">get_instance</span>
+
+<span class="n">MESSAGE_TX_DELAY</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">CHIP_READY_TIMEOUT</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># FTP message ids</span>
+<span class="n">FTP_CTRL_SESSION_CREATE_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">FTP_CTRL_SESSION_CREATE_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">FTP_CTRL_SESSION_DESTROY_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">FTP_CTRL_SESSION_DESTROY_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">FTP_CTRL_FILE_OPEN_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">FTP_CTRL_FILE_OPEN_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">FTP_CTRL_FILE_READ_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">FTP_CTRL_FILE_READ_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">FTP_CTRL_FILE_WRITE_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">FTP_CTRL_FILE_WRITE_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">FTP_CTRL_FILE_SEEK_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">FTP_CTRL_FILE_SEEK_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">FTP_CTRL_FILE_CLOSE_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">FTP_CTRL_FILE_CLOSE_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">FTP_CTRL_FILE_DELETE_REQ_PDU_ID</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="n">FTP_CTRL_FILE_DELETE_CFM_PDU_ID</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="c1"># session create request protocol version</span>
+<span class="n">CSR_FTP_PROTOCOL_VERSION_LATEST</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># session create request flags</span>
+<span class="n">CSR_FTP_SERVER_NON_VOLATILE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSR_FTP_SERVER_VOLATILE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">CSR_FTP_SERVER_LOCAL</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">CSR_FTP_SERVER_HOST</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="c1"># file open request mode</span>
+<span class="n">CSR_FTP_OPEN_MODE_CREATE_ALWAYS</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSR_FTP_OPEN_MODE_APPEND_ALWAYS</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">CSR_FTP_OPEN_MODE_OPEN_EXISTING</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># file open max transfer unit</span>
+<span class="n">MTU_DEFAULT</span> <span class="o">=</span> <span class="mh">0x8000</span>
+
+<span class="c1"># file open format</span>
+<span class="n">FORMAT_PATCH</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">FORMAT_CONFIG</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">FORMAT_DATA</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">FORMAT_STR</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">FORMAT_PATCH</span><span class="p">:</span> <span class="s1">&#39;patch&#39;</span><span class="p">,</span>
+    <span class="n">FORMAT_CONFIG</span><span class="p">:</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span>
+    <span class="n">FORMAT_DATA</span><span class="p">:</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">INVALID_HANDLE_VALUE</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span>
+
+<span class="c1"># file seek origin</span>
+<span class="n">CSR_FTP_SEEK_SET</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">CSR_FTP_SEEK_CUR</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSR_FTP_SEEK_END</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># result</span>
+<span class="n">CSR_FTP_RESULT_SUCCESS</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">CSR_FTP_FILE_OP_FAILURE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSR_FTP_DIR_OP_FAILURE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSR_FTP_DELETE_FAILURE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSR_FTP_FILE_OP_EOF</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">CSR_FTP_DELETE_READ_ONLY</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">CSR_FTP_DELETE_NOT_EXIST</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">CSR_FTP_FILE_OP_READ_ONLY</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">CSR_FTP_DELETE_NOT_EMPTY</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">CSR_FTP_FILE_OP_NOT_EXIST</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">CSR_FTP_FILE_OP_NOT_ALLOWED</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CSR_FTP_FILE_OP_ALREADY_EXISTS</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CSR_FTP_FILE_OP_NO_SPACE</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="c1"># session create and file open</span>
+<span class="n">SERVER_ADDRESS</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">SERVER_PORT_CONTROL</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">SERVER_PORT_DATA</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">FILE_EXTENSION</span> <span class="o">=</span> <span class="s1">&#39;hcf&#39;</span>
+<span class="n">LAYER_MIN</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">LAYER_MAX</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">HCF_HEADER_SIZE</span> <span class="o">=</span> <span class="mi">8</span>
+
+
+<div class="viewcode-block" id="Session"><a class="viewcode-back" href="../../../../kse.kalsim.component.html#kse.kalsim.component.hydra_ftp_server.Session">[docs]</a><span class="k">class</span> <span class="nc">Session</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Session object&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session_id</span> <span class="o">=</span> <span class="n">session_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">session_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Session id&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Server address&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Server port&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session_id</span></div>
+
+
+<div class="viewcode-block" id="Handle"><a class="viewcode-back" href="../../../../kse.kalsim.component.html#kse.kalsim.component.hydra_ftp_server.Handle">[docs]</a><span class="k">class</span> <span class="nc">Handle</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Handle object&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_spec</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">handle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session_id</span> <span class="o">=</span> <span class="n">session_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_spec</span> <span class="o">=</span> <span class="n">file_spec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: handle id&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str: Filename&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Position&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span>
+
+    <span class="nd">@pos</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set file position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            val (int): New file position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="n">val</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="HydraFtpServer"><a class="viewcode-back" href="../../../../kse.kalsim.component.html#kse.kalsim.component.hydra_ftp_server.HydraFtpServer">[docs]</a><span class="k">class</span> <span class="nc">HydraFtpServer</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+    <span class="sd">&quot;&quot;&quot;Hydra File transfer protocol server class</span>
+
+<span class="sd">    This class provides a ftp server to support kalsim firmware patches.</span>
+<span class="sd">    On instantiation it registers itself with firmware and listens for requests coming</span>
+<span class="sd">    (read, write, delete).</span>
+
+<span class="sd">    Currently it only supports a read only filesystem without seek support.</span>
+<span class="sd">    Valid files are those with extension hcf in the selected directory</span>
+<span class="sd">    Those files come in the format subsysN_configL or subsysN_dataL or subsysN_patchP_fwFFWW unless</span>
+<span class="sd">    a prefix is selected which is prepended to filenames.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hydra_protocol (kats.kalsim.hydra_service.protocol.HydraProtocol): Protocol handler</span>
+<span class="sd">        directory (str): Directory containing files</span>
+<span class="sd">        prefix (str): Prefix to be applied to every file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hydra_protocol</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hydra_protocol</span> <span class="o">=</span> <span class="n">hydra_protocol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;uut&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;directory&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;prefix&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">last_handle</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pending</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">chip_ready</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_files</span><span class="p">()</span>
+
+        <span class="c1"># install message handler to receive messages from kymera</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_msg_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="o">.</span><span class="n">install_message_handler</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_message_received</span><span class="p">)</span>
+
+        <span class="c1"># send indication to kymera meaning we are ready to receive requests</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="o">.</span><span class="n">send_service_advice_indication</span><span class="p">()</span>
+
+        <span class="c1"># wait for kymera to signal it is ready, if it timeouts we just log and continue</span>
+        <span class="n">timer0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">timer0</span> <span class="o">&lt;</span> <span class="n">CHIP_READY_TIMEOUT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_wait_relative</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">chip_ready</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;chip ready message not received&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_cache_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># load file contents in a dictionary</span>
+        <span class="c1"># we are only supporting read access and files are small so this is a simple way to</span>
+        <span class="c1"># handle our ftp server</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">directory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># cache in memory all hcf files</span>
+            <span class="n">wildcard</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">*.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">FILE_EXTENSION</span><span class="p">)</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">wildcard</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)]</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;ftp_server found filename:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+            <span class="c1"># create special files subsysX_config0.hcf</span>
+            <span class="c1"># these are a special concatenation of subsysX_config1.hcf to subsysX_config15.hcf files</span>
+            <span class="n">subsystems</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^</span><span class="si">%s</span><span class="s1">subsys([0-9]+)_</span><span class="si">%s</span><span class="s1">([0-9]+).</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">FORMAT_STR</span><span class="p">[</span><span class="n">FORMAT_CONFIG</span><span class="p">],</span> <span class="n">FILE_EXTENSION</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="n">search</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">search</span><span class="p">:</span>
+                    <span class="n">subsystem</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">search</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                    <span class="n">layer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">search</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">LAYER_MIN</span> <span class="o">&lt;=</span> <span class="n">layer</span> <span class="o">&lt;=</span> <span class="n">LAYER_MAX</span> <span class="ow">and</span> <span class="n">subsystem</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subsystems</span><span class="p">:</span>
+                        <span class="n">subsystems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subsystem</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">subsystem</span> <span class="ow">in</span> <span class="n">subsystems</span><span class="p">:</span>
+                <span class="n">zero_file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">subsys</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">0.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> \
+                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">subsystem</span><span class="p">,</span> <span class="n">FORMAT_STR</span><span class="p">[</span><span class="n">FORMAT_CONFIG</span><span class="p">],</span>
+                             <span class="n">FILE_EXTENSION</span><span class="p">)</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">subsystem</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="n">FORMAT_CONFIG</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">zero_file</span><span class="p">]</span> <span class="o">=</span> <span class="n">header</span>
+                <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">LAYER_MIN</span><span class="p">,</span> <span class="n">LAYER_MAX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">subsys</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> \
+                               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">subsystem</span><span class="p">,</span> <span class="n">FORMAT_STR</span><span class="p">[</span><span class="n">FORMAT_CONFIG</span><span class="p">],</span> <span class="n">ind</span><span class="p">,</span>
+                                <span class="n">FILE_EXTENSION</span><span class="p">)</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+                            <span class="c1"># remove first 64 bits header</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">zero_file</span><span class="p">]</span> <span class="o">+=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">()[</span><span class="n">HCF_HEADER_SIZE</span><span class="p">:]</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;ftp_server added </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">zero_file</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                        <span class="k">pass</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_message_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">msg</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">CCP_SIGNAL_ID_OPERATIONAL_IND</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">chip_ready</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;chip ready message received&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">msg</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">FTP_FW_TO_SERV_DATA</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pending</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pending</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pending</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">FTP_FW_TO_SERV_CTRL</span><span class="p">:</span>
+            <span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">FTP_CTRL_SESSION_CREATE_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_session_create</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_SESSION_DESTROY_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_session_destroy</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_FILE_OPEN_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_file_open</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_FILE_READ_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_file_read</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_FILE_WRITE_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_file_write</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_FILE_SEEK_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_file_seek</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_FILE_CLOSE_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_file_close</span><span class="p">,</span>
+                <span class="n">FTP_CTRL_FILE_DELETE_REQ_PDU_ID</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_file_delete</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">cmd_id</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cmd_id</span> <span class="ow">in</span> <span class="n">handlers</span><span class="p">:</span>
+                <span class="n">handlers</span><span class="p">[</span><span class="n">cmd_id</span><span class="p">](</span><span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;message received id:0x</span><span class="si">%04x</span><span class="s1"> unknown&#39;</span><span class="p">,</span> <span class="n">cmd_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_send_control_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="o">.</span><span class="n">send_ftp_server_to_fw_control</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_send_data_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="o">.</span><span class="n">send_ftp_server_to_fw_data</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_send_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="c1"># self.__config.hydra_protocol.send_ftp_server_to_fw_control(payload)</span>
+        <span class="c1"># FIXME this is a workaround for a bug in current firmware implementation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="n">MESSAGE_TX_DELAY</span><span class="p">,</span>
+                                             <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_send_control_now</span><span class="p">,</span> <span class="n">payload</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="c1"># self.__config.hydra_protocol.send_ftp_server_to_fw_data(payload)</span>
+        <span class="c1"># FIXME this is a workaround for a bug in current firmware implementation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="n">MESSAGE_TX_DELAY</span><span class="p">,</span>
+                                             <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_send_data_now</span><span class="p">,</span> <span class="n">payload</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_add_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a session for certain client.</span>
+
+<span class="sd">        Sessions are per client, and the client is identified by the client address and port.</span>
+<span class="sd">        If requested to create a session that already exists we just return the existing session</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            address (int): Client address</span>
+<span class="sd">            port (int): Client port</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Session: Client session</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">session_id</span> <span class="o">=</span> <span class="p">(</span><span class="n">address</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> <span class="n">port</span>
+        <span class="k">for</span> <span class="n">sess</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sess</span><span class="o">.</span><span class="n">session_id</span> <span class="o">==</span> <span class="n">session_id</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sess</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sess</span>
+
+    <span class="k">def</span> <span class="nf">_get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">session_id</span> <span class="o">==</span> <span class="n">session_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">session</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_close_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">session</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">session</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">session_id</span> <span class="o">==</span> <span class="n">session_id</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;session_id:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">session_id</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_add_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_spec</span><span class="p">,</span> <span class="n">client_address</span><span class="p">,</span> <span class="n">client_port</span><span class="p">):</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">Handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">last_handle</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_spec</span><span class="p">,</span>
+                        <span class="n">client_address</span><span class="p">,</span> <span class="n">client_port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">last_handle</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">handle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">handle</span>
+
+    <span class="k">def</span> <span class="nf">_get_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">hnd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">handle</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hnd</span><span class="o">.</span><span class="n">handle</span> <span class="o">==</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">hnd</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_close_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">hnd</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">handle</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">hnd</span><span class="o">.</span><span class="n">handle</span> <span class="o">==</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">handle</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;handle:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">handle</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_file_spec_to_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_spec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert file specification into filename</span>
+
+<span class="sd">        Firmware version file_spec[0-1]</span>
+<span class="sd">        Number file_spec[2]</span>
+<span class="sd">        Spare file_spec[3][3-0]</span>
+<span class="sd">        Subsystem file_spec[3][7-4]</span>
+<span class="sd">        Format file_spec[3][15-8]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_spec (list[int,int.int.int]): File specification</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Filename</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fw_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_spec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> <span class="n">file_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="n">file_spec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">subsystem</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_spec</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x000F</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_spec</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x00FF</span>
+        <span class="n">format_str</span> <span class="o">=</span> <span class="n">FORMAT_STR</span><span class="p">[</span><span class="n">fmt</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="n">FORMAT_PATCH</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">subsys</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s%s</span><span class="s1">_fw</span><span class="si">%08X</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">subsystem</span><span class="p">,</span> <span class="n">format_str</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">fw_version</span><span class="p">,</span> <span class="n">FILE_EXTENSION</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">subsys</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">subsystem</span><span class="p">,</span> <span class="n">format_str</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">FILE_EXTENSION</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">filename</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_session_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_SESSION_CREATE_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0] FTP protocol version</span>
+<span class="sd">        payload[1] Class flags</span>
+<span class="sd">        payload[2][15:8] Client address</span>
+<span class="sd">        payload[2][7:0] Client port</span>
+<span class="sd">        payload[3] eFuse hash</span>
+<span class="sd">        payload[4][15:8] Chip version</span>
+<span class="sd">        payload[4][7:4] Chip variant</span>
+<span class="sd">        payload[4][3:0] Chip revision</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">client_address</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+            <span class="n">client_port</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x00FF</span>
+
+            <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="n">CSR_FTP_PROTOCOL_VERSION_LATEST</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received session_create protocol version:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_FAILURE</span>  <span class="c1"># no available result for error</span>
+                <span class="n">session_id</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;received session_create client address:</span><span class="si">%s</span><span class="s1"> port:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">client_address</span><span class="p">,</span>
+                               <span class="n">client_port</span><span class="p">)</span>
+                <span class="n">session_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_session</span><span class="p">(</span><span class="n">client_address</span><span class="p">,</span> <span class="n">client_port</span><span class="p">)</span><span class="o">.</span><span class="n">session_id</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_RESULT_SUCCESS</span>
+
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">CSR_FTP_SERVER_NON_VOLATILE</span> <span class="o">|</span> <span class="n">CSR_FTP_SERVER_LOCAL</span> <span class="o">|</span> <span class="n">CSR_FTP_SERVER_HOST</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_SESSION_CREATE_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="n">session_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">session_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="n">flags</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">SERVER_ADDRESS</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">SERVER_PORT_CONTROL</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received session_create length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_session_destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_SESSION_DESTROY_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Session id (little endian format)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">session_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;received session_destroy session_id:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">session_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">session_id</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_close_session</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
+
+            <span class="c1"># we are returning status ok always (as hydra protocol specification states)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_RESULT_SUCCESS</span>
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_SESSION_DESTROY_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="n">session_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">session_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received session_destroy length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_file_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_FILE_OPEN_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Session id (little endian format)</span>
+<span class="sd">        payload[2] Mode</span>
+<span class="sd">        payload[3-6] File spec</span>
+<span class="sd">        payload[7][15:8] Client address</span>
+<span class="sd">        payload[7][7:0] Client port</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="n">session_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">file_spec</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+            <span class="n">client_port</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x00FF</span>  <span class="c1"># unused there is a special data message</span>
+            <span class="n">client_address</span> <span class="o">=</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x00FF</span>  <span class="c1"># unused there is a special data message</span>
+
+            <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
+            <span class="n">handle_id</span> <span class="o">=</span> <span class="n">INVALID_HANDLE_VALUE</span>
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">mtu</span> <span class="o">=</span> <span class="n">MTU_DEFAULT</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="p">:</span>  <span class="c1"># session does not exist</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_NOT_ALLOWED</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_open session:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="n">session_id</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">mode</span> <span class="o">!=</span> <span class="n">CSR_FTP_OPEN_MODE_OPEN_EXISTING</span><span class="p">:</span>  <span class="c1"># only read support</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_READ_ONLY</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_open mode:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_spec_to_filename</span><span class="p">(</span><span class="n">file_spec</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">:</span>
+                    <span class="n">handle_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_handle</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_spec</span><span class="p">,</span>
+                                                 <span class="n">client_address</span><span class="p">,</span> <span class="n">client_port</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_RESULT_SUCCESS</span>
+                    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">filename</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;received file_open filename:</span><span class="si">%s</span><span class="s1"> mode:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received open file:</span><span class="si">%s</span><span class="s1"> does not exist&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_NOT_EXIST</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_FILE_OPEN_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                <span class="n">handle_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">handle_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="n">size</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">size</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="n">mtu</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">SERVER_ADDRESS</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">SERVER_PORT_DATA</span><span class="p">,</span>
+            <span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_open length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_file_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_FILE_READ_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Handle (little endian format)</span>
+<span class="sd">        payload[2] Bytes to read</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">handle_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="n">bytes_to_read</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_handle</span><span class="p">(</span><span class="n">handle_id</span><span class="p">)</span>
+            <span class="n">reply</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_read handle:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="n">handle_id</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_NOT_EXIST</span>
+                <span class="n">reply</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">filename</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">pos</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;received file_read handle:</span><span class="si">%s</span><span class="s1"> length:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">handle_id</span><span class="p">,</span> <span class="n">bytes_to_read</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="n">bytes_to_read</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">filename</span><span class="p">]):</span>
+                    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">filename</span><span class="p">])</span> <span class="o">-</span> <span class="n">pos</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">length</span> <span class="o">=</span> <span class="n">bytes_to_read</span>
+
+                <span class="k">if</span> <span class="n">length</span><span class="p">:</span>
+                    <span class="c1"># convert to 16-bit payload</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">file_data</span><span class="p">[</span><span class="n">filename</span><span class="p">][</span><span class="n">pos</span><span class="p">:</span><span class="n">pos</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span>
+                    <span class="n">elems</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">H&#39;</span> <span class="o">%</span> <span class="n">elems</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_send_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">pos</span> <span class="o">+=</span> <span class="n">length</span>
+                    <span class="n">handle</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
+
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_RESULT_SUCCESS</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pending</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">FTP_CTRL_FILE_READ_CFM_PDU_ID</span><span class="p">,</span>
+                        <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                        <span class="n">handle_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                        <span class="p">(</span><span class="n">handle_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                        <span class="n">length</span><span class="p">,</span>
+                    <span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_EOF</span>
+                    <span class="n">reply</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="n">reply</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                    <span class="n">FTP_CTRL_FILE_READ_CFM_PDU_ID</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                    <span class="n">handle_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">handle_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                    <span class="n">length</span><span class="p">,</span>
+                <span class="p">])</span>
+
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_read length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_file_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_FILE_WRITE_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Handle (little endian format)</span>
+<span class="sd">        payload[2] Bytes to write</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">handle_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="c1"># bytes_to_write = payload[2]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_write handle:</span><span class="si">%s</span><span class="s1"> unsupported&#39;</span><span class="p">,</span> <span class="n">handle_id</span><span class="p">)</span>
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_READ_ONLY</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_FILE_WRITE_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                <span class="n">handle_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">handle_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="n">length</span><span class="p">,</span>
+            <span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_write length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_file_seek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_FILE_SEEK_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Handle (little endian format)</span>
+<span class="sd">        payload[2][15:8] Spare</span>
+<span class="sd">        payload[2][7:0] Origin</span>
+<span class="sd">        payload[3] Offset</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">handle_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="c1"># apare = (payload[2] &gt;&gt; 8) &amp; 0x00FF</span>
+            <span class="c1"># origin = payload[2] &amp; 0x00FF</span>
+            <span class="c1"># offset = payload[3]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_seek handle:</span><span class="si">%s</span><span class="s1"> unsupported&#39;</span><span class="p">,</span> <span class="n">handle_id</span><span class="p">)</span>
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_FILE_OP_NOT_ALLOWED</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_FILE_SEEK_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                <span class="n">handle_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">handle_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_seek length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_file_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_FILE_CLOSE_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Handle (little endian format)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">handle_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;received file_close handle:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">handle_id</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_handle</span><span class="p">(</span><span class="n">handle_id</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_close_handle</span><span class="p">(</span><span class="n">handle_id</span><span class="p">)</span>
+
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_RESULT_SUCCESS</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_FILE_CLOSE_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                <span class="n">handle_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">handle_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span>
+            <span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_close length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_handle_file_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process a FTP_CTRL_FILE_DELETE_REQ_PDU_ID received message</span>
+
+<span class="sd">        payload[0-1] Session id (little endian format)</span>
+<span class="sd">        payload[2-5] File spec</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message payload words</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="n">session_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="c1"># file_spec = payload[2:6]</span>
+            <span class="n">spare</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_delete unsupported&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">CSR_FTP_DELETE_READ_ONLY</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_send_control</span><span class="p">([</span>
+                <span class="n">FTP_CTRL_FILE_DELETE_CFM_PDU_ID</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">spare</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">result</span><span class="p">,</span>
+                <span class="n">session_id</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">session_id</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received file_delete length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

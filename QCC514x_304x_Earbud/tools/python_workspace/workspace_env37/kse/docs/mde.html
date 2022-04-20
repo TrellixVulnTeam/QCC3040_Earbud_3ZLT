@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MDE kalsim based project &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>MDE kalsim based project</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/mde.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mde-kalsim-based-project">
+<span id="mde"></span><h1>MDE kalsim based project<a class="headerlink" href="#mde-kalsim-based-project" title="Permalink to this headline">¶</a></h1>
+<p>This describes how to run a Kalsim-based project in MDE.</p>
+<div class="section" id="create-a-project-in-mde">
+<h2>Create a project in MDE<a class="headerlink" href="#create-a-project-in-mde" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Launch MDE, and then go to <strong>File</strong> &gt; <strong>New File or Project</strong>.</p></li>
+<li><p>Select a project from the resulting <strong>New File or New Project</strong> window.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Select the correct chip category (<strong>ADK CSRA6810x</strong>, <strong>ADK QCC512x</strong>, <strong>ADK QCC514x</strong>, <strong>ADK QCC516x</strong> or <strong>ADK QCC517x</strong>), depending on the chip being worked on.</p></li>
+<li><p>Select the type of application to be worked on (such as <strong>Sink Application</strong> or <strong>Loopback Download Application</strong> or <strong>Capability Bundle for Kymera</strong>), and then click <strong>Choose</strong>.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>On the <strong>Introduction and Project</strong> Location window:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Type the <strong>Name</strong> of the project.</p></li>
+<li><p>In the <strong>Create in</strong> field, choose the required location for the workspace, and then click <strong>Next</strong>.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Modify the details on the Properties window as required. Depending on the
+application type that you have selected, you might have to alter the properties.
+For example, if you have selected Capability Bundle for Kymera1 as the project
+type, you can add the included capabilities in this step.</p></li>
+<li><p>Click Next, and then click Finish.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For information about creating projects in MDE, see the
+Qualcomm_MDE.WIN.2.4 User Guide.</p>
+</div>
+<p>A workspace may contain many different projects in MDE for different items that will be deployed to a
+hardware platform. Not all the projects are relevant to KSE, which enables the user to develop and
+debug downloadable capability bundles. When working with KSE, you will only work with the capability
+download project; the project can be switched between <code class="docutils literal notranslate"><span class="pre">kse</span></code> and <code class="docutils literal notranslate"><span class="pre">debug</span></code> (hardware) configurations,
+while the overall workspace remains targeted at the hardware platform throughout.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(1) Depending on the type of application that you select, the project
+is either appended to an existing workspace, or a new workspace is
+created with some preloaded projects. For example, Capability Bundle
+projects are appended to existing workspaces and projects such as
+<strong>Loopback Download Application</strong> or <strong>Loopback Application</strong> create a workspace.</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li><p>The <strong>Loopback Download Application</strong> enables you to run
+<code class="docutils literal notranslate"><span class="pre">SELF_TEST</span></code> in KSE. See Running SELF_TEST and DOWNLOAD_PASSTHROUGH
+with streams and endpoints.</p></li>
+<li><p>The <strong>Capability Bundle for Kymera</strong> application allows you to create
+a capability storage file.</p></li>
+</ul>
+</div></blockquote>
+<p>(2) The application type selected in step 2. b. also impacts whether
+you are able to use KSE from a project that is already included in
+the application, or from a project that can be loaded after the
+application has been loaded in MDE. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Choosing <strong>Loopback Download Application</strong> means that the application
+workspace contains a project named <code class="docutils literal notranslate"><span class="pre">self_test_and_passthrough</span></code>, which
+can make use of KSE for prototyping and debugging.</p></li>
+<li><p>Choosing <strong>Sink Application</strong> means that the application does not contain
+a project that can make use of KSE, but after the application has been
+loaded into the workspace, a project (for example, Capability Bundle
+For Kymera) can later be loaded into this workspace, which can then use KSE for development.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="open-an-existing-project-from-the-adk">
+<h2>Open an existing project from the ADK<a class="headerlink" href="#open-an-existing-project-from-the-adk" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Launch MDE, and then go to <strong>File</strong> &gt; <strong>Open File or Project</strong>.</p></li>
+<li><p>Select your installed ADK:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Select from the listed examples and go to, for example, <strong>earbud</strong>.</p></li>
+<li><p>Go to <strong>workspace</strong>.</p></li>
+<li><p>Go to <strong>QCC5144-AA_DEV-BRD-R2-AA</strong>.</p></li>
+<li><p>Select <strong>earbud.x2w</strong>.</p></li>
+<li><p>Click <strong>Open</strong>.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Select the latest installed &lt;ADK_Toolkit_version&gt;.</p></li>
+<li><p>Click <strong>Open</strong>.</p></li>
+</ol>
+</div>
+<div class="section" id="change-projects-build-settings-to-run-on-kse">
+<h2>Change projects build settings to run on KSE<a class="headerlink" href="#change-projects-build-settings-to-run-on-kse" title="Permalink to this headline">¶</a></h2>
+<p>To change the build setting for the project to run on KSE:</p>
+<ol class="arabic">
+<li><p>Click <strong>Projects</strong>.</p></li>
+<li><p>From the <strong>Active Project</strong> drop-down menu, select the project to be worked on
+(for example, <strong>self_test_and_passthrough</strong> or <strong>kymera_audio</strong>).</p></li>
+<li><p>In the <strong>Build Settings</strong> section &gt; <strong>Edit build configuration</strong> field, select
+<code class="docutils literal notranslate"><span class="pre">kse</span></code>.</p></li>
+<li><p>Select User tab in Properties field to adapt pre-defined settings:</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>KALSIM_ENABLE_DEBUGGER = false or true, disable or enable debugging</p></li>
+<li><p>KALSIM_LOGLEVEL is adjustable between:</p>
+<blockquote>
+<div><ol class="lowerroman simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">=</span> <span class="pre">DEBUGG</span></code>, for debugging specific problems, high verbosity,
+not recommended</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">=</span> <span class="pre">INFO</span></code>, normal high verbosity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">30</span> <span class="pre">=</span> <span class="pre">WARNING</span></code>, only log errors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">40</span> <span class="pre">=</span> <span class="pre">ERROR</span></code>, only log non recoverable errors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">50</span> <span class="pre">=</span> <span class="pre">CRITICAL</span></code></p></li>
+</ol>
+<p>The value for the log level is accepted as number or as string.</p>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KALSIM_TIMER_UPDATE</span> <span class="pre">=</span> <span class="pre">6400</span></code> (default)</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Click <strong>Debug</strong>. On the <strong>Save Project</strong> pop-up window, click <strong>Yes</strong> to save
+the appropriate project</p></li>
+</ol>
+</div>
+<div class="section" id="deploy-the-project-on-kse">
+<h2>Deploy the project on KSE<a class="headerlink" href="#deploy-the-project-on-kse" title="Permalink to this headline">¶</a></h2>
+<p>To deploy the project on KSE, select the project, then either:</p>
+<ul class="simple">
+<li><p>Select <strong>Deploy(skip Dependencies)</strong></p></li>
+<li><p>Press <strong>Ctrl + Shift + D</strong></p></li>
+</ul>
+<p>You can deploy a project on KSE in either the release mode or debug mode.
+KSE shell is launched when a project is deployed.</p>
+</div>
+<div class="section" id="deploy-project-in-release-mode">
+<h2>Deploy project in release mode<a class="headerlink" href="#deploy-project-in-release-mode" title="Permalink to this headline">¶</a></h2>
+<p>When you deploy a project in release mode, the KSE shell is launched without
+the need to attach a debugger.</p>
+</div>
+<div class="section" id="deploy-project-in-debug-mode">
+<h2>Deploy project in debug mode<a class="headerlink" href="#deploy-project-in-debug-mode" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Click the <strong>Projects</strong> tab and then in the <strong>Properties</strong> section of the
+<strong>Build Settings</strong> pane, set <code class="docutils literal notranslate"><span class="pre">KALSIM_ENABLE_DEBUGGER</span></code> to <strong>true</strong>.</p></li>
+<li><p>Click <strong>Debug</strong>. On the <strong>Save Changes</strong> pop-up window, click <strong>Yes</strong>.</p></li>
+<li><p>Select the project, then either right-click and select
+<strong>Deploy(Skip Dependencies)</strong> or <strong>Ctrl + Shift + D</strong>.</p></li>
+<li><p>Attach the debugger. When a project is deployed in debug mode, the shell
+displays the following message, prompting you to attach debugger in the IDE:
+<code class="docutils literal notranslate"><span class="pre">Initialisation</span> <span class="pre">will</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">completed</span> <span class="pre">until</span> <span class="pre">an</span> <span class="pre">external</span> <span class="pre">kalaccess</span> <span class="pre">session</span>
+<span class="pre">is</span> <span class="pre">connected</span> <span class="pre">and</span> <span class="pre">run</span> <span class="pre">issued</span></code></p></li>
+<li><p>Select <strong>Debug &gt; Attach Debugger &gt; ADK Toolkit 1.x. &gt; Kalsim CSRA6810x Audio/
+Kalsim/QCC512x/Kalsim QCC 514x Audio</strong>. On the <strong>Attach Debugger</strong> window, click <strong>OK</strong>.</p></li>
+<li><p>On the debugger tool bar of the IDE, click <strong>Continue</strong> or press <strong>F5</strong> (play button).</p></li>
+<li><p>When a project is deployed in debug mode, its symbol files <code class="docutils literal notranslate"><span class="pre">(.elf)</span></code> should be
+automatically loaded into the workspace. In the unlikely event of the symbol
+files not being loaded automatically, the required symbol files can be
+manually loaded as follows:</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>Click <strong>Symbol Files</strong> tab on the <strong>Debug</strong> pane</p></li>
+<li><p>Double-click on the row corresponding to the project under <strong>Path</strong> and choose the <code class="docutils literal notranslate"><span class="pre">.elf</span></code> file from
+the following directory:
+<strong>&lt;workspace_directory&gt;/audio/kalimba/kymera/output_bundles/
+&lt;chipname&gt;_rom_kalsim_kalcmd2_release/&lt;project_name&gt;</strong></p>
+<p>The symbol files available in your capability bundle project allow you to debug any new
+capability bundles, which you are developing. If you want to debug existing capabilities
+present in base <code class="docutils literal notranslate"><span class="pre">kymera_audio</span></code> firmware, download their symbol files for Kalsim as follows:</p>
+<ol class="lowerroman simple">
+<li><p>Right-click and select <strong>Add Symbols</strong>.</p></li>
+<li><p>Select the <code class="docutils literal notranslate"><span class="pre">kymera_&lt;chipname&gt;_audio.elf</span></code> file from:
+<strong>&lt;workspace_directory&gt;/audio/kalimba/kymera/output/
+&lt;chipname&gt;_rom_kalsim_kalcmd2_release/build/debugbin/</strong></p></li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The text corresponding to the platform in the <strong>&lt;chipname&gt;</strong> placeholder in the paths
+should be correctly replaced depending on the platform being worked on.</p>
+</div>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>When KSE is deployed from a project to develop downloadable capabilities,
+IDE does not detect any break points at first. This is because the capability
+bundle has not downloaded when the symbol files were loaded to the IDE.
+This is also the case when KSE is stopped after the symbol files have been loaded.
+Refreshing the symbol files will fix this issue. To refresh symbol files,
+do one of the following:</p>
+<ul class="simple">
+<li><p>Reload the symbol files again.</p></li>
+<li><p>On the debugger toolbar, click <code class="docutils literal notranslate"><span class="pre">Pause</span></code> and <code class="docutils literal notranslate"><span class="pre">Play</span></code>.</p></li>
+<li><p>Stop the debugger and attach it again.</p></li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Compile</span> <span class="pre">Output</span></code> pane of the IDE contains information about the command and
+its arguments that launched KSE shell. This information includes the log level
+and any other scripts that were included during the launch.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

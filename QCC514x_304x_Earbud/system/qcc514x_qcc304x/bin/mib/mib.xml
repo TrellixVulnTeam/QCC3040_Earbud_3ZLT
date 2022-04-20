@@ -1,0 +1,1671 @@
+<?xml version='1.0' encoding='utf-8'?>
+<metadata_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="HydraMeta.xsd">
+
+  
+  <metadata build_date_time="2021-05-21 12:07" subsystem_alias="system" subsystem_id="0" subsystem_name="curator" version="2005">
+
+
+
+
+
+
+   <config_element name="PioStatus" psid="8">
+     <label>Read the status of the PIO lines</label>
+
+
+     <description_user>
+This key returns the state of the chip PIO lines 0 to 79 as a bitmask.
+
+This key returns 10 octets comprising of 5 16-bit bitmasks where bit 0 of the i'th bitmask
+represents PIO[0+16*i],bit 1 represents PIO[1+16*i], and so on. Here bit 0 is the least
+significant bit of a word.
+
+So for example, if PIOs 0, 1, 13, 14 and 50 were high and all other PIOs were low
+the MIB value is:
+- [0x6003 0x0 0x0 0x0004 0x0] in uint16 format
+- [0x60 0x03 0x0 0x0 0x0 0x0 0x0 0x04 0x0 0x0] in octet format
+
+     </description_user>
+     <type>octet_string</type>
+     <range_min>10</range_min>
+     <range_max>10</range_max>
+
+
+
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+
+
+   <config_element name="PioProtectMask" psid="12">
+     <label>Read which PIOs are reserved by the on-chip firmware</label>
+
+
+     <description_user>
+This key allows the host to see which PIOs are reserved by the on-chip
+firmware.
+
+It is read-only.
+
+This key holds 5 16-bit bitmasks, refer to PioStatus for the
+format of mapping PIOs to these bitmasks.
+
+If the bit corresponding to a PIO is high, it has been reserved by the
+on-chip firmware. This is likely to be a consequence of setting
+another MIB key to specify this PIO as being used in the feature
+controlled by that MIB key.
+
+If a PIO is allocated to the chip, the host may not attempt to modify it.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>10</range_min>
+     <range_max>10</range_max>
+
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+
+
+
+
+   <config_element name="ResourceDependencies" psid="18">
+     <label>Array of pairs of resource identifiers specifying dependencies</label>
+     <description_user>
+The string consists of an arbitrary number of sets of four octets.
+Each set encodes two unsigned 16-bit numbers, with the more
+significant octet first within each number. These pairs of numbers
+correspond to hardware resources (type CCP_RESOURCE_ID). Each pair
+specifies that the first resource depends on the second resource,
+ie whenever the first resource is requested, the second resource
+must first be acquired.
+
+Both resources must be known to the firmware, ie must be compiled
+into the resource database. Not all resources are necessarily known
+to all versions of the chip management subsystem firmware.
+
+This is used to specify run-time dependency information for resources.
+For example, to specify that a certain piece of hardware
+(CCP_RESOURCE_ID_WONDAWARE) depends on PIOs 3 and 4, the string would
+contain the four resource IDs:
+CCP_RESOURCE_ID_WONDAWARE CCP_RESOURCE_ID_PIO3
+CCP_RESOURCE_ID_WONDAWARE CCP_RESOURCE_ID_PIO4
+
+Failure to write this key, for example because there was not enough
+memory to store the dependency information or because one of the
+resource identifiers was not present in the firmware, causes the
+dependency information to be empty.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>4</range_min>
+     <range_max>128</range_max>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DeepSleepPioWake" psid="35">
+     <label>Mask of PIOs that wake the chip from deep sleep</label>
+
+     <description_user>
+Array of five 16-bit masks of PIOs that wake the chip from deep sleep.
+
+Refer to PioStatus for the format of mapping PIOs to these bitmasks.
+
+No arrangements are made for the chip to remain awake, so this is
+only useful when combined with additional signalling.
+
+By default, the PIO is assumed to be active high. This can be
+changed with the MIB attribute DeepSleepPioInvert.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>10</range_min>
+     <range_max>10</range_max>
+     <default>[0000 0000 0000 0000 0000]</default>
+
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DeepSleepPioInvert" psid="36">
+     <label>Mask of PIOs that wake the chip from deep sleep when low</label>
+
+     <description_user>
+Array of five 16-bit masks of PIOs that wake the chip from deep sleep when low.
+Refer to PioStatus for the format of mapping PIOs to these bitmasks.
+
+- If the corresponding bit in DeepSleepPioWake is 0, the bit is ignored.
+
+- Otherwise, if the bit is 0, the PIO causes wake from deep sleep when high.
+
+- Otherwise, if the bit is 1, the PIO causes wake from deep sleep when low.
+
+     </description_user>
+     <type>octet_string</type>
+     <range_min>10</range_min>
+     <range_max>10</range_max>
+     <default>[0000 0000 0000 0000 0000]</default>
+
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="USBManufString" psid="43">
+     <label>USB Manufacturer string descriptor</label>
+     <description_user>
+Manufacturer string descriptor for the USB debugger and the Hub devices
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <format>unicode_string</format>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="USBVendorID" psid="48">
+     <label>USB Vendor ID code </label>
+     <description_user>
+USB Vendor ID for both the hub and the USB debugger device
+     </description_user>
+     <type>uint16</type>
+     
+     <default>0x0a12</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+
+
+   <config_element name="USBHubProductString" psid="55">
+     <label>USB product string descriptor for hub</label>
+     <description_user>
+USB hub product string descriptor
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+    </config_element>
+
+
+
+   <config_element name="USBHubSerialNumberString" psid="56">
+     <label>USB serial number string descriptor for hub</label>
+     <description_user>
+USB hub serial number string descriptor
+          </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+    </config_element>
+
+
+
+   <config_element name="USBHubConfigString" psid="57">
+     <label>USB configuration string descriptor for hub</label>
+     <description_user>
+USB hub configuration string descriptor for the hub's single configuration
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+    </config_element>
+
+
+
+   <config_element name="USBHubProductID" psid="58">
+     <label>USB hub product ID</label>
+     <description_user>
+Product ID of the Curator Hub device.
+     </description_user>
+     <type>uint16</type>
+     
+     <default>0x4010</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="USBHubMaxPower" psid="59">
+        <label>Maximum power drawn by the hub when acting as a bus-powered device</label>
+        <description_user>
+Specify the maximum power drawn by the device if it is bus-powered.
+Expressed in units of 2mA.
+(See USB2.0 standard, table 9-10.)
+
+If USBSelfPowered is TRUE, this value is ignored and the device declares that it draws no current.
+        </description_user>
+        <type>uint16</type>
+        <default>250</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="USBSelfPowered" psid="61">
+     <label>Indicates whether the chip draws power from the USB or not</label>
+     <description_user>
+This can be set to TRUE if the chip has a separate power source.
+The value of USBHubMaxPower is ignored when this is TRUE - it is overridden to 0.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+
+   <config_element name="SqifAudioMaskROM" psid="67">
+      <label>Execute Audio from serial flash instead of ROM</label>
+      <description_user>
+If true, the Audio subsystem will be configured to run from
+an external serial flash. The chip will panic if no suitable
+serial flash is detected at boot-time. If False chip will ignore
+any attached serial flash and boot the subsystem from ROM.
+      </description_user>
+      <type>boolean</type>
+      <default>false</default>
+      <function_list>
+          <function function_name="mibsetfn_common" type="set" />
+          <function function_name="mibgetfn_common" type="get" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="DeepSleepBypassLDOHP" psid="71">
+      <label>Determine whether to leave the bypass LDO in high power
+      during deep sleep.</label>
+      <description_user>
+      For some applications we may need the bypass LDO to power external devices
+      in which case it may need to remain in high power mode during deep sleep.
+      This key allows HP mode to be forced during deep sleep
+
+      The key DormantBypassLDOHP gives the equivalent control during dormant.
+
+      Note the voltage of this supply can also vary during operation.
+      See the key BypassLdoForce3v3 for details.
+      </description_user>
+      <type>boolean</type>
+      <default>false</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="QSPIModeOverrides" psid="72">
+       <label>Array of (key,value) pairs indicating mode overrides for QSPI flash interfaces</label>
+   <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+
+     <default>[01 03 02 03 03 03]</default>
+
+     <range_min>0</range_min>
+     <range_max>8</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="DCDTimeout" psid="73">
+      <label>Set the number of milliseconds used for the data contact detect timeout.</label>
+      <description_user>When the USB cable is plugged in there is a delay between the VBUS
+line connecting and the data lines connecting. A timeout is used to state the max time
+between these two events. When the timeout occurs the firmware will assume the data lines
+have made contact.
+
+If VBUS is present on VCHG when the chip boots the boot time will be subtracted from DCDTimeout
+to ensure we still wait for the requested time. If the boot time is greater than the requested
+DCDTimeout a FAULT_BOOT_TIME_GREATER_THAN_DCD_TIMEOUT will be generated.
+      </description_user>
+      <type>uint16</type>
+      <range_min>0</range_min>
+      <range_max>1000</range_max>
+      <default>600</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+   <config_element name="AppsProcsClkRate" psid="77">
+      <label>Defines the clock rate of both the Apps processors.</label>
+
+      <description_user>
+Key values:
+ 0 : use SCALED clock
+ 1 : use PLL clock (80MHz)
+Other values reserved.
+NOTE: Not all products can select all clock rates.
+      </description_user>
+
+      <type>uint16</type>
+      <default>0</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+   <config_element name="ChargerIsUSB" psid="79">
+      <label>Set whether the charger is USB or not</label>
+      <description_user>
+When true, when a charger is plugged in USB charger detection will take place to find out what type of USB charger is connected.
+When false, if a charger is plugged in Curator will assume it's a non-USB charger.
+      </description_user>
+      <type>boolean</type>
+      <default>true</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="QSPIFRAMLUTBaseParams" psid="80">
+       <label>The basic identifiers and parameters for the QSPIF RAM LUT entries.</label>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>18</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTSPIReadParams" psid="81">
+       <label>The SPI mode read parameters for RAM LUT entries.</label>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>6</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTSPIConfVector" psid="82">
+       <label>The SPI mode configuration vector for RAM LUT entries.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>68</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTFastReadParams" psid="83">
+       <label>The fast mode read parameters for RAM LUT entries.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>10</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTFastConfVector" psid="84">
+       <label>The fast mode configuration vector for RAM LUT entries.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>68</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTWriteCmds" psid="85">
+       <label>The write command parameters for QSPI flash RAM LUT entries.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>6</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="QSPIFRAMLUTStatusReadParams" psid="87">
+     <label>The status register parameters for the QSPI flash RAM LUT entries.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>10</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTStatusReadVector" psid="88">
+     <label>The command vectors to read status registers for RAM LUT QSPI flash chips.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>20</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTDPDCmds" psid="89">
+       <label>The Deep Power Down commands for RAM LUT QSPI flash chips.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>6</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTResetVector" psid="90">
+       <label>The vector to reset RAM LUT QSPI flash chips.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>68</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="SqifEnableChipSelect1" psid="94">
+      <label>Enable the QSPI RAM Chip Select line on relevant interfaces.</label>
+      <description_user>
+This key is used to configure support for QSPI RAM devices.
+
+Seek guidance from Qualcomm on which QSPI RAM devices can be used and how to use this key to configure them.
+      </description_user>
+      <type>uint16</type>
+      <default>0</default>
+      <function_list>
+        <function function_name="mibsetfn_common" type="set" />
+        <function function_name="mibgetfn_common" type="get" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="EnableAudioSqif" psid="95">
+      <label>Enable the Audio QSPI interface when Audio is running from ROM.</label>
+      <description_user>
+This key is used to configure support for QSPI RAM devices.
+
+Seek guidance from Qualcomm on which QSPI RAM devices can be used and how to use this key to configure them.
+      </description_user>
+      <type>boolean</type>
+      <default>false</default>
+      <function_list>
+        <function function_name="mibsetfn_common" type="set" />
+        <function function_name="mibgetfn_common" type="get" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+   <config_element name="MclkPLLAlphaVcoConfig" psid="97">
+      <label> VCO configuration for MCLK PLL. </label>
+      <description_user>
+Advanced settings for VCO in the MCLK PLL.
+SET ONLY ON ADVICE FROM QUALCOMM
+      </description_user>
+      <type>octet_string</type>
+      <range_max>4</range_max>
+      <range_min>4</range_min>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="MclkPLLCoarseDacConfig" psid="98">
+      <label> Coarse DAC configuration for the MCLK PLL. </label>
+      <description_user>
+Advanced settings for the coarse DAC in the MCLK PLL.
+SET ONLY ON ADVICE FROM QUALCOMM
+      </description_user>
+      <type>uint16</type>
+      <default>0</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="BypassLdoForce3v3" psid="100">
+      <label>Force bypass LDO output to 3v3.</label>
+      <description_user>
+      When running from battery, by default, the bypass LDO output voltage is lowered from 3v3 to
+      save power. When this key is set the bypass LDO output is forced to 3v3 volts.
+      This can be particularly useful for the scenario where peripherals which require 3v3
+      are powered by the bypass LDO.
+
+      Note on some chips the bypass LDO must be lowered whilst programming efuse bits.
+      Seek guidance if 3v3 is required and efuse bits are to be programmed.
+
+      Note also the Bypass LDO may be put into a low power mode during deep sleep
+      and dormant. The keys DeepSleepBypassLDOHP and DormantBypassLDOHP can be
+      used to prevent this.
+      </description_user>
+      <type>boolean</type>
+      <default>false</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="QSPICalOverrides" psid="104">
+       <label>Array of 15 octets representing the interval boundaries for the pad calibration overrides</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>15</range_min>
+     <range_max>15</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="ChargerInsertionDebounceTime" psid="108">
+      <label>Debounce time for charger insertion in milliseconds.</label>
+      <description_user>
+This is a simple delay when VCHG goes high, it happens before USB charger detection. If
+ChargerIsUSB is false then this is the only debouncing, if it is true then the USB charger
+detection includes additional USB debouncing.
+      </description_user>
+      <type>uint16</type>
+      <default>15</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ChargerRemovalDebounceTime" psid="109">
+      <label>Debounce time for charger removal in milliseconds.</label>
+      <description_user>
+This is a simple delay when VCHG goes low. It provides the only debouncing on charger
+removal, regardless of the value of ChargerIsUSB.
+      </description_user>
+     <type>uint16</type>
+      <default>15</default>
+      <range_min>15</range_min>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+   <config_element name="USBHubDeviceRemovable" psid="112">
+        <label>Value for the DeviceRemovable field of the USB hub class descriptor</label>
+        <description_user>
+USB2.0 standard, section 11.23.2.1 "Hub Descriptor", offset 7 "DeviceRemovable".
+Bit 0 is reserved (0), bit 1 corresponds to port 1,
+bit 2 to port 2, bit 3 to port 3 and bit 4 to port 4.
+Each bit can be either 0 - device is removable or 1 - device is non-removable.
+Default value makes all 4 internal devices non-removable.
+        </description_user>
+        <type>uint16</type>
+        <default>0x1e</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+
+
+   <config_element name="SqifClockControl" psid="114">
+      <label> Defines the default clock source for SQIF Interface 0 and SQIF Interface 1</label>
+      <description_user>
+This MIB uses two nibbles to set the SQIF clocks as follows:
+Bits 3:0 - define the SQIF Interface 0 clock source selection.
+Bits 7:4 - define the SQIF Interface 1 clock source selection.
+
+SQIF interface 0: Audio
+SQIF interface 1: Apps
+
+Values for each SQIF clock nibble are:
+0 - XTAL clock source (32MHz)
+1 - PLL clock source (80MHz)
+Others - reserved
+      </description_user>
+      <type>uint8</type>
+      <default>0x00</default>
+      <function_list>
+        <function function_name="mibsetfn_common" type="set" />
+        <function function_name="mibgetfn_common" type="get" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+    <config_element name="USBChargerDetectDCDThreshold" psid="115">
+      <label>Voltage threshold in mV for data contact detection</label>
+      <description_user>The voltage threshold in mV on D+ during data contact detection
+that we use to determine if the charger is present or not. If the D+ voltage
+is less than this threshold we deduce the charger is present.
+      </description_user>
+      <type>uint16</type>
+      <default>800</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="USBChargerDetectProprietaryThreshold" psid="116">
+      <label>Voltage threshold in mV for proprietary charger detection</label>
+      <description_user>The voltage threshold in mV on D- just after primary detection
+that we use to determine if the charger is proprietary or not. If the D- voltage
+is greater than this threshold we deduce the charger is proprietary.
+      </description_user>
+      <type>uint16</type>
+      <default>900</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+
+
+
+
+     <config_element name="QSPIFRAMLUT4BAMCmds" psid="122">
+       <label>The 4 Byte Address Mode commands for RAM LUT QSPI flash chips.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>6</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIFRAMLUTSuspendResumeCmds" psid="123">
+     <label>The suspend/resume commands for RAM LUT QSPI flash chips.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>10</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="QSPIFRAMLUTEraseParams" psid="127">
+       <label>The erase parameters for QSPI flash RAM LUT entries.</label>
+     <description_user>
+This key is used to configure support for Flash devices not supported in the curator ROM.
+
+Seek guidance from Qualcomm on which other Flash devices can be used and how to use these keys to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>10</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+   <config_element name="QSPIAudioPadSet" psid="128">
+       <label>The QSPI pad set to be used by the Audio subsystem</label>
+     <description_user>
+This key is used to determine which set of QSPI pads the Audio subsystem will use when it is configured to use them.
+     </description_user>
+     <type>uint16</type>
+     <default>2</default>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="QSPIRAMParams" psid="129">
+       <label>Parameters used for QSPI RAM configuration</label>
+   <description_user>
+This key is used to configure support for QSPI RAM devices.
+
+Seek guidance from Qualcomm on which QSPI RAM devices can be used and how to use this key to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>8</range_min>
+     <range_max>8</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIRAMConfigVector" psid="130">
+       <label>QSPI RAM configuration vector</label>
+   <description_user>
+This key is used to configure support for QSPI RAM devices.
+
+Seek guidance from Qualcomm on which QSPI RAM devices can be used and how to use this key to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>20</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="QSPIRAMResetVector" psid="131">
+       <label>QSPI RAM reset vector</label>
+   <description_user>
+This key is used to configure support for QSPI RAM devices.
+
+Seek guidance from Qualcomm on which QSPI RAM devices can be used and how to use this key to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>20</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="QSPIRAMPIOConfigAudio" psid="132">
+       <label>QSPI RAM PIO power control configuration for the Audio subsystem</label>
+   <description_user>
+This key is used to configure support for QSPI RAM devices.
+
+Seek guidance from Qualcomm on which QSPI RAM devices can be used and how to use this key to configure them.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>4</range_min>
+     <range_max>4</range_max>
+     <function_list>
+       <function function_name="mibsetfn_common" type="set" />
+       <function function_name="mibgetfn_common" type="get" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PanicOnFault" psid="1000">
+     <label>Halt the system on any fault</label>
+     <description_user>
+When the chip's firmware detects a problem that implies that it
+cannot continue operation (for example, running out of pool memory) it
+normally calls panic(). This halts the firmware, and may reboot it.
+By contrast, when the chip's firmware encounters a problem that
+it can survive (for example, detecting a received corrupt packet) it
+normally calls fault(), which can cause a fault report
+message to be created.
+
+If this MIB entry is set to TRUE, the firmware calls panic()
+when it would normally call fault().
+
+Only set this for system debugging.
+
+See PanicOnFaultExceptions, which sets exceptions to PanicOnFault.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PanicOnFaultExceptions" psid="1001">
+     <label>List of fault ids treated the opposite to PanicOnFault</label>
+     <description_user>
+An array of eight octets giving a list of four 16-bit fault ids.
+Each 16-bit fault id will be treated the opposite to PanicOnFault (see below).
+Fault ids not required must be set to 0000 ie FAULT_NONE or "not a fault".
+If this MIB key is not set curator behaves as if it were [0000 0000 0000 0000].
+
+If PanicOnFault is true this is a whitelist ie all faults cause a panic
+except for the fault ids in this list.
+
+If PanicOnFault is false this is a blacklist ie only the fault ids in
+this list cause a panic.
+
+Only set this for system debugging.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>8</range_min>
+     <range_max>8</range_max>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="CuratorDeepSleepConfig" psid="1003">
+     <label>Deep sleep mode choice</label>
+     <description_user>
+There are the following possible approaches to deep sleep.
+
+0: Do not do it.
+
+1: Do it whenever possible.
+
+Other values are reserved
+     </description_user>
+     <type>uint16</type>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <default>1</default>
+     <range_min>0</range_min>
+     <range_max>2</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+   <config_element name="VCHGMessageEnable" psid="1009">
+        <label>Control whether 2-wire VCHG communication is enabled</label>
+    <description_user>
+Enables 2-wire VCHG communication.
+If set to false, no attempt is made to process any incoming VCHG messages and
+any requests to send VCHG messages will be ignored.
+
+Seek advice from Qualcomm before using this key.
+      </description_user>
+      <type>uint16</type>
+      <function_list>
+         <function function_name="mibgetfn_patch" type="get" />
+         <function function_name="mibsetfn_patch" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+    </config_element>
+
+   <config_element name="VCHGMessageEarbud" psid="1010">
+     <label>Select which earbud this device represents</label>
+     <description_user>
+Select which earbud this device represents in the context of VCHG charger
+comms.
+
+The device will only accept messages that are addressed to it, the options are:
+    0 - Ignore all messages
+    1 - Right earbud
+    2 - Left earbud
+
+This is only applicable when 2-wire VCHG communication is enabled with
+VCHGMessageEnable.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>2</range_max>
+     <function_list>
+       <function function_name="mibgetfn_patch" type="get" />
+       <function function_name="mibsetfn_patch" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DSULPTimeConversionFactor" psid="1011">
+     <label>ULP slow cycles to microseconds correction factor</label>
+     <description_user>
+When using the crystal in Ultra Low Power mode as the deep sleep timer
+source, this key allows any consistent offset in the crystal frequency
+that occurs in this mode only to be compensated for.
+Seek advice from Qualcomm before using this key.
+
+This patch changes the default value of the key to: 122
+     </description_user>
+     <type>uint16</type>
+     <function_list>
+       <function function_name="mibgetfn_patch" type="get" />
+       <function function_name="mibsetfn_patch" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ChargerAdjustVfloatTrim" psid="1012">
+     <label>Adjust the charger float voltage trim</label>
+     <description_user>
+The initial trim setting of the charger float voltage is set during production.
+This MIB key will add the specified signed offset to that value.
+
+The default value of this setting is zero.
+
+Seek advice from Qualcomm before using this key.
+     </description_user>
+     <type>int16</type>
+      <range_min>-6</range_min>
+      <range_max>6</range_max>
+     <function_list>
+       <function function_name="mibgetfn_patch" type="get" />
+       <function function_name="mibsetfn_patch" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <config_element name="SystemResourceNonDependencies" psid="1025">
+     <label>Array of pairs of resource identifiers specifying system dependencies to be removed</label>
+     <description_user>
+This key has an identical format to ResourceDependencies. It is
+used to specify dependencies at the system level which are compiled into
+the system, but are to be ignored at run time. In each pair of resource
+identifiers, the resource given by the first identifier no longer
+depends on the resource given by the second. No error is reported if
+the first identifier did not previously depend on the second (though
+clearly this setting is not useful). A pair of values within the array
+also overrides any corresponding dependency set in other MIB keys.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>4</range_min>
+     <range_max>128</range_max>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="UartPinsConfig" psid="1027">
+     <label>PIO configuration needed for UART pins</label>
+     <description_user>
+The value is an octet string consisting of four octets, each describing
+one of the four UART pins, in the order RTS, CTS, data TX, data RX. The
+format is strict. An invalid format causes the firmware to panic.
+
+Each octet can have one of the following values:
+
+0-0x7f: Use this value as the PIO for this UART pin. Note that valid
+values are constrained by packages and modules as well as chip
+hardware. The resource for the configured PIO will be acquired with
+the UART_WITH_PIOS resource and the hardware will be configured
+appropriately.
+
+0x80: Do not connect this pin. The UART hardware will be set to an unused
+PIO for this function. The PIO will not be routed to pins, however care
+needs to be taken if several pins are disabled as they will all use
+the same default unused pin and so may interact. To prevent this the
+controlling subsystem should separately set the CTS pin to be ignored
+and the RTS to drive a zero if they are not required.
+
+If the configured PIO requires additional resources, such as configuration
+of voltage level at the pad, these are handled automatically. Note that
+in such cases if a voltage level was previously configured, for example as
+a resource dependency during subsystem boot, it is assumed to be suitable.
+Otherwise, VDD_PADS is used.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>4</range_min>
+     <range_max>4</range_max>
+
+     <default>[3C 3D 3A 3B]</default>
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DeepSleepVoltageReduction" psid="1028">
+     <label>Voltage reduction when chip is in deep sleep</label>
+     <description_user>
+
+Adjust the voltage to be used in deep sleep
+
+SET ONLY ON ADVICE FROM QUALCOMM
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>350</range_max>
+     <default>250</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalLoadCapacitance" psid="1030">
+      <label>The capacitance for driving a crystal providing the raw clock</label>
+      <description_user>
+If the chip's fast clock is provided by a crystal, this value is used
+to set the coarse capacitive load. It is configured for each module design
+separately. The overall load capacitance requires tuning the coarse and fine
+trim controls. Also refers to the mib XtalFreqTrim which
+defines the fine load capacitance.
+
+      </description_user>
+      <type>uint16</type>
+      <range_min>0</range_min>
+      <range_max>31</range_max>
+      <default>11</default>
+      <function_list>
+      <function function_name="mibgetfn_common" type="get" />
+      <function function_name="mibsetfn_common" type="set" />
+      </function_list>
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalFreqTrim" psid="1031">
+      <label>Fine frequency trim for a crystal providing the raw chip clock</label>
+      <description_user>
+If the chip's fast clock is provided by a crystal, this value is used
+as a fine trim for the crystal frequency. It may be set for each
+individual chip to compensate for process variations. The overall load capacitance
+is defined by the coarse and fine trim. Also refers to the mib
+XtalLoadCapacitance which defines the coarse load capacitance.
+      </description_user>
+      <type>int16</type>
+      <range_min>-16</range_min>
+      <range_max>15</range_max>
+      <default>0</default>
+   <function_list>
+     <function function_name="mibgetfn_common" type="get" />
+     <function function_name="mibsetfn_common" type="set" />
+   </function_list>
+
+   <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PioDirectionElements" psid="1032">
+      <label>Set whether individual PIOs are input or output</label>
+      <description_user>
+The chip's PIO lines can be configured as either Input IOs or Output IOs.
+This key sets the direction of individual PIOs or set of PIOs when they
+are used as the standard IOs.
+The value is an array of pairs of octets. The first octet in each pair
+is the number of a PIO, currently from 0 to 79 . The second octet
+is 0 to set the PIO to input, 1 to set it to output.
+The maximum PIOs can be configured by this mib are 64 PIOs. If there are more than 64 PIOs
+to be configured, they should be defined by two of this mib keys and
+included separately by two different configuration files.
+
+The key cannot be read.
+      </description_user>
+      <type>octet_string</type>
+      <range_min>2</range_min>
+      <range_max>128</range_max>
+      <function_list>
+         <function function_name="mibgetfn_pio_elements" type="get" />
+         <function function_name="mibsetfn_pio_elements" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PioDriveElements" psid="1033">
+      <label>Set whether individual PIOs are high or low</label>
+      <description_user>
+This key specifies the logical level of the individual PIOs or set of PIOs when
+those PIOs are configured as the output IO.
+The value is an array of pairs of octets. The first octet in each pair
+is the number of a PIO, currently from 0 to 79 . The second octet
+is 0 to set the PIO low, or 1 to set the PIO high.
+The maximum PIOs can be configured by this mib are 64 PIOs. If there are more than 64 PIOs
+to be configured, they should be defined by two of this mib keys and
+included separately by two different configuration files.
+This key cannot be read.
+      </description_user>
+      <type>octet_string</type>
+      <range_min>2</range_min>
+      <range_max>128</range_max>
+      <function_list>
+         <function function_name="mibgetfn_pio_elements" type="get" />
+         <function function_name="mibsetfn_pio_elements" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PioSubsystemAllocationElements" psid="1035">
+      <label>Set the subsystem owner for individual PIOs</label>
+      <description_user>
+This key specifies the bus address of the subsystem
+that will own the PIO for individual PIOs or set of PIOs.
+The value of this key is an array of pairs of octets. The first octet in each pair
+is the number of a PIO, currently from 0 to 79 .
+The second octet is the bus address of the subsystem to which
+the PIO is to be allocated.
+
+Note this key controls the initial configuration of PIOs. But
+this configuration can be altered later via the P1 trap API or
+by the configuration of external components or interfaces.
+
+The maximum PIOs can be configured by this mib are 64 PIOs. If there are more than 64 PIOs
+to be configured, they should be defined by two of this mib keys and
+included separately by two different configuration files.
+
+This key cannot be read.
+      </description_user>
+      <type>octet_string</type>
+      <range_min>2</range_min>
+      <range_max>128</range_max>
+      <function_list>
+         <function function_name="mibgetfn_pio_elements" type="get" />
+         <function function_name="mibsetfn_pio_elements" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+
+
+   <config_element name="CuratorTemperatureMultiplier" psid="1038">
+      <label>Multiplicative factor for curator temperature measurement.</label>
+      <description_user>
+This value is used to multiply the raw temperature reading derived
+from the hardware in the chip's AUX or PMU macro to give a value where
+differences between readings are in degrees Celsius. The value
+CuratorTemperatureAddition is added to the result to convert to degrees
+Celsius.
+
+This value is a signed 32-bit integer in two's complement representation.
+It represents a fixed point number found by shifting right by 16 bits.
+Hence the top 16 bits of the number stored in the MIB represent the integer
+part of the resulting number while the lower 16 bits a fractional part.
+For example, 0x000A0000 represents the integer 10 and 0xFFFFC000
+represents -1/4.
+
+This key must be set for temperature compensation to be performed.
+      </description_user>
+      <type>int32</type>
+      <function_list>
+         <function function_name="mibgetfn_common" type="get" />
+         <function function_name="mibsetfn_common" type="set" />
+      </function_list>
+
+
+      <default>0x00005798</default>
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CuratorTemperatureAddition" psid="1039">
+      <label>Additive constant for the curator temperature measurement.</label>
+      <description_user>
+This value is added to the result of using the MIB attribute
+CuratorTemperatureMultiplier to give a temperature in degrees Celsius
+from the chip's AUX or PMU macro.
+
+The value is 16-bit signed integer: there is no fractional part as
+the temperature accuracy is not expected to be better than one
+degree Celsius.
+
+The default value given is a good starting point, but if accurate
+temperature measurements are required this value must be calibrated.
+      </description_user>
+      <type>int16</type>
+      <function_list>
+         <function function_name="mibgetfn_common" type="get" />
+         <function function_name="mibsetfn_common" type="set" />
+      </function_list>
+
+
+      <default>0</default>
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalDutyCycle" psid="1081">
+      <label>The crystal duty cycle setting.
+      </label>
+
+      <description_user>
+If the chip's fast clock is provided by a crystal, this value is used
+to set the duty cycle. It is calibrated on the production line.
+
+The value is an unsigned integer in the range 0 .. 31 inclusive
+
+      </description_user>
+      <type>uint16</type>
+      <range_min>0</range_min>
+      <range_max>31</range_max>
+      <function_list>
+      <function function_name="mibgetfn_common" type="get" />
+      <function function_name="mibsetfn_common" type="set" />
+      </function_list>
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+    <config_element name="USBDebugger" psid="1082">
+        <label>USB Debugger Enable</label>
+        <description_user>
+Set to false to disable USB debugger.
+        </description_user>
+        <type>boolean</type>
+        <is_internal>false</is_internal>
+        <default>true</default>
+    </config_element>
+
+
+   <config_element name="DormantModeEnable" psid="1083">
+     <label>Enable Dormant mode functionality</label>
+     <description_user>
+     When set to true, allows the chip to enter the ultra-low power dormant mode
+     when requested by Apps 0 . In this mode, all digital and analogue supplies are
+     switched off. Only the KeepAlive (KA) power domain, the VHV and BYP_LDO are active.
+     The BYP_LDO and VHV can also be individually put into their respective ULP modes
+     by configuring the DormantBypassLDOHP and DormantVHVLDOHP MIBs respectively.
+     Wake up from dormant can occur on a timer event, LED, SYS_CTRL and/or charger
+     insertion based on the wake-up config received from the Apps 0 . SYS_CTRL and VCHG wakes are
+     always enabled by default during dormant. The rest can be requested by the Apps 0 .
+
+     Wake ups on NFC, XIOs and some PIOs are also possible on some chips.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="OffModeEnable" psid="1084">
+     <label>Enable Off mode functionality</label>
+     <description_user>
+     When set to true, allows the chip to enter OFF state
+     when requested by Apps 0 . In the OFF state, the chip is completely
+     de-powered except for some analogue circuitry in the PMU to assist in wake
+     from OFF state. The only sources that can cause a wake up from OFF state
+     are SYS_CTRL and charger insertion.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DormantBypassLDOHP" psid="1085">
+      <label>Determine whether to leave the bypass LDO in high power
+      during dormant.</label>
+      <description_user>
+      For some applications we may need the bypass LDO to power external devices
+      in which case it may need to remain in high power mode during dormant.
+      This key allows HP mode to be forced during dormant.
+
+      The key DeepSleepBypassLDOHP gives the equivalent control during deep sleep.
+
+      Note the voltage of this supply can also vary during operation.
+      See the key BypassLdoForce3v3 for details.
+      </description_user>
+      <type>boolean</type>
+      <default>false</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DormantVHVLDOHP" psid="1086">
+      <label>Determine whether to leave the 1v8 VHV LDO in high power
+      during dormant.</label>
+      <description_user>
+      For some applications we may need the VHV LDO to provide power to
+      external/internal 1v8 devices, in which case it will need to remain
+      in high power mode during dormant.
+      </description_user>
+      <type>boolean</type>
+      <default>false</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PMUForcePWM" psid="1090">
+      <label>Force the PMU to use PWM at all times other than deep sleep</label>
+      <description_user>
+      This allows a config file to set the system to use the PMU PWM
+      at all times when active. This applies to both the PA and core SMPSs.
+      </description_user>
+      <type>boolean</type>
+
+      <default>false</default>
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="PioPadControlElements" psid="1096">
+      <label>Set the pad control for individual PIOs</label>
+      <description_user>
+This key sets the pad control for individual PIOs.
+The value is an array of pairs of octets. The first octet in each pair
+is the number of a PIO, currently from 0 to 79 . The second octet
+is the pad control setting, which is specific to each PIO. For example,
+for LED IOs only the Pull Enable is configurable.
+
+The bit field definition of pad control setting are:
+- bits 0-1: Drive strength
+- bit 2: UNUSED - set to 0
+- bit 3: Pull enable
+- bit 4: Pull strength
+- bit 5: Pull direction
+- bit 6: Sticky enable
+
+Note this key controls the initial configuration of PIOs. But
+this configuration can be altered later via the P1 trap API or
+by the configuration of external components or interfaces.
+
+The maximum PIOs that can be configured by this mib are 64 PIOs. If there are more than 64 PIOs
+to be configured, they should be defined by two of this mib keys and
+included separately by two different configuration files.
+
+The key cannot be read.
+
+The pad control values for PIOs which are used for APP 0 QSPI Flash are defined
+as the default value here.
+      </description_user>
+      <type>octet_string</type>
+      <range_min>2</range_min>
+      <range_max>128</range_max>
+
+      <default>[0d 01 0a 02 09 59 0c 59 0b 59 0e 59]</default>
+
+      <function_list>
+         <function function_name="mibgetfn_pio_elements" type="get" />
+         <function function_name="mibsetfn_pio_elements" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="UseAccurateSOSC" psid="1097">
+      <label>Use SOSC rather than the XTAL in ULP mode for deep sleep timing </label>
+      <description_user>
+      This key allows an internal Slow Oscillator (SOSC) to be used for
+      deep sleep timing when 250ppm timing accuracy is required, rather than
+      Ultra Low Power (ULP) mode for the crystal. Temperature correction
+      mechanisms for the SOSC are used to allow it to maintain the required
+      timing accuracy.
+
+      This allows a lower deep sleep current at the required accuracy
+      for bluetooth.
+
+      True means use the SOSC, False means use the crystal.
+      </description_user>
+
+      <type>boolean</type>
+      <default>true</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="PMUSMPS32MWaveForm" psid="1100">
+      <label>A value to set the SMPS mark/space ratio in PWM when using
+      the 32MHz clock</label>
+      <description_user>
+      Generally the default 8:8 mark/space ratio giving a 2MHz clock
+      for SMPSs in PWM is sufficient. However, there is a possibility
+      it could interfere with other clocks, so this MIB key allows the
+      user to override the default to achieve different mark/space ratios
+
+      The value is programmed into a register containing two six bit
+      fields, in bits 0-5 and 6-11. These are respectively the high
+      and low period, but offset by 1 (so 0 means 1 etc).
+
+      The default value corresponds to low=7,high=7, which gives an
+      8:8 mark/space ratio and a 2MHz switching frequency.
+
+      This setting should be use with care, as tinkering with the
+      SMPSs can produce unexpected results.
+
+      Note this MIB key is only useful when we've selected 32MHz as
+      the clock source in the SmpsPwmClockSourceControl MIB. When
+      80MHz is selected as the source use PMUSMPS80MWaveForm instead.
+      </description_user>
+     <type>uint16</type>
+     <default>0x1C7</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalCalibrationParameters" psid="1102">
+     <label>Parameters used for XTAL calibration </label>
+     <description_user>
+An array of ten octets defined as follows:
+ Octets 0-2 - ULP mode Min Bias, Max Bias and Target Threshold resp.
+ Octets 3-5 - LP mode Min Bias, Max Bias and Target Threshold resp.
+ Octets 6-8 - LN mode Min Bias, Max Bias and Target Threshold resp.
+ Octet 9 - Bit 0 - Increment bias after below Target Threshold reached.
+ Octet 9 - Bits 7:1 - Reserved.
+
+This patch changes the default value of the key to: [0a 0a 00 0f 0f 00 0a 0a 00 01]
+     </description_user>
+     <type>octet_string</type>
+     <range_min>10</range_min>
+     <range_max>10</range_max>
+     <default>[1f 1f 00 09 12 55 0a 0a 00 01]</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+
+   <config_element name="PanicAction" psid="1104">
+      <label>Action to take when a panic or subsystem watchdog occurs</label>
+      <description_user>
+      0: Immediately reset the device (default).
+      This setting should be used for the final production image to ensure
+      if a subsystem panics then the device will automatically reset.
+
+      1: Halt all subsystems including Curator and Janitor, no USB debug access.
+      This setting should be used during development. It stops all subsystems
+      and allows core dumps to be taken over TRB for analysis.
+
+      2: Halt all subsystems except Curator and Janitor, keeping USB debug access.
+      This setting should be used for development without TRB, allowing core
+      dumps to be taken over USB for analysis.
+
+      This is held in the preserved block so its value persists across a software
+      reboot until MIB keys are loaded during boot. If no value is specified then
+      it will take the default value of 0 at that point. On a hardware reboot or
+      power on reset it will get value 0 when the preserved block is zeroed.
+
+      If the debugger is present for the subsystem panicking or watchdogging
+      (SS bit set by tool_cmd debugger_set_debugger_present_req) then the value
+      of PanicAction is ignored and the behaviour for value 2 occurs instead.
+      </description_user>
+      <type>uint16</type>
+      <range_min>0</range_min>
+      <range_max>2</range_max>
+      <default>0</default>
+      <function_list>
+      <function function_name="mibgetfn_common" type="get" />
+      <function function_name="mibsetfn_common" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="LpxxLpxBiasTrimSettings" psid="1106">
+      <label>OSC_ULP_BIAS Trim settings to use with LPX or LPXX XTAL modes</label>
+      <description_user>
+Bits 07:00 Bias setting for LPX Mode
+Bits 15:08 Bias setting for LPXX Mode
+Note that a value of zero will leave the respective setting as per the calibrated
+LP bias value.
+
+This patch changes the default value of the key to: 0x1414
+      </description_user>
+      <type>uint16</type>
+      <default>0</default>
+      <function_list>
+      <function function_name="mibgetfn_common" type="get" />
+      <function function_name="mibsetfn_common" type="set" />
+      </function_list>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="VCHGPullEnable" psid="1114">
+     <label>Enable the VCHG pull down resistor.</label>
+    <description_user>
+Enable or disable the pull-down on the VCHG pin when VCHG is not present.
+
+If true, the pull-down is enabled except when VCHG &gt; 3.6V.
+If false, the pull-down will be permanently disabled.
+    </description_user>
+    <type>uint16</type>
+     <function_list>
+       <function function_name="mibgetfn_patch" type="get" />
+       <function function_name="mibsetfn_patch" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ExternalChargerTrimAdjustment" psid="1115">
+     <label>MIB key to adjust the external charger trim</label>
+     <description_user>
+MIB key to adjust the trim used for battery charging in "external" mode.
+
+
+SET ONLY ON ADVICE FROM QUALCOMM
+     </description_user>
+     <type>uint32</type>
+     <function_list>
+       <function function_name="mibgetfn_patch" type="get" />
+       <function function_name="mibsetfn_patch" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   </metadata>
+
+  </metadata_list>

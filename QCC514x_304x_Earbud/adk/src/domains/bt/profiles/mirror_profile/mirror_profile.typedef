@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019-2021 Qualcomm Technologies International, Ltd.-->
+
+<types name="mirror_profile" standalone="true">
+
+    <inherit header="marshal_common.h" count="NUMBER_OF_COMMON_MARSHAL_OBJECT_TYPES" x_macro_table="MARSHAL_COMMON_TYPES_TABLE"/>
+
+    <include_header name="kymera_adaptation_voice_protected.h"/>
+
+    <typedef_struct name="mirror_profile_hfp_volume_ind_t" basic="true" doc="HFP volume update sent from Primary to Secondary">
+        <member marshal="true" doc="Voice source">uint8 voice_source</member>
+        <member marshal="true" doc="HFP volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_hfp_codec_and_volume_ind_t" basic="true" doc="HFP codec type and volume sent from Primary to Secondary">
+        <member marshal="true" doc="Voice source">uint8 voice_source</member>
+        <member marshal="true" doc="HFP codec">hfp_codec_mode_t codec_mode</member>
+        <member marshal="true" doc="HFP volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_a2dp_volume_ind_t" basic="true" doc="A2DP volume update sent from Primary to Secondary">
+        <member marshal="true" doc="Audio source">uint8 audio_source</member>
+        <member marshal="true" doc="A2DP volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_stream_context_t" doc="A2DP media stream context sent from Primary to Secondary">
+        <member marshal="true" doc="The BT address">bdaddr addr</member>
+        <member marshal="true" doc="L2CAP CID">uint16 cid</member>
+        <member marshal="true" doc="L2CAP maximum transmission unit">uint16 mtu</member>
+        <member marshal="true" doc="A2DP volume">uint8 volume</member>
+        <member marshal="true" doc="Defines the current audio state - disconnected, connected, active">uint8 audio_state</member>
+        <member marshal="true" doc="Negotiated AVDTP SEID (stream endpoing ID) ">uint8 seid</member>
+        <member marshal="true" doc="">uint8 codec_sub_type</member>
+        <member marshal="true" doc="Codec bitrate bps">uint32 bitrate</member>
+        <member marshal="true" doc="Audio sample rate (/25Hz)">uint16 sample_rate</member>
+        <member marshal="true" doc="Audio sample bit width">uint8 sample_width</member>
+        <member marshal="true" doc="Audio channel type">uint8 channel_type</member>
+        <member marshal="true" doc="Audio source">uint8 audio_source</member>
+        <member marshal="true" doc="Other flags">uint8 flags</member>
+        <member marshal="true" doc="Content protection type">uint16 content_protection_type</member>
+        <member marshal="true" doc="Length of extra CPI (always 0)">uint8 content_protection_information_length</member>
+        <member marshal="true" doc="Q2Q Mode">uint8 q2q_mode</member>
+        <member marshal="true" doc="Split Mode">uint32 aptx_features</member>
+        <!-- Content protection information is intentionally omitted for simplicity since it it always zero-->
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_stream_context_response_t" doc="A2DP media stream context response sent from Secondary to Primary">
+        <member marshal="true" doc="L2CAP CID">uint16 cid</member>
+        <member marshal="true" doc="Negotiated AVDTP SEID (stream endpoing ID) ">uint8 seid</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_sync_a2dp_unmute_ind_t" doc="Secondary sends this message to primary to tell it when to unmute during a mute-sync start">
+        <member marshal="true" doc="The time at which to unmute">marshal_rtime_t unmute_time</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_sync_sco_unmute_ind_t" doc="Secondary sends this message to primary to tell it when to unmute during a SCO mute-sync start">
+        <member marshal="true" doc="The time at which to unmute">marshal_rtime_t unmute_time</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_lea_unicast_audio_conf_req_t" doc="Unicast audio stream context sent from Primary to Secondary">
+        <member marshal="true" doc="Audio source">uint8 audio_source</member>
+        <member marshal="true" doc="Voice source">uint8 voice_source</member>
+        <member marshal="true" doc="Audio context">uint16 audio_context</member>
+        <member marshal="true" doc="CIG identifier">uint8 cig_id</member>
+        <member marshal="true" doc="CIS identifier">uint8 cis_id</member>
+
+        <member marshal="true" doc="Sink ase identifier">uint8 sink_ase_id</member>
+        <member marshal="true" doc="Sink target latency">uint8 sink_target_latency</member>
+        <member marshal="true" doc="Sink target phy">uint8 sink_target_phy</member>
+        <member marshal="true" doc="Sink codec identifier">uint8 sink_codec_id</member>
+        <member marshal="true" doc="Sink sample frequency">uint16 sink_sampling_frequency</member>
+        <member marshal="true" doc="Sink frame duration">uint16 sink_frame_duration</member>
+        <member marshal="true" doc="Sink sdu interval">uint32 sink_sdu_interval</member>
+        <member marshal="true" doc="Sink framing">uint8 sink_framing</member>
+        <member marshal="true" doc="Sink phy">uint8 sink_phy</member>
+        <member marshal="true" doc="Sink max sdu size">uint16 sink_max_sdu_size</member>
+        <member marshal="true" doc="Sink retransmission number">uint8 sink_retransmission_num</member>
+        <member marshal="true" doc="Sink max transport latency">uint16 sink_max_transport_latency</member>
+        <member marshal="true" doc="Sink presentation dalay">uint32 sink_presentation_delay</member>
+
+        <member marshal="true" doc="Source ase identifier">uint8 source_ase_id</member>
+        <member marshal="true" doc="Source target latency">uint8 source_target_latency</member>
+        <member marshal="true" doc="Source target phy">uint8 source_target_phy</member>
+        <member marshal="true" doc="Source codec identifier">uint8 source_codec_id</member>
+        <member marshal="true" doc="Source sample frequency">uint16 source_sampling_frequency</member>
+        <member marshal="true" doc="Source frame duration">uint16 source_frame_duration</member>
+        <member marshal="true" doc="Source sdu interval">uint32 source_sdu_interval</member>
+        <member marshal="true" doc="Source framing">uint8 source_framing</member>
+        <member marshal="true" doc="Source phy">uint8 source_phy</member>
+        <member marshal="true" doc="Source max sdu size">uint16 source_max_sdu_size</member>
+        <member marshal="true" doc="Source retransmission number">uint8 source_retransmission_num</member>
+        <member marshal="true" doc="Source max transport latency">uint16 source_max_transport_latency</member>
+        <member marshal="true" doc="Source presentation dalay">uint32 source_presentation_delay</member>
+    </typedef_struct>
+</types>

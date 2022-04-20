@@ -1,0 +1,31 @@
+/*!
+\copyright  Copyright (c) 2021 Qualcomm Technologies International, Ltd.
+            All Rights Reserved.
+            Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+\file
+\brief      Kymera header with system kick period config definitions (in microseconds)
+*/
+
+#ifndef KYMERA_KICK_PERIOD_CONFIG_H_
+#define KYMERA_KICK_PERIOD_CONFIG_H_
+
+#define KICK_PERIOD_FAST (2000)
+#define KICK_PERIOD_SLOW (7500)
+
+#define KICK_PERIOD_SLAVE_SBC (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_SLAVE_APTX (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_SLAVE_AAC (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_MASTER_SBC (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_MASTER_AAC (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_MASTER_APTX (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_TONES (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_LEAKTHROUGH (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_VOICE (KICK_PERIOD_FAST)
+#define KICK_PERIOD_WIRED_ANALOG (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_FIT_TEST (KICK_PERIOD_SLOW)
+#define KICK_PERIOD_LE_AUDIO (KICK_PERIOD_FAST)
+
+#define KICK_PERIOD_SLAVE_APTX_ADAPTIVE (KICK_PERIOD_FAST)
+#define KICK_PERIOD_MASTER_APTX_ADAPTIVE (KICK_PERIOD_FAST)
+
+#endif /* KYMERA_KICK_PERIOD_CONFIG_H_ */

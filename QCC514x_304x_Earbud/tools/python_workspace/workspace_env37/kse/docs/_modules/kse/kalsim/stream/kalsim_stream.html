@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.stream.kalsim_stream &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.stream.kalsim_stream</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.stream.kalsim_stream</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Stream Base class&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractproperty</span>
+
+<span class="kn">from</span> <span class="nn">kats.core.stream_base</span> <span class="k">import</span> <span class="n">StreamBase</span><span class="p">,</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">,</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">,</span> <span class="n">STREAM_NAME</span><span class="p">,</span> \
+    <span class="n">STREAM_RATE</span><span class="p">,</span> <span class="n">STREAM_DATA_WIDTH</span><span class="p">,</span> <span class="n">STATE_EOF</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">get_instance</span>
+
+<span class="n">PARAM_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
+
+<span class="n">STREAM_BACKING</span> <span class="o">=</span> <span class="s1">&#39;stream_backing&#39;</span>
+<span class="n">STREAM_BACKING_FILE</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span>
+<span class="n">STREAM_BACKING_KALCMD</span> <span class="o">=</span> <span class="s1">&#39;kalcmd&#39;</span>
+
+<span class="n">STREAM_FLOW_CONTROL_DRIVE</span> <span class="o">=</span> <span class="s1">&#39;stream_flow_control_drive&#39;</span>
+<span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span> <span class="o">=</span> <span class="s1">&#39;kalsim&#39;</span>
+<span class="n">STREAM_FLOW_CONTROL_DRIVE_KALCMD</span> <span class="o">=</span> <span class="s1">&#39;kalcmd&#39;</span>
+
+<span class="n">STREAM_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;stream_filename&#39;</span>
+
+<span class="n">STREAM_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;stream_format&#39;</span>
+
+<span class="n">STREAM_FLOW_CONTROL_RATE</span> <span class="o">=</span> <span class="s1">&#39;stream_flow_control_rate&#39;</span>
+
+<span class="n">STREAM_FLOW_CONTROL_BLOCK_SIZE</span> <span class="o">=</span> <span class="s1">&#39;stream_flow_control_block_size&#39;</span>
+
+<span class="n">STREAM_DIRECTION</span> <span class="o">=</span> <span class="s1">&#39;stream_direction&#39;</span>
+<span class="n">STREAM_DIRECTION_READ</span> <span class="o">=</span> <span class="s1">&#39;read&#39;</span>
+<span class="n">STREAM_DIRECTION_WRITE</span> <span class="o">=</span> <span class="s1">&#39;write&#39;</span>
+
+<span class="n">STREAM_PINCH</span> <span class="o">=</span> <span class="s1">&#39;stream_pinch&#39;</span>
+
+<span class="n">STREAM_BLOCK_PROGRAM_CHANGES</span> <span class="o">=</span> <span class="s1">&#39;stream_block_program_changes&#39;</span>
+<span class="n">STREAM_BLOCK_PROGRAM_CHANGES_NONE</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+<span class="n">STREAM_BLOCK_PROGRAM_CHANGES_RATE</span> <span class="o">=</span> <span class="s1">&#39;rate&#39;</span>
+<span class="n">STREAM_BLOCK_PROGRAM_CHANGES_ALL</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span>
+
+<span class="n">CALLBACK_EOF</span> <span class="o">=</span> <span class="s1">&#39;eof&#39;</span>
+<span class="n">CALLBACK_DATA_EVENT</span> <span class="o">=</span> <span class="s1">&#39;data_event&#39;</span>
+
+
+<div class="viewcode-block" id="KalsimStream"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream">[docs]</a><span class="k">class</span> <span class="nc">KalsimStream</span><span class="p">(</span><span class="n">StreamBase</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Basic kalsim stream handler class</span>
+
+<span class="sd">    Modes supported</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        # kalsim will automatically stream a file</span>
+<span class="sd">        stream_type=&#39;source&#39;/&#39;sink&#39;</span>
+<span class="sd">        stream_backing=&#39;file&#39;</span>
+<span class="sd">        stream_flow_control_drive=&#39;kalsim&#39;</span>
+<span class="sd">        stream_filename=&#39;pathtorawfile&#39;</span>
+<span class="sd">        stream_format=bits_per_sample</span>
+<span class="sd">        stream_flow_control_rate=freq</span>
+<span class="sd">        stream_flow_control_block_size=1</span>
+
+<span class="sd">        # kalsim will stream a file that is controlled by the application, with calls to induce</span>
+<span class="sd">        stream_type=&#39;source&#39;</span>
+<span class="sd">        stream_backing=&#39;file&#39;</span>
+<span class="sd">        stream_flow_control_drive=&#39;kalcmd&#39;</span>
+<span class="sd">        stream_filename=&#39;pathtorawfile&#39;</span>
+<span class="sd">        stream_format=bits_per_sample</span>
+<span class="sd">        stream_flow_control_rate=freq</span>
+<span class="sd">        stream_flow_control_block_size=1</span>
+
+<span class="sd">        # the application will stream data with calls to insert</span>
+<span class="sd">        stream_type=&#39;source&#39;</span>
+<span class="sd">        stream_backing=&#39;kalcmd&#39;</span>
+<span class="sd">        stream_flow_control_drive=&#39;kalcmd&#39;</span>
+<span class="sd">        stream_format=bits_per_sample</span>
+<span class="sd">        stream_flow_control_block_size=1</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        stream_type (str): Type of stream &#39;source&#39; or &#39;sink&#39;</span>
+<span class="sd">        callback_data_event (func(samples)): Callback for attention required</span>
+<span class="sd">        stream_backing (str): Who is streaming the data</span>
+<span class="sd">            - file, kalsim, stream_filename should be provided (raw data file)</span>
+<span class="sd">            - kalcmd, the application with insert and extract</span>
+<span class="sd">        stream_flow_control_drive (str). Who is responsible of determining when samples have to be</span>
+<span class="sd">            induced</span>
+<span class="sd">            - kalsim</span>
+<span class="sd">            - kalcmd</span>
+<span class="sd">            - kalsim_level</span>
+<span class="sd">        stream_filename (str). Filename for kalsim to use as stream.</span>
+<span class="sd">            Should be a raw mono file and has to be present when stream_backing is file</span>
+<span class="sd">        stream_format (int): Number of bits in a sample</span>
+<span class="sd">        stream_flow_control_rate (int): Rate in samples per second</span>
+<span class="sd">        stream_flow_control_block_size (int): Minimum size of block to stream</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__param_schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">STREAM_BACKING</span><span class="p">:</span> <span class="p">{</span><span class="n">PARAM_DEFAULT</span><span class="p">:</span> <span class="n">STREAM_BACKING_FILE</span><span class="p">},</span>
+        <span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">:</span> <span class="p">{</span><span class="n">PARAM_DEFAULT</span><span class="p">:</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span><span class="p">},</span>
+        <span class="n">STREAM_FILENAME</span><span class="p">:</span> <span class="p">{</span><span class="n">PARAM_DEFAULT</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+        <span class="n">STREAM_FORMAT</span><span class="p">:</span> <span class="p">{</span><span class="n">PARAM_DEFAULT</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+        <span class="n">STREAM_FLOW_CONTROL_RATE</span><span class="p">:</span> <span class="p">{</span><span class="n">PARAM_DEFAULT</span><span class="p">:</span> <span class="mi">8000</span><span class="p">},</span>
+        <span class="n">STREAM_FLOW_CONTROL_BLOCK_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="n">PARAM_DEFAULT</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_param</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log_param&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_param</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_param</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;kalcmd&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd_stream</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;kalcmd_stream&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_type</span> <span class="o">=</span> <span class="n">stream_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__callback</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__callback</span><span class="p">[</span><span class="n">CALLBACK_EOF</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eof</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__callback</span><span class="p">[</span><span class="n">CALLBACK_DATA_EVENT</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;callback_data_event&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># initialise default values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__param_schema</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__param_schema</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="n">PARAM_DEFAULT</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">__param_schema</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="n">PARAM_DEFAULT</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_DIRECTION</span><span class="p">]</span> <span class="o">=</span> <span class="n">STREAM_DIRECTION_READ</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_DIRECTION</span><span class="p">]</span> <span class="o">=</span> <span class="n">STREAM_DIRECTION_WRITE</span>
+
+        <span class="c1"># for kalsim handled stream provide parameters to StreamBase if they are</span>
+        <span class="c1"># not already provided</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_BACKING</span><span class="p">]</span> <span class="o">==</span> <span class="n">STREAM_BACKING_FILE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">STREAM_NAME</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span>
+                    <span class="n">STREAM_FILENAME</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span> <span class="ow">and</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FILENAME</span><span class="p">]):</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">STREAM_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FILENAME</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">STREAM_RATE</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FLOW_CONTROL_RATE</span><span class="p">]:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">STREAM_RATE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FLOW_CONTROL_RATE</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">STREAM_DATA_WIDTH</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FORMAT</span><span class="p">]:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">STREAM_DATA_WIDTH</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FORMAT</span><span class="p">]</span>
+
+        <span class="c1"># verify whether the resource file exists or not,if not then raise meaningful</span>
+        <span class="c1"># trace output, the traceback will provide the info about file status</span>
+        <span class="c1"># os.stat() is used to find whether file exists or not</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_BACKING</span><span class="p">]</span> <span class="o">==</span> <span class="n">STREAM_BACKING_FILE</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FILENAME</span><span class="p">])</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@abstractproperty</span>
+    <span class="k">def</span> <span class="nf">platform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;list[str]: Platform name&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractproperty</span>
+    <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str: Interface name&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;extract values from kwargs that we handle&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__param_schema</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+<div class="viewcode-block" id="KalsimStream.get_id"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.get_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get stream id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Stream id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span></div>
+
+<div class="viewcode-block" id="KalsimStream.create"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.create">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create stream&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_param</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span></div>
+
+<div class="viewcode-block" id="KalsimStream.config"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.config">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Configure stream&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd_stream</span><span class="o">.</span><span class="n">install_eof_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eof</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd_stream</span><span class="o">.</span><span class="n">install_data_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_event</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;unknown parameters:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+
+        <span class="c1"># as we are always setting the rate of the stream we enforce that rate to be kept by</span>
+        <span class="c1"># kalsim, disabling any autoupdate of the rate based on kymera assumptions</span>
+        <span class="c1"># This is only supported in kalsim 21f/2018a and after</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">STREAM_BLOCK_PROGRAM_CHANGES</span><span class="p">,</span>
+                                            <span class="n">STREAM_BLOCK_PROGRAM_CHANGES_RATE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">]</span> <span class="o">==</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">STREAM_PINCH</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_commit_changes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_query_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span>
+
+        <span class="c1"># This is only supported in kalsim 21f/2018a and after</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_query_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">STREAM_BLOCK_PROGRAM_CHANGES</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_config_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stream not created&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+<div class="viewcode-block" id="KalsimStream.start"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.start">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start stream&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">]</span> <span class="o">==</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_rewind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">STREAM_PINCH</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="kc">False</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_commit_changes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimStream.stop"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.stop">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop stream&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">STREAM_FLOW_CONTROL_DRIVE</span><span class="p">]</span> <span class="o">==</span> <span class="n">STREAM_FLOW_CONTROL_DRIVE_KALSIM</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">STREAM_PINCH</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_commit_changes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">:</span>
+                <span class="c1"># This is only supported in kalsim 21d/2018a and after</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_flush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimStream.induce"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.induce">[docs]</a>    <span class="k">def</span> <span class="nf">induce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Induce stream, force some data to be sent</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            samples (int): Number of sampes to induce</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of samples actually induced</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_induce</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimStream.insert"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inserts data with the size specified in stream_format property</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (list[int]): Data to insert</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">(),</span> <span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimStream.extract"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.extract">[docs]</a>    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">sign_extend</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extracts data from the stream</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            samples (int): Number of samples to extract</span>
+<span class="sd">            sign_extend (bool): Do we want to sign extend the data elements, None for autodetect</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (list[int]): Data extracted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sign_extend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">8</span> <span class="k">if</span> <span class="n">sign_extend</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sign_extend</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">sign_extend</span><span class="o">=</span><span class="n">sign_extend</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimStream.destroy"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.destroy">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destroy stream&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_destroy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_param</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span></div>
+
+<div class="viewcode-block" id="KalsimStream.eof"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.eof">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">eof</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;End of File event received on stream&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">!=</span> <span class="n">STATE_EOF</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">eof</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KalsimStream.data_event"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.data_event">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">data_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Data event received on stream</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            samples (int): Number of samples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__callback</span><span class="p">[</span><span class="n">CALLBACK_DATA_EVENT</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__callback</span><span class="p">[</span><span class="n">CALLBACK_DATA_EVENT</span><span class="p">](</span><span class="n">samples</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimStream.query"><a class="viewcode-back" href="../../../../kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query stream property</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): Property</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Property value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_query_property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+.. _helper_capability:
+
+==========
+Capability
+==========
+
+Kymera supports the concept of capabilities and operators.
+This helper is a factory describing capabilities running in kymera.
+
+There are capabilities that are common to all platforms, and others are platform specific.
+When the system loads, the applicable capabilities for the current platform are discovered and
+auto-registered. 
+
+All capabilities must have
+
+   * interface which describes the type of capability.
+
+The operations with the factory are
+
+   * :meth:`kse.kymera.capability.capability_factory.CapabilityFactory.get_class` to obtain the class that handles a capability
+   * :meth:`kse.kymera.capability.capability_factory.CapabilityFactory.get_instance` to create an instance of a capability
+   * :meth:`kse.kymera.capability.capability_factory.CapabilityFactory.put_instance` to destroy an instance of a capability
+   * :meth:`kse.kymera.capability.capability_factory.CapabilityFactory.enum_interface` to list all available capability types
+   * :meth:`kse.kymera.capability.capability_factory.CapabilityFactory.enum_uut` to list all capability types in kalimba
+
+Every invocation of get_instance will return a new instance of an capability of certain interface
+and type.
+On that instance there is a set of valid operations :class:`kse.kymera.capability.capability_base.CapabilityBase`.
+Each capability could have a set of specific methods on top of the previous.
+
+The translation between capability ids (understood in kymera) and capability names is done in the
+file ``$KATS_WORKSPACE/config/capability.cfg.json``.
+
+In the shell it is available as ``capability``::
+
+    >>> capability.enum_interface()
+    >>> op = capability.get_instance('BASIC_PASS',
+                                    ["CHANGE_INPUT_DATA_TYPE", [1]],
+                                    ["CHANGE_OUTPUT_DATA_TYPE", [1]])
+    >>> op.create() # create operator in kymera
+    >>> op.config() # send all configuration messages to kymera
+    >>> op.start() # start operator in kymera
+    >>> # use the operator
+    >>> op.stop() # stop operator in kymera
+    >>> op.destroy() # destroy operator in kymera
+    >>> capability.put_instance(op)

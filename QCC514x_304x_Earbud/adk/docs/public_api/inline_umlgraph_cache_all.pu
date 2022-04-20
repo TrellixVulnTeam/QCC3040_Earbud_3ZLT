@@ -1,0 +1,425 @@
+@startuml inline_umlgraph_1.png
+state HANDSET_SERVICE_MP_SM{
+    state IDLE : No connection 
+    state GET_DEVICE : Get handset device to connect
+    state GET_NEXT_DEVICE : Get next handset device to connect
+
+    [*] -down-> IDLE : No device
+
+    IDLE -down--> GET_DEVICE : HandsetServiceMultipointSm_ReconnectRequest()
+
+    state c <<choice>>
+    GET_DEVICE -down-> c
+    c -up-> IDLE : [DEVICE_FOUND = FALSE]
+
+    state d <<choice>>
+    GET_NEXT_DEVICE -down-> d
+    d -> GET_DEVICE : [MAX_DEVICE_REACHED = FALSE && \n DEVICE_FOUND = TRUE]
+    d -> IDLE : [MAX_DEVICE_REACHED = TRUE]
+}
+state HANDSET_SERVICE_SM {
+    state DISCONNECTED : Handset not connected
+    state CONNECTING : Pseudo-state for connecting sub-states.
+    
+    c -down--> DISCONNECTED : [DEVICE_FOUND = TRUE]\nHandsetService_ConnectAddressRequest()
+    state CONNECTING {
+        state CONNECTING_ACL : ACL connecting
+        
+        CONNECTING_ACL --> GET_NEXT_DEVICE : ACL connected
+    }
+}
+@enduml
+@startuml inline_umlgraph_2.png
+state DISCONNECTED : Handset not connected
+state CONNECTING : Pseudo-state for connecting sub-states.
+state CONNECTED : Handset profile(s) connected
+state DISCONNECTING : Handset profile(s) disconnecting
+
+
+[*] -d-> DISCONNECTED : Create new handset state machine
+
+DISCONNECTED --> CONNECTING : HandsetConnect REQ
+DISCONNECTED --> CONNECTED : Handset connects\nHandsetConnect IND
+DISCONNECTED --> DISCONNECTED : HandsetDisconnect REQ\nHandsetDisconnect CFM (success)
+
+state CONNECTING {
+    state CONNECTING_ACL : ACL connecting
+    state CONNECTING_PROFILES : Handset profile(s) connecting
+
+    CONNECTING_ACL --> CONNECTING_PROFILES : ACL connected
+    CONNECTING_ACL --> DISCONNECTED : CONNECT_STOP_REQ
+}
+
+CONNECTING --> CONNECTING : HandsetConnect REQ
+CONNECTING --> CONNECTED : ACL & Profiles connected\nHandsetConnect CFM (success)
+CONNECTING --> DISCONNECTING : HandsetDisconnect REQ\nHandsetConnect CFM (cancelled)
+CONNECTING --> DISCONNECTED : ACL or Profiles failed\nHandsetConnect CFM (fail)
+
+CONNECTED --> DISCONNECTED : Handset disconnects\nHandsetDisconnect IND
+CONNECTED --> DISCONNECTING : HandsetDisconnect REQ
+CONNECTED --> CONNECTED : HandsetConnect REQ\nHandsetConnect CFM (success)
+
+DISCONNECTING --> CONNECTING : HandsetConnect REQ\nHandsetDisconnect CFM (cancelled)
+DISCONNECTING --> CONNECTED : Profile connected\nHandsetDisconnect CFM (fail)
+DISCONNECTING --> DISCONNECTING : HandsetDisconnect REQ
+DISCONNECTING --> DISCONNECTED : Profiles disconnected\nHandsetDisconnect CFM (success)
+@enduml
+@startuml inline_umlgraph_3.png
+    [*] -down-> NULL
+    NULL -down-> DISCONNECTED
+
+    DISCONNECTED : No AVRCP connection
+    DISCONNECTED -down-> CONNECTING_LOCAL : ConnectReq
+    DISCONNECTED -down-> CONNECTING_LOCAL_WAIT_RESPONSE : ConnectReq/clients to notify
+    DISCONNECTED -down-> CONNECTING_REMOTE_WAIT_RESPONSE : ConnectInd/clients to notify
+    DISCONNECTED -down-> CONNECTING_REMOTE : ConnectInd
+
+    CONNECTING_LOCAL_WAIT_RESPONSE -down-> CONNECTING_LOCAL : client notification complete
+    CONNECTING_REMOTE_WAIT_RESPONSE -down-> CONNECTING_REMOTE : client notification complete
+
+    CONNECTING_LOCAL -down-> CONNECTED : AVRCP_CONNECT_CFM
+    CONNECTING_REMOTE -down-> CONNECTED : AVRCP_CONNECT_CFM
+
+    CONNECTED -left-> DISCONNECTING : Disconnect Req/Ind
+
+    DISCONNECTING -right-> DISCONNECTED
+@enduml
+@startuml inline_umlgraph_4.png
+    [*] -down-> NULL
+    NULL -down-> INITIALISING : Pairing_Init()
+    INITIALISING : Registering EIR data
+    INITIALISING -down-> IDLE : EIR registration complete
+    IDLE : Page and Inquiry scan disabled
+    
+    state DevicePairing {
+        DevicePairing : Page scan enabled
+        IDLE -down-> DISCOVERABLE : INTERNAL_PAIR_REQ
+        IDLE -down-> PENDING_AUTHENTICATION : INTERNAL_PAIR_REQ(known addr)
+        DISCOVERABLE : Inquiry scan enabled
+        DISCOVERABLE : Awaiting device connection
+        DISCOVERABLE -up-> IDLE : PAIR_CFM(timeout/cancelled)
+        DISCOVERABLE -down-> PENDING_AUTHENTICATION : Start authentication
+        PENDING_AUTHENTICATION : Pairing in progress
+        PENDING_AUTHENTICATION --> IDLE : PAIR_CFM(success/failed)
+    }
+
+    footer Note that PAIRING_STATE_ prefix dropped from states and PAIRING_ prefix dropped from messages.
+@enduml
+@startuml inline_umlgraph_5.png
+participant "Application" as app
+participant "Device Test Service" as dts
+participant "Connection Library" as conn
+participant "Pairing" as pairing
+participant "SPP Server" as spps
+
+app -> dts : DeviceTestService_Start()
+dts -> spps : SppStartService
+dts <- spps : SPPS_START_SERVICE_CFM\nsuccess
+dts -> pairing : Pairing_Pair()
+note right: When pairing known devices can also connect to us
+alt
+dts <- pairing : PAIRING_CFM\nsuccess
+note right : Should then proceed with connection
+else pairing failed
+dts <- pairing : PAIRING_CFM\nAuthenticationFailed, NoLinkKey, Timeout, Unknown, Failed
+dts -> pairing : Pairing_Pair()
+else connection
+dts <- pairing  : PAIRING_CFM\nstopped
+note right : Should then proceed with connection
+end
+
+dts <- spps : SPP_CONNECT_IND
+dts -> spps : SppConnectResponse()
+
+dts <- spps : SPP_SERVER_CONNECT_CFM\nsuccess
+
+loop until session closed
+dts <- spps : SPPS_MESSAGE_MORE_DATA
+app <- dts  : mapped function
+app -> dts  : function response/OK
+note right : response sent to the Sink for the session
+end
+
+alt normal disconnect (no reboot)
+dts <- spps : SPPS_MESSAGE_MORE_DATA
+app <- dts  : DeviceTestServiceCommand_HandleDtsEndTesting
+app -> dts  : OK
+dts -> spps : SppDisconnectRequest()
+dts <- spps : SPPS_DISCONNECT_CFM
+dts <- conn : CON_MANAGER_TP_DISCONNECT_IND
+app <- dts  : DEVICE_TEST_SERVICE_ENDED
+
+else connection drop
+group spp
+    dts <- spps : SPPS_DISCONNECT_IND
+    dts -> spps : SppStartService
+end
+group link
+    dts <- conn : CON_MANAGER_TP_DISCONNECT_IND
+    dts -> pairing : Pairing_Pair()
+    note right : already paired devices can reconnect at this point
+end
+
+else reset after test
+dts <- spps : SPPS_MESSAGE_MORE_DATA
+app <- dts  : DeviceTestServiceCommand_HandleDtsEndTesting
+app -> dts  : OK
+note right : Device reboots
+end
+@enduml
+@startuml inline_umlgraph_6.png
+    [*] --> NULL
+    NULL --> HFP_STATE_INITIALISING_HFP
+
+    HFP_STATE_INITIALISING_HFP : Initialising HFP instance
+    HFP_STATE_INITIALISING_HFP --> HFP_STATE_DISCONNECTED : HFP_INIT_CFM
+
+    HFP_STATE_DISCONNECTED : No HFP connection
+    state HFP_STATE_CONNECTING {
+        HFP_STATE_CONNECTING_LOCAL : Locally initiated connection in progress
+        HFP_STATE_CONNECTING_REMOTE : Remotely initiated connection is progress
+        HFP_STATE_DISCONNECTED -down-> HFP_STATE_CONNECTING_LOCAL
+        HFP_STATE_DISCONNECTED -down-> HFP_STATE_CONNECTING_REMOTE
+    }
+
+    state HFP_STATE_CONNECTED {
+
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_IDLE : no_call_setup/no_call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_INCOMING : incoming_call_setup/no_call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_OUTGOING : outgoing_call_setup/no_call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_OUTGOING : outgoing_call_alerting_setup/no_call
+
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : no_call_setup/call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : incoming_call_setup/call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : outgoing_call_setup/call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : outgoing_call_alerting_setup/call
+
+        HFP_STATE_CONNECTED_IDLE : HFP connected, no call in progress
+        HFP_STATE_CONNECTED_IDLE -down-> HFP_STATE_CONNECTED_ACTIVE
+        HFP_STATE_CONNECTED_OUTGOING : HFP connected, outgoing call in progress
+        HFP_STATE_CONNECTED_INCOMING -right-> HFP_STATE_CONNECTED_ACTIVE
+        HFP_STATE_CONNECTED_INCOMING : HFP connected, incoming call in progress
+        HFP_STATE_CONNECTED_OUTGOING -left-> HFP_STATE_CONNECTED_ACTIVE
+        HFP_STATE_CONNECTED_ACTIVE : HFP connected, active call in progress
+        HFP_STATE_CONNECTED_ACTIVE -down-> HFP_STATE_DISCONNECTING
+        HFP_STATE_DISCONNECTING :
+
+        HFP_STATE_DISCONNECTING -up-> HFP_STATE_DISCONNECTED
+    }
+@enduml
+@startuml inline_umlgraph_7.png
+            skinparam roundcorner 20
+            hide footbox
+
+            participant "Application" as app
+            participant "Input Event Manager" as iem
+            participant "Logical Input Switch" as lis
+            participant "UI" as ui
+            participant "Role Selection Service" as rss
+            participant "Peer Signalling" as ps
+
+            group Initialisation
+            note over app
+                This is the same for both peer devices
+            end note
+
+            app->lis: LogicalInputSwitch_Init()
+            app->lis: LogicalInputSwitch_SetLogicalInputIdRange(min_id, max_id)
+            app->iem: InputEventManagerInit(LogicalInputSwitch_GetTask())
+
+            end group
+
+            group Peer Role Selection
+            note over rss
+                TWS Topology set-up occurs, one peer
+                device shall become the Primary. This
+                shall recieve all the Logical Inputs
+                and generate all the UI Inputs.
+
+                At Primary:
+            end note
+
+            rss->lis: LogicalInputSwitch_SetRerouteToPeer(TRUE)
+
+            note over rss
+                At Secondary:
+            end note
+
+            rss->lis: LogicalInputSwitch_SetRerouteToPeer(FALSE)
+            end group
+
+            group Button Press at Secondary
+
+            iem->lis: MessageSend(Logical_Input_MFB_Press)
+            lis->ps: PeerSig_MarshalledMsgChannelTx(logical_input_ind)
+
+            note over ps
+                The Logical Input is marshalled between
+                the two peer devices. It is delivered
+                to the Primary and applied to the UI:
+            end note
+
+            ps->lis: MessageSend(PEER_SIG_MARSHALLED_MSG_CHANNEL_RX_IND)
+            lis->ui: MessageSend(Ui_GetUiTask(),Logical_Input_MFB_Press)
+
+            end group
+
+            group Button Press at Primary
+
+            iem->lis: MessageSend(Logical_Input_MFB_Press)
+            lis->ui: MessageSend(Ui_GetUiTask(),Logical_Input_MFB_Press)
+
+            end group
+@enduml
+@startuml inline_umlgraph_8.png
+    note "For clarity not all state transitions shown" as N1
+
+    [*] -down-> UNINITIALISED : Start
+    note left of UNINITIALISED : State names shortened, removing prefix of PEER_FIND_ROLE_STATE_
+
+    UNINITIALISED : Initial state on power up
+    UNINITIALISED --> INITIALISED : peer_find_role_init()
+
+    INITIALISED: Awaiting a request to find role
+    INITIALISED --> CHECKING_PEER : PeerFindRole_FindRole()
+
+    CHECKING_PEER: Verifying that we have previously paired
+    CHECKING_PEER --> INITIALISED : Not yet paired
+    CHECKING_PEER --> DISCOVER : Paired
+
+    DISCOVER: Looking for a peer device.\nWill \b not enable scanning if streaming/in call.
+    DISCOVER: Start a timeout to enable advertising
+    DISCOVER --> DISCOVER_CONNECTABLE : Internal timeout to start advertising
+    DISCOVER --> DISCOVERED_DEVICE : Received an advert for matching device
+
+    DISCOVER_CONNECTABLE : Looking for peer
+    DISCOVER_CONNECTABLE : Also advertising
+    DISCOVER_CONNECTABLE --> DISCOVERED_DEVICE : Received an advert for matching device
+    DISCOVER_CONNECTABLE --> CLIENT : GATT Connect observer notification.\nRemote device connected to us.
+    DISCOVER_CONNECTABLE --> DISCOVER : No longer streaming/in call.\n(re)start scanning.
+    DISCOVER_CONNECTABLE --> DISCOVER_CONNECTABLE : streaming/in call.\nstop scanning.
+
+    DISCOVERED_DEVICE: Found a peer device. 
+    DISCOVERED_DEVICE: Advertising continues until we get a connection
+    DISCOVERED_DEVICE --> CONNECTING_TO_DISCOVERED : Scanning/Advertising ended
+    DISCOVERED_DEVICE --> CLIENT : GATT Connect observer notification.\nRemote device connected to us.
+
+    CONNECTING_TO_DISCOVERED: Connecting to the device we found
+    CONNECTING_TO_DISCOVERED: Advertising continues. Otherwise if our peer is in the same state there may be nothing to connect to
+    CONNECTING_TO_DISCOVERED --> SERVER_AWAITING_ENCRYPTION : CON_MANAGER_TP_CONNECT_IND (outgoing connection)
+    CONNECTING_TO_DISCOVERED --> CLIENT : GATT Connect observer notification.\nRemote device connected to us (crossover)
+    CONNECTING_TO_DISCOVERED --> DISCOVER : Link disconnected\nConnection manager
+
+    CLIENT: Connected as a GATT client
+    CLIENT --> CLIENT_AWAITING_ENCRYPTION : Connected to the peers server
+    CLIENT --> DISCOVER : Link disconnected\nConnection manager
+
+    SERVER_AWAITING_ENCRYPTION : Encrypt the link on entry
+    SERVER_AWAITING_ENCRYPTION : Wait for encryption to complete
+    SERVER_AWAITING_ENCRYPTION --> SERVER_PREPARING : Link encrypted successfully
+    SERVER_AWAITING_ENCRYPTION --> DISCOVER : Link disconnected\nConnection manager
+    SERVER_AWAITING_ENCRYPTION --> INITIALISED : Error encrypting the link
+
+    SERVER_PREPARING : Request & wait for system to be ready for role selection
+    SERVER_PREPARING --> SERVER : Received "prepared" response from client
+    SERVER_PREPARING --> SERVER : No client registered to receive prepare indication
+    SERVER_PREPARING --> DISCOVER : Link disconnected\nConnection manager
+
+    SERVER : Connected as a GATT server
+    SERVER : Calculate score
+    SERVER : Wait for client to select role
+    SERVER --> SERVER_AWAITING_COMPLETION : Commanded to change state.
+    SERVER --> DISCOVER : Link disconnected\nConnection manager
+
+    CLIENT_AWAITING_ENCRYPTION : Connected as a GATT client, link not yet encrypted
+    CLIENT_AWAITING_ENCRYPTION --> CLIENT_PREPARING : Link encrypted successfully
+    CLIENT_AWAITING_ENCRYPTION --> DISCOVER : Link disconnected\nConnection manager
+    
+    CLIENT_PREPARING : Request & wait for system to be ready for role selection
+    CLIENT_PREPARING --> CLIENT_DECIDING : Received "prepared" response from client
+    CLIENT_PREPARING --> CLIENT_DECIDING : No client registered to receive prepare indication
+    CLIENT_PREPARING --> DISCOVER : Link disconnected\nConnection manager
+
+    CLIENT_DECIDING : Deciding which role we should assume
+    CLIENT_DECIDING : Wait for score from server
+    CLIENT_DECIDING --> CLIENT_AWAITING_CONFIRM : Have score, informed peer of requested state
+    CLIENT_DECIDING --> DISCOVER : Link disconnected\nConnection manager
+
+    CLIENT_AWAITING_CONFIRM : Awaiting confirmation of role
+    CLIENT_AWAITING_CONFIRM --> COMPLETED : Server confirmed change.
+    CLIENT_AWAITING_CONFIRM --> DISCOVER : Link disconnected\nConnection manager
+
+    SERVER_AWAITING_COMPLETION : We have informed client of new state (we were server)
+    SERVER_AWAITING_COMPLETION : Waiting for external notification that we have completed
+    SERVER_AWAITING_COMPLETION --> COMPLETED : Link disconnected
+    SERVER_AWAITING_COMPLETION --> SERVER_AWAITING_COMPLETION : Time out expired\nDisconnected ourselves.
+
+    COMPLETED : Transition state when we have finished role selection
+    COMPLETED : May wait here for the link to be disconnected
+    COMPLETED : Decide whether to enter INITIALISED or DISCOVER state
+    COMPLETED --> INITIALISED : Did not complete with a primary role
+    COMPLETED --> DISCOVER : Completed with a primary role
+@enduml
+@startuml inline_umlgraph_9.png
+    note "For clarity not all state transitions shown" as N1
+
+    [*] -down-> UNINITIALISED : Start
+    note left of UNINITIALISED : State names shortened, removing prefix of PEER_PAIR_LE_STATE_
+
+    UNINITIALISED : Initial state on power up
+    UNINITIALISED --> INITIALISED : peer_pair_le_init()
+    
+    INITIALISED : State when first initialised, and after pairing has completed
+    INITIALISED --> PENDING_LOCAL_ADDR : peer_pair_le_start_service()
+
+    PENDING_LOCAL_ADDR : On entry to state, the local Bluetooth Device Address is requested from the Coneection Library.
+    PENDING_LOCAL_ADDR : This is needed before any subsequent activity.
+    PENDING_LOCAL_ADDR --> IDLE : CL_DM_LOCAL_BD_ADDR_CFM
+    PENDING_LOCAL_ADDR --> IDLE : CL_DM_LOCAL_BD_ADDR_CFM, PeerPairLe_FindPeer() called first
+    PENDING_LOCAL_ADDR --> PENDING_LOCAL_ADDR : PeerPairLe_FindPeer()
+
+    IDLE: Awaiting a request to pair with a peer
+    IDLE --> DISCOVERY : PeerPairLe_FindPeer()
+
+    DISCOVERY : Advertising and scanning. No devices yet detected.
+    DISCOVERY --> SELECTING : LE_SCAN_MANAGER_ADV_REPORT_IND. 
+    DISCOVERY --> PAIRING_AS_SERVER : GATT Connect observer notification
+    DISCOVERY --> REDISCOVERY : Timeout after a device found with low RSSI
+
+    REDISCOVERY : Found a device, but with a low RSSI. About to restart DISCOVERY.
+    REDISCOVERY --> DISCOVERY : Scanning has stopped.
+
+    SELECTING : Advertising and scanning. 
+    SELECTING : At least one advert from a matching device has been seen.
+    SELECTING --> CONNECTING : PEER_PAIR_LE_TIMEOUT_FROM_FIRST_SCAN, single device found
+    SELECTING --> DISCOVERY : PEER_PAIR_LE_TIMEOUT_FROM_FIRST_SCAN, no suitable device found
+    SELECTING --> PAIRING_AS_SERVER : GATT Connect observer notification
+
+    CONNECTING: Creating a connection to discovered device
+    CONNECTING --> PAIRING_AS_CLIENT : CON_MANAGER_TP_CONNECT_IND
+
+    PAIRING_AS_SERVER : Bluetooth pairing and encryption
+    PAIRING_AS_SERVER --> NEGOTIATE_C_ROLE : Pairing successful
+
+    PAIRING_AS_CLIENT : Bluetooth pairing and encryption
+    PAIRING_AS_CLIENT --> NEGOTIATE_P_ROLE : Pairing successful
+
+    NEGOTIATE_P_ROLE: Set up as GATT client for root key
+    NEGOTIATE_P_ROLE: Challenge the other device
+    NEGOTIATE_P_ROLE: Send root keys
+    NEGOTIATE_P_ROLE --> COMPLETED : GATT_ROOT_KEY_CLIENT_WRITE_KEY_IND
+
+    NEGOTIATE_C_ROLE: Wait for other device to send keys using the root key service
+    NEGOTIATE_C_ROLE --> COMPLETED_WAIT_FOR_DISCONNECT : GATT_ROOT_KEY_SERVER_KEY_UPDATE_IND
+
+    COMPLETED_WAIT_FOR_DISCONNECT: Wait for other device to disconnect
+    COMPLETED_WAIT_FOR_DISCONNECT --> DISCONNECTING : Timeout waiting for other device to disconnect, disconnect link
+    COMPLETED_WAIT_FOR_DISCONNECT --> INITIALISED : CON_MANAGER_TP_DISCONNECT_IND, link disconnected
+
+    COMPLETED: Peer paired
+    COMPLETED: Disconnect link
+    COMPLETED --> DISCONNECTING : Automatic
+
+    DISCONNECTING: Waiting for disconnection to complete
+    DISCONNECTING --> INITIALISED : CON_MANAGER_TP_DISCONNECT_IND, link disconnected
+@enduml

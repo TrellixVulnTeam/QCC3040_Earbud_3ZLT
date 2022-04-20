@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: customer-pydbg-hydratrans
+Version: 1.1.1
+Summary: Pydbg hydra-specific transport functionality
+Author: Qualcomm Technologies International, Ltd
+License: Qualcomm Proprietary
+Keywords: embedded firmware development
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Debugging Tools
+Classifier: License :: Proprietary
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=2.7, <3.10
+
+Pydbg base funcionality includes generic firmware analysis features
+

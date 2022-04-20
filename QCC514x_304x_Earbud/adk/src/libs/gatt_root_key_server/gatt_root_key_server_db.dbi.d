@@ -1,0 +1,1 @@
+gatt_root_key_server/gatt_root_key_server_db.dbi_: gatt_root_key_server/gatt_root_key_server_db.dbi gatt_root_key_server/gatt_root_key_server_uuids.h

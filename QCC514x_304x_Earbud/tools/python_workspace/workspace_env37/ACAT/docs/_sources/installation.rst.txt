@@ -1,0 +1,149 @@
+Installation
+============
+
+Create a Python Virtual Environment
+-----------------------------------
+Python applications come with different requirements and in some cases
+libraries may conflict when they are installed in the same Python
+environment.
+
+To minimize installation problems, create a separate virtual environment
+for the ACAT. See the ``virtualenv`` `online documentation`_ for more
+information.
+
+.. _online documentation: https://pypi.org/project/virtualenv/1.7.1.2/
+
+At the command prompt, change to a directory which becomes the working
+directory for this ACAT installation, then create a virtual environment
+(called ``acat_env`` in this example) using the following command:
+
+::
+
+ C:\<CURRENT PATH>\ <path_to_pathon_3_folder>\python.exe -m venv acat_env
+
+After the virtual environment is created, activate it using the following
+command:
+
+::
+
+ acat_env\Scripts\activate
+
+The command prompt should look like:
+
+::
+
+ (acat_env) <CURRENT PATH>>
+
+The virtual environment name before the command prompt shows that the
+activation was successful.
+
+.. note:: Some python versions install a very old ``pip`` library which
+          may not work properly with modern wheels and/or pypi servers.
+          Upgrade the pip library to its latest version using:
+          ``python -m pip install --upgrade pip``.
+
+
+From the wheel
+--------------
+To install the latest released ACAT, use the following command in you
+virtual environment:
+
+
+::
+
+     python -m pip install ACAT-x.y.z-py3-none-any.whl
+
+
+
+
+
+Full Installation
+~~~~~~~~~~~~~~~~~
+ACAT has no direct dependency. However, there are some optional
+libraries available which will enable ACAT to offer more functionality.
+As an example there libraries can be ``matplotlib`` and ``graphviz``.
+
+Optional dependencies are defined as "recommended" dependencies in the
+wheel package. It means, they can be installed as per user's preference. 
+
+To install all the recommended packages to enable the full functionality
+of ACAT, use the following installation command:
+
+
+::
+
+     python -m pip install ACAT-x.y.z-py3-none-any.whl[full]
+
+
+
+
+
+Install Graphviz
+----------------
+By doing the "full" installation, pip will install ``graphviz`` library as
+well. However, this library requires system wide installation of ``dot``
+application, which comes from `Graphviz`_ website.
+
+.. _Graphviz: https://graphviz.org/download/
+
+The complete installation guide is mentioned in the Graphviz link.
+
+.. note:: Please make sure to add the path to the installation of Graphviz
+          is added to your system path. To make sure the installation
+          works, open a command prompt and type ``dot``. The dot's
+          console should appear without any text. To exit the console,
+          press ``Ctrl + C``. On some Windows systems ``dot`` does not
+          work out of the box. If the execution of ``dot`` results in
+          error, open ``cmd.exe`` with Administrator privilege and execute
+          ``dot -c``. This configures plugins appropriately.
+
+
+Access ACAT in an ADK Installation
+----------------------------------
+From the ADK 20.2, ACAT wheel package is available to users. To access the
+correct ``acat`` executable, the user must activate the appropriate Python
+Virtual Environment. This environment has a mix-match libraries of the Toolkit
+and the ADK. For the convenience assume the following locations for the ADK and
+Toolkit folders. The names can be different in actual installations.
+
+ - ADK: ``C:\qtil\QCC_ADK\``, where the ``audio`` folder is available.
+ - Toolkit: ``C:\qtil\ADK_Toolkit\``, where the ``activate.bat`` script is
+   available.
+
+From the command line, activate the virtual environment in the Toolkit
+*from* the ADK location. It must activate the right workspace. The output
+is similar to:
+
+::
+
+  C:\qtil\QCC_ADK>C:\qtil\ADK_Toolkit\activate.bat
+  Activating workspace..
+  INFO:workspace:Installing...
+  INFO:workspace:PIP log:
+  Looking in links: c:\qtil\ADK_Toolkit\tools\python\wheels, c:\qtil\QCC_ADK\audio\.
+  Processing c:\qtil\QCC_ADK\audio\acat-1.10.4-py3-none-any.whl
+  Processing c:\qtil\QCC_ADK\audio\kse-0.11.0-py2.py3-none-any.whl
+  Processing c:\qtil\ADK_TOOLKIT\tools\python\wheels\kal_python_tools-1.1.8-py2.py3-none-win_amd64.whl
+  Processing c:\qtil\QCC_ADK\audio\ksp-0.4.2-py2.py3-none-any.whl
+  Collecting ipython<8,>=5.2.2; python_version >= "3"
+    Using cached ipython-7.18.1-py3-none-any.whl (786 kB)
+  Collecting six<2,>=1.10.0
+    Using cached six-1.15.0-py2.py3-none-any.whl (10 kB)
+  Collecting jsonschema<4,>=2.6.0
+    Using cached jsonschema-3.2.0-py2.py3-none-any.whl (56 kB)
+
+    --- <snip> ---
+
+  Successfully installed ACAT-1.10.4 KSP-0.4.2 attrs-20.2.0 backcall-0.2.0 colorama-0.4.4 customer-pydbg-base-0.7.1 customer-pydbg-qcc514x-qcc304x-0.7.1 decorator-4.4.2 importlib-metadata-2.0.0 ipython-7.18.1 ipython-genutils-0.2.0 jedi-0.17.2 jsonschema-3.2.0 kal-python-tools-1.1.8 kalcmd2-2.8.2 kse-0.11.0 numpy-1.19.2 parso-0.7.1 pickleshare-0.7.5 prompt-toolkit-3.0.8 pydbg-default-1.0 pygments-2.7.1 pyreadline-2.1 pyrsistent-0.17.3 setuptools-50.3.2 six-1.15.0 traitlets-5.0.5 trbtrans-2.9.0 wcwidth-0.2.5 wrapt-1.12.1 zipp-3.3.1
+  
+
+To test whether the ``acat`` script is accessible, run:
+  
+:: 
+
+  ATK (C:\qtil\ADK_Toolkit\) C:\qtil\QCC_ADK>acat --version
+  Audio Coredump Analysis Tool, v1.10.4
+
+.. note:: Make sure the ``ATK (C:\qtil\ADK_Toolkit\)`` text appears next
+          to the command line prompt. The output version maybe different
+          depending on the version of the ACAT available in that ADK.

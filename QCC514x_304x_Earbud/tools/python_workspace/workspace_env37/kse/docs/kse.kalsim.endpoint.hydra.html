@@ -1,0 +1,669 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.endpoint.hydra package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim.endpoint package" href="kse.kalsim.endpoint.html"/>
+        <link rel="next" title="kse.kalsim.graph package" href="kse.kalsim.graph.html"/>
+        <link rel="prev" title="kse.kalsim.endpoint package" href="kse.kalsim.endpoint.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.endpoint.html">kse.kalsim.endpoint package</a> &raquo;</li>
+      
+    <li>kse.kalsim.endpoint.hydra package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.endpoint.hydra.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-endpoint-hydra-package">
+<h1>kse.kalsim.endpoint.hydra package<a class="headerlink" href="#kse-kalsim-endpoint-hydra-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.a2dp">
+<span id="kse-kalsim-endpoint-hydra-a2dp-module"></span><h2>kse.kalsim.endpoint.hydra.a2dp module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.a2dp" title="Permalink to this headline">¶</a></h2>
+<p>Hydra a2dp endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.a2dp.</code><code class="sig-name descname">EndpointHydraA2dp</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/a2dp.html#EndpointHydraA2dp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra a2dp endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra a2dp stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/a2dp.html#EndpointHydraA2dp.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/a2dp.html#EndpointHydraA2dp.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Created as part of Audio Data Service start_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/a2dp.html#EndpointHydraA2dp.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of Audio Data Service stop_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/a2dp.html#EndpointHydraA2dp.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'a2dp'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.a2dp.EndpointHydraA2dp.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.file">
+<span id="kse-kalsim-endpoint-hydra-file-module"></span><h2>kse.kalsim.endpoint.hydra.file module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.file" title="Permalink to this headline">¶</a></h2>
+<p>Hydra file endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.file.</code><code class="sig-name descname">EndpointHydraFile</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/file.html#EndpointHydraFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra file endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra file stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/file.html#EndpointHydraFile.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/file.html#EndpointHydraFile.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Created as part of Audio Data Service start_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/file.html#EndpointHydraFile.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of Audio Data Service stop_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/file.html#EndpointHydraFile.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'file'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.file.EndpointHydraFile.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.file.EndpointHydraFile.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.iso">
+<span id="kse-kalsim-endpoint-hydra-iso-module"></span><h2>kse.kalsim.endpoint.hydra.iso module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.iso" title="Permalink to this headline">¶</a></h2>
+<p>Hydra iso endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.iso.EndpointHydraIso">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.iso.</code><code class="sig-name descname">EndpointHydraIso</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/iso.html#EndpointHydraIso"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.iso.EndpointHydraIso" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra iso endpoint</p>
+<p>This is an endpoint that is destroyed in the stream as part of the hydra iso
+data service creation/destruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra iso stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/iso.html#EndpointHydraIso.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/iso.html#EndpointHydraIso.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/iso.html#EndpointHydraIso.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of SCO Processing Service stop_service.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'iso'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.iso.EndpointHydraIso.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.l2cap">
+<span id="kse-kalsim-endpoint-hydra-l2cap-module"></span><h2>kse.kalsim.endpoint.hydra.l2cap module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.l2cap" title="Permalink to this headline">¶</a></h2>
+<p>Hydra l2cap endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.l2cap.</code><code class="sig-name descname">EndpointHydraL2cap</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/l2cap.html#EndpointHydraL2cap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra l2cap endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra l2cap stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/l2cap.html#EndpointHydraL2cap.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/l2cap.html#EndpointHydraL2cap.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Created as part of Audio Data Service start_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/l2cap.html#EndpointHydraL2cap.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of Audio Data Service stop_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/l2cap.html#EndpointHydraL2cap.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'l2cap'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.sco">
+<span id="kse-kalsim-endpoint-hydra-sco-module"></span><h2>kse.kalsim.endpoint.hydra.sco module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.sco" title="Permalink to this headline">¶</a></h2>
+<p>Hydra sco endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.sco.EndpointHydraSco">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.sco.</code><code class="sig-name descname">EndpointHydraSco</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/sco.html#EndpointHydraSco"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.sco.EndpointHydraSco" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra sco endpoint</p>
+<p>This is an endpoint that is destroyed in the stream as part of the hydra sco
+data service creation/destruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra sco stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/sco.html#EndpointHydraSco.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/sco.html#EndpointHydraSco.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/sco.html#EndpointHydraSco.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of SCO Processing Service stop_service.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'sco'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.sco.EndpointHydraSco.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.tester">
+<span id="kse-kalsim-endpoint-hydra-tester-module"></span><h2>kse.kalsim.endpoint.hydra.tester module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.tester" title="Permalink to this headline">¶</a></h2>
+<p>Hydra tester endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.tester.</code><code class="sig-name descname">EndpointHydraTester</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/tester.html#EndpointHydraTester"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra tester endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra tester stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/tester.html#EndpointHydraTester.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/tester.html#EndpointHydraTester.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Created as part of Audio Data Service start_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/tester.html#EndpointHydraTester.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of Audio Data Service stop_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/tester.html#EndpointHydraTester.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'tester'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.tester.EndpointHydraTester.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra.timestamped">
+<span id="kse-kalsim-endpoint-hydra-timestamped-module"></span><h2>kse.kalsim.endpoint.hydra.timestamped module<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra.timestamped" title="Permalink to this headline">¶</a></h2>
+<p>Hydra timestamped endpoint class</p>
+<dl class="class">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.endpoint.hydra.timestamped.</code><code class="sig-name descname">EndpointHydraTimestamped</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/timestamped.html#EndpointHydraTimestamped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Hydra timestamped endpoint</p>
+<p>This is an endpoint that is created and destroyed in the stream as part of the hydra audio
+data service creation/destruction.
+From here we just get the endpoint id from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Hydra timestamped stream index</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/timestamped.html#EndpointHydraTimestamped.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/timestamped.html#EndpointHydraTimestamped.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Created as part of Audio Data Service start_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/timestamped.html#EndpointHydraTimestamped.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroyed as part of Audio Data Service stop_service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/endpoint/hydra/timestamped.html#EndpointHydraTimestamped.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'timestamped'</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.endpoint.hydra">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.endpoint.hydra" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.graph.html" class="btn btn-neutral float-right" title="kse.kalsim.graph package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.endpoint.html" class="btn btn-neutral" title="kse.kalsim.endpoint package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

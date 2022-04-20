@@ -1,0 +1,36 @@
+kse.kalsim package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.kalsim.capability
+   kse.kalsim.component
+   kse.kalsim.endpoint
+   kse.kalsim.graph
+   kse.kalsim.hydra_service
+   kse.kalsim.library
+   kse.kalsim.stream
+   kse.kalsim.uut
+
+Submodules
+----------
+
+kse.kalsim.kalsim\_shell module
+-------------------------------
+
+.. automodule:: kse.kalsim.kalsim_shell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.kalsim
+   :members:
+   :undoc-members:
+   :show-inheritance:

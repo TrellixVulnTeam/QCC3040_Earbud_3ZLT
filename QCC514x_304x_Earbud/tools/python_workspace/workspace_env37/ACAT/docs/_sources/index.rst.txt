@@ -1,0 +1,41 @@
+.. ACAT documentation master file, created by
+   sphinx-quickstart on Tue Sep 17 13:33:08 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to ACAT's documentation!
+==============================================
+The Qualcomm Audio Coredump Analysis Tool (ACAT), is a Python-based
+debugging tool for both Qualcomm Kymera TM Capability and Framework
+code, which uses the Kymera framework on the DSP to analyze both Coredumps
+and live-running chips.  ACAT has two modes:
+
+ * **Automatic**: ACAT runs all analyses without further prompting (By
+   calling the ``run_all()`` function). Results are outputted to a text or
+   html file, or the Command Prompt window.
+
+ * **Interactive**: This mode provides a real-time debugging facility.
+   ACAT accepts Python commands and runs the selected analysis only.
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Contents
+
+
+   add_analysis
+   analyses
+   functions
+   installation
+   run
+   terms_definitions
+   code_documentation
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+.. qcomcopyright::

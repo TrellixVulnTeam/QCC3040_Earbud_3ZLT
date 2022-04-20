@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.library.period &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.library.period</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.library.period</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Utility library for period computation&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="compute_period"><a class="viewcode-back" href="../../../../kse.kalsim.library.html#kse.kalsim.library.period.compute_period">[docs]</a><span class="k">def</span> <span class="nf">compute_period</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">remainder</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to compute next timer period based of the nominal period, a remainder</span>
+<span class="sd">    value and the resolution of the timer</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        Overflow period example::</span>
+
+<span class="sd">            period = 0.00000166667</span>
+<span class="sd">            new_period, remain = self._compute_period(period, 0)</span>
+<span class="sd">            print(new_period, remain)</span>
+<span class="sd">            new_period, remain = self._compute_period(period, remain)</span>
+<span class="sd">            print(new_period, remain)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        period (float): Timer nominal period</span>
+<span class="sd">        remainder (float): Carried remainder from previous timer</span>
+<span class="sd">        resolution (float): Timer resolution f.i. 0.001 for msecs, 0.000001 for usecs</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple:</span>
+<span class="sd">            float: Timer period</span>
+<span class="sd">            float: Carried remainder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inv_res</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">resolution</span>
+    <span class="n">period_new</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">period</span> <span class="o">+</span> <span class="n">remainder</span><span class="p">)</span> <span class="o">*</span> <span class="n">inv_res</span><span class="p">)</span> <span class="o">/</span> <span class="n">inv_res</span>
+    <span class="n">remainder_new</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">period</span> <span class="o">+</span> <span class="n">remainder</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e9</span> <span class="o">/</span> <span class="n">inv_res</span><span class="p">)))</span> <span class="o">/</span> <span class="mf">1e9</span>
+    <span class="k">return</span> <span class="n">period_new</span><span class="p">,</span> <span class="n">remainder_new</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

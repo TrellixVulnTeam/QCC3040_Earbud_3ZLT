@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kymera.capability package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kymera package" href="kse.kymera.html"/>
+        <link rel="next" title="kse.kymera.capability.generic package" href="kse.kymera.capability.generic.html"/>
+        <link rel="prev" title="kse.kymera package" href="kse.kymera.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kymera.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kymera.html#module-kse.kymera">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kymera.html">kse.kymera package</a> &raquo;</li>
+      
+    <li>kse.kymera.capability package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kymera.capability.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kymera-capability-package">
+<h1>kse.kymera.capability package<a class="headerlink" href="#kse-kymera-capability-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="kse.kymera.capability.generic.html">kse.kymera.capability.generic package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.capability.generic.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.capability.generic.html#module-kse.kymera.capability.generic.capability_generic">kse.kymera.capability.generic.capability_generic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.capability.generic.html#module-kse.kymera.capability.generic">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kymera.capability.capability_base">
+<span id="kse-kymera-capability-capability-base-module"></span><h2>kse.kymera.capability.capability_base module<a class="headerlink" href="#module-kse.kymera.capability.capability_base" title="Permalink to this headline">¶</a></h2>
+<p>Capability Base class</p>
+<dl class="class">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.capability.capability_base.</code><code class="sig-name descname">CapabilityBase</code><span class="sig-paren">(</span><em class="sig-param">cap</em>, <em class="sig-param">kymera</em>, <em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Capability base class. Should be subclassed by every capability extension.</p>
+<p>This builds an interface on top of kymera to handle capabilities and operators.
+kymera interface is a single interface of multiple operators while CapabilityBase is
+an instance that handle a single operator.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PassThrough is subclassing CapabilityBase</span>
+<span class="kn">from</span> <span class="nn">kats.kymera.capability.common.pass_through</span> <span class="kn">import</span> <span class="n">PassThroughCapability</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">PassThroughCapability</span><span class="p">(</span><span class="s1">&#39;pass_through&#39;</span><span class="p">,</span> <span class="n">kymera</span><span class="p">,</span> <span class="n">input_data_type</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">output_data_type</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">op</span><span class="o">.</span><span class="n">create</span><span class="p">()</span> <span class="c1"># create operator in uut</span>
+<span class="n">op</span><span class="o">.</span><span class="n">config</span><span class="p">()</span> <span class="c1"># send all configuration messages</span>
+<span class="n">op</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">op</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">op</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">op</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cap</strong> (<em>str</em>) – Name of the capability</p></li>
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.cap_id">
+<em class="property">abstract property </em><code class="sig-name descname">cap_id</code><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.cap_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capability id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.config">
+<em class="property">abstract </em><code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy operator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the operator has not been previously created</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.disable_fade_out">
+<code class="sig-name descname">disable_fade_out</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.disable_fade_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.disable_fade_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.enable_fade_out">
+<code class="sig-name descname">enable_fade_out</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.enable_fade_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.enable_fade_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_capability_version">
+<code class="sig-name descname">get_capability_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_capability_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_capability_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get capability version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Capability version</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – if the operator has not been created of the uut responds incorrectly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_defaults">
+<code class="sig-name descname">get_defaults</code><span class="sig-paren">(</span><em class="sig-param">offset</em>, <em class="sig-param">length=1</em>, <em class="sig-param">encoding=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send get default params message</p>
+<p>Note it only supports requesting one block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<em>int</em>) – Parameter offset to read</p></li>
+<li><p><strong>length</strong> (<em>int</em>) – Number of parameters to read, each parameters will could be 24 or 32 bits</p></li>
+<li><p><strong>encoding</strong> (<em>int</em>) – Params encoding, 0 for 24b, 1 for 32b</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parameters read</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Operator id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_logical_ps_id">
+<code class="sig-name descname">get_logical_ps_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_logical_ps_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_logical_ps_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get logical psid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>UCID, capability id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[int,int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_params">
+<code class="sig-name descname">get_params</code><span class="sig-paren">(</span><em class="sig-param">offset</em>, <em class="sig-param">length=1</em>, <em class="sig-param">encoding=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send get params message</p>
+<p>Note it only supports requesting one block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<em>int</em>) – Parameter offset to read</p></li>
+<li><p><strong>length</strong> (<em>int</em>) – Number of parameters to read, each parameters will could be 24 or 32 bits</p></li>
+<li><p><strong>encoding</strong> (<em>int</em>) – Params encoding, 0 for 24b, 1 for 32b</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parameters read</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_sink_endpoint">
+<code class="sig-name descname">get_sink_endpoint</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_sink_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_sink_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sink endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num</strong> (<em>int</em>) – Zero-based index of the sink endpoint in the operator</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sink endpoint id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_sink_terminal">
+<code class="sig-name descname">get_sink_terminal</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_sink_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_sink_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sink terminal id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num</strong> (<em>int</em>) – Zero-based index of the sink terminal in the operator</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sink endpoint id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_source_endpoint">
+<code class="sig-name descname">get_source_endpoint</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_source_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_source_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get source endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num</strong> (<em>int</em>) – Zero-based index of the source endpoint in the operator</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Source endpoint id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_source_terminal">
+<code class="sig-name descname">get_source_terminal</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_source_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_source_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get source terminal id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num</strong> (<em>int</em>) – Zero-based index of the source terminal in the operator</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Source terminal id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_state">
+<code class="sig-name descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get capability state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Capability state</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.get_status">
+<code class="sig-name descname">get_status</code><span class="sig-paren">(</span><em class="sig-param">space=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.get_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send get status</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>space</strong> (<em>int</em>) – Space available for the response</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Operator specific status data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.send_recv_operator_message">
+<code class="sig-name descname">send_recv_operator_message</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.send_recv_operator_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.send_recv_operator_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send message to uut operator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list</strong><strong>[</strong><strong>int</strong><strong>]</strong> – Message to be sent</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Response</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_buffer_size">
+<code class="sig-name descname">set_buffer_size</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_buffer_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set buffer size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) – Buffer size</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_control">
+<code class="sig-name descname">set_control</code><span class="sig-paren">(</span><em class="sig-param">control_id</em>, <em class="sig-param">value</em>, <em class="sig-param">encoding=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send set control message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>control_id</strong> (<em>int</em>) – Specific control to set</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – Control value, 24 or 32 bits, to be sent</p></li>
+<li><p><strong>encoding</strong> (<em>int</em>) – Params encoding, 0 for 24b, 1 for 32b</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_data_stream_based">
+<code class="sig-name descname">set_data_stream_based</code><span class="sig-paren">(</span><em class="sig-param">enable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_data_stream_based"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_data_stream_based" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set data stream based</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>enable</strong> (<em>bool</em>) – Enable data stream</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_metadata_delay">
+<code class="sig-name descname">set_metadata_delay</code><span class="sig-paren">(</span><em class="sig-param">delay</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_metadata_delay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_metadata_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set metadata delay</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>delay</strong> (<em>int</em>) – Delay in samples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_params">
+<code class="sig-name descname">set_params</code><span class="sig-paren">(</span><em class="sig-param">offset</em>, <em class="sig-param">params</em>, <em class="sig-param">load_defaults=False</em>, <em class="sig-param">encoding=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send set params message</p>
+<p>Note it only supports requesting one block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<em>int</em>) – Parameter offset to read</p></li>
+<li><p><strong>params</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Parameters to write, should come in 24 or 32 bits data per parameter</p></li>
+<li><p><strong>load_defaults</strong> (<em>bool</em>) – Load defaults prior to execute commands</p></li>
+<li><p><strong>encoding</strong> (<em>int</em>) – Params encoding, 0 for 24b, 1 for 32b</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_sample_rate">
+<code class="sig-name descname">set_sample_rate</code><span class="sig-paren">(</span><em class="sig-param">sample_rate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_sample_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set sample rate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sample_rate</strong> (<em>int</em>) – Sample rate</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_terminal_buffer_size">
+<code class="sig-name descname">set_terminal_buffer_size</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">sinks</em>, <em class="sig-param">sources</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_terminal_buffer_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_terminal_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set terminal buffer size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – Buffer size</p></li>
+<li><p><strong>sinks</strong> (<em>int</em>) – Bit mask for sinks to apply</p></li>
+<li><p><strong>sources</strong> (<em>int</em>) – Bit mask for sources to apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.set_ucid">
+<code class="sig-name descname">set_ucid</code><span class="sig-paren">(</span><em class="sig-param">ucid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.set_ucid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.set_ucid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send set ucid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ucid</strong> (<em>int</em>) – UCID</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_base.CapabilityBase.version_request">
+<code class="sig-name descname">version_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_base.html#CapabilityBase.version_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_base.CapabilityBase.version_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get capability version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Capability version</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – if the operator has not been created of the uut responds incorrectly</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.capability.capability_factory">
+<span id="kse-kymera-capability-capability-factory-module"></span><h2>kse.kymera.capability.capability_factory module<a class="headerlink" href="#module-kse.kymera.capability.capability_factory" title="Permalink to this headline">¶</a></h2>
+<p>Capability handler class</p>
+<dl class="class">
+<dt id="kse.kymera.capability.capability_factory.CapabilityFactory">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.capability.capability_factory.</code><code class="sig-name descname">CapabilityFactory</code><span class="sig-paren">(</span><em class="sig-param">platform</em>, <em class="sig-param">kymera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_factory.html#CapabilityFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_factory.CapabilityFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Kalimba Capability factory</p>
+<p>This class handles remote representation of capabilities and operators inside kalimba.
+It supports a factory interface, where capabilities are classified in platforms
+When this class starts it autodiscovers all the capability types available for
+a set of platforms.
+Discovered capabilities should subclass CapabilityBase in a subpackage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">capability</span> <span class="o">=</span> <span class="n">CapabilityFactory</span><span class="p">([</span><span class="s1">&#39;common&#39;</span><span class="p">],</span> <span class="n">kymera</span><span class="p">)</span>
+<span class="n">capability</span><span class="o">.</span><span class="n">enum_interface</span><span class="p">()</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">capability</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;BASIC_PASS_THROUGH&#39;</span><span class="p">,</span>
+                            <span class="p">[</span><span class="s1">&#39;CHANGE_INPUT_DATA_TYPE&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                            <span class="p">[</span><span class="s1">&#39;CHANGE_OUTPUT_DATA_TYPE&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">op</span><span class="o">.</span><span class="n">create</span><span class="p">()</span> <span class="c1"># create operator in uut</span>
+<span class="n">op</span><span class="o">.</span><span class="n">config</span><span class="p">()</span> <span class="c1"># send all configuration messages</span>
+<span class="n">op</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">op</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">op</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+<span class="n">capability</span><span class="o">.</span><span class="n">put_instance</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>platform</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Platforms available</p></li>
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.capability.capability_factory.CapabilityFactory.enum_interface">
+<code class="sig-name descname">enum_interface</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_factory.html#CapabilityFactory.enum_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_factory.CapabilityFactory.enum_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of registered capabilities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>str: Capability name/interface</dt><dd><p>int: cap_id
+any: class
+str: platform</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_factory.CapabilityFactory.enum_uut">
+<code class="sig-name descname">enum_uut</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_factory.html#CapabilityFactory.enum_uut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_factory.CapabilityFactory.enum_uut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of registered capabilities in the uut</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>Capability id and names (or empty string if not locally registered)</p>
+<p>{1: [‘pass_through’],
+2: [‘’],
+19: [‘splitter’]}</p>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_factory.CapabilityFactory.get_class">
+<code class="sig-name descname">get_class</code><span class="sig-paren">(</span><em class="sig-param">capability</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_factory.html#CapabilityFactory.get_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_factory.CapabilityFactory.get_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search in the discovered plugins for a capability and return its class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>capability</strong> (<em>str</em><em> or </em><em>int</em>) – Capability name or id to search</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability class</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unable to find capability</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_factory.CapabilityFactory.get_instance">
+<code class="sig-name descname">get_instance</code><span class="sig-paren">(</span><em class="sig-param">capability</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_factory.html#CapabilityFactory.get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_factory.CapabilityFactory.get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search in the discovered plugins for a capability and return an instance to it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>capability</strong> (<em>str</em><em> or </em><em>int</em>) – Capability name or id to search</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unable to find capability</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.capability.capability_factory.CapabilityFactory.put_instance">
+<code class="sig-name descname">put_instance</code><span class="sig-paren">(</span><em class="sig-param">capability</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/capability/capability_factory.html#CapabilityFactory.put_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.capability.capability_factory.CapabilityFactory.put_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy operator instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>capability</strong> (<em>any</em>) – Capability instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.capability">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kymera.capability" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kymera.capability.generic.html" class="btn btn-neutral float-right" title="kse.kymera.capability.generic package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kymera.html" class="btn btn-neutral" title="kse.kymera package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

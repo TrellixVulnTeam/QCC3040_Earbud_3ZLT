@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kymera.endpoint package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kymera package" href="kse.kymera.html"/>
+        <link rel="next" title="kse.kymera.endpoint.common package" href="kse.kymera.endpoint.common.html"/>
+        <link rel="prev" title="kse.kymera.capability.generic package" href="kse.kymera.capability.generic.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kymera.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kymera.html#module-kse.kymera">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kymera.html">kse.kymera package</a> &raquo;</li>
+      
+    <li>kse.kymera.endpoint package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kymera.endpoint.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kymera-endpoint-package">
+<h1>kse.kymera.endpoint package<a class="headerlink" href="#kse-kymera-endpoint-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="kse.kymera.endpoint.common.html">kse.kymera.endpoint.common package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.codec">kse.kymera.endpoint.common.codec module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.digital_mic">kse.kymera.endpoint.common.digital_mic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.i2s">kse.kymera.endpoint.common.i2s module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.mapping">kse.kymera.endpoint.common.mapping module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.pcm">kse.kymera.endpoint.common.pcm module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.spdif">kse.kymera.endpoint.common.spdif module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common.static">kse.kymera.endpoint.common.static module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kymera.endpoint.common.html#module-kse.kymera.endpoint.common">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kymera.endpoint.endpoint_factory">
+<span id="kse-kymera-endpoint-endpoint-factory-module"></span><h2>kse.kymera.endpoint.endpoint_factory module<a class="headerlink" href="#module-kse.kymera.endpoint.endpoint_factory" title="Permalink to this headline">¶</a></h2>
+<p>Endpoint handler class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.endpoint_factory.EndpointFactory">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.endpoint_factory.</code><code class="sig-name descname">EndpointFactory</code><span class="sig-paren">(</span><em class="sig-param">platform</em>, <em class="sig-param">kymera</em>, <em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/endpoint_factory.html#EndpointFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.endpoint_factory.EndpointFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Kalimba Endpoint factory</p>
+<p>This class handles endpoints inside kalimba.
+It supports a factory interface, where endpoints are classified in platforms
+and there could be multiple endpoints for each platform.
+When this class starts it autodiscovers all the endpoint types available for
+a set of platforms.
+Discovered endpoints should subclass EndpointBase in a subpackage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">endpoint</span> <span class="o">=</span> <span class="n">EndpointFactory</span><span class="p">([</span><span class="s1">&#39;crescendo&#39;</span><span class="p">],</span> <span class="n">kymera</span><span class="p">)</span>
+<span class="n">endpoint</span><span class="o">.</span><span class="n">enum_interface</span><span class="p">()</span>
+<span class="n">ep</span> <span class="o">=</span> <span class="n">endpoint</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;pcm&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">pcm_sync_rate</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<span class="n">ep</span><span class="o">.</span><span class="n">create</span><span class="p">()</span> <span class="c1"># create endpoint in uut</span>
+<span class="n">ep</span><span class="o">.</span><span class="n">config</span><span class="p">()</span> <span class="c1"># send all configuration messages</span>
+<span class="o">...</span>
+<span class="n">ep</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+<span class="n">endpoint</span><span class="o">.</span><span class="n">put_instance</span><span class="p">(</span><span class="n">ep</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>platform</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Platforms available</p></li>
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>path</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.endpoint_factory.EndpointFactory.enum_interface">
+<code class="sig-name descname">enum_interface</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/endpoint_factory.html#EndpointFactory.enum_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.endpoint_factory.EndpointFactory.enum_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of registered endpoints</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id and names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.endpoint_factory.EndpointFactory.get_class">
+<code class="sig-name descname">get_class</code><span class="sig-paren">(</span><em class="sig-param">interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/endpoint_factory.html#EndpointFactory.get_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.endpoint_factory.EndpointFactory.get_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search in the discovered plugins for an endpoint interface and return its class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interface</strong> (<em>str</em>) – Endpoint interface</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Endpoint class</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unable to find endpoint interface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.endpoint_factory.EndpointFactory.get_instance">
+<code class="sig-name descname">get_instance</code><span class="sig-paren">(</span><em class="sig-param">interface</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/endpoint_factory.html#EndpointFactory.get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.endpoint_factory.EndpointFactory.get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search in the discovered plugins for an endpoint interface and return an instance of it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interface</strong> (<em>str</em>) – Endpoint interface</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Endpoint type name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Endpoint instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unable to find endpoint interface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.endpoint_factory.EndpointFactory.put_instance">
+<code class="sig-name descname">put_instance</code><span class="sig-paren">(</span><em class="sig-param">endpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/endpoint_factory.html#EndpointFactory.put_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.endpoint_factory.EndpointFactory.put_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy endpoint instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>endpoint</strong> (<em>any</em>) – Endpoint instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kymera.endpoint" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kymera.endpoint.common.html" class="btn btn-neutral float-right" title="kse.kymera.endpoint.common package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kymera.capability.generic.html" class="btn btn-neutral" title="kse.kymera.capability.generic package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Command-line tools &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="User guide" href="user_guide.html"/>
+        <link rel="next" title="kse package" href="kse.html"/>
+        <link rel="prev" title="Components" href="components.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Graph examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Command-line tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kse-shell">kse_shell</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+    <li>Command-line tools</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/command_line.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-tools">
+<h1>Command-line tools<a class="headerlink" href="#command-line-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="kse-shell">
+<span id="command-line-kse-shell"></span><h2>kse_shell<a class="headerlink" href="#kse-shell" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>usage: kse_shell [-h] [-c CONFIG] [-l LOG] [–log_level LEVEL] [–repl REPL]</dt><dd><p>[–hide_prompt] [–platform PLATFORM]
+[–capability_description CAPABILITY_DESCRIPTION]
+[–script SCRIPT [SCRIPT …]] [–exit]
+[–acat_analyses VAL [VAL …]] [–acat_bundle VAL [VAL …]]
+[–acat_firmware_log_enable] [–acat_firmware_log_level VAL]
+[–acat_firmware_log_timer_update_period VAL]
+[–acat_path VAL] [–acat_use]
+[–hydra_ftp_server_directory VAL]
+[–hydra_ftp_server_prefix VAL] [–hydra_ftp_server_skip]
+[–ka_path VAL] [–ka_skip] [–ka_subsystem VAL]
+[–kc_client] [–kc_port VAL]
+[–ks_cmdline_args VAL [VAL …]] [–ks_debug]
+[–ks_debug_port VAL] [–ks_firmware VAL] [–ks_path VAL]
+[–ks_quiet] [–ks_skip] [–ks_timer_update_period VAL]
+[–ks_verbose] [–license_manager_filename VAL]
+[–license_manager_use] [–pstore_filename VAL]
+[–pstore_use]</p>
+</dd>
+</dl>
+<p>Kalsim Shell. This in an utility to debug, prototype and test interactively
+kalimba code running in kalsim. It does coordinate three different pieces of
+software, kalcmd2, kalsim and kalaccess placing a nice REPL on top of it</p>
+<dl>
+<dt>optional arguments:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">-c <var>CONFIG</var></span>, <span class="option">--config <var>CONFIG</var></span></kbd></dt>
+<dd><p>Configuration file (default: )</p>
+</dd>
+<dt><kbd><span class="option">-l <var>LOG</var></span>, <span class="option">--log <var>LOG</var></span></kbd></dt>
+<dd><p>Log configuration file (default:
+config/log.shell.cfg.json)</p>
+</dd>
+<dt><kbd><span class="option">--log_level <var>LEVEL</var></span></kbd></dt>
+<dd><p>Log level (default: 30)</p>
+</dd>
+<dt><kbd><span class="option">--repl <var>REPL</var></span></kbd></dt>
+<dd><p>Read Eval Print Loop tool (default: ipython)</p>
+</dd>
+<dt><kbd><span class="option">--hide_prompt</span></kbd></dt>
+<dd><p>Do not display prompt (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--platform <var>PLATFORM</var></span></kbd></dt>
+<dd><p>Chip platform (default: crescendo)</p>
+</dd>
+<dt><kbd><span class="option">--capability_description <var>CAPABILITY_DESCRIPTION</var></span></kbd></dt>
+<dd><p>Configuration file with description of capabilities
+(default: config/capability.cfg.json)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>–script SCRIPT [SCRIPT …]</dt><dd><p>Script to execute after kalsim connect. For script
+arguments enclose it with “” as –script “script1.py
+arg1” “script2.py arg1 arg2” (default: None)</p>
+</dd>
+</dl>
+<dl class="option-list">
+<dt><kbd><span class="option">--exit</span></kbd></dt>
+<dd><p>Exit after connection (default: False)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>–acat_analyses VAL [VAL …]</dt><dd><p>ACAT analyses to load, empty for all (default: [])</p>
+</dd>
+<dt>–acat_bundle VAL [VAL …]</dt><dd><p>ACAT bundle file/s, additional firmware files to be
+loaded besides main firmware (default: [])</p>
+</dd>
+</dl>
+<dl class="option-list">
+<dt><kbd><span class="option">--acat_firmware_log_enable</span></kbd></dt>
+<dd><p>if set ACAT firmware log is enabled (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--acat_firmware_log_level <var>VAL</var></span></kbd></dt>
+<dd><p>firmware log level (default: 2)</p>
+</dd>
+<dt><kbd><span class="option">--acat_firmware_log_timer_update_period <var>VAL</var></span></kbd></dt>
+<dd><p>firmware log polling time in seconds (default: 0.5)</p>
+</dd>
+<dt><kbd><span class="option">--acat_path <var>VAL</var></span></kbd></dt>
+<dd><p>if set ACAT will be used from here, if not it should
+be installed as a package (default: None)</p>
+</dd>
+<dt><kbd><span class="option">--acat_use</span></kbd></dt>
+<dd><p>if set ACAT will be started, for this to work ks_debug
+should be set (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--hydra_ftp_server_directory <var>VAL</var></span></kbd></dt>
+<dd><p>hydra ftp server directory. (default:
+firmware/kalsim/crescendo)</p>
+</dd>
+<dt><kbd><span class="option">--hydra_ftp_server_prefix <var>VAL</var></span></kbd></dt>
+<dd><p>hydra ftp server filename prefix. (default: )</p>
+</dd>
+<dt><kbd><span class="option">--hydra_ftp_server_skip</span></kbd></dt>
+<dd><p>if set Hydra FTP server will not be started. (default:
+False)</p>
+</dd>
+<dt><kbd><span class="option">--ka_path <var>VAL</var></span></kbd></dt>
+<dd><p>if set kalaccess will be used from here, if not it
+should be installed as a package (default: None)</p>
+</dd>
+<dt><kbd><span class="option">--ka_skip</span></kbd></dt>
+<dd><p>for kalaccess to be connected, kalsim has to be
+started in debug mode (see below) and this flag should
+not be set, if kalsim is started in debug mode and
+kalaccess is skipped then an external kalaccess should
+be connected and a run issued for the initialisation
+phase to complete (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--ka_subsystem <var>VAL</var></span></kbd></dt>
+<dd><p>kalaccess subsystem for connect (default: 3)</p>
+</dd>
+<dt><kbd><span class="option">--kc_client</span></kbd></dt>
+<dd><p>if set kalcmd acts as client in reference to kalsim,
+the parameter kc_port should be set to non priviledged
+port (above 1023) otherwise kalcmd is a server
+(default: False)</p>
+</dd>
+<dt><kbd><span class="option">--kc_port <var>VAL</var></span></kbd></dt>
+<dd><p>kalcmd port for kalsim connections, if kc_client is
+not set, 0 is a valid value which means any free port,
+if kc_client is set then an available port should be
+set (default: 0)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>–ks_cmdline_args VAL [VAL …]</dt><dd><p>kalsim extra command line arguments, please surround
+every parameter with ‘’ and add a leading space as in
+‘ –param’ (default: [‘–disable-dots’])</p>
+</dd>
+</dl>
+<dl class="option-list">
+<dt><kbd><span class="option">--ks_debug</span></kbd></dt>
+<dd><p>kalsim enable debug, valid kalaccess parameters should
+be provided (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--ks_debug_port <var>VAL</var></span></kbd></dt>
+<dd><p>kalsim will open debugger using this port, valid port
+and valid kalaccess parameters must be provided
+(default: 31400)</p>
+</dd>
+<dt><kbd><span class="option">--ks_firmware <var>VAL</var></span></kbd></dt>
+<dd><p>kymera binary path without extension, it is used in
+acat as well (default:
+firmware/kalsim/crescendo/kymera_crescendo_audio)</p>
+</dd>
+<dt><kbd><span class="option">--ks_path <var>VAL</var></span></kbd></dt>
+<dd><p>kalsim binary path (default: kalsim_crescendo_audio)</p>
+</dd>
+<dt><kbd><span class="option">--ks_quiet</span></kbd></dt>
+<dd><p>kalsim enable quiet mode (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--ks_skip</span></kbd></dt>
+<dd><p>if set kalsim binary will not be started and no other
+kalsim parameter will be used, kalcmd will try to
+connect to an existing kalsim process, for this to
+work {‘option_strings’: [‘–ks_skip’], ‘dest’:
+‘ks_skip’, ‘nargs’: 0, ‘const’: True, ‘default’:
+False, ‘type’: None, ‘choices’: None, ‘required’:
+False, ‘help’: ‘if set kalsim binary will not be
+started and no other kalsim parametern will be used,
+kalcmd will try to connect to an existing kalsim
+process,n for this to work %s should not be 0n
+otherwise kalsim will be executed’, ‘metavar’: None,
+‘container’: &lt;argparse._ArgumentGroup object at
+0x7f8c1d70ea20&gt;, ‘prog’: ‘kse_shell’} should not be 0
+otherwise kalsim will be executed (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--ks_timer_update_period <var>VAL</var></span></kbd></dt>
+<dd><p>kalsim timer simulation accuracy (default: None)</p>
+</dd>
+<dt><kbd><span class="option">--ks_verbose</span></kbd></dt>
+<dd><p>kalsim enable verbose mode (default: False)</p>
+</dd>
+<dt><kbd><span class="option">--license_manager_filename <var>VAL</var></span></kbd></dt>
+<dd><p>License Manager config filename. (default:
+config/license.cfg.json)</p>
+</dd>
+<dt><kbd><span class="option">--license_manager_use</span></kbd></dt>
+<dd><p>if set License Manager will be started. (default:
+False)</p>
+</dd>
+<dt><kbd><span class="option">--pstore_filename <var>VAL</var></span></kbd></dt>
+<dd><p>PStore filename. (default: config/pstore.cfg.json)</p>
+</dd>
+<dt><kbd><span class="option">--pstore_use</span></kbd></dt>
+<dd><p>if set PStore will be started. (default: False)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.html" class="btn btn-neutral float-right" title="kse package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="components.html" class="btn btn-neutral" title="Components" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

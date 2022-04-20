@@ -1,0 +1,8 @@
+
+Stream
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Stream``.
+
+.. automodule:: ACAT.Analysis.Stream
+   :members:

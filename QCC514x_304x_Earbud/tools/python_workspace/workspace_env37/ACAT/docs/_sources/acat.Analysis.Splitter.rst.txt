@@ -1,0 +1,8 @@
+
+Splitter
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Splitter``.
+
+.. automodule:: ACAT.Analysis.Splitter
+   :members:

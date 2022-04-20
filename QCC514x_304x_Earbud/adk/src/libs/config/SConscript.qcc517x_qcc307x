@@ -1,0 +1,20 @@
+import os
+
+Import('p_env')
+
+# Pull in the Kymera build configuration
+if os.path.exists('SConscript.hydracore'):
+    p_env.SConscript('SConscript.hydracore', exports='p_env', must_exist=True)
+
+try:
+    p_env['CONFIG_DIRS_FILTER'].remove('anc')
+except ValueError:
+    pass
+
+p_env.Append(CONFIG_FEATURES=['CONFIG_QCC517X_QCC307x',
+                              'CONFIG_HANDOVER',
+                              'CONFIG_KEY_MANIPULATION'])
+
+# Pull in the Synergy build configuration
+if os.path.exists('Sconscript.synergy'):
+    p_env.SConscript('SConscript.synergy', exports='p_env', must_exist=True)

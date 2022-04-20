@@ -1,0 +1,97 @@
+Metadata-Version: 2.1
+Name: KSP
+Version: 0.5.1
+Summary: Kymera Stream Probe
+Home-page: http://www.qualcomm.com/
+Author: Qualcomm
+Author-email: ksp_dev@qti.qualcomm.com
+Maintainer: QCSR Audio FW
+Maintainer-email: ksp_dev@qti.qualcomm.com
+License: Other/Proprietary License
+Keywords: ksp,debug,live,probe,capability,audio,kymera
+Platform: Windows
+Platform: Linux
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Customer Service
+Classifier: Intended Audience :: DevelopersIntended Audience :: Information Technology
+Classifier: Intended Audience :: Manufacturing
+Classifier: Intended Audience :: Telecommunications Industry
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6, <4
+Requires-Dist: numpy (<2,>=1)
+Requires-Dist: pydbg-default
+Requires-Dist: trbtrans (>2.8.0)
+
+Qualcomm Kymera Stream Probe (KSP) is a debugging tool that enables users
+of the audio subsystem to sniff audio/data from inside a running graph in
+Qualcomm Kymera. It can be used to probe and record internal nodes of a
+graph.
+
+**Use cases**
+
+    * Provides probe on transmissions in the Kymera graph.
+    * Collect high level graph based profiling data to be used in KTTRv tool.
+    * Firmware development support.
+
+
+**Environment characteristics**
+
+    * Python 3.6+
+    * Windows and Linux support
+    * Released as a wheel and source package
+
+Changelog
+=========
+
+0.4.4
+------
+
+Release date is 5th Feb.
+
+Major changes:
+  * Product review and make it more in line with established standards.
+  * Scrutinize and improve the TRB speed during the connection.
+  * Add support for Built-in Capability, specially for SQIF builds.
+  * Add Python 3.8 Support
+  * Remove Python 3.5 Support
+
+
+0.4.5
+-----
+
+Release date is 11th March 2021.
+
+Major changes:
+
+  * Handle Ctrl+C when reading from the chip
+
+
+0.4.6
+-----
+Release date is 23rd April 2021
+
+Major changes:
+
+  * KSP reports the DKCS version number when starting a stream
+  * Inline the Script and the Interactive modes
+  * Allow users to set the internal buffer size
+  * Python3.9 support
+
+
+0.5.0
+-----
+Release date is 12th May 2021
+
+Major changes:
+
+  * Dual Core support feature
+
+

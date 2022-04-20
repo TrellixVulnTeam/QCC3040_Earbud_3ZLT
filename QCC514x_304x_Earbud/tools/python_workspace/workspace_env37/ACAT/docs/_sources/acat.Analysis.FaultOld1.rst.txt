@@ -1,0 +1,8 @@
+
+FaultOld1
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.FaultOld1``.
+
+.. automodule:: ACAT.Analysis.FaultOld1
+   :members:

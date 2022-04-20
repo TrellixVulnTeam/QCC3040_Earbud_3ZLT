@@ -1,0 +1,12 @@
+# QCC514X_QCC304X 0.0.1
+#
+# This file currently lives in: <root>/tools/python_workspace
+# Therefore relative paths below need to go up two to reach others
+#
+-r ../../adk/tools/requirements.txt
+-r ../../audio/requirements.txt
+-r ../pydbg/requirements.txt
+#
+# Here are the wheels provided in the Tools SI itself
+#
+-r ../util/requirements.txt

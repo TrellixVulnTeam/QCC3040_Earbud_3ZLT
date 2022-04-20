@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Run &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="next" title="Terms and Definitions" href="terms_definitions.html"/>
+        <link rel="prev" title="Installation" href="installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Run</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#acat-operating-modes">ACAT operating modes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acat-automatic-mode">ACAT automatic mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acat-interactive-mode">ACAT interactive mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#run-acat-on-multiple-cores">Run ACAT on multiple cores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-acat-on-a-coredump">Run ACAT on a Coredump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-acat-on-a-live-chip">Run ACAT on a live chip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#downloadable-capabilities">Downloadable capabilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Run</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/run.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="run">
+<h1>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h1>
+<p>ACAT is controlled, using the command line arguments listed below.</p>
+<blockquote>
+<div><dl class="option-list">
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">-t <var>PY_TOOLS</var></span>, <span class="option">--py-tools <var>PY_TOOLS</var></span></kbd></dt>
+<dd><p>Path to the Python Tools. Default is the value of
+<code class="docutils literal notranslate"><span class="pre">ACAT_PYTOOLS</span></code> environment variable.</p>
+</dd>
+<dt><kbd><span class="option">-c <var>COREDUMP</var></span>, <span class="option">--coredump <var>COREDUMP</var></span></kbd></dt>
+<dd><p>Path to coredump file to analyse. The coredump can be
+compressed as zip file as well as xcd file.</p>
+</dd>
+<dt><kbd><span class="option">-b <var>P0_BUILD_OUTPUT</var></span>, <span class="option">--build <var>P0_BUILD_OUTPUT</var></span></kbd></dt>
+<dd><p>Path to build output file. It is not required to
+specify if the tool is used internally on a released
+build.</p>
+</dd>
+<dt><kbd><span class="option">-j <var>DOWNLOADABLE_CAPABILITIES</var></span></kbd></dt>
+<dd><p>Path to downloaded capabilities. Put them one after
+another when there are more than one.</p>
+</dd>
+<dt><kbd><span class="option">-s <var>TRANSPORT</var></span>, <span class="option">--transport <var>TRANSPORT</var></span></kbd></dt>
+<dd><p>Allows ACAT to run on a ‘live’ chip rather than a
+coredump. The transport parameter is a standard
+kalaccess parameter string that should contain the
+transport required (e.g. <code class="docutils literal notranslate"><span class="pre">usb</span></code>, <code class="docutils literal notranslate"><span class="pre">kalsim</span></code> and
+<code class="docutils literal notranslate"><span class="pre">trb</span></code>) plus a number of other parameters such
+as SPIPORT, or SPIMUL.</p>
+<p>The value for transport should be relevant to the
+protocol that it uses. Please see the following
+examples:</p>
+<p><code class="docutils literal notranslate"><span class="pre">trb</span> <span class="pre">--&gt;</span> <span class="pre">trb/scar/0</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">kalsim</span> <span class="pre">--&gt;</span> <span class="pre">&quot;kalsim&quot;</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">usb</span> <span class="pre">--&gt;</span> <span class="pre">&quot;usb</span> <span class="pre">SPIPORT=247264&quot;</span></code></p>
+<p>Use double quotes when the transport string has
+spaces.
+To connect to a custom kalsim port, use <code class="docutils literal notranslate"><span class="pre">device://</span></code>
+and connect to the tcp port. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">device://tcp/localhost:31400/spi/sim/[CHIP</span> <span class="pre">NAME]</span></code></p>
+<p>User needs to know the chip name to use the above
+connection string. Or, use TCPHOST and TCPPORT
+parameters like:</p>
+<p>“kalsim TCPHOST=localhost TCPPORT=31401”</p>
+</dd>
+<dt><kbd><span class="option">-p <var>PROCESSOR</var></span>, <span class="option">--processor <var>PROCESSOR</var></span></kbd></dt>
+<dd><p>Specify which Kalimba processor (0, 1, …) to debug</p>
+</dd>
+<dt><kbd><span class="option">-d</span>, <span class="option">--dual-core</span></kbd></dt>
+<dd><p>Required if dual-core and if both cores are using the
+same build output. In Interactive mode, to select
+the processor that the command is to be run on, it
+has to be called with the name of the processor as
+the instance e.g. <code class="docutils literal notranslate"><span class="pre">p0.&lt;command&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">p1.&lt;command&gt;</span></code>.</p>
+</dd>
+<dt><kbd><span class="option">-i</span>, <span class="option">--interactive</span></kbd></dt>
+<dd><p>Run in Interactive mode. Interactive mode accepts
+individual commands and will query for missing
+information.</p>
+</dd>
+<dt><kbd><span class="option">-I</span>, <span class="option">--ipython</span></kbd></dt>
+<dd><p>Same as <code class="docutils literal notranslate"><span class="pre">-i</span></code>, but using the IPython interpreter.</p>
+</dd>
+<dt><kbd><span class="option">-w <var>WRITE_HTML</var></span>, <span class="option">--write-html <var>WRITE_HTML</var></span></kbd></dt>
+<dd><p>File path (inc. filename) where the html file will
+be created containing the results of the automatic
+analyse. (not compatible with interactive mode</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--verbose</span></kbd></dt>
+<dd><p>When set, extra logging information will appear on the
+screen and log files will be created in ACAT’s
+package directory.</p>
+</dd>
+<dt><kbd><span class="option">-q</span></kbd></dt>
+<dd><p>Wait until the chip is booted</p>
+</dd>
+<dt><kbd><span class="option">--cache-validity-interval <var>CACHE_VALIDITY</var></span></kbd></dt>
+<dd><p>Set the caching validity interval when reading from a
+live chip. The value is in seconds and it is 3 by
+default. On slower transports it is recommended to
+increase this value with the risk the data from the
+chip may not update within the interval. ACAT Ignores
+this value if the target is a coredump.</p>
+</dd>
+<dt><kbd><span class="option">--version</span></kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Example usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python ACAT.py -t C:\qtil\ADK_XY\tools\pythontools -b C:\qtil\ADK_XYudio\kalimba\kymera\output\&lt;confuild\debugbin\kymera_&lt;chip&gt;_audio -c coredump_file.xcd -d -i
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python ACAT.py -t C:\qtil\ADK_XY\tools\pythontools -b C:\qtil\ADK_XYudio\kalimba\kymera\output\&lt;confuild\debugbin\kymera_&lt;chip&gt;_audio -s &quot;trb/scar/0&quot; -p 0 -w HTML_output.html
+</pre></div>
+</div>
+<div class="section" id="acat-operating-modes">
+<h2>ACAT operating modes<a class="headerlink" href="#acat-operating-modes" title="Permalink to this headline">¶</a></h2>
+<p>ACAT can operate in either automatic or interactive mode.</p>
+<div class="section" id="acat-automatic-mode">
+<h3>ACAT automatic mode<a class="headerlink" href="#acat-automatic-mode" title="Permalink to this headline">¶</a></h3>
+<p>By default, ACAT operates in automatic mode, which performs a full
+analysis without further prompting.</p>
+</div>
+<div class="section" id="acat-interactive-mode">
+<h3>ACAT interactive mode<a class="headerlink" href="#acat-interactive-mode" title="Permalink to this headline">¶</a></h3>
+<p>ACAT interactive mode only performs the specified analysis, but accepts
+commands and prompts for any missing information.</p>
+</div>
+</div>
+<div class="section" id="run-acat-on-multiple-cores">
+<h2>Run ACAT on multiple cores<a class="headerlink" href="#run-acat-on-multiple-cores" title="Permalink to this headline">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">-d</span></code> are supplied, ACAT considers itself to be running on
+more than one core.</p>
+<p>As analyses are available for each core, always specify the processor name
+when running on more than one core in interactive mode, for example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p1</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>If dual-cores are run from a single build output, the <code class="docutils literal notranslate"><span class="pre">-p</span></code> argument is
+used to specify the processor to analyse.</p>
+</div>
+<div class="section" id="run-acat-on-a-coredump">
+<h2>Run ACAT on a Coredump<a class="headerlink" href="#run-acat-on-a-coredump" title="Permalink to this headline">¶</a></h2>
+<p>ACAT uses different command line arguments to analyse Coredumps, compared
+with a live device. The command line argument settings used to analyse a
+Coredump:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python ACAT.py -b &lt;build_output_with_filename_root&gt; -c &lt;coredump&gt; -t &lt;python_tools_path&gt; -i
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-acat-on-a-live-chip">
+<h2>Run ACAT on a live chip<a class="headerlink" href="#run-acat-on-a-live-chip" title="Permalink to this headline">¶</a></h2>
+<p>To obtain the best results, always pause the chip before attempting to run
+an analysis on a live device; the <code class="docutils literal notranslate"><span class="pre">-s</span></code> option enables ACAT to run on a
+live chip, rather than a static Coredump.</p>
+<p>The following code sample illustrates use of the -s option:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python ACAT.py -s &lt;transport&gt; -b &lt;build_output_with_filename_root&gt; -t &lt;pythontools_path&gt;
+</pre></div>
+</div>
+<p>Where the transport parameter defines the required transport, for example;
+USB (for ex: <code class="docutils literal notranslate"><span class="pre">usb</span> <span class="pre">SPIPORT=123456</span> <span class="pre">SPIMUL=4</span></code>), LPT, KalSim, TRB (for ex:
+<code class="docutils literal notranslate"><span class="pre">trb/scar/0</span></code>), as well as other parameters such as <code class="docutils literal notranslate"><span class="pre">SPIPORT</span></code> or
+<code class="docutils literal notranslate"><span class="pre">SPIMUL</span></code>.</p>
+</div>
+<div class="section" id="downloadable-capabilities">
+<h2>Downloadable capabilities<a class="headerlink" href="#downloadable-capabilities" title="Permalink to this headline">¶</a></h2>
+<p>To ensure that the extra symbols and functions are added to the main
+Kymera ELF when a downloadable capability is running, always launch ACAT
+with the <code class="docutils literal notranslate"><span class="pre">-j</span></code> option for each KDC downloaded capability.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Multiple <code class="docutils literal notranslate"><span class="pre">-j</span></code> options are possible, when working with multiple
+downloadable capabilities.</p>
+</div>
+<p>The following code sample provides an example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python ACAT.py -i -s &lt;transport&gt; -b &lt;build_output_with_filename_root&gt; -t &lt;pythontools_path&gt; -j &lt;download_build_output_with_filename_root&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="terms_definitions.html" class="btn btn-neutral float-right" title="Terms and Definitions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.uut.kalsim.timer &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.uut.kalsim.timer</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.uut.kalsim.timer</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Kalsim timers abstraction layer&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span><span class="p">,</span> <span class="n">log_output</span><span class="p">,</span> <span class="n">log_exception</span>
+
+<span class="c1">#: constant indicating the minimum cookie to use for kalcmd timers</span>
+<span class="n">COOKIE_MIN</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1">#: constant indicating the maximum cookie to use for kalcmd timers</span>
+<span class="n">COOKIE_MAX</span> <span class="o">=</span> <span class="mi">10000</span>
+
+
+<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Module to handle kalcmd/kalsim simulated timers</span>
+
+<span class="sd">    It requires a kalcmd instance to operate.</span>
+<span class="sd">    kalcmd timers generate a callback when expire in kalcmd background thread,</span>
+<span class="sd">    this module attaches to the callback and keeps a list a currently running timers, both absolute</span>
+<span class="sd">    and relative.</span>
+
+<span class="sd">    The user api to this module enables to create timers and check if those timers have expired</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kalcmd (kats.instrument.Kalcmd.Kalcmd): Kalcmd instrument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kalcmd</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;init kalcmd:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kalcmd</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="n">kalcmd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">install_timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timer_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span>
+
+    <span class="nd">@log_exception</span>
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_timer_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookie</span><span class="p">,</span> <span class="n">cur_time</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim timer cookie:</span><span class="si">%s</span><span class="s1"> cur_time:</span><span class="si">%s</span><span class="s1"> fired&#39;</span><span class="p">,</span> <span class="n">cookie</span><span class="p">,</span> <span class="n">cur_time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cookie</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="n">cookie</span><span class="p">][</span><span class="s1">&#39;func&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="n">cookie</span><span class="p">][</span><span class="s1">&#39;func&#39;</span><span class="p">](</span><span class="n">cookie</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="n">cookie</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Timer.get_time"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer.get_time">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get current time.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Current simulation time in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_current_time</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Timer.add_relative_timer"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer.add_relative_timer">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">add_relative_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a simulated relative timer.</span>
+
+<span class="sd">        To check for timer expiration use check_timer_expired or provide a callback func</span>
+<span class="sd">        The callback should be in the format</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def timer_fired(timer_id):</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Note that the callback is running in the context of kalcmd background thread so it should</span>
+<span class="sd">        not block</span>
+
+<span class="sd">        Example code</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            wait = True</span>
+
+<span class="sd">            def cb(id):</span>
+<span class="sd">                print(&#39;timer expired&#39;)</span>
+<span class="sd">                global wait</span>
+<span class="sd">                wait = False</span>
+
+<span class="sd">            id = timer.add_relative_timer(1.0, cb)</span>
+<span class="sd">            while wait:</span>
+<span class="sd">                import time</span>
+<span class="sd">                time.sleep(0.1)</span>
+<span class="sd">            print(&#39;execution resumes&#39;)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+<span class="sd">            callback (func): Callback function to be called when timer expires</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Timer id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">last_cookie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="n">callback</span><span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_relative_timer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span><span class="p">,</span> <span class="n">period</span><span class="p">)</span>
+                <span class="n">cookie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">==</span> <span class="n">COOKIE_MAX</span> <span class="k">else</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">&gt;</span> <span class="n">COOKIE_MAX</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">==</span> <span class="n">last_cookie</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;no available timers&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cookie</span></div>
+
+<div class="viewcode-block" id="Timer.add_absolute_timer"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer.add_absolute_timer">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">add_absolute_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a simulated absolute timer</span>
+
+<span class="sd">        To check for timer expiration use check_timer_expired or provide a callback func</span>
+
+<span class="sd">        The callback should be in the format</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def timer_fired(timer_id):</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Note that the callback is running in the context of kalcmd background thread so it should</span>
+<span class="sd">        not block</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+<span class="sd">            callback (func): Callback function to be called when timer expires</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Timer id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">last_cookie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="n">callback</span><span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_absolute_timer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span><span class="p">,</span> <span class="n">period</span><span class="p">)</span>
+                <span class="n">cookie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">==</span> <span class="n">COOKIE_MAX</span> <span class="k">else</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">&gt;</span> <span class="n">COOKIE_MAX</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">==</span> <span class="n">last_cookie</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;no available timers&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cookie</span></div>
+
+<div class="viewcode-block" id="Timer.cancel_timer"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer.cancel_timer">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">cancel_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cancel a timer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there was a timer and it has been cancelled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">timer_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">:</span>
+            <span class="c1"># just remove it from our list of timers as there is no way in kalcmd to remove an</span>
+            <span class="c1"># existing timer, it will get fired eventually and no action will take place</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="n">timer_id</span><span class="p">]</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="Timer.check_timer_expired"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer.check_timer_expired">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">check_timer_expired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if a timer has expired</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there is not a pending timer with the supplied id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">timer_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span></div>
+
+<div class="viewcode-block" id="Timer.wait_relative_timer"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.kalsim.html#kse.kalsim.uut.kalsim.timer.Timer.wait_relative_timer">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wait_relative_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wait for a relative amount of time.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">_callback</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+        <span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="n">last_cookie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">_callback</span><span class="p">,</span> <span class="n">event</span><span class="p">)}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_relative_timer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span><span class="p">,</span> <span class="n">period</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">==</span> <span class="n">COOKIE_MAX</span> <span class="k">else</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">&gt;</span> <span class="n">COOKIE_MAX</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">=</span> <span class="n">COOKIE_MIN</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_cookie</span> <span class="o">==</span> <span class="n">last_cookie</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;no available timers&#39;</span><span class="p">)</span>
+
+        <span class="c1"># we need to poll wait in order for KeyboardInterrupt to be processed in Windows</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

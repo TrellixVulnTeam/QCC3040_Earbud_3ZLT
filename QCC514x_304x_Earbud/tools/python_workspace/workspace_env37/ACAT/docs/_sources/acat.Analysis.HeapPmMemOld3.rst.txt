@@ -1,0 +1,8 @@
+
+HeapPmMemOld3
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.HeapPmMemOld3``.
+
+.. automodule:: ACAT.Analysis.HeapPmMemOld3
+   :members:

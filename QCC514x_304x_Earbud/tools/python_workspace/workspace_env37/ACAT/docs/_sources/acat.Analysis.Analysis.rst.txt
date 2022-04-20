@@ -1,0 +1,8 @@
+
+Analysis
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Analysis``.
+
+.. automodule:: ACAT.Analysis.Analysis
+   :members:

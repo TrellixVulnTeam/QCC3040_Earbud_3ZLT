@@ -1,0 +1,59 @@
+
+Terms and definitions
+=====================
+
+ .. list-table:: Terms and definitions
+  :widths: 50 50
+  :header-rows: 1
+
+  * - Term
+    - Definition
+  * - A2DP
+    - | Advanced Audio Distribution Profile.
+  * - ACAT
+    - | Audio Coredump Analysis Tool. A Python-based debugging
+      | tool for both Qualcomm Kymera Capability and Framework
+      | code, which uses the Kymera framework on the DSP to
+      | analyze both Coredumps and live-running chips.
+  * - ADK
+    - | Application Development Kit
+  * - AEC
+    - | Acoustic Echo Canceller
+  * - CDA
+    - | Combo Digital Architecture
+  * - DBG
+    - | Debug.
+  * - DM
+    - | Data Memory
+  * - DSP
+    - | Digital Signal Processor
+  * - ID
+    - | Identifier
+  * - KSP Capability/Operator
+    - | A Kymera operator that runs in audio subsystem, it is the
+      | heart of KSP feature responsible for sniffing and routing
+      | audio/data.
+  * - MDE
+    - | Qualcomm Multicore Development Environment
+  * - MIPS
+    - | Million Instructions Per Second
+  * - MMU
+    - | Memory Management Unit
+  * - PCM
+    - | Pulse Code Modulation
+  * - PM
+    - | Program Memory
+  * - RAM
+    - | Random Access Memory
+  * - ROM
+    - | Read Only Memory
+  * - RX
+    - | Receive or Receiver
+  * - SCO
+    - | Synchronous Connection-Oriented
+  * - TRB
+    - | Transaction Bridge
+  * - TX
+    - | Transmit or Transmitter
+  * - USB
+    - | Universal Serial Bus

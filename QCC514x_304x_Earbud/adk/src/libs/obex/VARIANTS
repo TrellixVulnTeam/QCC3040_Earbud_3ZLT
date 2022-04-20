@@ -1,0 +1,10 @@
+
+VARIANTS := v2 debug debug_v2
+CFLAGS_default := GOEP_VERSION_2_0
+
+# GOEP including debug print
+CFLAGS_debug := -DOBEX_DEBUG
+
+CFLAGS_v2 := -DGOEP_VERSION_2_0
+
+CFLAGS_debug_v2 := -DOBEX_DEBUG -DGOEP_VERSION_2_0										  

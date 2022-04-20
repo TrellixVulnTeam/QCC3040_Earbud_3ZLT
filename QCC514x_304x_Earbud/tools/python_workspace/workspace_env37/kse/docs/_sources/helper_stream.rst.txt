@@ -1,0 +1,39 @@
+.. _helper_stream:
+
+======
+Stream
+======
+
+Stream is an essential entity that defines the data flow in and out of the audio system.
+
+There are streams that are common to all platforms, and others are platform specific.
+When the system loads, the applicable streams for the current platform are discovered and
+auto-registered.
+
+The operations within the stream factory are:
+
+    * :meth:`kse.kalsim.stream.stream_factory.StreamFactory.get_class` to obtain the class that handles a stream
+    * :meth:`kse.kalsim.stream.stream_factory.StreamFactory.get_instance` to create an instance of a stream
+    * :meth:`kse.kalsim.stream.stream_factory.StreamFactory.put_instance` to destroy an instance of a stream
+    * :meth:`kse.kalsim.stream.stream_factory.StreamFactory.enum_interface` to list all available stream types
+
+Every invocation of get_instance will return a new instance of a stream of certain interface
+and type.
+On that instance there is a set of valid operations :class:`kse.core.stream_base.StreamBase`.
+
+In the shell it is available as ``stream``::
+
+    >>> kwargs = {
+    >>>     "backing": "file",
+    >>>     "filename": "resource/Female_1c_8000_16b.raw",
+    >>>     "sample_rate": 8000,
+    >>>     "sample_width": 16
+    >>> }
+    >>> st = stream.get_instance('pcm', 'source', **kwargs)
+    >>> st.create() # create stream
+    >>> st.config() # send all configuration messages
+    >>> st.start()
+    >>> # wait for some streaming
+    >>> st.stop()
+    >>> st.destroy()
+    >>> stream.put_instance(st)

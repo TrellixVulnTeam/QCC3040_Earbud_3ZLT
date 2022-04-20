@@ -1,0 +1,12 @@
+
+VARIANTS := v2 debug debug_v2
+
+# PBAPC including debug checks
+CFLAGS_debug := -DPBAPC_LIBRARY_DEBUG
+
+
+# PBAPC including debug checks and print
+CFLAGS_debug_print := -DDEBUG_PRINT_ENABLED -DPBAPC_LIBRARY_DEBUG
+
+CFLAGS_v2 := -DGOEP_VERSION_2_0
+CFLAGS_debug_v2 := -DDEBUG_PRINT_ENABLED -DPBAPC_LIBRARY_DEBUG -DGOEP_VERSION_2_0

@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ChipData &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="CoreTypes" href="acat.Core.CoreTypes.html"/>
+        <link rel="prev" title="Arch" href="acat.Core.Arch.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>ChipData</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.ChipData.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="chipdata">
+<h1>ChipData<a class="headerlink" href="#chipdata" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.ChipData</span></code>.</p>
+<span class="target" id="module-ACAT.Core.ChipData"></span><p>Chip Data.</p>
+<p>This module defines an interface for extracting information from a chip.</p>
+<dl class="class">
+<dt id="ACAT.Core.ChipData.ChipData">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.ChipData.</code><code class="sig-name descname">ChipData</code><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines an interface to extract information from a chip.</p>
+<p>Whether it is connected ‘live’ or its state has been extracted into a
+coredump.</p>
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.cast">
+<code class="sig-name descname">cast</code><span class="sig-paren">(</span><em class="sig-param">addr</em>, <em class="sig-param">type_def</em>, <em class="sig-param">deref_type=False</em>, <em class="sig-param">section='DM'</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.cast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Casts an address to a variable.</p>
+<p>This method takes the address of some (malloc’d) memory and
+‘casts’ it to be a variable of type ‘type_def’.</p>
+<p>Type can be either a type_def name, or a type ID. However, if the
+processor is patched and the type ID is given, providing <cite>elf_id</cite>
+is also mandatory.</p>
+<p>Often (especially in automatic analysis), we know the address of
+the memory but the typeId of its _pointer_. If ‘type_def’ is an ID
+and ‘deref_type’ is set to True, we will look up the type
+pointed-to, rather than the actual typeId supplied. (This isn’t
+necessary if the type_def name is supplied directly; in that case
+we must assume that the address contains something of that
+type_def.).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> – </p></li>
+<li><p><strong>type_def</strong> – </p></li>
+<li><p><strong>deref_type</strong> (<em>bool</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>section</strong> (<em>str</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a Variable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_all_banked_regs">
+<code class="sig-name descname">get_all_banked_regs</code><span class="sig-paren">(</span><em class="sig-param">addr_bank_sel_reg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_all_banked_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_all_banked_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string of all banked registers.</p>
+<p>Given the address of the register used to select the bank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr_bank_sel_reg</strong> – The address of the bank select register
+that controls the bank.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_all_proc_regs">
+<code class="sig-name descname">get_all_proc_regs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_all_proc_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_all_proc_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all processor registers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_banked_reg">
+<code class="sig-name descname">get_banked_reg</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">bank=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_banked_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_banked_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of a banked register.</p>
+<p>The default is the current value in the register.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – Address of the banked register.</p></li>
+<li><p><strong>bank</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_banked_reg_strict">
+<code class="sig-name descname">get_banked_reg_strict</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">bank=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_banked_reg_strict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_banked_reg_strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Looks up the values of a banked register.</p>
+<p>It takes the address of a banked register and the bank number
+(optional).</p>
+<p>Returns a ct.DataSym containing the bank select register name and
+address plus the values in the bank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – Address of the banked register.</p></li>
+<li><p><strong>bank</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em>, <em class="sig-param">ignore_overflow=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of one or more addresses in DM.</p>
+<p>This allows you to grab a chunk of memory, e.g. get_data(0x600, 50).
+Addresses can be from any valid DM region (DM1, PM RAM, mapped NVMEM,
+memory-mapped registers, etc.).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The length supplied is measured in addressable units.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr)</span></code> will return a single value;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr,</span> <span class="pre">1)</span></code> will return a list with a single member.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr,</span> <span class="pre">10)</span></code> will return a list with ten members or a
+list with three members (when the memory is octet
+addressed, 32bit words).</p></li>
+</ul>
+</div>
+<p>If the address is out of range, a KeyError exception will be raised.
+If the address is valid but the length is not (i.e. address+length
+is not a valid address) an OutOfRangeError exception will be raised.</p>
+<p>Note that reading PM RAM via DM is not supported (since not all chips
+map PM into DM). Use get_data_pm() instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> – </p></li>
+<li><p><strong>ignore_overflow</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignore if the read goes out
+from the memory region and append zeros. This is useful if
+an union is at the end of the memory region.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_data_pm">
+<code class="sig-name descname">get_data_pm</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_data_pm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_data_pm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets data from PM.</p>
+<p>This method works in the exactly the same way as <cite>get_data</cite>
+method, but it returns data from PM region instead of DM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_firmware_id">
+<code class="sig-name descname">get_firmware_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_firmware_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_firmware_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the firmware ID in integer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_firmware_id_string">
+<code class="sig-name descname">get_firmware_id_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_firmware_id_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_firmware_id_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the firmware ID in string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_patch_id">
+<code class="sig-name descname">get_patch_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_patch_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_patch_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the relevant variable and return the patch ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>zero if there is no patch detected.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_proc_reg">
+<code class="sig-name descname">get_proc_reg</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_proc_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_proc_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the processor register specified in <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<p>Name is a string containing the name of the register in upper or
+lower case, with or without the prefix <code class="docutils literal notranslate"><span class="pre">REGFILE_</span></code> e.g.
+<code class="docutils literal notranslate"><span class="pre">REGFILE_PC</span></code>, <code class="docutils literal notranslate"><span class="pre">rMAC</span></code>, <code class="docutils literal notranslate"><span class="pre">R10</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – </p></li>
+<li><p><strong>AttributeError</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_reg">
+<code class="sig-name descname">get_reg</code><span class="sig-paren">(</span><em class="sig-param">identifier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches for the name or address of a register.</p>
+<p>If the identifier is given in string format, the method also guess
+the correct name to match the desired identifier name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – Can be the name of a register or its address.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DataSym instance.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.DebugInfoNoVariableError" title="ACAT.Core.exceptions.DebugInfoNoVariableError"><strong>DebugInfoNoVariableError</strong></a> – If the given identifier not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_reg_strict">
+<code class="sig-name descname">get_reg_strict</code><span class="sig-paren">(</span><em class="sig-param">identifier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_reg_strict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_reg_strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of a register.</p>
+<p>Provided for the convenience of all Analysis modules, this method
+looks up the value of memory-mapped and processor registers.</p>
+<p><code class="docutils literal notranslate"><span class="pre">identifier</span></code> can be a register name (which must be EXACT), or
+address.</p>
+<p>In order to make sure they are unique, the names processor registers
+must be preceded by <code class="docutils literal notranslate"><span class="pre">REGFILE_</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">REGFILE_PC</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a DataSym containing the register details plus its value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.get_var_strict">
+<code class="sig-name descname">get_var_strict</code><span class="sig-paren">(</span><em class="sig-param">identifier</em>, <em class="sig-param">elf_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.get_var_strict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.get_var_strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value of a variable.</p>
+<p>Provided for the convenience of all Analysis modules, this method
+looks up the value of a variable.</p>
+<p>‘identifier’ can be a variable name (which must be EXACT), or
+address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – </p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a Variable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.identifier_exists">
+<code class="sig-name descname">identifier_exists</code><span class="sig-paren">(</span><em class="sig-param">identifier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.identifier_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.identifier_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if an identifier exists.</p>
+<p>When an identifier is given as a variable name, it should be the exact
+name. This method has no intention to guess names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – Can be a variable name or an address.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True when the identifier exists, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.is_booted">
+<code class="sig-name descname">is_booted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.is_booted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.is_booted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the processor is booted.</p>
+<p>The booted state is decided by the memory mapped STACK_POINTER value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the processor was booted, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.is_volatile">
+<code class="sig-name descname">is_volatile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.is_volatile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.is_volatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the data is volatile.</p>
+<p>Allows the user to query whether the data is volatile (e.g. from a
+live chip) or fixed (e.g. from a coredump).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the data is volatile, False othewise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.run_poll">
+<code class="sig-name descname">run_poll</code><span class="sig-paren">(</span><em class="sig-param">seconds</em>, <em class="sig-param">identifier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.run_poll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.run_poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measures the value of variable(s) over a given period of time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seconds</strong> (<em>int</em>) – Seconds to run the poll.</p></li>
+<li><p><strong>identifier</strong> – Name/address. Argument can be a single entry or in
+the form of a list e.g. [0x8688, ‘$_total_pool_size’].</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the contents of one or more addresses.</p>
+<p>This allows you to write a list of values to a chunk of memory.
+Addresses can only be from any valid DM RAM or memory mapped
+register region.</p>
+<p>e.g. set_data(0x3e5d, [1 2 3])</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set_data(address,</span> <span class="pre">[val])</span></code> writes address with a single value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_data(address,</span> <span class="pre">[val1</span> <span class="pre">...</span> <span class="pre">valn])</span></code> writes the list of values
+to memory starting from address.</p></li>
+</ul>
+</div>
+<p>This function should only be implemented for live chips. And
+should not be called if the chip is not live.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>value</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – When the address is out of range.</p></li>
+<li><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.OutOfRangeError" title="ACAT.Core.exceptions.OutOfRangeError"><strong>OutOfRangeError</strong></a> – When the address in valid but the length is
+    not (i.e. address+length is not a valid address).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.ChipData.ChipData.set_debuginfo">
+<code class="sig-name descname">set_debuginfo</code><span class="sig-paren">(</span><em class="sig-param">debuginfo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#ChipData.set_debuginfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.ChipData.set_debuginfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the debuginfo object.</p>
+<p>Chipdata uses the debug information for getting type information
+and constant data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>debuginfo</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.ChipData.VariablePoller">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.ChipData.</code><code class="sig-name descname">VariablePoller</code><span class="sig-paren">(</span><em class="sig-param">stop_event</em>, <em class="sig-param">identifiers</em>, <em class="sig-param">chipdata</em>, <em class="sig-param">queue</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#VariablePoller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.VariablePoller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Polling a variable/register.</p>
+<p>Reads a defined variable/register for a period of time. If a list of
+variable/register names is passed to the class then each shall be
+measured.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stop_event</strong> – </p></li>
+<li><p><strong>identifiers</strong> – </p></li>
+<li><p><strong>chipdata</strong> – </p></li>
+<li><p><strong>queue</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.ChipData.VariablePoller.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/ChipData.html#VariablePoller.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.ChipData.VariablePoller.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the thread.</p>
+<p>Reads the desired variable until the stop event arrives, returns
+list.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.CoreTypes.html" class="btn btn-neutral float-right" title="CoreTypes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.Arch.html" class="btn btn-neutral" title="Arch" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

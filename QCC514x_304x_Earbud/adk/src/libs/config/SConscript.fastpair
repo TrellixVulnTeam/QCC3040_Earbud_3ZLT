@@ -1,0 +1,4 @@
+Import('p_env')
+
+# Define the list of features added to a product when building Fastpair
+p_env.AppendUnique(CONFIG_FEATURES=['CONFIG_CRYPTO_FP'])

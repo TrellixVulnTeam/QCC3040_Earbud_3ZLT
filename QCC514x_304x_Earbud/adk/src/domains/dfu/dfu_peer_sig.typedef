@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="dfu_peer_sig" standalone="true">
+
+    <typedef_struct name="dfu_peer_erase_req_res_t" basic="true" doc="Peer Erase Request/Response exchanged between Primary and Secondary.">
+        <member marshal="true" doc="Peer Erase Request/Response; TRUE = Req Pri->Sec Start Erase, FALSE = Res Sec->Pri Indicate Erase Completed">uint8 peer_erase_req_res</member>
+        <member marshal="true" doc="Peer Erase Status; DontCare for Req Pri->Sec, Valid for Res Sec->Pri, TRUE Res Sec->Pri Erase Succeeded else Failed">uint8 peer_erase_status</member>
+    </typedef_struct>
+
+    <typedef_struct name="dfu_peer_device_not_in_use_t" basic="true" doc="Peer indication about device not in use from Primary to Secondary.">
+        <member marshal="false" doc="unused">uint8 dummy</member>
+    </typedef_struct>
+
+    <typedef_struct name="dfu_peer_set_context_t" basic="true" doc="Peer indication to set same context on Secondary as Primary.">
+        <member marshal="true" doc="context value">uint16  context</member>
+    </typedef_struct>
+
+</types>

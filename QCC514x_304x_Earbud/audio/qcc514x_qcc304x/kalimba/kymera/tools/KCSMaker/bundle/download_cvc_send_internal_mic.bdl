@@ -1,0 +1,7 @@
+import imp
+import os
+cap_list = imp.load_source("mod", os.path.abspath(os.path.join(os.path.curdir,"bundle/config/capabilities.cfg")))
+
+# List of capabilites to be bundled up in KDCs
+KDCs = {}
+KDCs["download_cvc_send_internal_mic"] = [dnld_cvceb3mic_mono_ie_send_wb,dnld_cvceb3mic_mono_ie_send_nb,dnld_cvceb2mic_mono_ie_send_wb,dnld_cvceb2mic_mono_ie_send_nb]

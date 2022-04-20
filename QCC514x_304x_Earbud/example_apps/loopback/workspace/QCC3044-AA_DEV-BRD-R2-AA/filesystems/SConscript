@@ -1,0 +1,482 @@
+"""
+Copyright (c) 2019 - 2021 Qualcomm Technologies International, Ltd.
+
+Filesystem build script
+"""
+
+from __future__ import print_function
+import os
+import sys
+import shutil
+import logging
+import tempfile
+import subprocess
+
+import maker.exceptions as bdex
+
+Import('p_env')
+
+def register_pylib_path(devkit_path):
+    """
+    Get the parent path to the pylib in the devkit and add it to sys.path if
+    it's not already there
+    """
+    path = os.path.normpath(os.path.join(devkit_path, 'apps', 'fw', 'tools'))
+    if not path in sys.path:
+        sys.path += [path, os.path.join(path, 'pylib')]
+
+
+def add_workspace_packages_to_sys_path(workspace_path):
+    """ Insert workspace packages to sys.path's first entry so it will be
+        preferred
+
+        Takes a workspace file path and if it has an accompanying '.tools'
+        file with the same name as the workspace it reads it for paths (one
+        path per line) and then adds those paths in order to sys.path.
+    """
+    workspace_path = workspace_path.strip('\"')
+    tools_file = os.path.splitext(workspace_path)[0] + ".tools"
+
+    if not os.path.isfile(tools_file):
+        return
+
+    with open(tools_file) as t:
+        lines = [l for l in t.readlines() if not l.startswith("#")]
+
+    for line in lines:
+        toolpath = os.path.normpath(os.path.join(os.path.dirname(workspace_path), line)).strip()
+        if os.path.isdir(toolpath) and not toolpath in sys.path:
+            sys.path.insert(0, toolpath)
+
+
+def add_adk_packages_to_sys_path():
+    """ Insert ADK packages to sys.path """
+    adk_path = os.path.normpath(os.path.join(ADK_ROOT, 'tools', 'packages', 'builder'))
+    if not adk_path in sys.path:
+        sys.path += [adk_path]
+
+
+def construct_xuv_path():
+    """ Construct the target filename from the project properties """
+    global p_env
+    global appsFs
+    global filesystem_type
+
+    # The option to use NvsCmd for deploying is passed in the Ubuild --special
+    # option. If using NvsCmd to deploy, the filesystems must be built using the
+    # correct endian format.
+    appsFs = 'nvscmd' in p_env['FLASH']
+
+    logging.debug('Project: %s', p_env['PROJECT'])
+    try:
+        filesystem_type = p_env['TYPE']
+    except KeyError as excep:
+        print("ERROR! Build Setting %s missing." % excep)
+        return None
+
+    if filesystem_type == "curator_config":
+        # Curator config filesystem should not use the appsFs argument
+        appsFs = False
+
+    output_filename = filesystem_type + "_filesystem"
+    if appsFs:
+        # This is a build for an apps filesystem that is needed in the form
+        # required by DFU, rather than in the form required for deploy
+        output_filename += "_dfu"
+
+    if p_env.get('BUILDOUTPUT_PATH'):
+        xuv_path = os.path.join(os.path.dirname(p_env['BUILDOUTPUT_PATH']), output_filename + '.xuv')
+    else:
+        xuv_path = os.path.join(p_env['PROJECT_DIR'], output_filename + '.xuv')
+
+    return xuv_path
+
+def filter_files(root, env):
+    """ Filter source files by extension """
+
+    env['HCF_FILES'] = []
+    env['HTF_FILES'] = []
+    env['DKCS_FILES'] = []
+    for file in env['source_files']:
+        file = '\\\\?\\' + file    # Convert to extended pathname
+        fl = file.lower() # For case insensitive tests
+        if fl.endswith(".hcf"):
+            env.Append(HCF_FILES = file)
+        elif fl.endswith(".htf"):
+            env.Append(HTF_FILES = file)
+        elif fl.endswith(".dkcs"):
+            env.Append(DKCS_FILES = file)
+
+def copydir(src, dst):
+    # create the directory in the destination folder if sorce directory doesn't exists
+    if not os.path.exists(dst):
+      os.makedirs(dst)
+      shutil.copystat(src, dst)
+    dirlist = os.listdir(src)
+    for item in dirlist:
+      s = os.path.join(src, item)
+      d = os.path.join(dst, item)
+
+      # if s is directory then copy the dir
+      if os.path.isdir(s):
+        copydir(s, d)
+      else:
+        shutil.copy2(s, d)
+
+
+def _run_prepare_fs(target, source, env):
+    # Import prepare_fs.py and run it
+    packfile_command = os.path.join(TOOLS_ROOT, 'tools', 'bin', 'Packfile.exe')
+
+    # Add PyLib path to sys.path
+    register_pylib_path(env['TOOLS_ROOT'])
+    # Add the firmware tools path to sys.path
+    add_workspace_packages_to_sys_path(env['WORKSPACE'])
+
+    from prepare_fs import pack_dir
+    src_dir = os.path.dirname(source[0].path)
+    tgt_dir = os.path.dirname(target[0].path)
+    if not os.path.isdir(tgt_dir):
+        os.makedirs(tgt_dir)
+    with open(target[0].path, "w") as out:
+        pack_dir(src_dir, out, packfile=packfile_command,
+                 offset=0, appsfs=env['appsFs'])
+
+
+def _run_psfs(target, source, env):
+    htf_files = [str(f) for f in source] # Convert sources from files to strings
+    env['psfs'].convert(htf_files, target[0].path)
+
+
+def build_filesystem():
+    """
+    Build any of the possible flavours of the filesystem project
+    """
+
+    def walk_up(start):
+        """ like os.walk, but in reverse, goes up the directory tree.
+            Unlike os.walk, doesn't differentiate files and folders """
+        current = os.path.realpath(start)
+        previous = ''
+
+        while current != previous:
+            try:
+                yield current, os.listdir(current)
+            except (IOError, OSError):
+                return
+            previous = current
+            current = os.path.realpath(os.path.join(current, '..'))
+
+    def __get_hydracode_sdbfile_path():
+        """
+        Let's see if the project has specified a specific hydracore sdb file to use
+        If so then then there will be a property HYDRACORE_CONFIG_SDB_FILE defined in the project.x2p file and set to the path to use
+        examples
+            <property name="HYDRACORE_CONFIG_SDB_FILE">sdk://tools/config/hydracore_config_ALTERNATIVE1.sdb</property>
+            <property name="HYDRACORE_CONFIG_SDB_FILE">../../MY_hydracore_config.sdb</property>
+            <property name="HYDRACORE_CONFIG_SDB_FILE">C:\TEST_CONFIGS\hydracore_config.sdb</property>
+        If this field is defined then that is what we are going to use and checks are made to ensure present.
+        If the field is NOT defined or empty then walk up from the project file and search for the 'adk' folder, then:
+            adk/bin/<chip_name>/hydracore_config.sdb
+        """
+        sdb_file = None
+        attribs = {
+            'type': 'warning',
+            'config': 'filesystem',
+            'core': 'apps/p1',
+            'module': 'build'
+        }
+
+        sdb_file_override = p_env.get('HYDRACORE_CONFIG_SDB_FILE')
+        # Check to see if project override exists
+        if sdb_file_override:
+            if os.path.isabs(sdb_file_override):
+                sdb_override_full_path = sdb_file_override
+            else:
+                sdb_override_full_path = os.path.realpath(os.path.join(PROJECT_ROOT, sdb_file_override))
+
+            if not os.path.isfile(sdb_override_full_path):
+                msg = ["WARNING - Can not find HYDRACORE_CONFIG_SDB_FILE defined file = {}".format(sdb_override_full_path)]
+                if sdb_file_override != sdb_override_full_path:
+                    msg += [
+                        "Property HYDRACORE_CONFIG_SDB_FILE is defined as = {}".format(sdb_file_override),
+                        "Default to looking for the SDB file in the current device's bin folder"
+                    ]
+
+                bdex.log_buildproc_output('buildoutput', attribs, "\n".join(msg))
+            else:
+                sdb_file = sdb_override_full_path
+
+        if not sdb_file:
+            for current_dir, contents in walk_up(PROJECT_ROOT):
+                if os.path.basename(current_dir) == 'adk':
+                    if 'bin' in contents:
+                        try:
+                            sdb_file = p_env.Glob(os.path.join(current_dir, 'bin', p_env['CHIP_TYPE'], '*.sdb'))[0]
+                        except IndexError:
+                            sdb_file = None
+                    else:
+                        bdex.raise_bd_err('INVALID_CONFIG', "Can not find bin folder for this branch: {}".format(current_dir))
+
+        if not sdb_file or not os.path.isfile(sdb_file):
+            bdex.raise_bd_err('INVALID_CONFIG', "Can not find a suitable HYDRACORE_CONFIG_SDB_FILE")
+
+        return sdb_file
+
+    def import_flash_config(flash_config_file):
+        """
+        Import the dictionary contained in the python script provided in
+        in flash_config_file
+        """
+        if os.path.isfile(flash_config_file):
+            try:
+                with open(flash_config_file, 'r') as fd:
+                    contents = fd.read()
+                    flash_config = eval(contents)
+                print("Using FLASH_CONFIG %s" % (flash_config_file))
+                sys.stdout.flush()
+                return flash_config
+            except IOError as err:
+                print("Unable to open and read %s: %s" % (flash_config_file, err))
+        else:
+            print("FLASH_CONFIG file %s not found" % (flash_config_file))
+
+        return None
+
+
+    def get_ps_store_size():
+        ''' The ps store size is calculated as 1/2 of the rw_config size '''
+        # Import the flash configuration file
+        flash_config = import_flash_config(p_env['FLASH_CONFIG'])
+        rw_config_size = 0
+
+        for section, attrs in flash_config.get("layout", None):
+            if section == "rw_config":
+                rw_config_size = attrs.get("capacity", 0)
+
+        if rw_config_size == 0:
+            bdex.raise_bd_err('INVALID_CONFIG', "Flash config layout must contain a valid rw_config section")
+        flash_device = flash_config.get('flash_device', None)
+        if not flash_device:
+            bdex.raise_bd_err('INVALID_CONFIG', "Flash config must contain a flash_device section")
+        block_size = flash_device.get('block_size', 0)
+        if ((rw_config_size / block_size) % 2) != 0:
+            bdex.raise_bd_err('INVALID_CONFIG', "rw_config size must be an even number of blocks")
+        return rw_config_size // 2
+
+
+    def gather_files(sdb_system_name, image_directory):
+        """
+        Helper function that grabs all htfs and compiles them into image_directory,
+        and copies all hcfs into the same directory
+        """
+        supported_fs_ext = [".hcf", ".dkcs"]
+
+        sdb_file = __get_hydracode_sdbfile_path()
+        if sdb_file is None:
+            return False
+        print('SDB File: {}'.format(sdb_file))
+        print('tool_root = {}'.format(TOOLS_ROOT))
+        config_command = os.path.join(TOOLS_ROOT, "tools", "bin", "ConfigCmd.exe")
+
+        for cfg_file in p_env['HTF_FILES']:
+            cmd_line = [config_command, "-noprefix", "binary", cfg_file,
+                        image_directory, "-system", sdb_system_name, "-quiet",
+                        "-database", sdb_file]
+            sys.stdout.flush()
+            sys.stdout.write('>>> [%s] in %s\n' % (' '.join(cmd_line), os.getcwd()))
+            if subprocess.call(cmd_line):
+                print("ConfigCmd failed: invoked as '%s'" % " ".join(cmd_line))
+                return False
+        for cfg_file in p_env['HCF_FILES'] + p_env['DKCS_FILES']:
+            # Precompiled - just copy into place
+            shutil.copy(cfg_file, image_directory)
+
+        return True
+
+    def get_capabilities_files_from_props(config, audio_project):
+        try:
+            caps_path = audio_project['DKCS_PATH']
+        except KeyError:
+            return []
+
+        if not os.path.isabs(caps_path):
+            caps_path = os.path.normpath(os.path.join(audio_project['PROJECT_DIR'], caps_path))
+
+        if os.path.exists(caps_path):
+            if not os.path.isdir(caps_path):
+                raise ValueError("DKCS_PATH should point to a folder not a file")
+        else:
+            raise ValueError("DKCS_PATH points to non-existent location")
+
+        return [os.path.join(caps_path, cap) for cap in config.get('DOWNLOADABLE_CAPABILITIES', '').split()]
+
+    if filesystem_type in ("firmware_config", "curator_config", "device_config"):
+        # Grab the firmware htfs and the sdbs from the image projects and run
+        # configcmd to produce the contents of a local images directory.  Then
+        # run packfile on it.
+        sdb_system_name = p_env['system_label']
+        image_directory = tempfile.mkdtemp()
+        if not gather_files(sdb_system_name, image_directory):
+            return False
+
+        sources = p_env.Glob(image_directory + '/*')
+        p_env['appsFs'] = appsFs
+        p_env.Command(xuv_path, sources,
+                      [_run_prepare_fs, Delete(image_directory)])
+
+    elif filesystem_type == "user_ps":
+        # Grab the user ps htf and convert it to XUV using the psflash_converter
+        # module
+
+        htf_files = p_env['HTF_FILES']
+        if len(htf_files) > 0:
+            print("Building user key persistent store image")
+            ps_store_size = get_ps_store_size()
+            from csr.dev.fw.psflash_converter import PsflashConverter
+            try:
+                p_env['psfs'] = PsflashConverter(p_env['CRYPTO_KEY'], stores_offset=0,
+                                                 store_size=ps_store_size)
+            except TypeError:
+                # TODO: Older API needed a default crypto_key to be passed to
+                # PsflashConverter. This can be removed once all builds use
+                # the PsflashConverter implementation which comes with its own default.
+                p_env['CRYPTO_KEY'] = (0, 0, 0, 0)
+                p_env['psfs'] = PsflashConverter(p_env['CRYPTO_KEY'], stores_offset=0,
+                                                 store_size=ps_store_size)
+            # We also need to push the PS keys into the SQIF
+            # 1. Load the htf
+            p_env.Command(xuv_path, htf_files, _run_psfs)
+        else:
+            print("No PS keys to flash")
+            # Better delete any xuv file that might have been hanging around
+            # so we don't accidentally flash it later
+            if os.path.isfile(xuv_path):
+                os.remove(xuv_path)
+
+    elif filesystem_type == "customer_ro":
+        # Point packfile at the customer-supplied filesystem root to produce an
+        # XUV
+        # Temporary: this filesystem needs to contain the Apps config
+        # as well as any customer RO filesystem
+
+        try:
+            fs_root = p_env['FS_ROOT']
+            no_setting = False if fs_root else True
+        except KeyError:
+            no_setting = True
+
+        quick_charge_config_exists = bool('QUICKCHARGE_CONFIG' in p_env)
+        sdb_system_name = p_env['system_label']
+
+        # Create a temporary directory to gather everything into
+        image_directory = tempfile.mkdtemp()
+
+        # Collect list of files to add to the customer RO filesystem
+        project_files = p_env['source_files']
+
+        for name, project in p_env['ws'].items():
+            proj_subsystem = project.get('SUBSYSTEM_NAME')
+            if "audio" in name or "audio" == proj_subsystem:
+                project_files += get_capabilities_files_from_props(p_env, project)
+                break
+
+        bundle_files = [x for x in project_files if x.endswith("dkcs")]
+
+        for bundle in bundle_files:
+            # Get the associated ELF
+            bundle_elf = os.path.splitext(bundle)[0] + ".elf"
+            if os.path.isfile(bundle_elf):
+                # Now report the ELF to the IDE for loading when debugging
+                # bundles are only for audio SS
+                attribs = {
+                    'type':   'info',
+                    'config': 'filesystem',
+                    'core':   'audio/p0',
+                    'module': 'deploy'
+                }
+                bdex.log_buildproc_output('elfpath', attribs, bundle_elf)
+
+        print("\nCopying files to %s filesystem...\n" % filesystem_type)
+
+        # Firstly, copy any files that are added to the customer RO filesystem project
+        if project_files:
+            print("\nCopying files added to %s filesystem project...\n" % filesystem_type)
+            for ro_file in project_files:
+                print("Copying file %s" % ro_file)
+                shutil.copy('\\\\?\\' + ro_file, image_directory)
+
+        sys.stdout.flush()
+
+        # Then, if there is a FS_ROOT directory specified in the customer RO filesystem project properties,
+        # copy all the files under this root directory
+        if not no_setting:
+            if not os.path.isdir(fs_root):
+                # Assume it's relative to the project root
+                fs_root = os.path.join(PROJECT_ROOT, fs_root)
+                if not os.path.isdir(fs_root):
+                    print("FS_ROOT directory does not exist.\nCreating: {}".format(fs_root))
+                    os.makedirs(fs_root)
+                    if not os.path.isdir(fs_root):
+                        return False
+
+            # Generate the quick charge configuration file
+            if quick_charge_config_exists:
+                quick_charge_config_file = os.path.join(
+                    PROJECT_ROOT,
+                    p_env['QUICKCHARGE_CONFIG']
+                )
+                quickChargeConfig.quickChargeHexGen.xml_to_hex(
+                    quick_charge_config_file,
+                    os.path.join(fs_root, "quick_charge_config")
+                )
+
+            print("\nCopying files under FS_ROOT...")
+            print("FS_ROOT (%s) with working dir (%s):" % (fs_root, PROJECT_ROOT))
+            for root, dirs, files in os.walk(fs_root):
+                for file in files:
+                    print("Copying file %s\%s" % (root,file))
+            sys.stdout.flush()
+            copydir('\\\\?\\' + os.path.abspath(fs_root), image_directory)
+
+        sources = p_env.Glob(image_directory + '/*')
+        p_env['appsFs'] = appsFs
+        p_env.Command(xuv_path, sources,
+                      [_run_prepare_fs, Delete(image_directory)])
+
+    return True
+
+# Initialise folder locations
+PROJECT_ROOT = os.getcwd().replace('\\', '/')
+logging.debug("PROJECT_ROOT is %s", PROJECT_ROOT)
+
+try:
+    TOOLS_ROOT = p_env['TOOLS_ROOT']
+except KeyError:
+    print("Variable TOOLS_ROOT has not been defined. It should be set to "
+          "the location of the tools folder.")
+    Exit(1)
+logging.debug("TOOLS_ROOT is %s", TOOLS_ROOT)
+
+try:
+    ADK_ROOT = p_env['ADK_ROOT']
+except KeyError:
+    print("Variable ADK_ROOT has not been defined. It should be set to "
+          "the location of the ADK folder.")
+    Exit(1)
+logging.debug("ADK_ROOT is %s", ADK_ROOT)
+
+# Add the pylib path to sys.path
+register_pylib_path(TOOLS_ROOT)
+
+# Construct target filename from supplied project properties
+xuv_path = construct_xuv_path()
+if not xuv_path:
+    Exit()
+
+# Filter source files according to extension
+filter_files(PROJECT_ROOT, p_env)
+
+build_filesystem()
+
+p_env.Default(xuv_path)

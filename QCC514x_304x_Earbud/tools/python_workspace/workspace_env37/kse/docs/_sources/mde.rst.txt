@@ -1,0 +1,178 @@
+.. _mde:
+
+========================
+MDE kalsim based project
+========================
+
+This describes how to run a Kalsim-based project in MDE.
+
+Create a project in MDE
+-----------------------
+
+1. Launch MDE, and then go to **File** > **New File or Project**.
+2. Select a project from the resulting **New File or New Project** window.
+
+    a. Select the correct chip category (**ADK CSRA6810x**, **ADK QCC512x**, **ADK QCC514x**, **ADK QCC516x** or **ADK QCC517x**), depending on the chip being worked on.
+    b. Select the type of application to be worked on (such as **Sink Application** or **Loopback Download Application** or **Capability Bundle for Kymera**), and then click **Choose**.
+
+3. On the **Introduction and Project** Location window:
+
+    a. Type the **Name** of the project.
+    b. In the **Create in** field, choose the required location for the workspace, and then click **Next**.
+
+4. Modify the details on the Properties window as required. Depending on the 
+   application type that you have selected, you might have to alter the properties. 
+   For example, if you have selected Capability Bundle for Kymera1 as the project 
+   type, you can add the included capabilities in this step. 
+5. Click Next, and then click Finish.
+
+.. note::  For information about creating projects in MDE, see the 
+           Qualcomm_MDE.WIN.2.4 User Guide.
+
+A workspace may contain many different projects in MDE for different items that will be deployed to a
+hardware platform. Not all the projects are relevant to KSE, which enables the user to develop and
+debug downloadable capability bundles. When working with KSE, you will only work with the capability
+download project; the project can be switched between ``kse`` and ``debug`` (hardware) configurations,
+while the overall workspace remains targeted at the hardware platform throughout.
+           
+.. note:: (1) Depending on the type of application that you select, the project 
+          is either appended to an existing workspace, or a new workspace is 
+          created with some preloaded projects. For example, Capability Bundle 
+          projects are appended to existing workspaces and projects such as 
+          **Loopback Download Application** or **Loopback Application** create a workspace.
+          
+              * The **Loopback Download Application** enables you to run 
+                ``SELF_TEST`` in KSE. See Running SELF_TEST and DOWNLOAD_PASSTHROUGH 
+                with streams and endpoints.
+              * The **Capability Bundle for Kymera** application allows you to create 
+                a capability storage file.  
+                
+           (2) The application type selected in step 2. b. also impacts whether 
+           you are able to use KSE from a project that is already included in 
+           the application, or from a project that can be loaded after the 
+           application has been loaded in MDE. For example:
+
+              * Choosing **Loopback Download Application** means that the application 
+                workspace contains a project named ``self_test_and_passthrough``, which 
+                can make use of KSE for prototyping and debugging.
+              * Choosing **Sink Application** means that the application does not contain
+                a project that can make use of KSE, but after the application has been 
+                loaded into the workspace, a project (for example, Capability Bundle 
+                For Kymera) can later be loaded into this workspace, which can then use KSE for development.
+       
+
+Open an existing project from the ADK
+-------------------------------------
+
+1. Launch MDE, and then go to **File** > **Open File or Project**.
+2. Select your installed ADK:
+
+    a. Select from the listed examples and go to, for example, **earbud**.
+    b. Go to **workspace**.
+    c. Go to **QCC5144-AA_DEV-BRD-R2-AA**.
+    d. Select **earbud.x2w**.
+    e. Click **Open**.
+
+3. Select the latest installed <ADK_Toolkit_version>.
+4. Click **Open**.
+
+
+Change projects build settings to run on KSE
+--------------------------------------------
+
+To change the build setting for the project to run on KSE:
+
+1. Click **Projects**.
+2. From the **Active Project** drop-down menu, select the project to be worked on 
+   (for example, **self_test_and_passthrough** or **kymera_audio**).
+3. In the **Build Settings** section > **Edit build configuration** field, select
+   ``kse``.
+4. Select User tab in Properties field to adapt pre-defined settings:
+
+    a. KALSIM_ENABLE_DEBUGGER = false or true, disable or enable debugging
+    b. KALSIM_LOGLEVEL is adjustable between:
+    
+        i. ``10 = DEBUGG``, for debugging specific problems, high verbosity, 
+           not recommended
+        ii. ``20 = INFO``, normal high verbosity
+        iii. ``30 = WARNING``, only log errors
+        iv. ``40 = ERROR``, only log non recoverable errors
+        v. ``50 = CRITICAL``
+        
+        The value for the log level is accepted as number or as string.
+
+    c. ``KALSIM_TIMER_UPDATE = 6400`` (default)
+
+5. Click **Debug**. On the **Save Project** pop-up window, click **Yes** to save 
+   the appropriate project
+
+Deploy the project on KSE
+-------------------------
+
+To deploy the project on KSE, select the project, then either:
+
+* Select **Deploy(skip Dependencies)**
+* Press **Ctrl + Shift + D**
+
+You can deploy a project on KSE in either the release mode or debug mode. 
+KSE shell is launched when a project is deployed.
+
+Deploy project in release mode
+------------------------------
+
+When you deploy a project in release mode, the KSE shell is launched without 
+the need to attach a debugger.
+
+Deploy project in debug mode
+----------------------------
+
+1. Click the **Projects** tab and then in the **Properties** section of the 
+   **Build Settings** pane, set ``KALSIM_ENABLE_DEBUGGER`` to **true**.
+2. Click **Debug**. On the **Save Changes** pop-up window, click **Yes**.
+3. Select the project, then either right-click and select 
+   **Deploy(Skip Dependencies)** or **Ctrl + Shift + D**.
+4. Attach the debugger. When a project is deployed in debug mode, the shell 
+   displays the following message, prompting you to attach debugger in the IDE:
+   ``Initialisation will not be completed until an external kalaccess session
+   is connected and run issued``
+5. Select **Debug > Attach Debugger > ADK Toolkit 1.x. > Kalsim CSRA6810x Audio/
+   Kalsim/QCC512x/Kalsim QCC 514x Audio**. On the **Attach Debugger** window, click **OK**.
+6. On the debugger tool bar of the IDE, click **Continue** or press **F5** (play button).
+7. When a project is deployed in debug mode, its symbol files ``(.elf)`` should be 
+   automatically loaded into the workspace. In the unlikely event of the symbol 
+   files not being loaded automatically, the required symbol files can be 
+   manually loaded as follows: 
+   
+       a. Click **Symbol Files** tab on the **Debug** pane
+       b. Double-click on the row corresponding to the project under **Path** and choose the ``.elf`` file from
+          the following directory:
+          **<workspace_directory>/audio/kalimba/kymera/output_bundles/
+          <chipname>_rom_kalsim_kalcmd2_release/<project_name>**
+
+          The symbol files available in your capability bundle project allow you to debug any new
+          capability bundles, which you are developing. If you want to debug existing capabilities
+          present in base ``kymera_audio`` firmware, download their symbol files for Kalsim as follows:
+          
+          i. Right-click and select **Add Symbols**.
+          ii. Select the ``kymera_<chipname>_audio.elf`` file from:
+              **<workspace_directory>/audio/kalimba/kymera/output/
+              <chipname>_rom_kalsim_kalcmd2_release/build/debugbin/**
+
+        .. note:: The text corresponding to the platform in the **<chipname>** placeholder in the paths
+                  should be correctly replaced depending on the platform being worked on.
+
+8. When KSE is deployed from a project to develop downloadable capabilities, 
+   IDE does not detect any break points at first. This is because the capability 
+   bundle has not downloaded when the symbol files were loaded to the IDE. 
+   This is also the case when KSE is stopped after the symbol files have been loaded. 
+   Refreshing the symbol files will fix this issue. To refresh symbol files, 
+   do one of the following:
+
+   * Reload the symbol files again.
+   * On the debugger toolbar, click ``Pause`` and ``Play``.
+   * Stop the debugger and attach it again.
+
+
+9. The ``Compile Output`` pane of the IDE contains information about the command and 
+   its arguments that launched KSE shell. This information includes the log level 
+   and any other scripts that were included during the launch.

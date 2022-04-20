@@ -1,0 +1,336 @@
+.. _graph:
+
+======
+Graphs
+======
+
+KTE abstracts the concept of a graph, its elements and operations as described in
+:ref:`helper_graph`.
+
+Streams
+-------
+
+Streams are entities to handle the audio data in and out of Kymera. In KSE, 
+they are mostly input to and output from the graph. The input streams are called 
+source streams and the output streams are called the sink streams.
+
+Example definition of one source pcm stream backed by the file ``resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw``::
+
+        "stream": [
+            {
+                "interface": "pcm",
+                "type": "source",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw",
+                    "sample_rate": 8000,
+                    "sample_width": 16
+                }
+            }
+        ]
+
+Full reference in :ref:`graph_stream`.
+
+
+Endpoints
+---------
+
+A Kymera endpoint is a software component in the audio subsystem, representing 
+where the audio stream enters or leaves the Kalimba DSP. An endpoint is an 
+abstraction of an interface of the DSP, where audio data is either produced or 
+consumed. Endpoints handle remote interactions from the DSP, or the hardware 
+configuration required to move audio data between an external entity and the 
+local DSP buffer.  Endpoints can also perform some limited data processing, 
+such as removing DC from incoming or outgoing audio signals. Kymera endpoints 
+are usually proxies for Source or Sink objects in the application subsystem 
+(or vice versa), and for most purposes, the two can be treated as equivalent.
+
+Endpoints are of two types:
+
+* Source endpoint. When data flows from the endpoint into the DSP
+* Sink endpoint. When the data flows out of the DSP
+
+Example definition of one pcm source endpoint::
+
+    "endpoint": [
+        {
+            "interface": "pcm",
+            "type": "source",
+            "kwargs": {
+                "instance": 0,
+                "channel": 0,
+                "pcm_sync_rate": 8000,
+                "pcm_sample_rising_edge": 0,
+                "pcm_master_mode": 1,
+                "pcm_slot_count": 4,
+                "pcm_sample_format": 1,
+                "pcm_master_clock_rate": 512000
+            }
+        }
+    ]
+
+Full reference in :ref:`graph_endpoint`.
+
+Operators
+---------
+
+An operator is an instantiated instance of a capability. A capability can be 
+defined as a non-instantiated instance of a re-usable component that can be 
+instantiated one or more times in support of use cases. This means, there can 
+be one of more instances of an operator running with the same capabilities 
+inside Kymera at a time.
+
+Example definition of one operator with two messages::
+
+    "operator": [
+        {
+            "interface": "BASIC_PASS",
+            "args": [
+                [
+                    "CHANGE_INPUT_DATA_TYPE",
+                    [
+                        1
+                    ]
+                ],
+                [
+                    "CHANGE_OUTPUT_DATA_TYPE",
+                    [
+                        1
+                    ]
+                ]
+            ]
+        }
+    ]
+
+Full reference in :ref:`graph_operator`.
+
+Connections
+-----------
+
+Every element previously defined has terminals. Streams and endpoints have one 
+input and one output, operators have a capability dependent number of inputs 
+and outputs
+
+Example definition connection the first stream (stream0) to the first endpoint 
+(endpoint0)::
+
+        "graph": [
+            [
+                "stream0",
+                "endpoint0"
+            ]
+        ]
+
+For connections involving operators, the direction and terminal number has to 
+be expressed. Here we connect the first output of the first operator to the 
+first input of the second operator::
+
+        "graph": [
+            [
+                "operator0o0",
+                "operator1i0"
+            ]
+        ]
+
+Rules for connection
+
+* Stream source can be connected to endpoint source
+* Endpoint source can be connected to operator inputs or endpoint sink
+* Operator outputs can be connected to operator inputs or endpoint sink
+* Endpoint sink can be connection to stream sink
+
+
+Creating a full graph
+---------------------
+
+Save the following file in ``$KATS_WORKSPACE/workspace/config/pt.cfg.json``::
+
+    {
+        "stream": [
+            {
+                "interface": "pcm",
+                "type": "source",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw",
+                    "sample_rate": 8000,
+                    "sample_width": 16
+                }
+            },
+            {
+                "interface": "pcm",
+                "type": "sink",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "tmp/pt_0.wav",
+                    "sample_rate": 8000,
+                    "sample_width": 16
+                }
+            }
+        ],
+        "endpoint": [
+            {
+                "interface": "pcm",
+                "type": "source",
+                "kwargs": {
+                    "instance": 0,
+                    "channel": 0,
+                    "pcm_sync_rate": 8000,
+                    "pcm_sample_rising_edge": 0,
+                    "pcm_master_mode": 1,
+                    "pcm_slot_count": 4,
+                    "pcm_sample_format": 1,
+                    "pcm_master_clock_rate": 512000
+                }
+            },
+            {
+                "interface": "pcm",
+                "type": "sink",
+                "kwargs": {
+                    "instance": 0,
+                    "channel": 0,
+                    "pcm_sync_rate": 8000,
+                    "pcm_sample_rising_edge": 0,
+                    "pcm_master_mode": 1,
+                    "pcm_slot_count": 4,
+                    "pcm_sample_format": 1,
+                    "pcm_master_clock_rate": 512000
+                }
+            }
+        ],
+        "operator": [
+            {
+                "interface": "BASIC_PASS",
+                "args": [
+                    [
+                        "CHANGE_INPUT_DATA_TYPE",
+                        [
+                            1
+                        ]
+                    ],
+                    [
+                        "CHANGE_OUTPUT_DATA_TYPE",
+                        [
+                            1
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "graph": [
+            [
+                "stream0",
+                "endpoint0"
+            ],
+            [
+                "endpoint0",
+                "operator0i0"
+            ],
+            [
+                "operator0o0",
+                "endpoint1"
+            ],
+            [
+                "endpoint1",
+                "stream1"
+            ]
+        ]
+    }
+
+
+Kymera Graph
+------------
+
+A Kymera graph is a connection of entities that test Kymera operators.
+
+.. image:: _static/simple_graph.svg
+
+The picture shows a graph in its simplest form:
+
+    * A source stream
+    * A source endpoint
+    * An operator
+    * A sink endpoint
+    * A sink stream
+
+The source stream connects to the source endpoint, which then connects to the input of the Kalimba
+operator. The output of the operator connects to a sink endpoint, which connects to a sink stream.
+
+In :ref:`examples` it is shown how to play different graphs.
+
+
+
+Playing a Graph
+---------------
+
+Configuration of a graph can be done interactively on KSE shell, or using a 
+JSON configuration file saved inside the workspace, and loaded on KSE shell, 
+like in this example. For testing in simulation environments like KSE, the 
+source and sink streams are generally file based. The following events occur 
+in the given order when a graph in KSE is played:
+        
+* Creation and start of the components:
+
+    * The nodes are first created in the following order:
+
+        * Streams
+        * Endpoints
+        * Operators
+        
+    * They are configured in the same order as shown below:
+    
+        * Streams
+        * Endpoints
+        * Operators    
+    
+    * The nodes are then connected according to the configuration.
+    * The operators and the endpoints are then started.
+    * The sink stream is then started.
+    * Finally, the source stream is started.       
+
+* Keeping the nodes active:
+
+    * The graph is considered to be active as long as the source streams have not reached their EOF.
+    * All the nodes and connections are kept active during this period.
+    * When the last of the source stream has reached its EOF, the graph is stopped.
+
+* Stopping and destroying the graph:
+
+    * The nodes in the graph are stopped in the reverse order of creation.
+    * The source streams are stopped.
+    * The sink streams are stopped.
+    * The operators and the endpoints are stopped.
+    * The nodes are disconnected.
+    * The nodes are destroyed in the following order:
+
+        * Operators
+        * Endpoints
+        * Streams
+
+
+To play the graph in KSE shell, run::
+
+   >>> from kse.framework.library.file_util import load
+   >>> data = load('config/pt.cfg.json')
+   >>> graph.play(data)
+
+The resulting file named ``pt_0.wav`` is located in the ``tmp`` directory.
+
+
+.. note:: There is a limitation in KSE in terms of synchronization of the source
+          and sink streams. The start of the sink stream has an extra silence 
+          periods to account the propagation time through the graph. The end of 
+          the sink stream has an extra silence period to account the amount of 
+          time for KSE to detect the EOF of the source stream. The lengths of 
+          these additional silence periods are not known. The problem of 
+          finding the exact start and end of the signal in the sink side.
+    
+Reference
+---------
+
+.. toctree::
+    :maxdepth: 1
+
+    graph_stream
+    graph_endpoint
+    graph_operator

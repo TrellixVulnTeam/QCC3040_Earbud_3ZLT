@@ -1,0 +1,8 @@
+
+ChipData
+==========================================================================
+
+This module can be imported from ``ACAT.Core.ChipData``.
+
+.. automodule:: ACAT.Core.ChipData
+   :members:

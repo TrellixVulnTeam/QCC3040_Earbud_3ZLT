@@ -1,0 +1,832 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to Use KSP &mdash; KSP 0.5.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSP 0.5.1 documentation" href="index.html"/>
+        <link rel="next" title="Troubleshooting" href="3_troubleshooting.html"/>
+        <link rel="prev" title="Installation" href="1_installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to Use KSP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#find-transform-ids-using-acat">Find transform IDs using ACAT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sniffing-hardware-channels">Sniffing hardware channels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-channel-ksp-streams">Multi channel KSP streams</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-the-ksp-command-line-interface">Starting the KSP command-line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configure-streams">Configure Streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-output-filename">Set the Output Filename</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-date-and-time-to-the-output-filename">Add Date and Time to the output filename</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-the-ksp-built-in-capability">Use the KSP Built-in Capability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#start-and-stop">Start and Stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manually-start-and-stop-the-probe">Manually Start and Stop the probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-interactive-operation">Non-interactive operation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_scripts.html">Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="z_definitions.html">Terms and definitions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>How to Use KSP</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/2_how_to_use.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-use-ksp">
+<h1>How to Use KSP<a class="headerlink" href="#how-to-use-ksp" title="Permalink to this headline">¶</a></h1>
+<p>Before using KSP, the following considerations should be taken into
+account:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Only one instance of the KSP tool can be used on any single target.</p></li>
+<li><p>KSP supports up to two streams, up to four channels each.</p></li>
+<li><p>The following buffers are not supported:</p>
+<ul>
+<li><p>Any transforms that the reader writes into the buffer.</p></li>
+<li><p>Remote buffers. These are buffers in another sybsystem’s RAM and
+connecting the Audio subsystem with another subsystem. These buffers are
+not shown in the audio chain graph. Example of these buffers are
+<code class="docutils literal notranslate"><span class="pre">Apps</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">A2DP</span></code> and <code class="docutils literal notranslate"><span class="pre">HW</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">MIC</span></code>, which are <code class="docutils literal notranslate"><span class="pre">MMU</span> <span class="pre">Audio</span> <span class="pre">Mux</span></code>
+buffers.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="find-transform-ids-using-acat">
+<h2>Find transform IDs using ACAT<a class="headerlink" href="#find-transform-ids-using-acat" title="Permalink to this headline">¶</a></h2>
+<p>To sniff a transform in an audio graph, KSP needs to know the transform
+identifier of the connection. ACAT is used to find transform identifiers.</p>
+<p>To find those identifiers using ACAT, follow the steps below:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Connect ACAT to a live chip that is running the audio application. It
+can be used within the Qualcomm MDE from the <strong>ACAT</strong> tab or by
+opening it independently with the <code class="docutils literal notranslate"><span class="pre">-i</span></code> and <code class="docutils literal notranslate"><span class="pre">-d</span></code> parameters. The <code class="docutils literal notranslate"><span class="pre">-i</span></code>
+is the option for the interactive mode and <code class="docutils literal notranslate"><span class="pre">-d</span></code> is for dual core.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">stream.create_graph_img()</span></code> in ACAT (<code class="docutils literal notranslate"><span class="pre">graphviz</span></code>
+installation is needed). Alternatively, use
+<code class="docutils literal notranslate"><span class="pre">stream.analyse_transforms()</span></code> that lists the transforms. To get
+the transform buffers on the processor 1, use <code class="docutils literal notranslate"><span class="pre">p1.</span></code> at the
+beginning of the command. For example: <code class="docutils literal notranslate"><span class="pre">p1.stream.create_graph_img()</span></code>
+will display the audio chain on the processor 1.</p></li>
+<li><p>Transform IDs are printed above the connection lines in
+<code class="docutils literal notranslate"><span class="pre">graphviz</span></code> graphs.</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<blockquote>
+<div><img alt="_images/find_transform_ids_acat.png" src="_images/find_transform_ids_acat.png" />
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p>Group interested channels into streams.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>All channels for a stream must be on the same processor. Mixing
+channels across processors is an invalid configuration and KSP does
+not support them.</p></li>
+<li><p>All channels in a stream must be synchronized. this means that
+channels must produce audio at the same midterm average rate so that
+KSP sniffing for the stream does not stall.</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Multiple outputs of one operator are usually synchronized, but not
+always, as for example, <code class="docutils literal notranslate"><span class="pre">AEC_REFERENCE</span></code> speaker outputs are not
+synchronized to microphone outputs.</p>
+</div>
+<div class="section" id="sniffing-hardware-channels">
+<h3>Sniffing hardware channels<a class="headerlink" href="#sniffing-hardware-channels" title="Permalink to this headline">¶</a></h3>
+<p>KSP sniffs channels that are associated with connection transforms.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MMU buffers that are used by endpoints to read/write audio from/to
+hardware are not sniffable in KSP. The exception is MMU buffers of
+endpoints that are overridden by operators like <code class="docutils literal notranslate"><span class="pre">AEC_REFERENCE</span></code> where
+those buffers are exposed through transforms. For example <code class="docutils literal notranslate"><span class="pre">0x1c0e</span></code> and
+<code class="docutils literal notranslate"><span class="pre">0x1c0f</span></code> in above figure.</p></li>
+<li><p>Buffers that are shared with application subsystem are not sniffable.
+For example, A2DP input or USB RX/TX buffers.</p></li>
+<li><p>SCO MMU buffers can be sniffed as they are associated with the
+connection between SCO endpoints and SCO operators. For example
+<code class="docutils literal notranslate"><span class="pre">0x1c08</span></code> in above figure.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="multi-channel-ksp-streams">
+<h3>Multi channel KSP streams<a class="headerlink" href="#multi-channel-ksp-streams" title="Permalink to this headline">¶</a></h3>
+<p>KSP streams and channels enable sniffing multiple transform buffers in a
+single run of KSP. It can sniff up to four channels in each stream. All
+channels in a KSP stream must be synchronized and be on the same processor.</p>
+<p>Examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A resampler or <code class="docutils literal notranslate"><span class="pre">RATE_ADJUST</span></code> operator always produce the same amount
+of data for all of its output channels, so all the output channels can
+be grouped into a KSP sniffing stream, however its input and outputs
+cannot be in the same stream as they do not have the same rate.</p></li>
+<li><p>In a Source Sync operator, the amounts of consumed input and produced
+output are normally equal. However it sometimes discards input or
+inserts silence. Therefore, its input and output cannot be grouped
+into the same KSP stream.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="starting-the-ksp-command-line-interface">
+<h2>Starting the KSP command-line interface<a class="headerlink" href="#starting-the-ksp-command-line-interface" title="Permalink to this headline">¶</a></h2>
+<p>After the KSP installation, all the executables such as <code class="docutils literal notranslate"><span class="pre">ksp.exe</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ksp_extract.exe</span></code> are available from the <strong>Scripts</strong> folder in the
+virtual environment.</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ksp</span><span class="o">.</span><span class="n">exe</span> <span class="n">trb</span><span class="p">:</span><span class="n">scar</span> <span class="o">-</span><span class="n">f</span> <span class="o">&lt;</span><span class="n">PATH</span> <span class="n">TO</span> <span class="n">THE</span> <span class="n">APPS1</span> <span class="n">FIRMWARE</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Use <code class="docutils literal notranslate"><span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">--help</span></code> for all optional flags.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If more than one TRB interface is connected and the exact address of TRB is
+not specified, for example only <code class="docutils literal notranslate"><span class="pre">scar</span></code> is given, KSP prompts for which one
+to use.</p>
+</div>
+</div>
+<div class="section" id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<p>To see all the available commands, use help. To see a more detailed
+explanation of each command, use the help <code class="docutils literal notranslate"><span class="pre">&lt;command&gt;</span></code>.</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(ksp_env) &lt;CURRENT PATH&gt;&gt; ksp.exe trb:scar -f &lt;PATH TO THE FIRMWARE&gt;
+
+Device attach succeeded. Using TRB clock speed: 70MHz.
+Welcome to Kymera Stream Probe (KSP) CLI!
+To get the list of commands typel `help`. For command helps
+use `help [COMMAND]`. Use `exit` command to quit.
+KSP&gt; help
+
+Documented commands (type help &lt;topic&gt;):
+========================================
+config  config_stream  exit  [and other commands]
+
+KSP&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>To begin sniffing data, the tool must first be configured. The
+configuration is handled using an assortment of commands in the CLI.</p>
+<p>To view the current configurations, use <code class="docutils literal notranslate"><span class="pre">config</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config</span>
+<span class="n">Current</span> <span class="n">Configurations</span><span class="p">:</span>
+    <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span> <span class="n">temp</span><span class="o">/</span><span class="n">my_output</span>
+    <span class="n">Streams</span>        <span class="p">:</span>
+        <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Buffer</span> <span class="n">Size</span>  <span class="p">:</span> <span class="mi">0</span>
+            <span class="n">Data</span> <span class="n">Type</span>    <span class="p">:</span> <span class="n">PCM16</span>
+            <span class="n">Processor</span>    <span class="p">:</span> <span class="mi">0</span>
+            <span class="n">Transform</span> <span class="n">IDs</span><span class="p">:</span> <span class="mh">0x1c16</span> <span class="mh">0x1c17</span>
+        <span class="mi">1</span><span class="p">:</span>
+            <span class="n">Buffer</span> <span class="n">Size</span>  <span class="p">:</span> <span class="mi">1024</span>
+            <span class="n">Data</span> <span class="n">Type</span>    <span class="p">:</span> <span class="n">PCM16</span>
+            <span class="n">Processor</span>    <span class="p">:</span> <span class="mi">1</span>
+            <span class="n">Transform</span> <span class="n">IDs</span><span class="p">:</span> <span class="mh">0x1c19</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="configure-streams">
+<h3>Configure Streams<a class="headerlink" href="#configure-streams" title="Permalink to this headline">¶</a></h3>
+<p>KSP supports the configuration of up to two streams. To configure each
+stream, issue config_stream with the stream number as parameter, which can
+be <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config_stream</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>The command <code class="docutils literal notranslate"><span class="pre">config_stream</span> <span class="pre">0</span></code> starts the configuration procedure of the
+stream 0.</p>
+<p><strong>Description of attributes:</strong>
+Each stream requires values for the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>Data Type</em>: Accepted values are <code class="docutils literal notranslate"><span class="pre">DATA16</span></code>, <code class="docutils literal notranslate"><span class="pre">PCM16</span></code>, <code class="docutils literal notranslate"><span class="pre">PCM24</span></code>,
+<code class="docutils literal notranslate"><span class="pre">PCM32</span></code>, <code class="docutils literal notranslate"><span class="pre">DATA32</span></code> and <code class="docutils literal notranslate"><span class="pre">TTR</span></code>.</p></li>
+</ul>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 10%" />
+<col style="width: 37%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Transmits/Size</p></th>
+<th class="head"><p>Suitable for</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DATA16</p></td>
+<td><p>0</p></td>
+<td colspan="2"><p>Lower 16 bits (2 octets)    16-bit encoded channels</p></td>
+</tr>
+<tr class="row-odd"><td><p>PCM16</p></td>
+<td><p>1</p></td>
+<td colspan="2"><p>Upper 16 bits (2 octets)    linear PCM audio channels</p></td>
+</tr>
+<tr class="row-even"><td><p>PCM24</p></td>
+<td><p>2</p></td>
+<td colspan="2"><p>Upper 24 bits (3 octets)    linear PCM audio channels</p></td>
+</tr>
+<tr class="row-odd"><td><p>PCM32</p></td>
+<td><p>3</p></td>
+<td colspan="2"><p>Upper 32 bits (4 octets)    linear PCM audio channels</p></td>
+</tr>
+<tr class="row-even"><td><p>DATA32</p></td>
+<td><p>4</p></td>
+<td colspan="2"><p>Lower 32 bits (4 octets)    32-bit encoded channels</p></td>
+</tr>
+<tr class="row-odd"><td><p>TTR</p></td>
+<td><p>5</p></td>
+<td colspan="2"><p>Lower 32 bits (4 octets)    32-bit encoded channels</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><ul class="simple">
+<li><p>Reserved: 6 and 7  [might be used in future for extending the packet
+protocol].</p></li>
+<li><p>In Qualcomm CDA chips DATA32 is the same as PCM32, but is useful when
+extracting data).</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul>
+<li><p><em>Enable Metadata</em>: This option is only available to <code class="docutils literal notranslate"><span class="pre">TTR</span></code> streams. When it
+is enabled, KSP records metadata as well.</p></li>
+<li><p><em>Transform IDs</em>: Space separated IDs in hex. i.e. <code class="docutils literal notranslate"><span class="pre">0x1C16</span></code>. Besides a list
+of transform IDs, <code class="docutils literal notranslate"><span class="pre">TTR</span></code> can also accept <code class="docutils literal notranslate"><span class="pre">none</span></code> or <code class="docutils literal notranslate"><span class="pre">all</span></code> values. If IDs
+are given, all the Transform IDs must be on the same processor.</p></li>
+<li><p><em>Samples</em>: Accepts a number from 1 to 256. KSP rounds up any given
+number to a multiple of 8. For example, if the given number is 21, KSP
+uses 24. The default value is 0, which means the audio firmware decides
+what to set.</p></li>
+<li><p><em>Sample Rate</em>: It is configurable for <code class="docutils literal notranslate"><span class="pre">PCM</span></code> data types. The value is
+a number from 8000 to 192000. The default value is 0. KSP produces the
+output as described:</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">Sample Rate configuration VS the output</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data type</p></th>
+<th class="head"><p>Sample Rate</p></th>
+<th class="head"><p>Output format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TTR</p></td>
+<td><p>Not Applicable</p></td>
+<td><p>Per channel RAW data file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Any DATA</p></td>
+<td><p>Not Applicable</p></td>
+<td><p>Per channel RAW data file.</p></td>
+</tr>
+<tr class="row-even"><td><p>Any PCM</p></td>
+<td><p>Specified</p></td>
+<td><p>Per stream multichannel WAV file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Any PCM</p></td>
+<td><p>0</p></td>
+<td><p>Per stream multichannel RAW file.</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p><em>Timed Data</em>: Hex ID of an endpoint or terminal, or 0 to disable.
+This option is only available to <code class="docutils literal notranslate"><span class="pre">TTR</span></code> streams. When enabled, a low
+resolution version of the data written is recorded as part of the
+<code class="docutils literal notranslate"><span class="pre">TTR</span></code> traces. Supported types are operator output terminals and
+audio sink endpoints. The former also works when the operator output
+is part of an in-place chain. For the latter, data written to the
+hardware buffer is recorded. This data is suitable for visual indication
+in the KTTR Viewer tool, not for audio quality assessments.</p></li>
+<li><p><em>Buffer Size</em>: The size of the internal buffer in words for the stream. It
+must be a positive integer from 0 to 16384. The default value is 0, which
+means Kymera will decide what is the best size for the most use cases. This
+feature is only available to downloadables with the version 1.3 or higher.</p></li>
+<li><p><em>Processor</em>: The processor number to sniff data from. The value can be
+either <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Example:</strong>
+The following code shows an example of how to configure stream 0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config_stream</span> <span class="mi">0</span>
+<span class="n">Data</span> <span class="n">Type</span><span class="p">:</span> <span class="n">PCM16</span>
+<span class="n">Transform</span> <span class="n">IDs</span> <span class="p">(</span><span class="n">Space</span> <span class="n">separated</span> <span class="n">IDs</span><span class="p">):</span> <span class="mh">0x1c16</span> <span class="mh">0x1c17</span>
+<span class="n">Samples</span> <span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="mi">128</span>
+<span class="n">Sample</span> <span class="n">Rate</span> <span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="mi">8000</span>
+<span class="n">Buffer</span> <span class="n">Size</span> <span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="mi">200</span>
+<span class="n">Processor</span> <span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="mi">1</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config</span>
+<span class="n">Current</span> <span class="n">Configurations</span><span class="p">:</span>
+    <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span>
+    <span class="n">Streams</span>        <span class="p">:</span>
+        <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Buffer</span> <span class="n">Size</span>   <span class="p">:</span> <span class="mi">200</span>
+            <span class="n">Data</span> <span class="n">Type</span>     <span class="p">:</span> <span class="n">PCM16</span>
+            <span class="n">Processor</span>     <span class="p">:</span> <span class="mi">1</span>
+            <span class="n">Sample</span> <span class="n">Rate</span>   <span class="p">:</span> <span class="mi">8000</span>
+            <span class="n">Samples</span>       <span class="p">:</span> <span class="mi">128</span>
+            <span class="n">Transform</span> <span class="n">IDs</span> <span class="p">:</span> <span class="mh">0x1c16</span> <span class="mh">0x1c17</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>When the requested stream is already configured in the application, the
+config_stream command tries to reconfigure the stream. In this case,
+default values are those existing old values, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config_stream</span> <span class="mi">0</span>
+<span class="n">Data</span> <span class="n">Type</span> <span class="p">[</span><span class="n">PCM16</span><span class="p">]:</span>
+<span class="n">Transform</span> <span class="n">IDs</span> <span class="p">(</span><span class="n">Space</span> <span class="n">separated</span> <span class="n">IDs</span><span class="p">)</span> <span class="p">[</span><span class="mh">0x1c16</span> <span class="mh">0x1c17</span><span class="p">]:</span> <span class="mh">0x1c16</span> <span class="mh">0x1c1b</span>
+<span class="n">Samples</span> <span class="p">[</span><span class="mi">128</span><span class="p">]:</span> <span class="mi">104</span>
+<span class="n">Sample</span> <span class="n">Rate</span> <span class="p">[</span><span class="mi">8000</span><span class="p">]:</span>
+<span class="n">Buffer</span> <span class="n">Size</span> <span class="p">[</span><span class="mi">200</span><span class="p">]:</span>
+<span class="n">Processor</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="mi">0</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config</span>
+<span class="n">Current</span> <span class="n">Configurations</span><span class="p">:</span>
+    <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span>
+    <span class="n">Streams</span>        <span class="p">:</span>
+        <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Buffer</span> <span class="n">Size</span>  <span class="p">:</span> <span class="mi">200</span>
+            <span class="n">Data</span> <span class="n">Type</span>    <span class="p">:</span> <span class="n">PCM16</span>
+            <span class="n">Processor</span>    <span class="p">:</span> <span class="mi">0</span>
+            <span class="n">Sample</span> <span class="n">Rate</span>  <span class="p">:</span> <span class="mi">8000</span>
+            <span class="n">Samples</span>      <span class="p">:</span> <span class="mi">104</span>
+            <span class="n">Transform</span> <span class="n">IDs</span><span class="p">:</span> <span class="mh">0x1c16</span> <span class="mh">0x1c1b</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-the-output-filename">
+<h3>Set the Output Filename<a class="headerlink" href="#set-the-output-filename" title="Permalink to this headline">¶</a></h3>
+<p>KSP needs to know where to save the output. The command which sets the
+output path is <code class="docutils literal notranslate"><span class="pre">set_output_filename</span></code>, which takes the absolute/relative
+path as a parameter, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">set_output_filename</span> <span class="n">C</span><span class="p">:</span>\<span class="n">My</span> <span class="n">Output</span>\<span class="n">test</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config</span>
+<span class="n">Current</span> <span class="n">Configurations</span><span class="p">:</span>
+    <span class="n">Add</span> <span class="n">Date</span><span class="o">-</span><span class="n">Time</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="n">Output</span> <span class="n">Filename</span>                     <span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">My</span> <span class="n">Output</span>\<span class="n">test</span>
+    <span class="n">Streams</span>                             <span class="p">:</span>
+    <span class="n">Use</span> <span class="n">the</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">capability</span>         <span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>If the extension of the output filename is not set, KSP will add <code class="docutils literal notranslate"><span class="pre">.lrw</span></code>
+extension automatically to the end of the filename.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When setting the output file and address, do not use single (<code class="docutils literal notranslate"><span class="pre">'</span></code>) and double
+(<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>) quotes unless they are part of the path. For example, <code class="docutils literal notranslate"><span class="pre">&quot;C:\My</span>
+<span class="pre">Output\test&quot;</span></code> does not work.</p>
+</div>
+</div>
+<div class="section" id="add-date-and-time-to-the-output-filename">
+<h3>Add Date and Time to the output filename<a class="headerlink" href="#add-date-and-time-to-the-output-filename" title="Permalink to this headline">¶</a></h3>
+<p>By default, KSP adds the date and the time of the recording to the filename.
+To change this, use <code class="docutils literal notranslate"><span class="pre">add_datetime_to_filename</span></code> command. The expected
+parameter for this command is one of the strings <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">add_datetime_to_filename</span> <span class="n">false</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config</span>
+<span class="n">Current</span> <span class="n">Configurations</span><span class="p">:</span>
+    <span class="n">Add</span> <span class="n">Date</span><span class="o">-</span><span class="n">Time</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span> <span class="kc">False</span>
+    <span class="n">Output</span> <span class="n">Filename</span>                     <span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">My</span> <span class="n">Output</span>\<span class="n">test</span>
+    <span class="n">Streams</span>                             <span class="p">:</span>
+    <span class="n">Use</span> <span class="n">the</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">capability</span>         <span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-the-ksp-built-in-capability">
+<h3>Use the KSP Built-in Capability<a class="headerlink" href="#use-the-ksp-built-in-capability" title="Permalink to this headline">¶</a></h3>
+<p>Some chips benefit from having KSP Capability built into the silicon. For these
+cases, the user can enable the built-in capability option by using
+<code class="docutils literal notranslate"><span class="pre">use_builtin_cap</span></code> command. The expected parameter for this command is string.
+The value is case insensitive and can be either <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>. When KSP
+first starts, the default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KSP</span><span class="o">&gt;</span> <span class="n">use_builtin_cap</span> <span class="n">true</span>
+
+<span class="n">KSP</span><span class="o">&gt;</span> <span class="n">config</span>
+<span class="n">Current</span> <span class="n">Configurations</span><span class="p">:</span>
+    <span class="n">Add</span> <span class="n">Date</span><span class="o">-</span><span class="n">Time</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="n">Output</span> <span class="n">Filename</span>                     <span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">My</span> <span class="n">Output</span>\<span class="n">test</span>
+    <span class="n">Streams</span>                             <span class="p">:</span>
+    <span class="n">Use</span> <span class="n">the</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">capability</span>         <span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="start-and-stop">
+<h2>Start and Stop<a class="headerlink" href="#start-and-stop" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">start</span></code> command starts the sniff operation. A user can watch the
+live progress on the screen during this process. To stop the process,
+press <strong>Enter</strong>.</p>
+<p>On the termination, extra information is displayed and the CLI gives
+control back to the user, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>KSP&gt; start
+Connected to device:scar:0.
+Trb link reset: retrying access
+KSP downloadable file found, index=14.
+KSP bundle is loaded.
+Operator ID: 0x4800
+
+Press Enter to stop the prob.
+Bytes written to the output file: 540680
+
+  &lt;-- ENTER is pressed here! --&gt;
+
+Streams:
+    stream0:
+        channels: 2
+        total_samples: 141024
+        packets: 1469
+        samples_in_packet: 96
+        data_type: PCM16
+
+Headers:
+    stream0:
+        channels: 2
+        data_type: PCM16
+
+KSP&gt;
+</pre></div>
+</div>
+<p>During the reading process, user can issue <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code> interruption and
+terminate the reading. In this case, no further processing will take
+place and the downloadable will be unloaded. Where it is needed, user can
+use the extract tool to do the extraction on the generated LRW file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the KSP operator is already being configured and is running with
+<code class="docutils literal notranslate"><span class="pre">start_op</span></code>, the <code class="docutils literal notranslate"><span class="pre">start</span></code> command will stop the running operator, unload
+the downloadable, and do all the re-configuration steps again.</p>
+</div>
+</div>
+<div class="section" id="manually-start-and-stop-the-probe">
+<h2>Manually Start and Stop the probe<a class="headerlink" href="#manually-start-and-stop-the-probe" title="Permalink to this headline">¶</a></h2>
+<p>To have more control over the end to end probe process, it is possible to
+do steps in the <code class="docutils literal notranslate"><span class="pre">start</span></code> command manually. All the required commands in
+the console are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">start_op</span></code>: Start the KSP operator based on the stream(s) configurations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stop_op</span></code>: Stop the KSP operator, when it is running.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_reader</span></code>: Establish the connection to the chip and retrieve the data.
+It saves the data in a file that is defined in the configuration.</p></li>
+</ul>
+<p>The format of the output file is <code class="docutils literal notranslate"><span class="pre">lrw</span></code>. To extract more information from
+this file, use <a class="reference internal" href="4_scripts.html#ksp-extract-script"><span class="std std-ref">KSP Extract Script</span></a>.</p>
+</div>
+<div class="section" id="non-interactive-operation">
+<h2>Non-interactive operation<a class="headerlink" href="#non-interactive-operation" title="Permalink to this headline">¶</a></h2>
+<p>KSP can run non-interactively with the <code class="docutils literal notranslate"><span class="pre">--batch</span></code> option. For example:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ksp</span><span class="o">.</span><span class="n">exe</span> <span class="n">trb</span><span class="p">:</span><span class="n">scar</span><span class="p">:</span><span class="mi">123456</span> <span class="o">-</span><span class="n">f</span> <span class="o">&lt;</span><span class="n">PATH</span> <span class="n">TO</span> <span class="n">THE</span> <span class="n">APPS1</span> <span class="n">FIRMWARE</span><span class="o">&gt;</span>
+  <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">o</span> <span class="n">test</span><span class="o">.</span><span class="n">lrw</span> <span class="o">-</span><span class="n">s</span> <span class="mi">0</span><span class="p">:</span><span class="n">pcm16</span><span class="p">:</span><span class="n">tr</span><span class="o">=</span><span class="mh">0x1c10</span><span class="p">:</span><span class="n">fs</span><span class="o">=</span><span class="mi">48000</span><span class="p">:</span><span class="n">proc</span><span class="o">=</span><span class="mi">1</span> <span class="o">-</span><span class="n">d</span> <span class="mi">3</span>
+<span class="n">Device</span> <span class="n">attach</span> <span class="n">succeeded</span><span class="o">.</span> <span class="n">Using</span> <span class="n">TRB</span> <span class="n">clock</span> <span class="n">speed</span><span class="p">:</span> <span class="mi">40</span><span class="n">MHz</span><span class="o">.</span>
+<span class="n">Configuration</span><span class="p">:</span>
+    <span class="n">Output</span> <span class="n">Filename</span><span class="p">:</span> <span class="n">test</span><span class="o">.</span><span class="n">lrw</span>
+    <span class="n">Streams</span>        <span class="p">:</span>
+        <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Buffer</span> <span class="n">Size</span>   <span class="p">:</span> <span class="mi">0</span>
+            <span class="n">Data</span> <span class="n">Type</span>     <span class="p">:</span> <span class="n">PCM16</span>
+            <span class="n">Processor</span>     <span class="p">:</span> <span class="mi">1</span>
+            <span class="n">Samples</span>       <span class="p">:</span> <span class="mi">0</span>
+            <span class="n">Stream</span>        <span class="p">:</span> <span class="mi">0</span>
+            <span class="n">Transform</span> <span class="n">IDs</span> <span class="p">:</span> <span class="mh">0x1c10</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Connected</span> <span class="n">to</span> <span class="n">device</span><span class="p">:</span><span class="n">scarlet</span><span class="p">:</span><span class="mf">123456.</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">KSP</span> <span class="n">downloadable</span> <span class="n">file</span> <span class="n">found</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mf">8.</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">KSP</span> <span class="n">bundle</span> <span class="ow">is</span> <span class="n">loaded</span> <span class="n">on</span> <span class="n">P0</span><span class="o">.</span>
+
+<span class="n">Run</span> <span class="k">for</span> <span class="mi">3</span> <span class="n">seconds</span><span class="o">...</span>
+<span class="n">Bytes</span> <span class="n">written</span> <span class="n">to</span> <span class="n">the</span> <span class="n">output</span> <span class="n">file</span><span class="p">:</span> <span class="mi">49160</span>
+<span class="n">Streams</span><span class="p">:</span>
+    <span class="n">headers_filename</span><span class="p">:</span> <span class="n">test_headers</span><span class="o">.</span><span class="n">txt</span>
+    <span class="n">stream0</span>         <span class="p">:</span>
+        <span class="n">channels</span>         <span class="p">:</span> <span class="mi">1</span>
+        <span class="n">data_type</span>        <span class="p">:</span> <span class="n">PCM16</span>
+        <span class="n">filenames</span>        <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;test_stream0_1channels_TTR.raw&#39;</span><span class="p">]</span>
+        <span class="n">packets</span>          <span class="p">:</span> <span class="mi">251</span>
+        <span class="n">samples_in_packet</span><span class="p">:</span> <span class="mi">96</span>
+        <span class="n">total_samples</span>    <span class="p">:</span> <span class="mi">24096</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The invocation options are:</p>
+<blockquote>
+<div><ul>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">trb:scar:&lt;serial_number&gt;</span></code>:</dt><dd><p>If more than one TRBI adapter is connected
+to the host, the serial number should be specified as part of the
+device string. Otherwise KSP will prompt to select one of the available
+adapters.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-b</span></code>, <code class="docutils literal notranslate"><span class="pre">--batch</span></code>:</dt><dd><p>Run non-interactively.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-o</span></code> <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILE_NAME</span></code>, <code class="docutils literal notranslate"><span class="pre">--output</span></code> <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILE_NAME</span></code>:</dt><dd><p>Specify the output file name. Required in non-interactive mode.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">-s</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;stream_config&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">--stream</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;stream_config&gt;</span></code>:</dt><dd><p>Configure a stream. The argument is of the form:
+<code class="docutils literal notranslate"><span class="pre">&lt;stream_number&gt;</span></code>:<code class="docutils literal notranslate"><span class="pre">&lt;data_type&gt;</span></code>:<code class="docutils literal notranslate"><span class="pre">&lt;key&gt;``=``&lt;value&gt;</span></code>:…</p>
+<p>In non-interactive mode, at least one stream configuration
+is required.
+The values are the same as for interactive configuration,
+only the transform ID list is comma-separated instead of
+space-separated. The keys are:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tr</span></code></p></td>
+<td><p>Transform ID list, comma separated. Default for
+<code class="docutils literal notranslate"><span class="pre">TTR</span></code> streams is <code class="docutils literal notranslate"><span class="pre">all</span></code>, for other stream types
+this key-value pair is required.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fs</span></code></p></td>
+<td><p>Sampling rate for <code class="docutils literal notranslate"><span class="pre">PCM</span></code> streams, default 0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bs</span></code></p></td>
+<td><p>Buffer Size in words, default 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">samples</span></code></p></td>
+<td><p>Packet size, default 0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">md</span></code>,
+<code class="docutils literal notranslate"><span class="pre">metadata</span></code></p></td>
+<td><p>For <code class="docutils literal notranslate"><span class="pre">TTR</span></code> streams, enable recording metadata tag
+info. The value can be <code class="docutils literal notranslate"><span class="pre">y</span></code> or <code class="docutils literal notranslate"><span class="pre">n</span></code>, or can be
+omitted, that is equivalent to <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">td</span></code>,
+<code class="docutils literal notranslate"><span class="pre">timed_data</span></code></p></td>
+<td><p>For <code class="docutils literal notranslate"><span class="pre">TTR</span></code> streams, record low resolution data
+written by an operator terminal or an endpoint.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">proc</span></code></p></td>
+<td><p>Processor number. The value can be <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-d</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;seconds&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">--duration</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;seconds&gt;</span></code>:</dt><dd><p>Record for the given number of seconds. The recording can
+also be stopped earlier by pressing <code class="docutils literal notranslate"><span class="pre">Ctrl-C</span></code> if run from a console
+or terminal. Either <code class="docutils literal notranslate"><span class="pre">--duration</span></code> or <code class="docutils literal notranslate"><span class="pre">--wait_input</span></code> is required
+in non-interactive mode.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-w</span></code>, <code class="docutils literal notranslate"><span class="pre">--wait-input</span></code>:</dt><dd><p>After starting the recording, wait for the <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key to be
+pressed (or a new line to be sent to stdin, if not run in a console
+or terminal) to stop. This is the same behaviour as in interactive
+mode. Either <code class="docutils literal notranslate"><span class="pre">--duration</span></code> or <code class="docutils literal notranslate"><span class="pre">--wait_input</span></code> is required
+in non-interactive mode.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>The invocation options for the non-interactive mode are ignored in
+interactive mode.</p>
+<p>In non-interactive mode, the last interactive configuration is neither read
+nor updated.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="3_troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="1_installation.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.5.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

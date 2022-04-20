@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.library package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse package" href="kse.html"/>
+        <link rel="next" title="kse.library.audio_file package" href="kse.library.audio_file.html"/>
+        <link rel="prev" title="kse.kymera.kymera.hydra package" href="kse.kymera.kymera.hydra.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kse.library package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.library.capability">kse.library.capability module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.library.module">kse.library.module module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.library.registry">kse.library.registry module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.library.template">kse.library.template module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.library.test_base">kse.library.test_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.library">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+    <li>kse.library package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.library.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-library-package">
+<h1>kse.library package<a class="headerlink" href="#kse-library-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="kse.library.audio_file.html">kse.library.audio_file package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.audio_file.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.audio_file.html#module-kse.library.audio_file.audio">kse.library.audio_file.audio module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.audio_file.html#module-kse.library.audio_file.audio_base">kse.library.audio_file.audio_base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.audio_file.html#module-kse.library.audio_file.audio_raw">kse.library.audio_file.audio_raw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.audio_file.html#module-kse.library.audio_file.audio_wav">kse.library.audio_file.audio_wav module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.audio_file.html#module-kse.library.audio_file">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.library.graph.html">kse.library.graph package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.graph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.graph.html#module-kse.library.graph.graph">kse.library.graph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.graph.html#module-kse.library.graph">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.library.types.html">kse.library.types package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.types.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.types.html#module-kse.library.types.int_types">kse.library.types.int_types module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.library.types.html#module-kse.library.types">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.library.capability">
+<span id="kse-library-capability-module"></span><h2>kse.library.capability module<a class="headerlink" href="#module-kse.library.capability" title="Permalink to this headline">¶</a></h2>
+<p>Capability support library</p>
+<dl class="function">
+<dt id="kse.library.capability.get_capability_id">
+<code class="sig-prename descclassname">kse.library.capability.</code><code class="sig-name descname">get_capability_id</code><span class="sig-paren">(</span><em class="sig-param">cap_data</em>, <em class="sig-param">cap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/capability.html#get_capability_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.capability.get_capability_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get capability id for a given capability id or name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cap_data</strong> (<em>dict</em>) – Capability data object</p></li>
+<li><p><strong>cap</strong> (<em>int</em><em> or </em><em>str</em>) – Capability id or name to search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the capability name does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.capability.get_capability_msgs">
+<code class="sig-prename descclassname">kse.library.capability.</code><code class="sig-name descname">get_capability_msgs</code><span class="sig-paren">(</span><em class="sig-param">cap_data</em>, <em class="sig-param">cap_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/capability.html#get_capability_msgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.capability.get_capability_msgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of messages handled by a capability</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cap_data</strong> (<em>dict</em>) – Capability data object</p></li>
+<li><p><strong>cap_name</strong> (<em>str</em>) – Capability name to search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability messages is the format ‘MSG’: int</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the capability name does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.capability.get_capability_name">
+<code class="sig-prename descclassname">kse.library.capability.</code><code class="sig-name descname">get_capability_name</code><span class="sig-paren">(</span><em class="sig-param">cap_data</em>, <em class="sig-param">cap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/capability.html#get_capability_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.capability.get_capability_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get capability name for a given capability id or name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cap_data</strong> (<em>dict</em>) – Capability data object</p></li>
+<li><p><strong>cap</strong> (<em>int</em><em> or </em><em>str</em>) – Capability id or name to search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability name</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the capability name does not exist</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.capability.get_capability_names">
+<code class="sig-prename descclassname">kse.library.capability.</code><code class="sig-name descname">get_capability_names</code><span class="sig-paren">(</span><em class="sig-param">cap_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/capability.html#get_capability_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.capability.get_capability_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all capabilities defined in a capability data object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cap_data</strong> (<em>dict</em>) – Capability data object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability file contents</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.capability.load_capability_file">
+<code class="sig-prename descclassname">kse.library.capability.</code><code class="sig-name descname">load_capability_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/capability.html#load_capability_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.capability.load_capability_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get capability data from capability file</p>
+<p>The capability file should have the following format</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;BASIC_PASS_THROUGH&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;CAPABILITY_VERSION_REQUEST&quot;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
+            <span class="s2">&quot;ENABLE_FADE_OUT&quot;</span><span class="p">:</span> <span class="mi">8192</span><span class="p">,</span>
+            <span class="s2">&quot;DISABLE_FADE_OUT&quot;</span><span class="p">:</span> <span class="mi">8193</span><span class="p">,</span>
+            <span class="s2">&quot;SET_DATA_STREAM_BASED&quot;</span><span class="p">:</span> <span class="mi">8207</span><span class="p">,</span>
+            <span class="s2">&quot;CHANGE_INPUT_DATA_TYPE&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s2">&quot;CHANGE_OUTPUT_DATA_TYPE&quot;</span><span class="p">:</span> <span class="mi">11</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;SCO_SEND&quot;</span><span class="p">:</span>  <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – File name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Capability file contents</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.module">
+<span id="kse-library-module-module"></span><h2>kse.library.module module<a class="headerlink" href="#module-kse.library.module" title="Permalink to this headline">¶</a></h2>
+<p>Module support library</p>
+<dl class="function">
+<dt id="kse.library.module.get_parent_module">
+<code class="sig-prename descclassname">kse.library.module.</code><code class="sig-name descname">get_parent_module</code><span class="sig-paren">(</span><em class="sig-param">module_name</em>, <em class="sig-param">module_filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/module.html#get_parent_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.module.get_parent_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parent module path of a given module path and file</p>
+<p>The module_filename is needed to compute the parent module
+file file1.file2.py inside the module kats would be module kats.file1.file2</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="vm">__name__</span>
+<span class="s1">&#39;kats.kymera.uut.uut&#39;</span>
+<span class="vm">__file__</span>
+<span class="s1">&#39;C:/Users/martina/project/kats4/kats/kats/kalimba/uut/uut.pyc&#39;</span>
+<span class="n">get_parent_module</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="vm">__file__</span><span class="p">)</span>
+<span class="n">kats</span><span class="o">.</span><span class="n">kymera</span><span class="o">.</span><span class="n">uut</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param</strong> (<em>str</em>) – Module name</p></li>
+<li><p><strong>module_filename</strong> (<em>str</em>) – Filename for that module</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parent module</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.registry">
+<span id="kse-library-registry-module"></span><h2>kse.library.registry module<a class="headerlink" href="#module-kse.library.registry" title="Permalink to this headline">¶</a></h2>
+<p>Registry</p>
+<dl class="function">
+<dt id="kse.library.registry.get_instance">
+<code class="sig-prename descclassname">kse.library.registry.</code><code class="sig-name descname">get_instance</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/registry.html#get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.registry.get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the instance of a registered name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero based index of the instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.registry.get_instance_names">
+<code class="sig-prename descclassname">kse.library.registry.</code><code class="sig-name descname">get_instance_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/registry.html#get_instance_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.registry.get_instance_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all registered instance names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Instance names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[str[</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.registry.get_instance_num">
+<code class="sig-prename descclassname">kse.library.registry.</code><code class="sig-name descname">get_instance_num</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/registry.html#get_instance_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.registry.get_instance_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of instance of a registered name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the instance</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of instances</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.registry.register_instance">
+<code class="sig-prename descclassname">kse.library.registry.</code><code class="sig-name descname">register_instance</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/registry.html#register_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.registry.register_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a instance of a given name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance</p></li>
+<li><p><strong>instance</strong> (<em>any</em>) – Instance to register</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.registry.unregister_instance">
+<code class="sig-prename descclassname">kse.library.registry.</code><code class="sig-name descname">unregister_instance</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/registry.html#unregister_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.registry.unregister_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a instance of a given name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance</p></li>
+<li><p><strong>instance</strong> (<em>any</em>) – Instance to unregister</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.template">
+<span id="kse-library-template-module"></span><h2>kse.library.template module<a class="headerlink" href="#module-kse.library.template" title="Permalink to this headline">¶</a></h2>
+<p>Template engine support</p>
+<dl class="function">
+<dt id="kse.library.template.substitute">
+<code class="sig-prename descclassname">kse.library.template.</code><code class="sig-name descname">substitute</code><span class="sig-paren">(</span><em class="sig-param">tmpl</em>, <em class="sig-param">test_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/template.html#substitute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.template.substitute" title="Permalink to this definition">¶</a></dt>
+<dd><p>This helper substitutes the templated values of <cite>template</cite> from
+matching keys in <cite>test_dict</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tmpl</strong> (<em>dict</em>) – The templated json config file to be used as the
+source. The placeholders should start with
+<cite>TEMPLATE</cite>.</p></li>
+<li><p><strong>test_dict</strong> (<em>dict</em>) – Dict with keys matching the placeholders in the
+template as keys</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dict with all the placeholders in the template json filled</dt><dd><p>with the values in test_dict</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.test_base">
+<span id="kse-library-test-base-module"></span><h2>kse.library.test_base module<a class="headerlink" href="#module-kse.library.test_base" title="Permalink to this headline">¶</a></h2>
+<p>Test base library</p>
+<dl class="function">
+<dt id="kse.library.test_base.add_output_file">
+<code class="sig-prename descclassname">kse.library.test_base.</code><code class="sig-name descname">add_output_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/test_base.html#add_output_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.test_base.add_output_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add file to test output files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to filename</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.library.test_base.register_test_base_instance">
+<code class="sig-prename descclassname">kse.library.test_base.</code><code class="sig-name descname">register_test_base_instance</code><span class="sig-paren">(</span><em class="sig-param">instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/test_base.html#register_test_base_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.test_base.register_test_base_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register test base instance</p>
+<p>This should be called before rest of functions in this library are usable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instance</strong> (<em>any</em>) – Test base instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.library" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.library.audio_file.html" class="btn btn-neutral float-right" title="kse.library.audio_file package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kymera.kymera.hydra.html" class="btn btn-neutral" title="kse.kymera.kymera.hydra package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

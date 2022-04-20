@@ -1,0 +1,8 @@
+
+Dorm
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Dorm``.
+
+.. automodule:: ACAT.Analysis.Dorm
+   :members:

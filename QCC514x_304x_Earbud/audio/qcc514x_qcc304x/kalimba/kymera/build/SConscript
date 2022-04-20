@@ -1,0 +1,29 @@
+"""
+Copyright (c) 2020 Qualcomm Technologies International, Ltd.
+
+Kymera audio build script
+"""
+
+from __future__ import print_function
+import os
+import logging
+import maker.exceptions as bdex
+
+Import('p_env')
+
+# Initialise folder locations
+PROJECT_ROOT = os.getcwd().replace('\\', '/')
+logging.debug("PROJECT_ROOT is " + PROJECT_ROOT)
+
+elf_path = os.path.abspath(os.path.join(PROJECT_ROOT, p_env['OUTPUT']))
+
+attribs = {
+    'type':   'info',
+    'config': 'prebuilt_image',
+    'core':   'audio/p0',
+    'module': 'build'
+}
+
+bdex.log_buildproc_output('elfpath', attribs, elf_path)
+
+print("Nothing to build for 'prebuilt_image' project")

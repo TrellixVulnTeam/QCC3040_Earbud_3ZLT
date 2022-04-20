@@ -1,0 +1,8 @@
+
+logger
+==========================================================================
+
+This module can be imported from ``ACAT.Core.logger``.
+
+.. automodule:: ACAT.Core.logger
+   :members:

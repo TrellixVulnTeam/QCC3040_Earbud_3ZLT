@@ -1,0 +1,55 @@
+.. KSE documentation master file, created by
+   sphinx-quickstart on Tue Aug  4 10:50:19 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+KSE
+====
+
+KSE (Kymera Simulation Environment) is a Python-based command shell for 
+interactive prototyping, testing, and debugging of Kymera operators running 
+in a simulated environment. When the shell is started, the session is loaded 
+with objects available for the user to interact with Kymera.
+
+The audio subsystem is simulated using kalsim/kalcmd2 (kalimba simulator).
+
+**Chip platforms supported**
+
+    * Crescendo
+    * Stretto
+    * Strettoplus
+    * Maorgen1
+    * Maor
+
+**Environment characteristics**
+
+    * Python 3.6+
+    * Windows and Linux support
+
+**Known limitations**
+
+    * Only single kalimba core is supported
+    * No 32 bit Linux support
+    * Hardware interfaces are simulated
+
+
+Table of contents
+=================
+
+.. toctree::
+   :maxdepth: 1
+   
+   getting_started
+   user_guide
+   kse
+   changelog
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+
+.. qcomcopyright::

@@ -1,0 +1,248 @@
+"""
+Copyright (c) 2019 - 2021 Qualcomm Technologies International, Ltd.
+
+Library build script
+"""
+
+from __future__ import print_function
+import os
+import sys
+import logging
+import subprocess
+
+Import('p_env')
+
+# Builder for database files
+p_env.Tool('gattdbgen')
+
+def dos2unix(src):
+    """ Convert DOS style pathnames to the Unix style preferred by Make """
+    dst = src.split()
+    dst = [os.path.expandvars(f) for f in dst]
+    dst = [os.path.normpath(f) for f in dst]
+    dst = [os.path.splitdrive(f)[1] for f in dst]
+    dst = ' '.join(dst).replace('\\', '/')
+
+    return dst
+
+
+def convert_options(param):
+    """
+    Convert a string of option=value pairs into a dictionary.
+    Singlets are also accepted, having an empty string value.
+    """
+
+    import re
+
+    # Initialise return value
+    options = dict()
+
+    # Split the input string into groups, where each group comprises
+    # <alphanumeric text> or
+    # <alphanumeric text> = <value containing alphanumeric text> or
+    #                       "<value containing any character>" or
+    #                       '<value containing any character>'
+    expression = r'\w+(?:\s*=\s*(?:\w+|".*?"|\'.*?\'))?'
+    for pair in re.findall(expression, param):
+        (option, sep, value) = pair.partition('=')
+        options[option] = value.strip(' \t\'"')
+
+    return options
+
+
+# Assign default values where required
+if not p_env.get('BUILD_TYPE'):
+    p_env['BUILD_TYPE'] = 'release'
+if not p_env.get('CHIP_TYPE'):
+    p_env['CHIP_TYPE'] = 'qcc512x_qcc302x'
+if not p_env.get('OS_VARIANT'):
+    p_env['OS_VARIANT'] = 'hydra_os'
+if not p_env.get('DEFS'):
+    p_env['DEFS'] = '__KALIMBA__ HAVE_32BIT_DATA_WIDTH INSTALL_HYDRA_LOG' + \
+                    ' BLUELAB HYDRACORE GATT_DBI_LIB HYDRA_LOG_MAX_LEVEL=5'
+if p_env.get('NUM_PIO_BANKS'):
+    p_env['DEFS'] += ' NUMBER_OF_PIO_BANKS=' + str(p_env['NUM_PIO_BANKS'])
+
+# Enable/disable debug messages
+p_env['SCRIPT_DEBUG'] = False
+
+# Initialise folder locations
+PROJECT_ROOT = os.getcwd().replace('\\', '/')
+logging.debug("PROJECT_ROOT is %s", PROJECT_ROOT)
+
+try:
+    TOOLS_ROOT = p_env['TOOLS_ROOT']
+except KeyError:
+    print("Variable TOOLS_ROOT has not been defined. It should be set to "
+          "the location of the tools folder.")
+    Exit(1)
+logging.debug("TOOLS_ROOT is %s", TOOLS_ROOT)
+
+try:
+    ADK_ROOT = p_env['ADK_ROOT']
+except KeyError:
+    print("Variable ADK_ROOT has not been defined. It should be set to "
+          "the location of the ADK folder.")
+    Exit(1)
+logging.debug("ADK_ROOT is %s", ADK_ROOT)
+
+# Setup paths for the build
+SRC_DIR           = dos2unix(os.getcwd())
+
+# Define LIBRARY_VERSION
+LIBRARY_VERSION = p_env.get('LIBRARY_VERSION', 'default')
+p_env.Replace(LIBRARY_VERSION = LIBRARY_VERSION + '_' + p_env['CHIP_TYPE'])
+
+# Folders
+if p_env['BUILDOUTPUT_PATH']:
+    p_env.Replace(inst_dir = p_env['BUILDOUTPUT_PATH'] + '/../installed_libs')
+else:
+    p_env.Replace(inst_dir = '#installed_libs')
+p_env.Replace(private_lib_dir = p_env['inst_dir'] + '/lib/private/' + p_env['LIBRARY_VERSION'])
+p_env.Replace(profiles_inc_dir = p_env['inst_dir'] + '/include/profiles/' + p_env['LIBRARY_VERSION'])
+p_env.Replace(fw_inst_dir = '#../../os/' + p_env['CHIP_TYPE'] + '/' + p_env['OS_VARIANT'] + '/src/installed_libs')
+p_env.Replace(firmware_inc_dir = p_env['fw_inst_dir'] + '/include/firmware_' + p_env['CHIP_TYPE'])
+p_env.Replace(standard_inc_dir = p_env['fw_inst_dir'] + '/include/standard')
+p_env.Replace(firmware_app_inc_dir = p_env['firmware_inc_dir'] + '/app')
+
+# Add standard include paths (must come first)
+p_env.Replace(CPPPATH=[p_env['firmware_inc_dir'], p_env['standard_inc_dir'],
+                       p_env['firmware_app_inc_dir'], p_env['profiles_inc_dir']])
+
+# Pull in private libs from default location
+if p_env['BUILDOUTPUT_PATH']:
+    p_env.Append(CPPPATH=[p_env['profiles_inc_dir'].replace(p_env['inst_dir'], '../../installed_libs')])
+
+# Expand ellipses in LIBPATHS and INCPATHS to include subdirectories recursively
+for f in p_env.get('INCPATHS', '').split():
+    if f.endswith('...'):
+        for root, dir, file in os.walk(f[:-3]):
+            p_env.AppendUnique(CPPPATH=root)
+    else:
+        # Use Dir() to force the directory lookup in the same folder as
+        # the SConscript file (which is the same as the project file).
+        # Otherwise the lookup won't happen till compilation time, and
+        # that is being performed in each library's subfolder.
+        p_env.AppendUnique(CPPPATH=Dir(f))
+
+p_env.Replace(LIBPATH=[])
+for f in p_env.get('LIBPATHS', '').split():
+    if f.endswith('...'):
+        for root, dir, file in os.walk(f[:-3]):
+            p_env.AppendUnique(LIBPATH=root)
+    else:
+        # Use Dir() to force the directory lookup in the same folder as
+        # the SConscript file (which is the same as the project file).
+        # Otherwise the lookup won't happen till compilation time, and
+        # that is being performed in each library's subfolder.
+        p_env.AppendUnique(LIBPATH=Dir(f))
+
+# Convert definitions into a list
+p_env.Replace(DEFS=p_env.get('DEFS', '').split())
+
+# Extract build arguments
+for (key, value) in convert_options(p_env['BUILD_ARGUMENTS']).items():
+    if value:
+        p_env[key] = value
+
+if p_env.get('LIBTYPE', '') == 'synergy':
+    p_env.AppendUnique(DEFS=['SYNERGY_FOR_VM', 'HYDRA'])
+
+# Disable building of the shim layer on Crescendo builds.
+p_env['DISABLE_SHIM'] = True
+
+# List of libraries to build
+BUILD_LIBS = {d for d in os.listdir(SRC_DIR) if os.path.isdir(SRC_DIR + '/' + d) and Glob(SRC_DIR + '/' + d + '/*.h')}
+
+# Define standard compiler options
+MINIM_OPT = '-minim'
+
+p_env['SUPPORTED_EXECUTION_MODES'] = 'native'
+
+try:
+    CHIP_NAME_OPT = '-k' + p_env['CHIP_NAME']
+except KeyError:
+    print("CHIP_NAME property missing")
+    Exit(1)
+
+logging.debug("BUILDING FOR %s", p_env['CHIP_TYPE'])
+
+WARNING_OPTS = p_env.get('WARNING_FLAGS',
+                         '-Wall -WAccuracyLoss -WnoConstantTest ' + \
+                         '-WCharPointerUnaligned')
+# Following warnings are left disabled when porting by commenting out the line
+if p_env.get('EXTRA_WARNINGS', 'FALSE').lower() != 'true':
+    WARNING_OPTS += ' -WnoAccuracyLoss -WnoArgSizeLarger' + \
+                    ' -WnoPointerUnaligned -WnoExplicitQualifier' + \
+                    ' -WnoCharPointerUnaligned -WnoUnsignedCompare'
+
+PREINCLUDES = ['hydra_types.h', 'hydra_macros.h', 'hydra_dev.h']
+PREINCLUDE_OPTS = ' -preinclude '.join([''] + PREINCLUDES)
+
+# Add pre-include files to the list of dependencies
+# (hydra_macros.h requires macros.h)
+p_env.Append(depends=[p_env['profiles_inc_dir'] + '/hydra_dev.h',
+                      p_env['standard_inc_dir'] + '/hydra_types.h',
+                      p_env['firmware_inc_dir'] + '/hydra_macros.h',
+                      p_env['standard_inc_dir'] + '/macros.h'])
+
+# If the project property 'Build Type' is set to 'release' optimise for
+# speed, otherwise use debugging friendly options
+if p_env['BUILD_TYPE'].lower() == 'release':
+    OPTIMISE_OPTS = p_env.get('RELEASE_OPTIMISE_FLAGS', '-O2')
+    p_env.Append(DEFS=['RELEASE_BUILD'])
+else:
+    OPTIMISE_OPTS = p_env.get('DEBUG_OPTIMISE_FLAGS', '-O0')
+    p_env.Append(DEFS=['DEBUG_BUILD'])
+
+COMPILE_FLAGS = '-g -Xa -apply-b179745-workaround ' + \
+                ' '.join([MINIM_OPT, WARNING_OPTS, PREINCLUDE_OPTS,
+                          OPTIMISE_OPTS])
+
+# Translate options variable names into SCons versions
+p_env.Replace(CFLAGS=COMPILE_FLAGS)
+p_env.Append(CPPDEFINES=p_env['DEFS'])
+p_env.Replace(CPPFLAGS=[CHIP_NAME_OPT])
+
+# Import configuration options
+for conf in p_env['CONFIGS'].split():
+    # Set up new p_environment for this configuration
+    #config_p_env = p_env.Clone()
+
+    # Store the configuration
+    p_env['CONFIGURATION'] = conf
+
+    # Don't enable any CONFIG_FEATURES by default
+    p_env['CONFIG_FEATURES'] = []
+
+#    # Set some defaults (prevents bleed through from
+#    # previous runs for other configurations)
+#    override LIBRARY_VERSION:=$(BASE_LIBRARY_VERSION)
+#    override dirs:= $(BASE_DIRS)
+#    override SUPPORTED_EXECUTION_MODES:=$(BASE_EXECUTION_MODES)
+
+#    # If no build configuration was provided then use
+#    # current value of LIBRARY_VERSION and don't try to
+#    # load any CONFIG_FEATURES
+#    ifneq (default,$(1))
+#        # Set LIBRARY_VERSION to base_config
+#        override LIBRARY_VERSION:=$(BASE_LIBRARY_VERSION)_$(1)
+#    endif
+
+#    # Prevent bleed through of config settings
+#    CONFIG_EXECUTION_MODES:=
+#    CONFIG_DIRS_FILTER:=
+#    CONFIG_DIRS_NOT_WARNING_FREE:=
+
+    # Load configuration file; fail if it does not exist
+    conf_file = 'config/SConscript.' + conf
+    p_env.SConscript(conf_file, exports='p_env', must_exist=True)
+
+# Filter out libraries indicated by the configuration
+# (will need to do this on a per-config basis)
+BUILD_LIBS -= set(p_env.get('CONFIG_DIRS_FILTER', []))
+
+# Import the library SConscript files
+for library in BUILD_LIBS:
+    p_env.SConscript('Sconscript.lib', variant_dir=library, exports='p_env', duplicate=0, must_exist=True)
+

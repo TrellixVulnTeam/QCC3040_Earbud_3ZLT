@@ -1,0 +1,8 @@
+
+SanityCheck
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.SanityCheck``.
+
+.. automodule:: ACAT.Analysis.SanityCheck
+   :members:

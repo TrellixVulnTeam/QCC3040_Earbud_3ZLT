@@ -1,0 +1,8 @@
+
+DmProfiler
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.DmProfiler``.
+
+.. automodule:: ACAT.Analysis.DmProfiler
+   :members:

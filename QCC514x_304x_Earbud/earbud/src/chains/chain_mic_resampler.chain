@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<chain name="CHAIN_MIC_RESAMPLER" id="0" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_MIC_RESAMPLER" id="CAP_ID_IIR_RESAMPLER">
+        <sink name="IN_REF" terminal="0"/>
+        <sink name="IN1" terminal="1"/>
+        <sink name="IN2" terminal="2"/>
+        <sink name="IN3" terminal="3"/>
+        <source name="OUT_REF" terminal="0"/>
+        <source name="OUT1" terminal="1"/>
+        <source name="OUT2" terminal="2"/>
+        <source name="OUT3" terminal="3"/>
+    </operator>
+
+    <input sink="OPR_MIC_RESAMPLER.IN_REF" role="EPR_AEC_RESAMPLER_IN_REF"/>
+    <input sink="OPR_MIC_RESAMPLER.IN1"    role="EPR_MIC_RESAMPLER_IN1"/>
+    <input sink="OPR_MIC_RESAMPLER.IN2"    role="EPR_MIC_RESAMPLER_IN2"/>
+    <input sink="OPR_MIC_RESAMPLER.IN3"    role="EPR_MIC_RESAMPLER_IN3"/>
+    <output source="OPR_MIC_RESAMPLER.OUT_REF" role="EPR_AEC_RESAMPLER_OUT_REF"/>
+    <output source="OPR_MIC_RESAMPLER.OUT1"    role="EPR_MIC_RESAMPLER_OUT1"/>
+    <output source="OPR_MIC_RESAMPLER.OUT2"    role="EPR_MIC_RESAMPLER_OUT2"/>
+    <output source="OPR_MIC_RESAMPLER.OUT3"    role="EPR_MIC_RESAMPLER_OUT3"/>
+</chain>

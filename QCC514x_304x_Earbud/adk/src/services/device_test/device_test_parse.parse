@@ -1,0 +1,160 @@
+######################################################################################
+#
+# Copyright (c) 2019-2020 Qualcomm Technologies International, Ltd.
+#
+# This file contains all AT commands used by the Device Test Service
+#
+######################################################################################
+
+prefix DeviceTestServiceParser_
+
+# ------------------------------------------------------------------------------------
+# AT Commands for Authorisation
+#-------------------------------------------------------------------------------------
+
+{ AT + AUTHSTART \r } : DeviceTestServiceCommand_HandleAuthStart
+
+[0-9A-Fa-f] : hexdigit
+{ AT + AUTHRESP = %hexdigit+:response \r } : DeviceTestServiceCommand_HandleAuthResp
+
+{ AT + AUTHDISABLE \r } : DeviceTestServiceCommand_HandleAuthDisable
+
+# ------------------------------------------------------------------------------------
+# AT Commands for controlling the test mode operation
+#-------------------------------------------------------------------------------------
+
+{ AT + DTSENDTESTING = %d:reboot \r } : DeviceTestServiceCommand_HandleDtsEndTesting
+
+{ AT + DTSSETTESTMODE = %d:testmode \r } : DeviceTestServiceCommand_HandleDtsSetTestMode
+
+{ AT + DTSTESTMODE ? \r } : DeviceTestServiceCommand_HandleDtsTestModeQuery
+
+# ------------------------------------------------------------------------------------
+# AT Commands for configuration of ANC
+#-------------------------------------------------------------------------------------
+
+{ AT + ANCENABLE = %d:mode \r } : DeviceTestServiceCommand_HandleAncEnable
+
+{ AT + ANCDISABLE \r } : DeviceTestServiceCommand_HandleAncDisable
+
+{ AT + ANCREADFINEGAIN = %d:mode , %d:gainpath \r } : DeviceTestServiceCommand_HandleAncReadFineGain
+
+{ AT + ANCSETFINEGAIN = %d:mode , %d:gainpath , %d:gainvalue \r } : DeviceTestServiceCommand_HandleAncSetFineGain
+
+{ AT + ANCWRITEFINEGAIN = %d:mode , %d:gainpath , %d:gainvalue \r } : DeviceTestServiceCommand_HandleAncWriteFineGain
+
+{ AT + ANCREADCOARSEGAIN = %d:mode , %d:gainpath \r } : DeviceTestServiceCommand_HandleAncReadCoarseGain
+
+{ AT + ANCREADFINEGAINDUAL = %d:mode , %d:gainpath \r } : DeviceTestServiceCommand_HandleAncReadFineGainDual
+
+{ AT + ANCSETFINEGAINDUAL = %d:mode , %d:gainpath , %d:instance0gain , %d:instance1gain \r } : DeviceTestServiceCommand_HandleAncSetFineGainDual
+
+{ AT + ANCWRITEFINEGAINDUAL = %d:mode , %d:gainpath , %d:instance0gain , %d:instance1gain \r } : DeviceTestServiceCommand_HandleAncWriteFineGainDual
+
+# ------------------------------------------------------------------------------------
+# AT Commands for ANC Audio Persistent Storage Keys (ANC Audio PSKEY)
+#-------------------------------------------------------------------------------------
+
+{ AT + ANCSETPSKEY = 0X %hexdigit+:pskey, %d:instance, %*:value \r } : DeviceTestServiceCommand_HandleAncSetPsKey
+
+{ AT + ANCGETPSKEY = 0X %hexdigit+:pskey, %d:instance \r } : DeviceTestServiceCommand_HandleAncGetPsKey
+
+
+# ------------------------------------------------------------------------------------
+# Sample AT Commands for extensions
+#-------------------------------------------------------------------------------------
+
+{ AT + LOCALBDADDR ? \r } : DeviceTestServiceCommand_HandleLocalBdaddr
+
+# ------------------------------------------------------------------------------------
+# AT Commands for audio testing. Loopback and tone generation.
+#-------------------------------------------------------------------------------------
+
+{ AT + LOOPBACKSTART = %d:micSelection, %d:speakerSelection, %d:sampleRate \r } : DeviceTestServiceCommand_HandleAudioLoopbackStart
+
+{ AT + LOOPBACKSTOP \r } : DeviceTestServiceCommand_HandleAudioLoopbackStop
+
+{ AT + AUDIOPLAYTESTTONE \r } : DeviceTestServiceCommand_HandleAudioPlayTestTone
+
+{ AT + AUDIOPLAYTONE = %d:tone , %d:speakerSelection , %d:durationMs \r } : DeviceTestServiceCommand_HandleAudioPlayTone
+
+# ------------------------------------------------------------------------------------
+# AT Commands for radio tests. TX of carriers and packets
+#-------------------------------------------------------------------------------------
+
+{ AT + RFTESTSTOP \r } : DeviceTestServiceCommand_HandleRfTestStop
+
+{ AT + RFTESTCARRIER = %d:channel \r } : DeviceTestServiceCommand_HandleRfTestCarrier
+
+{ AT + RFTESTTXSTART \r } : DeviceTestServiceCommand_HandleRfTestTxStart
+
+{ AT + RFTESTCFGCHANNEL = %d:channel \r } : DeviceTestServiceCommand_HandleRfTestCfgChannel
+
+{ AT + RFTESTCFGPACKET = 0X %hexdigit+:payload , 0X %hexdigit+:packetType , %d:length \r } : DeviceTestServiceCommand_HandleRfTestCfgPacket
+
+{ AT + RFTESTCFGADDRESS = %d:logicalAddr , %hexdigit+:bdaddr \r } : DeviceTestServiceCommand_HandleRfTestCfgAddress
+
+{ AT + RFTESTCFGPOWER = %d:powerSetting \r } : DeviceTestServiceCommand_HandleRfTestCfgPower
+
+{ AT + RFTESTCFGSTOPTIME = %d:reboot , %d:timeMs \r } : DeviceTestServiceCommand_HandleRfTestCfgStopTime
+
+{ AT + RFTESTCFGSTOPPIO = %d:pio \r } : DeviceTestServiceCommand_HandleRfTestCfgStopPio
+
+{ AT + RFTESTCFGSTOPTOUCH \r } : DeviceTestServiceCommand_HandleRfTestCfgStopTouch
+
+{ AT + RFTESTDUTMODE \r } : DeviceTestServiceCommand_HandleDeviceUnderTestMode
+
+{ AT + RFTESTLETXSTART = %d:lechannel, %d:lelength, %d:pattern \r } : DeviceTestServiceCommand_HandleRfTestLeTxStart
+
+{ AT + RFTESTLERXSTART = %d:lechannel \r } : DeviceTestServiceCommand_HandleRfTestLeRxStart
+
+# ------------------------------------------------------------------------------------
+# AT Commands for PIO testing
+#-------------------------------------------------------------------------------------
+
+{ AT + TESTPIOOUTPUT = %d:pio, %d:onOff \r } : DeviceTestServiceCommand_HandlePioOutput
+
+{ AT + TESTPIOINPUTPIO = %d:pio \r } : DeviceTestServiceCommand_HandlePioInput
+
+{ AT + TESTPIOINPUTS \r } : DeviceTestServiceCommand_HandlePioAllInputs
+
+# ------------------------------------------------------------------------------------
+# AT Commands for LED testing
+#-------------------------------------------------------------------------------------
+
+{ AT + TESTLED = %d:ledValue \r } : DeviceTestServiceCommand_HandleLed
+
+# ------------------------------------------------------------------------------------
+# AT Commands for RSSI testing
+#-------------------------------------------------------------------------------------
+
+{ AT + RSSIREAD \r } : DeviceTestServiceCommand_HandleRssiRead
+
+# ------------------------------------------------------------------------------------
+# AT Commands for Persistent Storage Keys (PSKEY)
+#-------------------------------------------------------------------------------------
+
+{ AT + PSKEYSET = %d:pskey, %*:value \r } : DeviceTestServiceCommand_HandlePskeySet
+
+{ AT + PSKEYGET = %d:pskey \r } : DeviceTestServiceCommand_HandlePskeyGet
+
+{ AT + PSKEYCLEAR = %d:pskey \r } : DeviceTestServiceCommand_HandlePskeyClear
+
+{ AT + PSKEYMIBGET = %d:pskey \r } : DeviceTestServiceCommand_HandleMibPskeyGet
+
+# ------------------------------------------------------------------------------------
+# AT Commands for testing sensors
+#-------------------------------------------------------------------------------------
+
+{ AT + TESTACCELEROMETER = %d:durationS , %d:stopAfter \r } : DeviceTestServiceCommand_HandleAccelerometer
+
+{ AT + TESTPROXIMITY = %d:durationS , %d:stopAfter \r } : DeviceTestServiceCommand_HandleProximitySensor
+
+{ AT + TESTTOUCH = %d:durationS , %d:stopAfter \r } : DeviceTestServiceCommand_HandleTouchSensor
+
+{ AT + TESTHALLEFFECT = %d:durationS , %d:stopAfter \r } : DeviceTestServiceCommand_HandleHallEffectSensor
+
+{ AT + TEMPERATURE ? \r } : DeviceTestServiceCommand_HandleTemperature
+
+{ AT + BATTERYLEVEL ? \r } : DeviceTestServiceCommand_HandleBatteryLevel
+

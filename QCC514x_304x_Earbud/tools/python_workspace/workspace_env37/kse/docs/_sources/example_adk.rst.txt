@@ -1,0 +1,45 @@
+
+===
+ADK
+===
+
+As a prerequisite for these examples a capability bundle must have been created e.g. by use of MDE.
+
+* The project type in MDE should be **Loopback/Download** application.
+* The active project in MDE should be **self_test_and_passthrough**
+
+For more information, see :ref:`mde`.
+
+When a **Capability Bundle for Kymera** or a **Loopback/Download** application is 
+loaded on the IDE, the IDE creates a **download.py** file automatically. When 
+launching KSE, the IDE uses this file to download the relevant **dkcs** file 
+before KSE is ready to accept user commands. Any other common setup that 
+is intended to run every time KSE is launched, such as setting up 
+streams/files or downloading multiple projects, can be added to this file.
+
+.. _running_self_test:
+
+**Running SELF_TEST**
+
+``0x4001`` is the capability ID of the ``SELF_TEST`` capability
+
+
+    >>> op=kymera.opmgr_create_operator(0x4001)
+    >>> [hex(x) for x in kymera.opmgr_operator_message(op, [1])]
+
+* This should print ``['0x600d']`` which is a ‘Good’ response from that 
+  capability. A Python list comprehension displays the response message in 
+  hexadecimal
+
+.. _download_passthrough_operators_with_streams_and_endpoints:
+
+**DOWNLOAD_PASSTHROUGH Operator with Streams and Endpoints**
+
+Follow the same steps in :ref:`simple_basic_pass_with_streams_and_endpoints`, but change the
+**BASIC_PASS** section as follows::
+
+   >>> op = kymera.opmgr_create_operator(0x4002)
+   >>> kymera.opmgr_operator_message(op, [10, 1])
+   >>> kymera.opmgr_operator_message(op, [11, 1])
+
+``0x4002`` is the capability ID of the ``DOWNLOAD_PASSTHROUGH`` capability.

@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PlainTextFormatter &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="table" href="acat.Display.table.html"/>
+        <link rel="prev" title="InteractiveFormatter" href="acat.Display.InteractiveFormatter.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#display">Display</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.Formatter.html">Formatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.HtmlFormatter.html">HtmlFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.InteractiveFormatter.html">InteractiveFormatter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PlainTextFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.table.html">table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>PlainTextFormatter</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Display.PlainTextFormatter.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="plaintextformatter">
+<h1>PlainTextFormatter<a class="headerlink" href="#plaintextformatter" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Display.PlainTextFormatter</span></code>.</p>
+<span class="target" id="module-ACAT.Display.PlainTextFormatter"></span><p>Plain Text Formatter.</p>
+<p>Module responsible for displaying results in text format.</p>
+<dl class="class">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Display.PlainTextFormatter.</code><code class="sig-name descname">PlainTextFormatter</code><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the Formatter interface to provide plain-text output.</p>
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.alert">
+<code class="sig-name descname">alert</code><span class="sig-paren">(</span><em class="sig-param">alert_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.alert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise a alert.</p>
+<p>Important information that we want to be highlighted. For example,
+<em>pmalloc pools exhausted</em> or <em>chip has panicked</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alert_str</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.change_log_file">
+<code class="sig-name descname">change_log_file</code><span class="sig-paren">(</span><em class="sig-param">new_log_filename</em>, <em class="sig-param">suppress_stdout=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.change_log_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.change_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a log file.</p>
+<p>It ensures that everything output via this formatter (e.g. via
+formatter.output) will be copied to the file as well as to stdout.
+Setting <code class="docutils literal notranslate"><span class="pre">suppress_stdout</span></code> to True will mean that we don’t output to
+stdout either, unless we’re outputting an alert or error.</p>
+<p>If we are already logging, setting a new filename allows the
+log file to be changed over to a new file. A filename of None
+stops logging to a file (and stops suppressing stdout, if we
+were).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_log_filename</strong> – </p></li>
+<li><p><strong>suppress_stdout</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">error_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise an error.</p>
+<p>This signifies some problem with the analysis tool itself, e.g. an
+analysis can’t complete for some reason.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>error_str</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.flush">
+<code class="sig-name descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output all logged events (body text, alerts, errors etc.).</p>
+<p>It removed the current logged events and you can re-use the formatter
+if you really wanted. If outputting to a file then the file will be (
+over)written at this point.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.output">
+<code class="sig-name descname">output</code><span class="sig-paren">(</span><em class="sig-param">string_to_output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normal body text. Lists/dictionaries will be compacted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string_to_output</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.output_raw">
+<code class="sig-name descname">output_raw</code><span class="sig-paren">(</span><em class="sig-param">string_to_output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.output_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.output_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unformatted text output. Useful when displaying tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string_to_output</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.output_svg">
+<code class="sig-name descname">output_svg</code><span class="sig-paren">(</span><em class="sig-param">string_to_output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.output_svg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.output_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>svg body text. Lists/dictionaries will be compacted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string_to_output</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.section_end">
+<code class="sig-name descname">section_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.section_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.section_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a section.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.section_reset">
+<code class="sig-name descname">section_reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.section_reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.section_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the section formatting, ending all open sections.</p>
+<p>This is provided so that in case of an error we can continue safely.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.section_start">
+<code class="sig-name descname">section_start</code><span class="sig-paren">(</span><em class="sig-param">header_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.section_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.section_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a new section.</p>
+<p>Sections can be nested.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>header_str</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.PlainTextFormatter.PlainTextFormatter.set_logfile">
+<code class="sig-name descname">set_logfile</code><span class="sig-paren">(</span><em class="sig-param">log_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/PlainTextFormatter.html#PlainTextFormatter.set_logfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.PlainTextFormatter.PlainTextFormatter.set_logfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the log file.</p>
+<p>It ensures that everything output via this formatter (e.g. via
+<code class="docutils literal notranslate"><span class="pre">formatter.output</span></code>) will be copied to the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>log_file</strong> – This must be a file handler.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Display.table.html" class="btn btn-neutral float-right" title="table" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Display.InteractiveFormatter.html" class="btn btn-neutral" title="InteractiveFormatter" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

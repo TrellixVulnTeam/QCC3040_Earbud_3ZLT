@@ -1,0 +1,19 @@
+
+Workspace
+---------
+
+The workspace is pointed through the environmental variable ``$KATS_WORKSPACE``,
+which need to be set before launching the KSE shell.
+
+The workspace should have been populated with the following subdirectories:
+
+* ``config``. Where configuration files reside
+* ``firmware``. For kalimba firmware files
+* ``log``. Where log files are placed
+* ``resource``. Sample audio files
+* ``script``. User script files location to be used with kalsim_shell or as user test scripts
+* ``tmp``. Location for test audio output and coredump files
+
+.. note:: The folder ``firmware`` - For kalimba firmware files - has to be manually
+          generated inside the KSE standalone installation. Inside the ADK installation
+          the folder ``firmware`` is generated automatically in a different location.

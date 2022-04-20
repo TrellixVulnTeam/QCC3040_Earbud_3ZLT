@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kymera.kymera.hydra.kymera &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kymera.kymera.hydra.kymera</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kymera.kymera.hydra.kymera</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Kymera handler&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">..generic.accmd</span> <span class="k">import</span> <span class="n">Accmd</span>
+<span class="kn">from</span> <span class="nn">..kymera_base</span> <span class="k">import</span> <span class="n">KymeraBase</span>
+
+
+<div class="viewcode-block" id="KymeraHydra"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra">[docs]</a><span class="k">class</span> <span class="nc">KymeraHydra</span><span class="p">(</span><span class="n">KymeraBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Kymera interface</span>
+
+<span class="sd">    This class is just an adapter for the kymera api to the accmd api</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uut (kats.core.uut_base.UutBase): Uut instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">platform</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;crescendo&#39;</span><span class="p">,</span> <span class="s1">&#39;stre&#39;</span><span class="p">,</span> <span class="s1">&#39;streplus&#39;</span><span class="p">,</span> <span class="s1">&#39;maorgen1&#39;</span><span class="p">,</span> <span class="s1">&#39;maor&#39;</span><span class="p">]</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="s1">&#39;accmd&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uut</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span> <span class="o">=</span> <span class="n">Accmd</span><span class="p">(</span><span class="n">uut</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">uut</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_create_operator"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_create_operator">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_create_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">create_operator</span><span class="p">(</span><span class="n">cap_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_create_operator_ex"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_create_operator_ex">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_create_operator_ex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">processor_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">create_operator_ex</span><span class="p">(</span><span class="n">cap_id</span><span class="p">,</span>
+                                              <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
+                                              <span class="n">processor_id</span><span class="o">=</span><span class="n">processor_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_destroy_operators"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_destroy_operators">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_destroy_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">destroy_operators</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_start_operators"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_start_operators">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_start_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">start_operators</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_stop_operators"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_stop_operators">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_stop_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stop_operators</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_reset_operators"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_reset_operators">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_reset_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">reset_operators</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_operator_message"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_operator_message">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_operator_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op_id</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">operator_message</span><span class="p">(</span><span class="n">op_id</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_get_capid_list"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_get_capid_list">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_get_capid_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cap_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">num</span><span class="p">,</span> <span class="n">cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">get_capabilities</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">cap_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="ow">and</span> <span class="n">cap</span> <span class="o">!=</span> <span class="p">[]:</span>
+            <span class="k">if</span> <span class="n">cap_list</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">get_capabilities</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cap_list</span><span class="p">))</span>
+            <span class="n">cap_list</span> <span class="o">+=</span> <span class="n">cap</span>
+        <span class="k">return</span> <span class="n">cap_list</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_get_opid_list"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_get_opid_list">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_get_opid_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">op_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">num</span><span class="p">,</span> <span class="n">op_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">get_operators</span><span class="p">(</span><span class="n">cap_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">op_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="ow">and</span> <span class="n">op_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">op_list</span><span class="p">:</span>  <span class="c1"># do not re-read in the first iteration (already done)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">op_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">get_operators</span><span class="p">(</span><span class="n">cap_id</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">op_list</span><span class="p">))</span>
+            <span class="n">op_list</span> <span class="o">+=</span> <span class="n">op_ids</span>
+        <span class="k">return</span> <span class="n">op_list</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.opmgr_get_cap_info"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.opmgr_get_cap_info">[docs]</a>    <span class="k">def</span> <span class="nf">opmgr_get_cap_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">cap_id</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;opmgr_get_cap_info not implemented&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_get_source"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_get_source">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_get_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_get_source</span><span class="p">(</span><span class="n">endpoint_type</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_get_sink"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_get_sink">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_get_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_get_sink</span><span class="p">(</span><span class="n">endpoint_type</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_close_source"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_close_source">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_close_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_close_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_close_sink"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_close_sink">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_close_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_close_sink</span><span class="p">(</span><span class="n">sink_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_configure_sid"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_configure_sid">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_configure_sid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ep_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_configure</span><span class="p">(</span><span class="n">ep_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_connect"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_connect">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_connect</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_transform_disconnect"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_transform_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_transform_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transforms</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_transform_disconnect</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_if_sync_sids"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_if_sync_sids">[docs]</a>    <span class="k">def</span> <span class="nf">stream_if_sync_sids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ep1</span><span class="p">,</span> <span class="n">ep2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accmd</span><span class="o">.</span><span class="n">stream_sync_sid</span><span class="p">(</span><span class="n">ep1</span><span class="p">,</span> <span class="n">ep2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KymeraHydra.stream_get_connection_list"><a class="viewcode-back" href="../../../../../kse.kymera.kymera.hydra.html#kse.kymera.kymera.hydra.kymera.KymeraHydra.stream_get_connection_list">[docs]</a>    <span class="k">def</span> <span class="nf">stream_get_connection_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">source_id</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">sink_id</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;stream_get_connection_list not implemented&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

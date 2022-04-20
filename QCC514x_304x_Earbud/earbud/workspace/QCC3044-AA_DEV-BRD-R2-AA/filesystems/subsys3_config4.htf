@@ -1,0 +1,10 @@
+file=audio4
+
+# Split audio heap memory
+# P0 = 316kB
+# P1 = 92kB
+HeapAllocation = [FF 00 00 7C 00 00]
+
+# All bundles currently load into P0, so move all PM memory to P0
+P1PMHeapAllocation = 0
+479 = %[0028 0050 0040 0028 0050 0040]%

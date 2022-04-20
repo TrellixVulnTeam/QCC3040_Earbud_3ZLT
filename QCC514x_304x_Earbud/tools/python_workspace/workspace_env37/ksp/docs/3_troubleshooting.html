@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Troubleshooting &mdash; KSP 0.5.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSP 0.5.1 documentation" href="index.html"/>
+        <link rel="next" title="Scripts" href="4_scripts.html"/>
+        <link rel="prev" title="How to Use KSP" href="2_how_to_use.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_how_to_use.html">How to Use KSP</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ensure-good-readings">Ensure good readings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-the-ksp-operator-fails">Starting the KSP operator fails</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ksp-stopped-in-the-middle-of-recording">KSP stopped in the middle of recording</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4_scripts.html">Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="z_definitions.html">Terms and definitions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Troubleshooting</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/3_troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ensure-good-readings">
+<h2>Ensure good readings<a class="headerlink" href="#ensure-good-readings" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following when using KSP to get a good reading:</p>
+<blockquote>
+<div><ul>
+<li><p>Use a TRB clock speed of 40 MHz or higher.</p>
+<p>If necessary, use the following commands in the Pydbg shell to change
+the speed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">get_freq_mhz</span><span class="p">()</span>
+<span class="go">20.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">set_freq_mhz</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">get_freq_mhz</span><span class="p">()</span>
+<span class="go">40.0</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>KSP checks this speed at the beginning of the execution. If the
+value is too low, for example less than <code class="docutils literal notranslate"><span class="pre">40</span> <span class="pre">MHz</span></code>, it displays a warning
+message to the user. Then, the user has the option to increase
+the speed which is persistent throughout the session.</p>
+</div>
+</li>
+<li><p>Limit the number of TRB connections to the chip.</p></li>
+<li><p>USB2 may cause a bottleneck when reading data. Use USB3 instead of
+USB2 if it is available in the system.</p></li>
+<li><p>The running KSP operator consumes resources on the chip, i.e. the
+processor capacity. The user must observe the available resources
+during the reading. If the resources are overwhelmed there might be
+glitches in the output and it cannot be considered as a good reading.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="starting-the-ksp-operator-fails">
+<h2>Starting the KSP operator fails<a class="headerlink" href="#starting-the-ksp-operator-fails" title="Permalink to this headline">¶</a></h2>
+<p>When using the KSP, if starting the operator fails:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Check if the right KSP downloadable is selected and the deployment for
+the chip was successful.</p></li>
+<li><p>Check PM and DM RAM consumption. There must be enough memory to run
+the KSP operator.</p></li>
+<li><p>Check if there are enough MIPS. Reduce the number of channels and/or
+configure streams for data types with shorter size if the throughput
+is high.</p></li>
+<li><p>Make sure TRB logging from apps is not running at the same time.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="ksp-stopped-in-the-middle-of-recording">
+<h2>KSP stopped in the middle of recording<a class="headerlink" href="#ksp-stopped-in-the-middle-of-recording" title="Permalink to this headline">¶</a></h2>
+<p>If KSP stops in the middle of recording, the operator may not be removed
+cleanly. If this happens a clean restart is required:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Kill the python process.</p></li>
+<li><p>Close the cmd window.</p></li>
+<li><p>Restart the development board and start the use case again.</p></li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="4_scripts.html" class="btn btn-neutral float-right" title="Scripts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2_how_to_use.html" class="btn btn-neutral" title="How to Use KSP" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.5.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

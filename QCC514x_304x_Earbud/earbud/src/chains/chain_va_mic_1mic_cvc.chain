@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019-2021 Qualcomm Technologies International, Ltd.-->
+<!--VA mic chain with 1 mic CVC-->
+
+<chain name="CHAIN_VA_MIC_1MIC_CVC" id="1" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_chain_config.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+    
+    <operator name="OPR_MIC_GAIN" id="CAP_ID_BASIC_PASS">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+    
+    <operator name="OPR_CVC_SEND" id="CAP_ID_VA_CVC_1MIC">
+        <sink name="AEC_IN" terminal="0"/>
+        <sink name="MIC1_IN" terminal="1"/>
+        <source name="OUT" terminal="CVC_1MIC_VA_OUTPUT_TERMINAL"/>
+    </operator>
+    
+    <input sink="OPR_CVC_SEND.AEC_IN" role="EPR_VA_MIC_AEC_IN"/>
+    <input sink="OPR_MIC_GAIN.IN" role="EPR_VA_MIC_MIC1_IN"/>
+    <connection source="OPR_MIC_GAIN.OUT" sink="OPR_CVC_SEND.MIC1_IN"/>
+    <output source="OPR_CVC_SEND.OUT" role="EPR_VA_MIC_ENCODE_OUT"/>
+    
+</chain>

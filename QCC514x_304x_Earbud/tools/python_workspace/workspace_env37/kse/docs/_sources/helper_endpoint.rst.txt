@@ -1,0 +1,34 @@
+.. _helper_endpoint:
+
+========
+Endpoint
+========
+
+Kymera supports the concept of endpoint.
+This helper is a factory describing endpoints running in kalimba.
+
+There are endpoints that are common to all platforms, and others are platform specific.
+When the system loads, the applicable endpoints for the current platform are discovered and
+auto-registered. 
+
+The operations within the endpoint factory that handles Kalimba endpoints are:
+
+    * :meth:`kse.kymera.endpoint.endpoint_factory.EndpointFactory.get_class` to obtain the class that handles an endpoint
+    * :meth:`kse.kymera.endpoint.endpoint_factory.EndpointFactory.get_instance` to create an instance of an endpoint
+    * :meth:`kse.kymera.endpoint.endpoint_factory.EndpointFactory.put_instance` to destroy an instance of an endpoint
+    * :meth:`kse.kymera.endpoint.endpoint_factory.EndpointFactory.enum_interface` to list all available endpoint types
+
+Every invocation of get_instance will return a new instance of an endpoint of certain interface
+and type.
+On that instance there is a set of valid operations :class:`kse.core.endpoint_base.EndpointBase`.
+
+In the shell it is available as ``endpoint``::
+
+    >>> endpoint.enum_interface() # this will list all available endpoints
+    >>> ep = endpoint.get_instance('pcm', 'source', pcm_sync_rate=8000)
+    >>> ep.create() # this will create the endpoint in kymera
+    >>> ep.get_id() # this will return the endpoint id in kymera
+    >>> ep.config() # this will configure the endpoint in kymera
+    >>> # use the endpoint
+    >>> ep.destroy() # this will destroy the endpoint in kymera
+    >>> endpoint.put_instance(ep)

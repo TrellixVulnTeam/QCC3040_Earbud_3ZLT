@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.core.uut_base &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.core.uut_base</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.core.uut_base</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;UUT Base class&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">abstractproperty</span>
+
+
+<div class="viewcode-block" id="UutBase"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase">[docs]</a><span class="k">class</span> <span class="nc">UutBase</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Unit Under Test abstraction&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">__</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractproperty</span>
+    <span class="k">def</span> <span class="nf">platform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str: Platform name&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractproperty</span>
+    <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str: Interface name&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UutBase.timer_get_time"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.timer_get_time">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">timer_get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get current time.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Current simulation time in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.timer_add_relative"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.timer_add_relative">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">timer_add_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a relative timer.</span>
+
+<span class="sd">        To check for timer expiration use timer_check_expired and/or provide a callback</span>
+<span class="sd">        with the format.</span>
+
+<span class="sd">        In the callback function there should be no blocking operations.</span>
+<span class="sd">        The format of the callback is:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def timer_fired(timer_id):</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+<span class="sd">            callback (func(timer_id)): Callback function to be called when timer expires</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Timer id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.timer_add_absolute"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.timer_add_absolute">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">timer_add_absolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add an absolute timer</span>
+
+<span class="sd">        To check for timer expiration use timer_check_expired and/or provide a callback</span>
+<span class="sd">        with the format.</span>
+
+<span class="sd">        In the callback function there should be no blocking operations.</span>
+<span class="sd">        The format of the callback is:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def timer_fired(timer_id):</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+<span class="sd">            callback (func(timer_id)): Callback function to be called when timer expires</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Timer id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.timer_cancel"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.timer_cancel">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">timer_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cancel a timer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there was a timer and it has been cancelled</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.timer_check_expired"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.timer_check_expired">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">timer_check_expired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if a timer has expired</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there is not a pending timer with the supplied id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.timer_wait_relative"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.timer_wait_relative">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">timer_wait_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Block until certain time elapses</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            period (float): Period in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.message_register_handler"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.message_register_handler">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">message_register_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register handler for send_message and send_recv_message operations.</span>
+
+<span class="sd">        Any message received will be sent to a queue belonging to this handler, receive or</span>
+<span class="sd">        send-receive operations will read from that queue.</span>
+
+<span class="sd">        Additionally a callback function can be provided that will be called unconditionally.</span>
+<span class="sd">        In the callback function there should be no blocking operations.</span>
+<span class="sd">        The format of the callback is:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def message_received(message):</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            header (kalcmd_msg_header): Message header</span>
+<span class="sd">            callback (func(list[int])): Message reception callback</span>
+<span class="sd">            flt (func): Filtering function receiving one parameter being the message received and</span>
+<span class="sd">                returning True if the message is accepted in the filter, False otherwise</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Handler</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.message_unregister_handler"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.message_unregister_handler">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">message_unregister_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unregister handler for message_send, message_send_recv operations and callback on</span>
+<span class="sd">        message received.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (dict): Message handler</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.message_send"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.message_send">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">message_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a message</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (dict): Message handler registered with register_handler</span>
+<span class="sd">            msg (list[int]): Message to send</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.message_recv"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.message_recv">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">message_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Received a message</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (dict): Message handler registered with register_handler</span>
+<span class="sd">            timeout (float): Timeout for response in seconds, None for default</span>
+<span class="sd">            flt (func): Filtering function receiving one parameter being the message received and</span>
+<span class="sd">                returning True if the message is accepted in the filter, False otherwise</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Reply</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.message_send_recv"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.message_send_recv">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a message and wait for response</span>
+
+<span class="sd">        Example code</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def filter_by_sequence(seq, payload):</span>
+<span class="sd">                return len(payload) &gt; 3 and seq == payload[2]</span>
+
+<span class="sd">            from functools import partial</span>
+<span class="sd">            payload = uut.message_send_recv(handler, payload,</span>
+<span class="sd">                                            flt=partial(filter_by_sequence, sequence_num))</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (dict): Message handler registered with register_handler</span>
+<span class="sd">            msg (list[int]): Message to send</span>
+<span class="sd">            timeout (float): Timeout for response in seconds, None for default</span>
+<span class="sd">            flt (func): Filtering function receiving one parameter being the message received and</span>
+<span class="sd">                returning True if the message is accepted in the filter, False otherwise</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Reply</span>
+
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If there is a response reception timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.mem_peek"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.mem_peek">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mem_peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read memory address</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Message type to access (PM, DM)</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            size (int): Read size in bytes</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Memory data value</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.mem_poke"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.mem_poke">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mem_poke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write memory address</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Message type to access (PM, DM)</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            size (int): Write size in bytes</span>
+<span class="sd">            value (int): Memory data value</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.mem_block_read"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.mem_block_read">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mem_block_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">num_dwords</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read block memory</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Message type to access (PM, DM)</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            num_dwords (int): Number of 32 bits blocks</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Memory data dword values</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.mem_block_write"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.mem_block_write">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mem_block_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">dwords</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write block memory</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Message type to access (PM, DM)</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            dwords (list[int]): Memory data dword values</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="UutBase.interrupt"><a class="viewcode-back" href="../../../kse.core.html#kse.core.uut_base.UutBase.interrupt">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">interrupt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interrupt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assert an interrupt in kalimba</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interrupt (int): Interrupt number to assert, starting with 0</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

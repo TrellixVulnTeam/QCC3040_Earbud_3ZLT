@@ -1,0 +1,8 @@
+
+LiveChip
+==========================================================================
+
+This module can be imported from ``ACAT.Core.LiveChip``.
+
+.. automodule:: ACAT.Core.LiveChip
+   :members:

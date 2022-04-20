@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="audio_router">
+    <include_header name="marshal_common.h"/>
+    <include_header name="task_list.h"/>
+    <include_header name="audio_router.h"/>
+
+    <source>
+#include "domain_marshal_types.h" 
+    </source>
+
+    <typedef_header_source>
+#include "audio_router.h"
+
+#define MAX_NUM_SOURCES ((max_audio_sources - 1) + (max_voice_sources - 1))
+
+    </typedef_header_source>
+
+    <typedef_struct name="audio_router_data_container_t" basic="true" doc="Audio router data structure">
+        <member marshal="true" doc="Array of audio source info">audio_router_data_t data[MAX_NUM_SOURCES]</member>
+        <member marshal="true" doc="Most recently routed audio source">audio_source_t last_routed_audio_source</member>
+    </typedef_struct>
+
+</types>
+
+

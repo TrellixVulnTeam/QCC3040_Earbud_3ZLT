@@ -1,0 +1,77 @@
+.. KSP documentation master file, created by
+   sphinx-quickstart on Mon Sep 23 10:00:10 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to KSP's documentation!
+==============================================
+
+Qualcomm® Kymera™ Stream Probe (KSP) is a debugging tool that enables
+users of the audio subsystem to sniff audio/data from inside a running
+graph in Qualcomm® Kymera. It can be used to probe and record internal
+transforms of a graph.
+
+.. image:: _static/introduction_image.png
+
+Description of terms used in KSP
+--------------------------------
+
+  - *Stream*: KSP can sniff more than one channel (connection buffer). In
+    KSP buffers are grouped into streams. All channels within a stream
+    must be synchronized in real time. See Find transform IDs using ACAT
+    section.
+  - *Channel*: A channel has a one to one relation to a connection buffer. A
+    stream can have up to 4 channels. All channels in the same stream must
+    be synchronized, this means encoded streams can only have one channel.
+    Streams that are configured with unsynchronized channels can cause the
+    KSP operator to stall.
+
+Limitations
+-----------
+
+The following limitations should be considered when using the application:
+
+  - The chips supported are:
+
+    - CSRA6810x
+    - QCC302x/3x
+    - QCC304x
+    - QCC512x
+    - QCC514x
+
+  - Apps must be based on an ADK application.
+  - A TRB connection must be available.
+  - KSP cannot be active at the same time as TRB logging.
+  - KSP does not support USB DBG as a transport interface.
+
+
+Prerequisites
+-------------
+
+The prerequisites required to use KSP are:
+
+  - One of the following python version:
+
+    - Python 3.6 (64-bit).
+    - Python 3.7 (64-bit).
+    - Python 3.8 (64-bit).
+    - Python 3.9 (64-bit).
+
+  - A development board.
+  - A working ADK based customer application.
+  - A working ACAT.
+  - TRBI200 connection.
+  - KSP downloadable for the chip, provide as part of the ADK.
+
+
+.. toctree::
+   :maxdepth: 3
+
+   1_installation
+   2_how_to_use
+   3_troubleshooting
+   4_scripts
+   z_definitions
+
+
+.. qcomcopyright::

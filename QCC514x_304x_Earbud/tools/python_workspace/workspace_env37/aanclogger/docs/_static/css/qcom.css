@@ -1,0 +1,39 @@
+
+@import url("theme.css");
+
+div.wy-side-nav-search {
+    background: url("../images/q_colon.png") no-repeat;
+    text-align: left;
+    padding: 8px 50px;
+}
+
+nav.wy-nav-side {
+    background-image: url("../images/side-bg.png");
+}
+
+blockquote.pull-quote {
+    background: #e0e0e0;
+    padding: 8px;
+    border-left: #780b5c solid;
+}
+
+div.sphinx-info {
+    font-size: 75%;
+}
+
+.wy-side-nav-search {
+    background: none;
+}
+
+.wy-menu-vertical a {
+    color: white;
+}
+
+.wy-menu .caption-text {
+    color: white;
+}
+
+.copyrightsection > p {
+    font-size: 80%;
+    margin-bottom: 0.8em;
+}

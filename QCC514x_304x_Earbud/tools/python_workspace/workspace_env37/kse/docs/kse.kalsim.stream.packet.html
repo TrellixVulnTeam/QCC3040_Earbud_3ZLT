@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.stream.packet package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim.stream package" href="kse.kalsim.stream.html"/>
+        <link rel="next" title="kse.kalsim.uut package" href="kse.kalsim.uut.html"/>
+        <link rel="prev" title="kse.kalsim.stream.hydra package" href="kse.kalsim.stream.hydra.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.stream.html">kse.kalsim.stream package</a> &raquo;</li>
+      
+    <li>kse.kalsim.stream.packet package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.stream.packet.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-stream-packet-package">
+<h1>kse.kalsim.stream.packet package<a class="headerlink" href="#kse-kalsim-stream-packet-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.stream.packet.packetiser">
+<span id="kse-kalsim-stream-packet-packetiser-module"></span><h2>kse.kalsim.stream.packet.packetiser module<a class="headerlink" href="#module-kse.kalsim.stream.packet.packetiser" title="Permalink to this headline">¶</a></h2>
+<p>Packetiser class</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.packet.packetiser.PacketInfo">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.packet.packetiser.</code><code class="sig-name descname">PacketInfo</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#PacketInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.PacketInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure describing a packet info</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>,</em><em>int</em><em>,</em><em>int</em><em>]</em><em>]</em>) – List of packet infos</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.packet.packetiser.PacketInfo.get_offset">
+<code class="sig-name descname">get_offset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#PacketInfo.get_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.PacketInfo.get_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get info packet stream data offset.</p>
+<p>This is the offset in the stream data for this packet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Offset</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.packet.packetiser.PacketInfo.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#PacketInfo.get_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.PacketInfo.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get info packet stream data size.</p>
+<p>This is the size  in the stream data for this packet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Offset</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.packet.packetiser.PacketInfo.get_timestamp">
+<code class="sig-name descname">get_timestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#PacketInfo.get_timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.PacketInfo.get_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get info packet timestamp</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Timestamp in microseconds relative to previous packet timestamp</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kse.kalsim.stream.packet.packetiser.Packetiser">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.packet.packetiser.</code><code class="sig-name descname">Packetiser</code><span class="sig-paren">(</span><em class="sig-param">stream</em>, <em class="sig-param">data</em>, <em class="sig-param">packet</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#Packetiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.Packetiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Packet streamer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> (<em>kats.core.stream_base.StreamBase</em>) – Stream instance</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Audio stream samples</p></li>
+<li><p><strong>packet</strong> (<em>list</em><em>[</em><a class="reference internal" href="#kse.kalsim.stream.packet.packetiser.PacketInfo" title="kse.kalsim.stream.packet.packetiser.PacketInfo"><em>PacketInfo</em></a><em>]</em>) – Audio packet info data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.packet.packetiser.Packetiser.check_active">
+<code class="sig-name descname">check_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#Packetiser.check_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.Packetiser.check_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the end of file has been reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>End of file</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.packet.packetiser.Packetiser.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#Packetiser.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.Packetiser.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.packet.packetiser.Packetiser.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/packet/packetiser.html#Packetiser.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.packet.packetiser.Packetiser.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.packet">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.stream.packet" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.uut.html" class="btn btn-neutral float-right" title="kse.kalsim.uut package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.stream.hydra.html" class="btn btn-neutral" title="kse.kalsim.stream.hydra package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

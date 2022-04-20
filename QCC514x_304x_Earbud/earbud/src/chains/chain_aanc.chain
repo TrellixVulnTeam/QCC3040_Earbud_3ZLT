@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+<!--Chain for AEC reference-->
+
+<chain name="CHAIN_AANC" id="1" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_AANC" id="EB_CAP_ID_ADAPTIVE_ANC_REF">
+        <sink name="PLAYBACK_IN" terminal="0"/>
+        <sink name="EXT_FF_MIC" terminal="3"/>
+        <sink name="INT_ERR_MIC" terminal="2"/>
+    </operator>
+	
+	
+    <input sink="OPR_AANC.PLAYBACK_IN" role="EPR_AANC_VOICE_DECTECTION_IN"/>
+	<input sink="OPR_AANC.EXT_FF_MIC" role="EPR_AANC_FF_MIC_IN"/>
+	<input sink="OPR_AANC.INT_ERR_MIC" role="EPR_AANC_ERR_MIC_IN"/>
+		    
+</chain>

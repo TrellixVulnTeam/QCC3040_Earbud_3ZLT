@@ -1,0 +1,8 @@
+
+HeapPmMem
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.HeapPmMem``.
+
+.. automodule:: ACAT.Analysis.HeapPmMem
+   :members:

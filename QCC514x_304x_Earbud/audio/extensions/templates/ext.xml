@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid>1D83B424-D84D-4B5D-97B3-72F58CEEF606</uuid>
+        <target>amd64</target>
+    </ext_id>
+    <ext_info>
+        <name>Templates</name>
+        <description>Templates added by the git repo</description>
+        <build>64</build>
+    </ext_info>
+    <plugins type="merge">
+        <templates type="replace">
+           <path>audio://templates</path>
+        </templates>
+    </plugins>
+</root>

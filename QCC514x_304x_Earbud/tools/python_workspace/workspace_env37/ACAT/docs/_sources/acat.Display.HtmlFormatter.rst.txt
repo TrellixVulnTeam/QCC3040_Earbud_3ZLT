@@ -1,0 +1,8 @@
+
+HtmlFormatter
+==========================================================================
+
+This module can be imported from ``ACAT.Display.HtmlFormatter``.
+
+.. automodule:: ACAT.Display.HtmlFormatter
+   :members:

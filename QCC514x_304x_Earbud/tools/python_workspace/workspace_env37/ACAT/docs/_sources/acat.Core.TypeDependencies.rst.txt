@@ -1,0 +1,8 @@
+
+TypeDependencies
+==========================================================================
+
+This module can be imported from ``ACAT.Core.TypeDependencies``.
+
+.. automodule:: ACAT.Core.TypeDependencies
+   :members:

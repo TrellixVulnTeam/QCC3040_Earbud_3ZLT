@@ -1,0 +1,8 @@
+
+constants
+==========================================================================
+
+This module can be imported from ``ACAT.Core.constants``.
+
+.. automodule:: ACAT.Core.constants
+   :members:

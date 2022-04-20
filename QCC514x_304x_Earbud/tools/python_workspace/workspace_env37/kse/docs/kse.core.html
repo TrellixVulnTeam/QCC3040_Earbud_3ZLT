@@ -1,0 +1,876 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.core package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse package" href="kse.html"/>
+        <link rel="next" title="kse.framework package" href="kse.framework.html"/>
+        <link rel="prev" title="kse package" href="kse.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kse.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.core.endpoint_base">kse.core.endpoint_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.core.stream_base">kse.core.stream_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.core.uut_base">kse.core.uut_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+    <li>kse.core package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.core.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-core-package">
+<h1>kse.core package<a class="headerlink" href="#kse-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.core.endpoint_base">
+<span id="kse-core-endpoint-base-module"></span><h2>kse.core.endpoint_base module<a class="headerlink" href="#module-kse.core.endpoint_base" title="Permalink to this headline">¶</a></h2>
+<p>Endpoint Base class</p>
+<dl class="class">
+<dt id="kse.core.endpoint_base.EndpointBase">
+<em class="property">class </em><code class="sig-prename descclassname">kse.core.endpoint_base.</code><code class="sig-name descname">EndpointBase</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/endpoint_base.html#EndpointBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Endpoint base class. Should be subclassed by every endpoint extension.</p>
+<p>This builds an interface on top of kymera to handle endpoints.
+kymera interface is a single interface of multiple endpoints while EndpointBase is
+an instance that handle a single endpoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EndpointPcmCrescendo is subclassing EndpointBase</span>
+<span class="n">ep</span> <span class="o">=</span> <span class="n">EndpointPcmCrescendo</span><span class="p">(</span><span class="n">kymera</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">)</span>
+<span class="n">ep</span><span class="o">.</span><span class="n">create</span><span class="p">()</span> <span class="c1"># create endpoint in uut</span>
+<span class="n">ep</span><span class="o">.</span><span class="n">config</span><span class="p">()</span> <span class="c1"># send all configuration messages</span>
+<span class="o">...</span>
+<span class="n">ep</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">ep</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint source or sink</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.config">
+<em class="property">abstract </em><code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/endpoint_base.html#EndpointBase.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.config_param">
+<code class="sig-name descname">config_param</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/endpoint_base.html#EndpointBase.config_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.config_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure single parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em><em> or </em><em>int</em>) – Key</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – Value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.create">
+<em class="property">abstract </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/endpoint_base.html#EndpointBase.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/endpoint_base.html#EndpointBase.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/endpoint_base.html#EndpointBase.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.endpoint_base.EndpointBase.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.core.endpoint_base.EndpointBase.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.core.stream_base">
+<span id="kse-core-stream-base-module"></span><h2>kse.core.stream_base module<a class="headerlink" href="#module-kse.core.stream_base" title="Permalink to this headline">¶</a></h2>
+<p>Stream Base class</p>
+<dl class="class">
+<dt id="kse.core.stream_base.StreamBase">
+<em class="property">class </em><code class="sig-prename descclassname">kse.core.stream_base.</code><code class="sig-name descname">StreamBase</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Basic stream handler class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Type of stream ‘source’ or ‘sink’</p></li>
+<li><p><strong>stream_name</strong> (<em>str</em>) – Stream name</p></li>
+<li><p><strong>stream_rate</strong> (<em>int</em>) – Stream frame rate in hertzs</p></li>
+<li><p><strong>stream_data_width</strong> (<em>int</em>) – Stream data width in hertzs</p></li>
+<li><p><strong>stream_data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Stream frame data</p></li>
+<li><p><strong>callback_eof</strong> (<em>func</em><em>(</em><em>)</em>) – Callback for End of File</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.check_active">
+<code class="sig-name descname">check_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.check_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.check_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the end of file has been reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>End of file</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.config">
+<em class="property">abstract </em><code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.create">
+<em class="property">abstract </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.destroy">
+<em class="property">abstract </em><code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.eof">
+<code class="sig-name descname">eof</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.eof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream data</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.get_data_width">
+<code class="sig-name descname">get_data_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.get_data_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.get_data_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream data width</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Sample width in bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.get_name">
+<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.get_rate">
+<code class="sig-name descname">get_rate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.get_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.get_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream sample rate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Frame rate in Hertzs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.get_state">
+<code class="sig-name descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>State, one of STATE_CREATED, STATE_STARTED, STATE_STOPPED, STATE_EOF</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.get_type">
+<code class="sig-name descname">get_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.get_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream type ‘source’ or ‘sink’</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.core.stream_base.StreamBase.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.core.stream_base.StreamBase.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set stream data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Stream data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.start">
+<em class="property">abstract </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.stream_base.StreamBase.stop">
+<em class="property">abstract </em><code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/stream_base.html#StreamBase.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.stream_base.StreamBase.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.core.uut_base">
+<span id="kse-core-uut-base-module"></span><h2>kse.core.uut_base module<a class="headerlink" href="#module-kse.core.uut_base" title="Permalink to this headline">¶</a></h2>
+<p>UUT Base class</p>
+<dl class="class">
+<dt id="kse.core.uut_base.UutBase">
+<em class="property">class </em><code class="sig-prename descclassname">kse.core.uut_base.</code><code class="sig-name descname">UutBase</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Unit Under Test abstraction</p>
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.core.uut_base.UutBase.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.interrupt">
+<em class="property">abstract </em><code class="sig-name descname">interrupt</code><span class="sig-paren">(</span><em class="sig-param">interrupt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.interrupt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.interrupt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert an interrupt in kalimba</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interrupt</strong> (<em>int</em>) – Interrupt number to assert, starting with 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.mem_block_read">
+<em class="property">abstract </em><code class="sig-name descname">mem_block_read</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">num_dwords</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.mem_block_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.mem_block_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read block memory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Message type to access (PM, DM)</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>num_dwords</strong> (<em>int</em>) – Number of 32 bits blocks</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Memory data dword values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.mem_block_write">
+<em class="property">abstract </em><code class="sig-name descname">mem_block_write</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">dwords</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.mem_block_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.mem_block_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write block memory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Message type to access (PM, DM)</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>dwords</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Memory data dword values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.mem_peek">
+<em class="property">abstract </em><code class="sig-name descname">mem_peek</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.mem_peek"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.mem_peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read memory address</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Message type to access (PM, DM)</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Read size in bytes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Memory data value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.mem_poke">
+<em class="property">abstract </em><code class="sig-name descname">mem_poke</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">size</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.mem_poke"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.mem_poke" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write memory address</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Message type to access (PM, DM)</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Write size in bytes</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – Memory data value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.message_recv">
+<em class="property">abstract </em><code class="sig-name descname">message_recv</code><span class="sig-paren">(</span><em class="sig-param">handler</em>, <em class="sig-param">timeout=None</em>, <em class="sig-param">flt=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.message_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.message_recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Received a message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<em>dict</em>) – Message handler registered with register_handler</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – Timeout for response in seconds, None for default</p></li>
+<li><p><strong>flt</strong> (<em>func</em>) – Filtering function receiving one parameter being the message received and
+returning True if the message is accepted in the filter, False otherwise</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Reply</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.message_register_handler">
+<em class="property">abstract </em><code class="sig-name descname">message_register_handler</code><span class="sig-paren">(</span><em class="sig-param">header</em>, <em class="sig-param">callback=None</em>, <em class="sig-param">flt=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.message_register_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.message_register_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register handler for send_message and send_recv_message operations.</p>
+<p>Any message received will be sent to a queue belonging to this handler, receive or
+send-receive operations will read from that queue.</p>
+<p>Additionally a callback function can be provided that will be called unconditionally.
+In the callback function there should be no blocking operations.
+The format of the callback is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">message_received</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>kalcmd_msg_header</em>) – Message header</p></li>
+<li><p><strong>callback</strong> (<em>func</em><em>(</em><em>list</em><em>[</em><em>int</em><em>]</em><em>)</em>) – Message reception callback</p></li>
+<li><p><strong>flt</strong> (<em>func</em>) – Filtering function receiving one parameter being the message received and
+returning True if the message is accepted in the filter, False otherwise</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Handler</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.message_send">
+<em class="property">abstract </em><code class="sig-name descname">message_send</code><span class="sig-paren">(</span><em class="sig-param">handler</em>, <em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.message_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.message_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<em>dict</em>) – Message handler registered with register_handler</p></li>
+<li><p><strong>msg</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to send</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.message_send_recv">
+<em class="property">abstract </em><code class="sig-name descname">message_send_recv</code><span class="sig-paren">(</span><em class="sig-param">handler</em>, <em class="sig-param">msg</em>, <em class="sig-param">timeout=None</em>, <em class="sig-param">flt=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.message_send_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.message_send_recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message and wait for response</p>
+<p>Example code</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_by_sequence</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">seq</span> <span class="o">==</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">uut</span><span class="o">.</span><span class="n">message_send_recv</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span>
+                                <span class="n">flt</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">filter_by_sequence</span><span class="p">,</span> <span class="n">sequence_num</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handler</strong> (<em>dict</em>) – Message handler registered with register_handler</p></li>
+<li><p><strong>msg</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to send</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – Timeout for response in seconds, None for default</p></li>
+<li><p><strong>flt</strong> (<em>func</em>) – Filtering function receiving one parameter being the message received and
+returning True if the message is accepted in the filter, False otherwise</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Reply</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If there is a response reception timeout</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.message_unregister_handler">
+<em class="property">abstract </em><code class="sig-name descname">message_unregister_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.message_unregister_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.message_unregister_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister handler for message_send, message_send_recv operations and callback on
+message received.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>dict</em>) – Message handler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.core.uut_base.UutBase.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.timer_add_absolute">
+<em class="property">abstract </em><code class="sig-name descname">timer_add_absolute</code><span class="sig-paren">(</span><em class="sig-param">period</em>, <em class="sig-param">callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.timer_add_absolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.timer_add_absolute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an absolute timer</p>
+<p>To check for timer expiration use timer_check_expired and/or provide a callback
+with the format.</p>
+<p>In the callback function there should be no blocking operations.
+The format of the callback is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">timer_fired</span><span class="p">(</span><span class="n">timer_id</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>period</strong> (<em>float</em>) – Period in seconds</p></li>
+<li><p><strong>callback</strong> (<em>func</em><em>(</em><em>timer_id</em><em>)</em>) – Callback function to be called when timer expires</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Timer id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.timer_add_relative">
+<em class="property">abstract </em><code class="sig-name descname">timer_add_relative</code><span class="sig-paren">(</span><em class="sig-param">period</em>, <em class="sig-param">callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.timer_add_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.timer_add_relative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a relative timer.</p>
+<p>To check for timer expiration use timer_check_expired and/or provide a callback
+with the format.</p>
+<p>In the callback function there should be no blocking operations.
+The format of the callback is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">timer_fired</span><span class="p">(</span><span class="n">timer_id</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>period</strong> (<em>float</em>) – Period in seconds</p></li>
+<li><p><strong>callback</strong> (<em>func</em><em>(</em><em>timer_id</em><em>)</em>) – Callback function to be called when timer expires</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Timer id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.timer_cancel">
+<em class="property">abstract </em><code class="sig-name descname">timer_cancel</code><span class="sig-paren">(</span><em class="sig-param">timer_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.timer_cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.timer_cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel a timer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>period</strong> (<em>float</em>) – Period in seconds</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if there was a timer and it has been cancelled</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.timer_check_expired">
+<em class="property">abstract </em><code class="sig-name descname">timer_check_expired</code><span class="sig-paren">(</span><em class="sig-param">timer_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.timer_check_expired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.timer_check_expired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a timer has expired</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>period</strong> (<em>float</em>) – Period in seconds</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if there is not a pending timer with the supplied id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.timer_get_time">
+<em class="property">abstract </em><code class="sig-name descname">timer_get_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.timer_get_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.timer_get_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Current simulation time in seconds</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.core.uut_base.UutBase.timer_wait_relative">
+<em class="property">abstract </em><code class="sig-name descname">timer_wait_relative</code><span class="sig-paren">(</span><em class="sig-param">period</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/core/uut_base.html#UutBase.timer_wait_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.core.uut_base.UutBase.timer_wait_relative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Block until certain time elapses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>period</strong> (<em>float</em>) – Period in seconds</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.core" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.framework.html" class="btn btn-neutral float-right" title="kse.framework package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.html" class="btn btn-neutral" title="kse package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

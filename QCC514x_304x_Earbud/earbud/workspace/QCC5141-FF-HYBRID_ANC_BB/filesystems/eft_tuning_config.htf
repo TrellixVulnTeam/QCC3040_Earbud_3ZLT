@@ -1,0 +1,7 @@
+file = audio
+
+# EFT Capability
+
+# PSID=0x205100, capID=0x40A2, UCID=0x0000, capIDVer=1, Fit Quality Threshold = -8dB
+# -> [ 1001 0001 0001 F800 0000  ]
+0x205100 = [ 01 10 01 00 01 00 00 F8 00 00 ]

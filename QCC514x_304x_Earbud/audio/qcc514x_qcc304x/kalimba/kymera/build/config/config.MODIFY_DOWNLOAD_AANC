@@ -1,0 +1,37 @@
+############################################################################
+#  Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+#  All Rights Reserved.
+#  Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+#  Notifications and licenses are retained for attribution purposes only
+############################################################################
+
+#
+# Capabilities to include in the build
+#
+%list CFG_CAPABILITIES
+AANC_MONO_16K
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib_private/aanc/fxlms100
+../lib_private/aanc/ed100
+../lib_private/aanc
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/aanc/aanc
+
+%build
+RELEASE_BUILD=TRUE
+
+# Prebuilt libraries were built only for QCC514x (strettoplus v11)
+# Prebuilt library files (.a and .reloc) must be placed under
+#
+# \kalimba\kymera\lib_release\($CONFIG)
+
+%list PREBUILT_LIBS
+libaanc.a
+
+# Enable license reporting in the capability wrapper
+%cpp
+USE_AANC_LICENSING

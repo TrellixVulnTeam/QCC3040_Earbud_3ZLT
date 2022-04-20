@@ -1,0 +1,167 @@
+Run
+===
+
+ACAT is controlled, using the command line arguments listed below.
+
+
+  -h, --help            show this help message and exit
+  -t PY_TOOLS, --py-tools PY_TOOLS
+                        Path to the Python Tools. Default is the value of
+                        ``ACAT_PYTOOLS`` environment variable.
+  -c COREDUMP, --coredump COREDUMP
+                        Path to coredump file to analyse. The coredump can be
+                        compressed as zip file as well as xcd file.
+  -b P0_BUILD_OUTPUT, --build P0_BUILD_OUTPUT
+                        Path to build output file. It is not required to
+                        specify if the tool is used internally on a released
+                        build.
+  -j DOWNLOADABLE_CAPABILITIES
+                        Path to downloaded capabilities. Put them one after
+                        another when there are more than one.
+  -s TRANSPORT, --transport TRANSPORT
+                        Allows ACAT to run on a 'live' chip rather than a
+                        coredump. The transport parameter is a standard
+                        kalaccess parameter string that should contain the
+                        transport required (e.g. ``usb``, ``kalsim`` and
+                        ``trb``) plus a number of other parameters such
+                        as SPIPORT, or SPIMUL.
+                        
+                        The value for transport should be relevant to the
+                        protocol that it uses. Please see the following
+                        examples:
+                        
+                        ``trb --> trb/scar/0``
+
+                        ``kalsim --> "kalsim"``
+
+                        ``usb --> "usb SPIPORT=247264"``
+
+                        Use double quotes when the transport string has
+                        spaces.
+                        To connect to a custom kalsim port, use ``device://``
+                        and connect to the tcp port. For example:
+
+                        ``device://tcp/localhost:31400/spi/sim/[CHIP NAME]``
+
+                        User needs to know the chip name to use the above
+                        connection string. Or, use TCPHOST and TCPPORT
+                        parameters like:
+
+                        "kalsim TCPHOST=localhost TCPPORT=31401"
+
+  -p PROCESSOR, --processor PROCESSOR
+                        Specify which Kalimba processor (0, 1, ...) to debug
+  -d, --dual-core       Required if dual-core and if both cores are using the
+                        same build output. In Interactive mode, to select
+                        the processor that the command is to be run on, it
+                        has to be called with the name of the processor as
+                        the instance e.g. ``p0.<command>``,
+                        ``p1.<command>``.
+  -i, --interactive     Run in Interactive mode. Interactive mode accepts
+                        individual commands and will query for missing
+                        information.
+  -I, --ipython         Same as ``-i``, but using the IPython interpreter.
+  -w WRITE_HTML, --write-html WRITE_HTML
+                        File path (inc. filename) where the html file will
+                        be created containing the results of the automatic
+                        analyse. (not compatible with interactive mode
+  -v, --verbose         When set, extra logging information will appear on the
+                        screen and log files will be created in ACAT's
+                        package directory.
+  -q                    Wait until the chip is booted
+  --cache-validity-interval CACHE_VALIDITY
+                        Set the caching validity interval when reading from a
+                        live chip. The value is in seconds and it is 3 by
+                        default. On slower transports it is recommended to
+                        increase this value with the risk the data from the
+                        chip may not update within the interval. ACAT Ignores
+                        this value if the target is a coredump.
+  --version             show program's version number and exit
+
+Example usage:
+
+:: 
+
+ python ACAT.py -t C:\qtil\ADK_XY\tools\pythontools -b C:\qtil\ADK_XYudio\kalimba\kymera\output\<confuild\debugbin\kymera_<chip>_audio -c coredump_file.xcd -d -i
+
+::
+
+ python ACAT.py -t C:\qtil\ADK_XY\tools\pythontools -b C:\qtil\ADK_XYudio\kalimba\kymera\output\<confuild\debugbin\kymera_<chip>_audio -s "trb/scar/0" -p 0 -w HTML_output.html
+
+
+ACAT operating modes
+--------------------
+ACAT can operate in either automatic or interactive mode.
+
+
+ACAT automatic mode
+~~~~~~~~~~~~~~~~~~~
+By default, ACAT operates in automatic mode, which performs a full
+analysis without further prompting.
+
+
+ACAT interactive mode
+~~~~~~~~~~~~~~~~~~~~~
+ACAT interactive mode only performs the specified analysis, but accepts
+commands and prompts for any missing information.
+
+
+Run ACAT on multiple cores
+--------------------------
+If ``-d`` are supplied, ACAT considers itself to be running on
+more than one core.
+
+As analyses are available for each core, always specify the processor name
+when running on more than one core in interactive mode, for example:
+
+ * ``p0``
+ * ``p1``
+
+If dual-cores are run from a single build output, the ``-p`` argument is
+used to specify the processor to analyse.
+
+
+Run ACAT on a Coredump
+----------------------
+ACAT uses different command line arguments to analyse Coredumps, compared
+with a live device. The command line argument settings used to analyse a
+Coredump:
+
+::
+
+    python ACAT.py -b <build_output_with_filename_root> -c <coredump> -t <python_tools_path> -i
+
+
+Run ACAT on a live chip
+-----------------------
+To obtain the best results, always pause the chip before attempting to run
+an analysis on a live device; the ``-s`` option enables ACAT to run on a
+live chip, rather than a static Coredump.
+
+The following code sample illustrates use of the -s option:
+
+::
+
+    python ACAT.py -s <transport> -b <build_output_with_filename_root> -t <pythontools_path>
+
+Where the transport parameter defines the required transport, for example;
+USB (for ex: ``usb SPIPORT=123456 SPIMUL=4``), LPT, KalSim, TRB (for ex:
+``trb/scar/0``), as well as other parameters such as ``SPIPORT`` or
+``SPIMUL``.
+
+
+Downloadable capabilities
+-------------------------
+To ensure that the extra symbols and functions are added to the main
+Kymera ELF when a downloadable capability is running, always launch ACAT
+with the ``-j`` option for each KDC downloaded capability.
+
+.. note::
+    Multiple ``-j`` options are possible, when working with multiple
+    downloadable capabilities.
+
+The following code sample provides an example:
+
+::
+
+ python ACAT.py -i -s <transport> -b <build_output_with_filename_root> -t <pythontools_path> -j <download_build_output_with_filename_root>

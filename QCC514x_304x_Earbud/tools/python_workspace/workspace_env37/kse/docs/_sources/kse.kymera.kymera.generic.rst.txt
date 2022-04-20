@@ -1,0 +1,22 @@
+kse.kymera.kymera.generic package
+=================================
+
+Submodules
+----------
+
+kse.kymera.kymera.generic.accmd module
+--------------------------------------
+
+.. automodule:: kse.kymera.kymera.generic.accmd
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.kymera.kymera.generic
+   :members:
+   :undoc-members:
+   :show-inheritance:

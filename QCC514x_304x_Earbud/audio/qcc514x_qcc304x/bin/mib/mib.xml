@@ -1,0 +1,4864 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Copyright (c) 2012 - 2020 Qualcomm Technologies International, Ltd. -->
+
+<metadata_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="HydraMeta.xsd">
+
+
+
+
+
+  
+  <metadata subsystem_id="3" subsystem_name="audio" version="17163">
+
+   <config_element name="StubInt" psid="1">
+     <label>Dummy integer MIB entry</label>
+     <description_user>
+A MIB integer entry that can be harmlessly read or written, e.g.,
+for testing.
+     </description_user>
+     <type>int32</type>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="StubStr" psid="2">
+     <label>Dummy string MIB entry</label>
+     <description_user>
+A MIB string entry that can be harmlessly read or written, e.g.,
+for testing.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="FirmwareBuildNumber" psid="5">
+     <label>Numeric firmware build identifier</label>
+     <description_user>
+Each published firmware build has a unique numeric identifier and
+a unique textual (string) identifier. The number and the string
+both uniquely identify the firmware build.
+
+This variable gives the numeric build identifier. The value should
+normally be expressed in decimal.
+
+The corresponding textual identifier is available via
+FirmwareBuildString.
+     </description_user>
+     <type>uint32</type>
+     <function function_name="mibgetfn_common" type="get" />
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="FirmwareBuildString" psid="6">
+     <label>Textual firmware build identifier</label>
+     <description_user>
+Each published firmware build has a unique numeric identifier and
+a unique textual (string) identifier. The number and the string
+both uniquely identify the firmware build.
+
+This variable gives the textual build identifier. The value is an
+ASCII string.
+
+The corresponding numeric identifier is available via
+FirmwareBuildNumber.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <function function_name="mibgetfn_common" type="get" />
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PanicOnFault" psid="7">
+     <label>Halt the system on any fault</label>
+     <description_user>
+When the chip's firmware detects a problem that implies that it
+cannot continue operation (such as running out of pool memory) it
+normally calls panic(). This halts the firmware, and may reboot it.
+By contrast, when the chip's firmware encounters a problem that
+it can survive (such as detecting a received corrupt packet) it
+normally calls fault(), which can cause a message, a "fault report",
+to be created.
+
+If this MIB entry is set TRUE then the firmware calls panic()
+when it would normally call fault().
+
+See PanicOnFaultCode, which can alter the behaviour of PanicOnFault.
+     </description_user>
+     <type>boolean</type>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PanicOnFaultCode" psid="8">
+     <label>Halt the system on a specific fault</label>
+     <description_user>
+The description of PanicOnFault presumes the value of
+PanicOnFaultCode is zero (the equivalent of "fault_none" within
+the firmware).
+
+If PanicOnFaultCode is non-zero (i.e., if it is set to a valid
+faultid), then a call to fault() leads directly to a call to panic()
+only when fault() is called with the specified fault code. In other words,
+this key causes a PanicOnFault to occur when a specific fault occurs.
+     </description_user>
+     <type>uint16</type>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmMasterClockRate" psid="13">
+     <label>First PCM interface override for clock rate</label>
+     <description_user>
+When acting as a master on the first digital interface in PCM mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based
+on the sync rate, bits per sample and slots per frame.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>1024000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmMasterMode" psid="14">
+     <label>Enable master mode on first PCM instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the first PCM instance.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="PcmShortSyncEnable" psid="16">
+     <label>Enable short synchronisation for first PCM instance</label>
+     <description_user>
+Setting this key enables Short frame sync (sync pulse width of 1 bit clock cycle,
+falling edge indicates start of frame) on the first PCM instance.
+
+If long frame sync is selected the frame starts at rising edge of the sync pulse and
+Sync pulse width depends on PcmLongLengthSyncEnable configuration
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="PcmSignExtendEnable" psid="18">
+     <label>Enable sign extend for first PCM instance</label>
+     <description_user>
+Enable sign extension of 13/8-bit samples to 16-bit samples on the first
+PCM interface.
+
+If the key is not set, the samples are padded to 16-bits by inserting
+extra LSBs. For 13-bit samples, the 3-bit padding can be selected by
+setting PcmAudioGain accordingly. 8-bit samples are padded with zeros.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmLsbFirstEnable" psid="19">
+     <label>Enable LSB first for first PCM instance</label>
+     <description_user>
+This key controls the order in which samples are transmitted and
+received on the first PCM interface. Set this key to send/receive
+LSB first.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmTxTristateEnable" psid="20">
+     <label>Enable Tx tristate for first PCM instance</label>
+     <description_user>
+0: drive PCM_OUT continuously.
+1: tri-state PCM_OUT immediately after falling edge of PCM_CLK in the
+last bit of an active slot, assuming the next slot is not active.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmTxTristateRisingEdgeEnable" psid="21">
+     <label>Enable Tx tristate rising edge for first PCM instance</label>
+     <description_user>
+This key is only effective if PcmTxTristateEnable is set
+0: tri-state PCM_OUT immediately after falling edge of PCM_CLK in
+last bit of an active slot, assuming the next slot is also not active.
+1: tri-state PCM_OUT after rising edge of PCM_CLK after the last data
+bit of an active slot.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmSyncSuppressEnable" psid="22">
+     <label>Suppress frame synchronisation for first PCM instance</label>
+     <description_user>
+Suppress PCM_SYNC on the first PCM instance while generating PCM_CLK (in master mode).
+Some codecs (connected to the PCM interface) use this to enter a low power state.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmGciModeEnable" psid="23">
+     <label>Enable GCI mode for first PCM instance</label>
+     <description_user>
+Enable PCM GCI mode.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmMuteEnable" psid="24">
+     <label>Mute PCM_DATA output for first PCM instance</label>
+     <description_user>
+Force PCM_DATA output on first PCM instance to be muted.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmLongLengthSyncEnable" psid="25">
+     <label>Enable long length sync for first PCM instance</label>
+     <description_user>
+If PcmShortSyncEnable is not set, this key will configure PCM_SYNC pulse
+on first PCM instance to be 16 (long) or 8 (short) PCM_CLK cycles.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmSampleRisingEdgeEnable" psid="26">
+     <label>Sample PCM_DATA on rising edge of PCM_CLK for first PCM instance</label>
+     <description_user>
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmSampleFormat" psid="27">
+     <label>Sample format for first PCM instance</label>
+     <description_user>
+This key is only provided for backward compatibility.
+Use PcmSampleSize to configure up to 24 bit format. If PcmSampleSize
+is set, this key is ignored.
+This key supports formats up to 16 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>3</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="PcmSlotCount" psid="29">
+     <label>Number of slots in a PCM frame for first PCM instance</label>
+     <description_user>
+This key specifies the number of PCM slots (1-4) that are to be present
+between sync pulses on the first digital interface.
+If the key PcmMasterClockRate is set, this key is ignored as a
+request has been made for a specific master clock frequency.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>4</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmSyncRate" psid="30">
+     <label>The PCM_SYNC rate for first PCM instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the first digital
+interface when operating as a master in PCM mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>96000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PcmAudioGain" psid="31">
+     <label>Sample gain value for first PCM instance</label>
+     <description_user>
+Some Codecs allow their gain to be controlled by 3 extra bits
+received at the end of a 13-bit PCM sample. This key allows the
+value of those 3 bits to be specified for the first PCM instance.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>7</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="I2sSyncRate" psid="33">
+     <label>Synchronisation rate in hertz for first I2S instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the first digital
+interface when operating as a master in I2S mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>48000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sMasterClockRate" psid="34">
+     <label>Master clock rate in hertz for first I2S instance</label>
+     <description_user>
+When acting as a master on the first digital interface in I2S mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based on the
+sync rate and bits per sample.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sMasterMode" psid="35">
+     <label>Enable master mode on first I2S instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the first I2S instance.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sJstfyFormat" psid="36">
+     <label>Set sample justification for first I2S instance</label>
+     <description_user>
+0: left justified, 1: right justified.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sLftJstfyDly" psid="37">
+     <label>Set delay before sampling when left justified for first I2S instance</label>
+     <description_user>
+0: MSB of sample data occurs in the first bit clock period after sync transition.
+1: MSB of sample data occurs in the second bit clock period after sync transition.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sChnlPlrty" psid="38">
+     <label>I2S channel polarity for first I2S instance</label>
+     <description_user>
+0: Sample data is left channel when sync clock line is high
+1: Sample data is right channel when sync clock line is high
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sAudioAttenEnable" psid="39">
+     <label>Enable attenuation on input data for first I2S instance</label>
+     <description_user>
+Enables/disables the attenuation applied to incoming (into device) audio samples in case the I2sBitsPerSample
+is set to 20 or 24 bits per sample on the first I2S instance.
+
+false: 17 bit sample data is rounded down to 16 bits.
+true : the audio attenuation defined in the MIB key I2sAudioAtten is applied over 24 bits with saturated rounding.
+
+Requires I2sCropEnable to be 0.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sAudioAtten" psid="40">
+     <label>Attenuation in 6 dB steps for first I2S instance</label>
+     <description_user>
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>15</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sBitsPerSample" psid="41">
+     <label>Bits per sample for first I2S instance</label>
+     <description_user>
+This key specifies the number of bit clocks reserved for each (mono)
+sample on the first I2S interface. Valid settings are 16, 20, or
+24 bits per sample.
+
+This key does not specify how many of those bits are used for internal
+data processing; see I2sSampleSize for that. If this key is set to
+a value larger than I2sSampleSize, the additional bits are output as
+zeroes in the least significant bits. On the input, if sample size
+is 16 bits and bits-per-sample is greater, an attenuation can be
+applied, or samples larger than 16bit can be cropped to 16bits.
+
+This key is also used to calculate the bit clock rate when in
+master mode and the I2sMasterClockRate key is not set.
+(I2sMasterClockRate takes precedence over this key for the
+purposes of supplying the master clock rate.) The calculation is
+bits per sample * 2 (channels) * sample rate.
+     </description_user>
+     <type>uint16</type>
+     <range_min>16</range_min>
+     <range_max>24</range_max>
+     <default>16</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sCropEnable" psid="42">
+     <label>Takes first 16bits after sync edge as sample for first I2S instance</label>
+     <description_user>
+In this mode the most significant bits after sync are taken to be the sample data.
+If I2sBitsPerSample is configured for 24/32 bits per sample, but I2sSampleSize is
+configured for 16 bits per sample only, then crop enable decides whether the I2S
+interface rounds or truncates incoming 24/32 bits to 16 bits.
+
+Additionally, it must be enabled if in 16 bit per sample mode when CLK rate = 32*sample rate.
+
+0: Disable Cropping(or select rounding)
+1: Enable Cropping
+
+From CSRA681xx, the crop mode is selected automatically, and there is no need to
+set this key; it should be left at its default value.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sTxStartSample" psid="43">
+     <label>Defines when TX begins for first I2S instance</label>
+     <description_user>
+0: I2S transmission begins during low sync clock phase.
+1: I2S transmission begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2sRxStartSample" psid="44">
+     <label>Defines when RX begins for first I2S instance</label>
+     <description_user>
+0: I2S reception begins during low sync clock phase.
+1: I2S reception begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="AudioIfsReturnToDefaultOnClose" psid="47">
+     <label>Return audio interfaces to default configuration when closed</label>
+     <description_user>
+Setting this key will cause the audio interfaces to be returned to the MIB
+defaults when all users of an interface have closed the endpoints. For example
+the PCM MIB defaults will be applied when all slots have been released. For
+Codecs and other endpoints that don't share a physical interface (like the PCM
+bus) then the defaults will be set when the endpoints are released.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   
+   
+
+
+    <config_element name="PcmPioConfig" psid="50">
+        <label>PIO configuration for first PCM/I2S instance</label>
+        <description_user>
+            This key defines which chip pins the first PCM or I2S interface (instance 0)
+            comes out on. (The same pins are shared by these two interfaces, so they
+            cannot be used simultaneously.)
+            The octet string key value contains a value each for the PCM signal lines
+            CLK, SYNC, MCLK, DOUT &amp; DIN (or, for I2S: SCK, WS, MCLK, SD_OUT, &amp; SD_IN).
+            Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+                0xFE: Dedicated pin as per chip pinout
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            Note that signals cannot be a combination of PIO and dedicated pins.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>5</range_min>
+        <range_max>5</range_max>
+        <is_internal>false</is_internal>
+        <default>[FE FE FF FE FE]</default>
+    </config_element>
+
+    <config_element name="Pcm1PioConfig" psid="51">
+        <label>PIO configuration for second PCM/I2S instance</label>
+        <description_user>
+            This key defines which chip pins the second PCM or I2S interface (instance 1)
+            comes out on. (The same pins are shared by these two interfaces, so they
+            cannot be used simultaneously.)
+            The octet string key value contains a value each for the PCM signal lines
+            CLK, SYNC, MCLK, DOUT &amp; DIN (or, for I2S: SCK, WS, MCLK, SD_OUT, &amp; SD_IN).
+            Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+                0xFE: Dedicated pin as per chip pinout
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            Note that signals cannot be a combination of PIO and dedicated pins.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>5</range_min>
+        <range_max>5</range_max>
+        <is_internal>false</is_internal>
+        <default>[FF FF FF FE FE]</default>
+    </config_element>
+
+    <config_element name="Pcm2PioConfig" psid="52">
+        <label>PIO configuration for third PCM/I2S instance</label>
+        <description_user>
+            This key defines which chip pins the third PCM or I2S interface (instance 2)
+            comes out on. (The same pins are shared by these two interfaces, so they
+            cannot be used simultaneously.)
+            The octet string key value contains a value each for the PCM signal lines
+            CLK, SYNC, MCLK, DOUT &amp; DIN (or, for I2S: SCK, WS, MCLK, SD_OUT, &amp; SD_IN).
+            Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+                0xFE: Dedicated pin as per chip pinout
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            Note that signals cannot be a combination of PIO and dedicated pins.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>5</range_min>
+        <range_max>5</range_max>
+        <is_internal>false</is_internal>
+        <default>[FF FF FF FE FE]</default>
+    </config_element>
+
+    <config_element name="Pcm3PioConfig" psid="53">
+        <label>PIO configuration for fourth PCM/I2S instance</label>
+        <description_user>
+            This key defines which chip pins the fourth PCM or I2S interface (instance 3)
+            comes out on. (The same pins are shared by these two interfaces, so they
+            cannot be used simultaneously.)
+            On some devices the fourth PCM or I2S instance could support multi-lane enhanced
+            I2S interface with additional 3 DIN lines. So unlike other PCM or I2S instances,
+            the fourth instance octet string key value contains a value each for the PCM
+            signal lines CLK, SYNC, MCLK, DOUT &amp; DIN (or, for I2S: SCK, WS, MCLK, SD_OUT,
+            &amp; SD_IN) as well as 3 additional DIN lines DIN_B, DIN_C &amp; DIN_D (or, for
+            I2S: SD_IN_B, SD_IN_C &amp; SD_IN_D).
+            Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+                0xFE: Dedicated pin as per chip pinout
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            Note that signals cannot be a combination of PIO and dedicated pins.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>8</range_min>
+        <range_max>8</range_max>
+        <is_internal>false</is_internal>
+        <default>[FE FE FF FE FE FF FF FF]</default>
+    </config_element>
+
+
+
+
+    <config_element name="Spdif0InPioConfig" psid="54">
+        <label>Input PIO configuration for first SPDIF instance</label>
+        <description_user>
+            This key defines how input pin for first SPDIF instance (instance 0) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Spdif1InPioConfig" psid="55">
+        <label>Input PIO configuration for second SPDIF instance</label>
+        <description_user>
+            This key defines how input pin for second SPDIF instance (instance 1) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Spdif2InPioConfig" psid="56">
+        <label>Input PIO configuration for third SPDIF instance</label>
+        <description_user>
+            This key defines how input pin for third SPDIF instance (instance 2) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Spdif3InPioConfig" psid="57">
+        <label>Input PIO configuration for fourth SPDIF instance</label>
+        <description_user>
+            This key defines how input pin for fourth SPDIF instance (instance 3) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+     <config_element name="CoreEnable" psid="58">
+        <label>List of processor instances to be enabled</label>
+        <description_user>
+             This key lists the processor instance numbers other than processor 0 to be activated. By default all supported processors are active. For dual-core, only processor 1 is listed here.
+    </description_user>
+        <type>octet_string</type>
+        <range_min>1</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>[ 01 ]</default>
+      </config_element>
+
+
+
+   <config_element name="Pcm1MasterClockRate" psid="59">
+     <label>Second PCM interface override for clock rate</label>
+     <description_user>
+When acting as a master on the second digital interface in PCM mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based
+on the sync rate, bits per sample and slots per frame.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>1024000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1MasterMode" psid="60">
+     <label>Enable master mode for second PCM instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the second PCM instance.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm1ShortSyncEnable" psid="62">
+     <label>Enable short synchronisation for second PCM instance</label>
+     <description_user>
+Setting this key enables Short frame sync (sync pulse width of 1 bit clock cycle,
+falling edge indicates start of frame) on the second PCM instance.
+
+If long frame sync is selected the frame starts at rising edge of the sync pulse and
+Sync pulse width depends on Pcm1LongLengthSyncEnable configuration
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm1SignExtendEnable" psid="64">
+     <label>Enable sign extend for second PCM instance</label>
+     <description_user>
+Enable sign extension of 13/8-bit samples to 16-bit samples on the second
+PCM interface.
+
+If the key is not set, the samples are padded to 16-bits by inserting
+extra LSBs. For 13-bit samples, the 3-bit padding can be selected by
+setting Pcm1AudioGain accordingly. 8-bit samples are padded with zeros.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1LsbFirstEnable" psid="65">
+     <label>Enable LSB first for second PCM instance</label>
+     <description_user>
+This key controls the order in which samples are transmitted and
+received on the second PCM interface. Set this key to send/receive
+LSB first.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1TxTristateEnable" psid="66">
+     <label>Enable Tx tristate for second PCM instance</label>
+     <description_user>
+0: drive PCM_OUT continuously.
+1: tri-state PCM_OUT immediately after falling edge of PCM_CLK in the
+last bit of an active slot, assuming the next slot is not active.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1TxTristateRisingEdgeEnable" psid="67">
+     <label>Enable Tx tristate rising edge for second PCM instance</label>
+     <description_user>
+This key is only effective if Pcm1TxTristateEnable is set
+0: tri-state PCM_OUT immediately after falling edge of PCM_CLK in
+last bit of an active slot, assuming the next slot is also not active.
+1: tri-state PCM_OUT after rising edge of PCM_CLK after the last data
+bit of an active slot.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1SyncSuppressEnable" psid="68">
+     <label>Suppress frame synchronisation for second PCM instance</label>
+     <description_user>
+Suppress PCM_SYNC on the second PCM instance while generating PCM_CLK (in master mode).
+Some codecs (connected to the PCM interface) use this to enter a low power state.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1GciModeEnable" psid="69">
+     <label>Enable GCI mode for second PCM instance</label>
+     <description_user>
+Enable PCM GCI mode.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1MuteEnable" psid="70">
+     <label>Mute PCM_DATA output for second PCM instance</label>
+     <description_user>
+Force PCM_DATA output on second PCM instance to be muted.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1LongLengthSyncEnable" psid="71">
+     <label>Enable long length sync for second PCM instance</label>
+     <description_user>
+If Pcm1ShortSyncEnable is not set, this key will configure PCM_SYNC pulse
+on second PCM instance to be 16 (long) or 8 (short) PCM_CLK cycles.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1SampleRisingEdgeEnable" psid="72">
+     <label>Sample PCM_DATA on rising edge of PCM_CLK for second PCM instance</label>
+     <description_user>
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1SampleFormat" psid="73">
+     <label>Sample format for second PCM instance</label>
+     <description_user>
+This key is only provided for backward compatibility.
+Use Pcm1SampleSize to configure up to 24 bit format. If Pcm1SampleSize
+is set, this key is ignored.
+This key supports formats up to 16 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>3</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm1SlotCount" psid="75">
+     <label>Number of slots in a PCM frame for second PCM instance</label>
+     <description_user>
+This key specifies the number of PCM slots (1-4) that are to be present
+between sync pulses on the second digital interface.
+If the key Pcm1MasterClockRate is set, this key is ignored as a
+request has been made for a specific master clock frequency.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>4</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1SyncRate" psid="76">
+     <label>The PCM_SYNC rate for second PCM instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the second digital
+interface when operating as a master in PCM mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>96000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm1AudioGain" psid="77">
+     <label>Sample gain value for second PCM instance</label>
+     <description_user>
+Some Codecs allow their gain to be controlled by 3 extra bits
+received at the end of a 13-bit PCM sample. This key allows the
+value of those 3 bits to be specified for the second PCM instance.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>7</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   
+   
+
+   <config_element name="Pcm2MasterClockRate" psid="80">
+     <label>Third PCM interface override for clock rate</label>
+     <description_user>
+When acting as a master on the third digital interface in PCM mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based
+on the sync rate, bits per sample and slots per frame.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>1024000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2MasterMode" psid="81">
+     <label>Enable PCM master mode for third PCM instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the third PCM instance.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm2ShortSyncEnable" psid="83">
+     <label>Enable short synchronisation for third PCM instance</label>
+     <description_user>
+Setting this key enables Short frame sync (sync pulse width of 1 bit clock cycle,
+falling edge indicates start of frame) on the third PCM instance.
+
+If long frame sync is selected the frame starts at rising edge of the sync pulse and
+Sync pulse width depends on Pcm2LongLengthSyncEnable configuration
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm2SignExtendEnable" psid="85">
+     <label>Enable sign extend for third PCM instance</label>
+     <description_user>
+Enable sign extension of 13/8-bit samples to 16-bit samples on the third
+PCM interface.
+
+If the key is not set, the samples are padded to 16-bits by inserting
+extra LSBs. For 13-bit samples, the 3-bit padding can be selected by
+setting Pcm2AudioGain accordingly. 8-bit samples are padded with zeros.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2LsbFirstEnable" psid="86">
+     <label>Enable LSB first for third PCM instance</label>
+     <description_user>
+This key controls the order in which samples are transmitted and
+received on the third PCM interface. Set this key to send/receive
+LSB first.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2TxTristateEnable" psid="87">
+     <label>Enable Tx tristate for third PCM instance</label>
+     <description_user>
+0: drive PCM_OUT continuously.
+1: tri-state PCM_OUT immediately after falling edge of PCM_CLK in the
+last bit of an active slot, assuming the next slot is not active.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2TxTristateRisingEdgeEnable" psid="88">
+     <label>Enable Tx tristate rising edge for third PCM instance</label>
+     <description_user>
+This key is only effective if Pcm2TxTristateEnable is set
+0: tri-state PCM_OUT immediately after falling edge of PCM_CLK in
+last bit of an active slot, assuming the next slot is also not active.
+1: tri-state PCM_OUT after rising edge of PCM_CLK after the last data
+bit of an active slot.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2SyncSuppressEnable" psid="89">
+     <label>Suppress frame synchronisation for third PCM instance</label>
+     <description_user>
+Suppress PCM_SYNC on the third PCM instance while generating PCM_CLK (in master mode).
+Some codecs (connected to the PCM interface) use this to enter a low power state.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2GciModeEnable" psid="90">
+     <label>Enable GCI mode for third PCM instance</label>
+     <description_user>
+Enable PCM GCI mode.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2MuteEnable" psid="91">
+     <label>Mute PCM_DATA output for third PCM instance</label>
+     <description_user>
+Force PCM_DATA output on third PCM instance to be muted.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2LongLengthSyncEnable" psid="92">
+     <label>Enable long length sync for third PCM instance</label>
+     <description_user>
+If Pcm2ShortSyncEnable is not set, this key will configure PCM_SYNC pulse
+on third PCM instance to be 16 (long) or 8 (short) PCM_CLK cycles.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2SampleRisingEdgeEnable" psid="93">
+     <label>Sample PCM_DATA on rising edge of PCM_CLK for third PCM instance</label>
+     <description_user>
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2SampleFormat" psid="94">
+     <label>Sample format for third PCM instance</label>
+     <description_user>
+This key is only provided for backward compatibility.
+Use Pcm2SampleSize to configure up to 24 bit format. If Pcm2SampleSize
+is set, this key is ignored.
+This key supports formats up to 16 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>3</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm2SlotCount" psid="96">
+     <label>Number of slots in a PCM frame for third PCM instance</label>
+     <description_user>
+This key specifies the number of PCM slots (1-4) that are to be present
+between sync pulses on the third digital interface.
+If the key Pcm2MasterClockRate is set, this key is ignored as a
+request has been made for a specific master clock frequency.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>4</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2SyncRate" psid="97">
+     <label>The PCM_SYNC rate for third PCM instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the third digital
+interface when operating as a master in PCM mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>48000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm2AudioGain" psid="98">
+     <label>Sample gain value for third PCM instance</label>
+     <description_user>
+Some Codecs allow their gain to be controlled by 3 extra bits
+received at the end of a 13-bit PCM sample. This key allows the
+value of those 3 bits to be specified for the third PCM instance.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>7</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   
+   
+
+   <config_element name="Pcm3MasterClockRate" psid="101">
+     <label>Fourth PCM interface override for clock rate</label>
+     <description_user>
+When acting as a master on the fourth digital interface in PCM mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based
+on the sync rate, bits per sample and slots per frame.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>1024000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3MasterMode" psid="102">
+     <label>Enable PCM master mode for fourth PCM instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the fourth PCM instance.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm3ShortSyncEnable" psid="104">
+     <label>Enable short synchronisation for fourth PCM instance</label>
+     <description_user>
+Setting this key enables Short frame sync (sync pulse width of 1 bit clock cycle,
+falling edge indicates start of frame) on the fourth PCM instance.
+
+If long frame sync is selected the frame starts at rising edge of the sync pulse and
+Sync pulse width depends on Pcm3LongLengthSyncEnable configuration
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm3SignExtendEnable" psid="106">
+     <label>Enable sign extend for fourth PCM instance</label>
+     <description_user>
+Enable sign extension of 13/8-bit samples to 16-bit samples on the fourth
+PCM interface.
+
+If the key is not set, the samples are padded to 16-bits by inserting
+extra LSBs. For 13-bit samples, the 3-bit padding can be selected by
+setting Pcm3AudioGain accordingly. 8-bit samples are padded with zeros.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3LsbFirstEnable" psid="107">
+     <label>Enable LSB first for fourth PCM instance</label>
+     <description_user>
+This key controls the order in which samples are transmitted and
+received on the fourth PCM interface. Set this key to send/receive
+LSB first.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3TxTristateEnable" psid="108">
+     <label>Enable Tx tristate for fourth PCM instance</label>
+     <description_user>
+0: drive PCM_OUT continuously.
+1: tri-state PCM_OUT immediately after falling edge of PCM_CLK in the
+last bit of an active slot, assuming the next slot is not active.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3TxTristateRisingEdgeEnable" psid="109">
+     <label>Enable Tx tristate rising edge for fourth PCM instance</label>
+     <description_user>
+This key is only effective if Pcm3TxTristateEnable is set
+0: tri-state PCM_OUT immediately after falling edge of PCM_CLK in
+last bit of an active slot, assuming the next slot is also not active.
+1: tri-state PCM_OUT after rising edge of PCM_CLK after the last data
+bit of an active slot.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3SyncSuppressEnable" psid="110">
+     <label>Suppress frame synchronisation for fourth PCM instance</label>
+     <description_user>
+Suppress PCM_SYNC on the fourth PCM instance while generating PCM_CLK (in master mode).
+Some codecs (connected to the PCM interface) use this to enter a low power state.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3GciModeEnable" psid="111">
+     <label>Enable GCI mode for fourth PCM instance</label>
+     <description_user>
+Enable PCM GCI mode.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3MuteEnable" psid="112">
+     <label>Mute PCM_DATA output for fourth PCM instance</label>
+     <description_user>
+Force PCM_DATA output on fourth PCM instance to be muted.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3LongLengthSyncEnable" psid="113">
+     <label>Enable long length sync for fourth PCM instance</label>
+     <description_user>
+If Pcm3ShortSyncEnable is not set, this key will configure PCM_SYNC pulse
+on fourth PCM instance to be 16 (long) or 8 (short) PCM_CLK cycles.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3SampleRisingEdgeEnable" psid="114">
+     <label>Sample PCM_DATA on rising edge of PCM_CLK for fourth PCM instance</label>
+     <description_user>
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3SampleFormat" psid="115">
+     <label>Sample format for fourth PCM instance</label>
+     <description_user>
+This key is only provided for backward compatibility.
+Use Pcm3SampleSize to configure up to 24 bit format. If Pcm3SampleSize
+is set, this key is ignored.
+This key supports formats up to 16 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>3</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   <config_element name="Pcm3SlotCount" psid="117">
+     <label>Number of slots in a PCM frame for fourth PCM instance</label>
+     <description_user>
+This key specifies the number of PCM slots (1-4) that are to be present
+between sync pulses on the fourth digital interface.
+If the key Pcm3MasterClockRate is set, this key is ignored as a
+request has been made for a specific master clock frequency.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>4</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3SyncRate" psid="118">
+     <label>The PCM_SYNC rate for fourth PCM instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the fourth digital
+interface when operating as a master in PCM mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>48000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="Pcm3AudioGain" psid="119">
+     <label>Sample gain value for fourth PCM instance</label>
+     <description_user>
+Some Codecs allow their gain to be controlled by 3 extra bits
+received at the end of a 13-bit PCM sample. This key allows the
+value of those 3 bits to be specified for the fourth PCM instance.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>7</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+   
+   
+
+
+
+   <config_element name="I2s1SyncRate" psid="122">
+     <label>Synchronisation rate in hertz for second I2S instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the second digital
+interface when operating as a master in I2S mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>48000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1MasterClockRate" psid="123">
+     <label>Master clock rate in hertz for second I2S instance</label>
+     <description_user>
+When acting as a master on the second digital interface in I2S mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based on the
+sync rate and bits per sample.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1MasterMode" psid="124">
+     <label>Enable master mode on second I2S instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the second I2S instance.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1JstfyFormat" psid="125">
+     <label>Set sample justification for second I2S instance</label>
+     <description_user>
+0: left justified, 1: right justified.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1LftJstfyDly" psid="126">
+     <label>Set delay before sampling when left justified for second I2S instance</label>
+     <description_user>
+0: MSB of sample data occurs in the first bit clock period after sync transition.
+1: MSB of sample data occurs in the second bit clock period after sync transition.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1ChnlPlrty" psid="127">
+     <label>I2S channel polarity for second I2S instance</label>
+     <description_user>
+0: Sample data is left channel when sync clock line is high
+1: Sample data is right channel when sync clock line is high
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1AudioAttenEnable" psid="128">
+     <label>Enable attenuation on input data for second I2S instance</label>
+     <description_user>
+Enables/disables the attenuation applied to incoming (into device) audio samples in case the I2s1BitsPerSample
+is set to 20 or 24 bits per sample on the second I2S instance.
+
+false: 17 bit sample data is rounded down to 16 bits.
+true : the audio attenuation defined in the MIB key I2s1AudioAtten is applied over 24 bits with saturated rounding.
+
+Requires I2s1CropEnable to be 0.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1AudioAtten" psid="129">
+     <label>Attenuation in 6 dB steps for second I2S instance</label>
+     <description_user>
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>15</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1BitsPerSample" psid="130">
+     <label>Bits per sample for second I2S instance</label>
+     <description_user>
+This key specifies the number of bit clocks reserved for each (mono)
+sample on the second I2S interface. Valid settings are 16, 20, or
+24 bits per sample.
+
+This key does not specify how many of those bits are used for internal
+data processing; see I2s1SampleSize for that. If this key is set to
+a value larger than I2s1SampleSize, the additional bits are output as
+zeroes in the least significant bits. On the input, if sample size
+is 16 bits and bits-per-sample is greater, an attenuation can be
+applied, or samples larger than 16bit can be cropped to 16bits.
+
+This key is also used to calculate the bit clock rate when in
+master mode and the I2s1MasterClockRate key is not set.
+(I2s1MasterClockRate takes precedence over this key for the
+purposes of supplying the master clock rate.) The calculation is
+bits per sample * 2 (channels) * sample rate.
+     </description_user>
+     <type>uint16</type>
+     <range_min>16</range_min>
+     <range_max>24</range_max>
+     <default>16</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1CropEnable" psid="131">
+     <label>Takes first 16bits after sync edge as sample for second I2S instance</label>
+     <description_user>
+In this mode the most significant bits after sync are taken to be the sample data.
+If I2s1BitsPerSample is configured for 24/32 bits per sample, but I2s1SampleSize is
+configured for 16 bits per sample only, then crop enable decides whether the I2S
+interface rounds or truncates incoming 24/32 bits to 16 bits.
+
+Additionally, it must be enabled if in 16 bit per sample mode when CLK rate = 32*sample rate.
+
+0: Disable Cropping(or select rounding)
+1: Enable Cropping
+
+From CSRA681xx, the crop mode is selected automatically, and there is no need to
+set this key; it should be left at its default value.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1TxStartSample" psid="132">
+     <label>Defines when TX begins for second I2S instance</label>
+     <description_user>
+0: I2S transmission begins during low sync clock phase.
+1: I2S transmission begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s1RxStartSample" psid="133">
+     <label>Defines when RX begins for second I2S instance</label>
+     <description_user>
+0: I2S reception begins during low sync clock phase.
+1: I2S reception begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2SyncRate" psid="134">
+     <label>Synchronisation rate in hertz for third I2S instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the third digital
+interface when operating as a master in I2S mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>48000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2MasterClockRate" psid="135">
+     <label>Master clock rate in hertz for third I2S instance</label>
+     <description_user>
+When acting as a master on the third digital interface in I2S mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based on the
+sync rate and bits per sample.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2MasterMode" psid="136">
+     <label>Enable master mode on third I2S instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the third I2S instance.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2JstfyFormat" psid="137">
+     <label>Set sample justification for third I2S instance</label>
+     <description_user>
+0: left justified, 1: right justified.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2LftJstfyDly" psid="138">
+     <label>Set delay before sampling when left justified for third I2S instance</label>
+     <description_user>
+0: MSB of sample data occurs in the first bit clock period after sync transition.
+1: MSB of sample data occurs in the second bit clock period after sync transition.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2ChnlPlrty" psid="139">
+     <label>I2S channel polarity for third I2S instance</label>
+     <description_user>
+0: Sample data is left channel when sync clock line is high
+1: Sample data is right channel when sync clock line is high
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2AudioAttenEnable" psid="140">
+     <label>Enable attenuation on input data for third I2S instance</label>
+     <description_user>
+Enables/disables the attenuation applied to incoming (into device) audio samples in case the I2s2BitsPerSample
+is set to 20 or 24 bits per sample on the third I2S instance.
+
+false: 17 bit sample data is rounded down to 16 bits.
+true : the audio attenuation defined in the MIB key I2s2AudioAtten is applied over 24 bits with saturated rounding.
+
+Requires I2s2CropEnable to be 0.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2AudioAtten" psid="141">
+     <label>Attenuation in 6 dB steps for third I2S instance</label>
+     <description_user>
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>15</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2BitsPerSample" psid="142">
+     <label>Bits per sample for third I2S instance</label>
+     <description_user>
+This key specifies the number of bit clocks reserved for each (mono)
+sample on the third I2S interface. Valid settings are 16, 20, or
+24 bits per sample.
+
+This key does not specify how many of those bits are used for internal
+data processing; see I2s2SampleSize for that. If this key is set to
+a value larger than I2s2SampleSize, the additional bits are output as
+zeroes in the least significant bits. On the input, if sample size
+is 16 bits and bits-per-sample is greater, an attenuation can be
+applied, or samples larger than 16bit can be cropped to 16bits.
+
+This key is also used to calculate the bit clock rate when in
+master mode and the I2s2MasterClockRate key is not set.
+(I2s2MasterClockRate takes precedence over this key for the
+purposes of supplying the master clock rate.) The calculation is
+bits per sample * 2 (channels) * sample rate.
+     </description_user>
+     <type>uint16</type>
+     <range_min>16</range_min>
+     <range_max>24</range_max>
+     <default>16</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2CropEnable" psid="143">
+     <label>Takes first 16bits after sync edge as sample for third I2S instance</label>
+     <description_user>
+In this mode the most significant bits after sync are taken to be the sample data.
+If I2s2BitsPerSample is configured for 24/32 bits per sample, but I2s2SampleSize is
+configured for 16 bits per sample only, then crop enable decides whether the I2S
+interface rounds or truncates incoming 24/32 bits to 16 bits.
+
+Additionally, it must be enabled if in 16 bit per sample mode when CLK rate = 32*sample rate.
+
+0: Disable Cropping(or select rounding)
+1: Enable Cropping
+
+From CSRA681xx, the crop mode is selected automatically, and there is no need to
+set this key; it should be left at its default value.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2TxStartSample" psid="144">
+     <label>Defines when TX begins for third I2S instance</label>
+     <description_user>
+0: I2S transmission begins during low sync clock phase.
+1: I2S transmission begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s2RxStartSample" psid="145">
+     <label>Defines when RX begins for third I2S instance</label>
+     <description_user>
+0: I2S reception begins during low sync clock phase.
+1: I2S reception begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3SyncRate" psid="146">
+     <label>Synchronisation rate in hertz for fourth I2S instance</label>
+     <description_user>
+This key specifies the sync rate in hertz for the fourth digital
+interface when operating as a master in I2S mode.
+     </description_user>
+     <type>uint32</type>
+     <range_min>8000</range_min>
+     <range_max>48000</range_max>
+     <default>8000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3MasterClockRate" psid="147">
+     <label>Master clock rate in hertz for fourth I2S instance</label>
+     <description_user>
+When acting as a master on the fourth digital interface in I2S mode, this key
+allows the specification in hertz of the exact clock rate to be generated.
+
+If set to zero, the firmware calculates the clock rate based on the
+sync rate and bits per sample.
+
+Note: the name MasterClockRate is historical; this key pertains to the bit
+clock frequency, not the frequency of any MCLK signal in the system.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>8000000</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3MasterMode" psid="148">
+     <label>Enable master mode on fourth I2S instance</label>
+     <description_user>
+Setting the key to TRUE configures the hardware to generate the clock and
+sync signals on the fourth I2S instance.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3JstfyFormat" psid="149">
+     <label>Set sample justification for fourth I2S instance</label>
+     <description_user>
+0: left justified, 1: right justified.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3LftJstfyDly" psid="150">
+     <label>Set delay before sampling when left justified for fourth I2S instance</label>
+     <description_user>
+0: MSB of sample data occurs in the first bit clock period after sync transition.
+1: MSB of sample data occurs in the second bit clock period after sync transition.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3ChnlPlrty" psid="151">
+     <label>I2S channel polarity for fourth I2S instance</label>
+     <description_user>
+0: Sample data is left channel when sync clock line is high
+1: Sample data is right channel when sync clock line is high
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>1</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3AudioAttenEnable" psid="152">
+     <label>Enable attenuation on input data for fourth I2S instance</label>
+     <description_user>
+Enables/disables the attenuation applied to incoming (into device) audio samples in case the I2s3BitsPerSample
+is set to 20 or 24 bits per sample on the fourth I2S instance.
+
+false: 17 bit sample data is rounded down to 16 bits.
+true : the audio attenuation defined in the MIB key I2s3AudioAtten is applied over 24 bits with saturated rounding.
+
+Requires I2s3CropEnable to be 0.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3AudioAtten" psid="153">
+     <label>Attenuation in 6 dB steps for fourth I2S instance</label>
+     <description_user>
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>15</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3BitsPerSample" psid="154">
+     <label>Bits per sample for fourth I2S instance</label>
+     <description_user>
+This key specifies the number of bit clocks reserved for each (mono)
+sample on the fourth I2S interface. Valid settings are 16, 20, or
+24 bits per sample.
+
+This key does not specify how many of those bits are used for internal
+data processing; see I2s3SampleSize for that. If this key is set to
+a value larger than I2s3SampleSize, the additional bits are output as
+zeroes in the least significant bits. On the input, if sample size
+is 16 bits and bits-per-sample is greater, an attenuation can be
+applied, or samples larger than 16bit can be cropped to 16bits.
+
+This key is also used to calculate the bit clock rate when in
+master mode and the I2s3MasterClockRate key is not set.
+(I2s3MasterClockRate takes precedence over this key for the
+purposes of supplying the master clock rate.) The calculation is
+bits per sample * 2 (channels) * sample rate.
+     </description_user>
+     <type>uint16</type>
+     <range_min>16</range_min>
+     <range_max>24</range_max>
+     <default>16</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3CropEnable" psid="155">
+     <label>Takes first 16bits after sync edge as sample for fourth I2S instance</label>
+     <description_user>
+In this mode the most significant bits after sync are taken to be the sample data.
+If I2s3BitsPerSample is configured for 24/32 bits per sample, but I2s3SampleSize is
+configured for 16 bits per sample only, then crop enable decides whether the I2S
+interface rounds or truncates incoming 24/32 bits to 16 bits.
+
+Additionally, it must be enabled if in 16 bit per sample mode when CLK rate = 32*sample rate.
+
+0: Disable Cropping(or select rounding)
+1: Enable Cropping
+
+From CSRA681xx, the crop mode is selected automatically, and there is no need to
+set this key; it should be left at its default value.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3TxStartSample" psid="156">
+     <label>Defines when TX begins for fourth I2S instance</label>
+     <description_user>
+0: I2S transmission begins during low sync clock phase.
+1: I2S transmission begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="I2s3RxStartSample" psid="157">
+     <label>Defines when RX begins for fourth I2S instance</label>
+     <description_user>
+0: I2S reception begins during low sync clock phase.
+1: I2S reception begins during high sync clock phase.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+    <config_element name="Spdif0OutPioConfig" psid="158">
+        <label>Output PIO configuration for first SPDIF instance</label>
+        <description_user>
+            This key defines how output pin for first SPDIF instance (instance 0) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Spdif1OutPioConfig" psid="159">
+        <label>Output PIO configuration for second SPDIF instance</label>
+        <description_user>
+            This key defines how output pin for second SPDIF instance (instance 1) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Spdif2OutPioConfig" psid="160">
+        <label>Output PIO configuration for third SPDIF instance</label>
+        <description_user>
+            This key defines how output pin for third SPDIF instance (instance 2) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Spdif3OutPioConfig" psid="161">
+        <label>Output PIO configuration for fourth SPDIF instance</label>
+        <description_user>
+            This key defines how output pin for fourth SPDIF instance (instance 3) is configured.
+            The signal can be specified to use
+                0 - 95: PIO number or
+            If the signal is not required, it should be set to
+                255: Unused
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <default>255</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="DigMic0PioConfig" psid="162">
+        <label>PIO configuration for first Digital Mic instance</label>
+        <description_user>
+            This key defines how pins for first Digital Mic instance (instance 0) are configured.
+            The octet string key value contains a value each for the CLK_OUT &amp; DATA_IN signal lines
+            in that order. Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            If multiple digital mic instances share the same clock pin, set the CLK_OUT signal on any one
+            of the instances to the required PIO number and set it to Unused on all the other instances.
+            All digital mic channels that share a clock in this way must be placed in a sync group. Also,
+            digital mic endpoints on the instance that defines CLK_OUT should be connected first for the
+            clock to be enabled.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>2</range_min>
+        <range_max>2</range_max>
+        <is_internal>false</is_internal>
+        <default>[FF FF]</default>
+    </config_element>
+    <config_element name="DigMic1PioConfig" psid="163">
+        <label>PIO configuration for second Digital Mic instance</label>
+        <description_user>
+            This key defines how pins for second Digital Mic instance (instance 1) are configured.
+            The octet string key value contains a value each for the CLK_OUT &amp; DATA_IN signal lines
+            in that order. Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            If multiple digital mic instances share the same clock pin, set the CLK_OUT signal on any one
+            of the instances to the required PIO number and set it to Unused on all the other instances.
+            All digital mic channels that share a clock in this way must be placed in a sync group. Also,
+            digital mic endpoints on the instance that defines CLK_OUT should be connected first for the
+            clock to be enabled.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>2</range_min>
+        <range_max>2</range_max>
+        <is_internal>false</is_internal>
+        <default>[FF FF]</default>
+    </config_element>
+    <config_element name="DigMic2PioConfig" psid="164">
+        <label>PIO configuration for third Digital Mic instance</label>
+        <description_user>
+            This key defines how pins for third Digital Mic instance (instance 2) are configured.
+            The octet string key value contains a value each for the CLK_OUT &amp; DATA_IN signal lines
+            in that order. Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            If multiple digital mic instances share the same clock pin, set the CLK_OUT signal on any one
+            of the instances to the required PIO number and set it to Unused on all the other instances.
+            All digital mic channels that share a clock in this way must be placed in a sync group. Also,
+            digital mic endpoints on the instance that defines CLK_OUT should be connected first for the
+            clock to be enabled.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>2</range_min>
+        <range_max>2</range_max>
+        <is_internal>false</is_internal>
+        <default>[FF FF]</default>
+    </config_element>
+    <config_element name="DigMic3PioConfig" psid="165">
+        <label>PIO configuration for fourth Digital Mic instance</label>
+        <description_user>
+            This key defines how pins for fourth Digital Mic instance (instance 3) are configured.
+            The octet string key value contains a value each for the CLK_OUT &amp; DATA_IN signal lines
+            in that order. Each signal can be specified to use
+                0x00 - 0x5F: PIO number or
+            If the signal is not required, it should be set to
+                0xFF: Unused
+            If multiple digital mic instances share the same clock pin, set the CLK_OUT signal on any one
+            of the instances to the required PIO number and set it to Unused on all the other instances.
+            All digital mic channels that share a clock in this way must be placed in a sync group. Also,
+            digital mic endpoints on the instance that defines CLK_OUT should be connected first for the
+            clock to be enabled.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>2</range_min>
+        <range_max>2</range_max>
+        <is_internal>false</is_internal>
+        <default>[FF FF]</default>
+    </config_element>
+
+
+
+    <config_element name="PcmSampleSize" psid="166">
+        <label>Sample size for the first PCM interface</label>
+        <description_user>
+This key supports formats up to 24 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration,
+16: 16 bits in 16 cycle slot duration,
+24: 24 bits in 24 cycle slot duration.
+If this key is set, it takes precedence over PcmSampleFormat.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>24</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Pcm1SampleSize" psid="167">
+        <label>Sample size for the second PCM interface</label>
+        <description_user>
+This key supports formats up to 24 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration,
+16: 16 bits in 16 cycle slot duration,
+24: 24 bits in 24 cycle slot duration.
+If this key is set, it takes precedence over Pcm1SampleFormat.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>24</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Pcm2SampleSize" psid="168">
+        <label>Sample size for the third PCM interface</label>
+        <description_user>
+This key supports formats up to 24 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration,
+16: 16 bits in 16 cycle slot duration,
+24: 24 bits in 24 cycle slot duration.
+If this key is set, it takes precedence over Pcm2SampleFormat.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>24</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Pcm3SampleSize" psid="169">
+        <label>Sample size for the fourth PCM interface</label>
+        <description_user>
+This key supports formats up to 24 bit.
+0: 13 bits in 16 cycle slot duration,
+1: 16 bits in 16 cycle slot duration,
+2: 8 bits in 16 cycle slot duration,
+3: 8 bits in 8 cycle slot duration,
+16: 16 bits in 16 cycle slot duration,
+24: 24 bits in 24 cycle slot duration.
+If this key is set, it takes precedence over Pcm3SampleFormat.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>24</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="I2sSampleSize" psid="170">
+        <label>Sample size for the first I2S interface</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both input and output, and to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>16</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="I2s1SampleSize" psid="171">
+        <label>Sample size for the second I2S interface</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both input and output, and to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>16</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="I2s2SampleSize" psid="172">
+        <label>Sample size for the third I2S interface</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both input and output, and to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>16</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="I2s3SampleSize" psid="173">
+        <label>Sample size for the fourth I2S interface</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both input and output, and to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>16</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="Codec0InputGain" psid="192">
+        <label>Gain for the first codec input</label>
+        <description_user>
+Input gain in approximate 3dB steps, with 9 corresponding to 0dB,
+lower values to smaller gains (attenuation), and higher values to
+larger gains. Depending on the range of gains implemented in a
+device, settings at the lower and upper ends of the range may
+result in the same gain. Refer to the device datasheet for details.
+When Codec0RawInputGain is set, the value of this key is ignored.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>22</range_max>
+        <default>9</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0RawInputGain" psid="193">
+        <label>Low level gain control for the first codec input</label>
+        <description_user>
+The value for this key consists of bit fields for registers which
+control the codec input gain. Refer to the device datasheet for details
+of this setting.
+When a valid value for this key is defined, the value of Codec0InputGain is ignored.
+        </description_user>
+        <type>uint32</type>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0InputRate" psid="194">
+        <label>The sample rate in Hz for the first codec input</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the first codec input.
+Valid choices are: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 40000, 44100,
+and 48000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>48000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0InputDataSource" psid="196">
+        <label>Configures the signal routing within the first codec input</label>
+        <description_user>
+ADC data source selection from:
+0: output of the IIR Filter
+1: output of the digital gain stage
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0InputRoute" psid="197">
+        <label>Configures the signal routing within the first codec input</label>
+        <description_user>
+ADC chain routing:
+0: IIR filter followed by Digital gain
+1: Digital gain followed by IIR filter
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0InputSampleSize" psid="198">
+        <label>Sample size for the first codec input</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0InputG722FilterEnable" psid="199">
+        <label>Enables optional G722 filter in the first codec input</label>
+        <description_user>
+Enables optional G722 filter in the first codec input. Improves noise performance.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0InputG722FirEnable" psid="200">
+        <label>Enables optional G722 FIR filter in the first codec input</label>
+        <description_user>
+Enable optional FIR filter in the G722 filter to droop the response slightly.
+This only has an effect if Codec0InputG722FilterEnable is also set.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec0InputTermination" psid="201">
+        <label>Selects the analog inputs for the first codec input</label>
+        <description_user>
+This is a bitfield. When bit 15 is 0, the values of the lower bits correspond to
+the following standard configurations:
+0: dual differential (LINEIN1_P:LINEIN1_N, LINEIN2_P:LINEIN2_N)
+1: dual single-ended noninverted (LINEIN1_P, LINEIN2_P)
+2: dual single-ended inverted (LINEIN1_N, LINEIN2_N)
+3: single differential(MICIN1_P, MICIN2_N)
+When bit 15=1, the lower bits are a raw register value controlling the input line
+selection. Not all the configurations are valid on all devices and instances. See
+the device datasheet for details.
+        </description_user>
+        <type>uint16</type>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="Codec0InputSidetoneSourceA" psid="202">
+        <label>Configures the sidetone source point for the first channel of the first codec input</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0InputSidetoneSourceB" psid="203">
+        <label>Configures the sidetone source point for the second channel of the first codec input</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0InputSidetoneGainA" psid="204">
+        <label>Configures the sidetone gain for the first channel of the first codec input</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0InputSidetoneGainB" psid="205">
+        <label>Configures the sidetone gain for the second channel of the first codec input</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec0OutputGain" psid="208">
+        <label>Gain for the first codec output</label>
+        <description_user>
+Output gain in approximate 3dB steps, with 15 corresponding to 0dB,
+lower values to smaller gains (attenuation), and higher values to
+larger gains. Depending on the range of gains implemented in a
+device, settings towards the lower and upper ends of the range may
+result in the same gain. Refer to the device datasheet for details.
+When Codec0RawOutputGain is set, the value of this key will be ignored.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>22</range_max>
+        <default>15</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0RawOutputGain" psid="209">
+        <label>Low level gain control for the first codec output</label>
+        <description_user>
+The value for this key consists of bit fields for registers which
+control the codec output gain. Refer to the device datasheet for details
+of this setting.
+When a valid value for this key is set, Codec0OutputGain will be ignored.
+        </description_user>
+        <type>uint32</type>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0OutputRate" psid="210">
+        <label>The sample rate in Hz for the first codec output</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the first codec output.
+Supported sample rates are: 8000, 11025, 12000, 16000, 22050, 24000, 32000,
+40000, 44100, 48000 and 96000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>96000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+
+    <config_element name="Codec0OutputSampleSize" psid="212">
+        <label>Sample size for the first codec output</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0OutputInterpFilterMode" psid="213">
+        <label>Selects the codec output interpolation FIR filter.</label>
+        <description_user>
+Selects the codec output interpolation FIR filter:
+0: default interpolation filter
+1: short FIR for reduced latency requirements, but not as good stop band rejection
+2: narrow FIR to meet G.722 requirements
+3: reserved
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>3</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec0OutputIndividualSidetoneEnableA" psid="214">
+        <label>Enables adding sidetone to the first channel of the first codec output</label>
+        <description_user>
+Source channels also have to be selected using Codec0OutputSourceMaskA.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputIndividualSidetoneEnableB" psid="215">
+        <label>Enables adding sidetone to the second channel of the first codec output</label>
+        <description_user>
+Source channels also have to be selected using Codec0OutputSourceMaskB.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputSidetoneSourceMaskA" psid="216">
+        <label>Enables sidetone source channels for output on the first channel of the first codec output</label>
+        <description_user>
+This is a bitmask of 8 bits, one for each source channel. A maximum of two bits can be set at the same time.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>192</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputSidetoneSourceMaskB" psid="217">
+        <label>Enables sidetone source channels for output on the second channel of the first codec output</label>
+        <description_user>
+This is a bitmask of 8 bits, one for each source channel. A maximum of two bits can be set at the same time.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>192</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputSidetoneInjectionPointA" psid="218">
+        <label>Configures routing of the sidetone to the first channel of the first codec output</label>
+        <description_user>
+The valid choices are:
+0: Side tone is added after the digital gain.
+1: Side tone is added before the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputSidetoneInjectionPointB" psid="219">
+        <label>Configures routing of the sidetone to the second channel of the first codec output</label>
+        <description_user>
+The valid choices are:
+0: Side tone is added after the digital gain.
+1: Side tone is added before the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputSidetoneInvertA" psid="220">
+        <label>Inverts the sidetone phase on the first channel of the first codec output</label>
+        <description_user>
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec0OutputSidetoneInvertB" psid="221">
+        <label>Inverts the sidetone phase on the second channel of the first codec output</label>
+        <description_user>
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec1InputGain" psid="224">
+        <label>Gain for the second codec input</label>
+        <description_user>
+Input gain in approximate 3dB steps, with 9 corresponding to 0dB,
+lower values to smaller gains (attenuation), and higher values to
+larger gains. Depending on the range of gains implemented in a
+device, settings at the lower and upper ends of the range may
+result in the same gain. Refer to the device datasheet for details.
+When Codec1RawInputGain is set, the value of this key is ignored.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>22</range_max>
+        <default>9</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1RawInputGain" psid="225">
+        <label>Low level gain control for the second codec input</label>
+        <description_user>
+The value for this key consists of bit fields for registers which
+control the codec input gain. Refer to the device datasheet for details
+of this setting.
+When a valid value for this key is defined, the value of Codec1InputGain is ignored.
+        </description_user>
+        <type>uint32</type>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1InputRate" psid="226">
+        <label>The sample rate in Hz for the second codec input</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the second codec input.
+Valid choices are: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 40000, 44100,
+and 48000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>48000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1InputDataSource" psid="228">
+        <label>Configures the signal routing within the second codec input</label>
+        <description_user>
+ADC data source selection from:
+0: output of the IIR Filter
+1: output of the digital gain stage
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1InputRoute" psid="229">
+        <label>Configures the signal routing within the second codec input</label>
+        <description_user>
+ADC chain routing:
+0: IIR filter followed by Digital gain
+1: Digital gain followed by IIR filter
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1InputSampleSize" psid="230">
+        <label>Sample size for the second codec input</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1InputG722FilterEnable" psid="231">
+        <label>Enables optional G722 filter in the second codec input</label>
+        <description_user>
+Enables optional G722 filter in the second codec input. Improves noise performance.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1InputG722FirEnable" psid="232">
+        <label>Enables optional G722 FIR filter in the second codec input</label>
+        <description_user>
+Enable optional FIR filter in the G722 filter to droop the response slightly.
+This only has an effect if Codec1InputG722FilterEnable is also set.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec1InputTermination" psid="233">
+        <label>Selects the analog inputs for the second codec input</label>
+        <description_user>
+This is a bitfield. When bit 15 is 0, the values of the lower bits correspond to
+the following standard configurations:
+0: dual differential (LINEIN1_P:LINEIN1_N, LINEIN2_P:LINEIN2_N)
+1: dual single-ended noninverted (LINEIN1_P, LINEIN2_P OR MICIN1, MICIN2)
+2: dual single-ended inverted (LINEIN1_N, LINEIN2_N)
+3: single differential(MICIN1_P, MICIN2_N)
+When bit 15=1, the lower bits are a raw register value controlling the input line
+selection. Not all the configurations are valid on all devices and instances. See
+the device datasheet for details.
+        </description_user>
+        <type>uint16</type>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="Codec1InputSidetoneSourceA" psid="234">
+        <label>Configures the sidetone source point for the first channel of the second codec input</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1InputSidetoneSourceB" psid="235">
+        <label>Configures the sidetone source point for the second channel of the second codec input</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1InputSidetoneGainA" psid="236">
+        <label>Configures the sidetone gain for the first channel of the second codec input</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1InputSidetoneGainB" psid="237">
+        <label>Configures the sidetone gain for the second channel of the second codec input</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec1OutputGain" psid="240">
+        <label>Gain for the second codec output</label>
+        <description_user>
+Output gain in approximate 3dB steps, with 15 corresponding to 0dB,
+lower values to smaller gains (attenuation), and higher values to
+larger gains. Depending on the range of gains implemented in a
+device, settings towards the lower and upper ends of the range may
+result in the same gain. Refer to the device datasheet for details.
+When Codec1RawOutputGain is set, the value of this key will be ignored.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>22</range_max>
+        <default>15</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1RawOutputGain" psid="241">
+        <label>Low level gain control for the second codec output</label>
+        <description_user>
+The value for this key consists of bit fields for registers which
+control the codec output gain. Refer to the device datasheet for details
+of this setting.
+When a valid value for this key is set, Codec1OutputGain will be ignored.
+        </description_user>
+        <type>uint32</type>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1OutputRate" psid="242">
+        <label>The sample rate in Hz for the second codec output</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the second codec output.
+Supported sample rates are: 8000, 11025, 12000, 16000, 22050, 24000, 32000,
+40000, 44100, 48000 and 96000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>96000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1OutputGainBoostEnable" psid="243">
+        <label>Enables a 3dB gain boost for the second codec output</label>
+        <description_user>
+Enables a 3dB gain boost for the second codec output
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1OutputSampleSize" psid="244">
+        <label>Sample size for the second codec output</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec1OutputInterpFilterMode" psid="245">
+        <label>Selects the codec output interpolation FIR filter.</label>
+        <description_user>
+Selects the codec output interpolation FIR filter:
+0: default interpolation filter
+1: short FIR for reduced latency requirements, but not as good stop band rejection
+2: narrow FIR to meet G.722 requirements
+3: reserved
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>3</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec1OutputIndividualSidetoneEnableA" psid="246">
+        <label>Enables adding sidetone to the first channel of the second codec output</label>
+        <description_user>
+Source channels also have to be selected using Codec0OutputSourceMaskA.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputIndividualSidetoneEnableB" psid="247">
+        <label>Enables adding sidetone to the second channel of the second codec output</label>
+        <description_user>
+Source channels also have to be selected using Codec0OutputSourceMaskB.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputSidetoneSourceMaskA" psid="248">
+        <label>Enables sidetone source channels for output on the first channel of the second codec output</label>
+        <description_user>
+This is a bitmask of 8 bits, one for each source channel. A maximum of two bits can be set at the same time.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>192</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputSidetoneSourceMaskB" psid="249">
+        <label>Enables sidetone source channels for output on the second channel of the second codec output</label>
+        <description_user>
+This is a bitmask of 8 bits, one for each source channel. A maximum of two bits can be set at the same time.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>192</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputSidetoneInjectionPointA" psid="250">
+        <label>Configures routing of the sidetone to the first channel of the second codec output</label>
+        <description_user>
+The valid choices are:
+0: Side tone is added after the digital gain.
+1: Side tone is added before the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputSidetoneInjectionPointB" psid="251">
+        <label>Configures routing of the sidetone to the second channel of the second codec output</label>
+        <description_user>
+The valid choices are:
+0: Side tone is added after the digital gain.
+1: Side tone is added before the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputSidetoneInvertA" psid="252">
+        <label>Inverts the sidetone phase on the first channel of the second codec output</label>
+        <description_user>
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="Codec1OutputSidetoneInvertB" psid="253">
+        <label>Inverts the sidetone phase on the second channel of the second codec output</label>
+        <description_user>
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec1OutputDrive" psid="254">
+        <label>Drive current for the headphone/speaker output of the second codec</label>
+        <description_user>
+There are two valid choices:
+0: 16 Ohm
+1: 32 Ohm (default)
+The setting applies to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+
+    <config_element name="SidetoneGain" psid="256">
+        <label>Global sidetone gain default</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps,
+and unity gain for a value of 11. I.e. the range is approximately -33dB to
++12dB.
+This key sets the default for all sidetone input devices i.e. codec ADCs and
+digital mics. Override it with the following keys in order to configure
+different gains for input devices:
+Codec0InputSidetoneGainA
+Codec0InputSidetoneGainB
+Codec1InputSidetoneGainA
+Codec2InputSidetoneGainB
+DigMic0SidetoneGainA
+DigMic0SidetoneGainB
+DigMic1SidetoneGainA
+DigMic1SidetoneGainB
+DigMic2SidetoneGainA
+DigMic2SidetoneGainB
+DigMic3SidetoneGainA
+DigMic3SidetoneGainB
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="CodecSidetoneEnable" psid="257">
+        <label>Global sidetone output enable for both codec instances</label>
+        <description_user>
+This flag enables sidetone overall for both codec instances.
+In addition to this flag, the individual sidetone enable
+and sidetone source mask for each codec output channel
+have to be set to enable sidetone.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="CodecOutputDisableTimeout" psid="259">
+        <label>Delay for turning off codec output hardware</label>
+        <description_user>
+To reduce pops and clicks during fast close/open sequences of codec devices,
+this setting allows delaying part of the deactivation of the output
+hardware. The interval is specified in microseconds.
+        </description_user>
+        <type>uint32</type>
+        
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic0InputRate" psid="272">
+        <label>Sample rate in Hz for the first digital microphone</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the first digital microphone.
+Valid choices are: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 40000, 44100,
+and 48000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>48000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0InputGain" psid="273">
+        <label>Input gain for the first digital microphone</label>
+        <description_user>
+This is a bitfield value. If bit 15 is cleared, the lower 4 bits contain
+a gain in 2's complement format, zero representing unity gain, and roughly 3dB steps.
+I.e. the approximate gains for each value between 0x0000 and 0x000F are:
+0x0007: 21dB
+0x0006: 18dB
+0x0005: 15dB
+0x0004: 12dB
+0x0003: 9dB
+0x0002: 6dB
+0x0001: 3dB
+0x0000: 0dB
+0x000F: -3dB
+0x000E: -6dB
+0x000D: -9dB
+0x000C: -12dB
+0x000B: -15dB
+0x000A: -18dB
+0x0009: -21dB
+0x0008: -24dB
+
+If bit 15 is set, the lower 9 bits represent a linear gain scale in steps of 1/32,
+i.e. from 0x8000 = mute, 0x8001 = approx. -30dB, to 0x81FF = approx. 24dB.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>65535</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0ChanSwap" psid="274">
+        <label>Swap the two channels of the first digital microphone</label>
+        <description_user>
+If set, the two channels of the first digital microphone are swapped,
+i.e. the bit clock is inverted.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0ClockRate" psid="275">
+        <label>Configures the clock rate for the first digital microphone</label>
+        <description_user>
+The value represents the clock rate in kHz. The supported values and resulting clock rates are:
+ 500: 500kHz
+1000: 1MHz
+2000: 2MHz
+4000: 4MHz
+        </description_user>
+        <type>uint16</type>
+        <range_min>500</range_min>
+        <range_max>4000</range_max>
+        <default>2000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0AmpSel" psid="276">
+        <label>Configures the input levels for the first digital microphone</label>
+        <description_user>
+Valid choices are: 0x0700, 0x0601, 0x0502, 0x0403.
+        </description_user>
+        <type>uint16</type>
+        <range_min>1027</range_min>
+        <range_max>1792</range_max>
+        <default>1792</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0SampleSize" psid="277">
+        <label>Sample size for the first digital microphone</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0DataSource" psid="278">
+        <label>Configures the signal routing within the first digital microphone</label>
+        <description_user>
+ADC data source selection from:
+0: output of the IIR Filter
+1: output of the digital gain stage
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0Route" psid="279">
+        <label>Configures the signal routing within the first digital microphone</label>
+        <description_user>
+ADC chain routing:
+0: IIR filter followed by Digital gain
+1: Digital gain followed by IIR filter
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0G722FilterEnable" psid="280">
+        <label>Enables optional G722 filter in the first digital microphone</label>
+        <description_user>
+Enables optional G722 filter in the first digital microphone. Improves noise performance.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic0G722FirEnable" psid="281">
+        <label>Enables optional G722 FIR filter in the first digital microphone</label>
+        <description_user>
+Enable optional FIR filter in the G722 filter to droop the response slightly.
+This only has an effect if Codec0InputG722FilterEnable is also set.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="DigMic0SidetoneSourceA" psid="282">
+        <label>Configures the sidetone source point for the first channel of the first digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic0SidetoneSourceB" psid="283">
+        <label>Configures the sidetone source point for the second channel of the first digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic0SidetoneGainA" psid="284">
+        <label>Configures the sidetone gain for the first channel of the first digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic0SidetoneGainB" psid="285">
+        <label>Configures the sidetone gain for the second channel of the first digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="DigMic1InputRate" psid="288">
+        <label>Sample rate in Hz for the second digital microphone</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the second digital microphone.
+Valid choices are: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 40000, 44100,
+and 48000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>48000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1InputGain" psid="289">
+        <label>Input gain for the second digital microphone</label>
+        <description_user>
+This is a bitfield value. If bit 15 is cleared, the lower 4 bits contain
+a gain in 2's complement format, zero representing unity gain, and roughly 3dB steps.
+I.e. the approximate gains for each value between 0x0000 and 0x000F are:
+0x0007: 21dB
+0x0006: 18dB
+0x0005: 15dB
+0x0004: 12dB
+0x0003: 9dB
+0x0002: 6dB
+0x0001: 3dB
+0x0000: 0dB
+0x000F: -3dB
+0x000E: -6dB
+0x000D: -9dB
+0x000C: -12dB
+0x000B: -15dB
+0x000A: -18dB
+0x0009: -21dB
+0x0008: -24dB
+
+If bit 15 is set, the lower 9 bits represent a linear gain scale in steps of 1/32,
+i.e. from 0x8000 = mute, 0x8001 = approx. -30dB, to 0x81FF = approx. 24dB.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>65535</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1ChanSwap" psid="290">
+        <label>Swap the two channels of the second digital microphone</label>
+        <description_user>
+If set, the two channels of the second digital microphone are swapped,
+i.e. the bit clock is inverted.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1ClockRate" psid="291">
+        <label>Configures the clock rate for the second digital microphone</label>
+        <description_user>
+The value represents the clock rate in kHz. The supported values and resulting clock rates are:
+ 500: 500kHz
+1000: 1MHz
+2000: 2MHz
+4000: 4MHz
+        </description_user>
+        <type>uint16</type>
+        <range_min>500</range_min>
+        <range_max>4000</range_max>
+        <default>2000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1AmpSel" psid="292">
+        <label>Configures the input levels for the second digital microphone</label>
+        <description_user>
+Valid choices are: 0x0700, 0x0601, 0x0502, 0x0403.
+        </description_user>
+        <type>uint16</type>
+        <range_min>1027</range_min>
+        <range_max>1792</range_max>
+        <default>1792</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1SampleSize" psid="293">
+        <label>Sample size for the second digital microphone</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1DataSource" psid="294">
+        <label>Configures the signal routing within the second digital microphone</label>
+        <description_user>
+ADC data source selection from:
+0: output of the IIR Filter
+1: output of the digital gain stage
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1Route" psid="295">
+        <label>Configures the signal routing within the second digital microphone</label>
+        <description_user>
+ADC chain routing:
+0: IIR filter followed by Digital gain
+1: Digital gain followed by IIR filter
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1G722FilterEnable" psid="296">
+        <label>Enables optional G722 filter in the second digital microphone</label>
+        <description_user>
+Enables optional G722 filter in the second digital microphone. Improves noise performance.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic1G722FirEnable" psid="297">
+        <label>Enables optional G722 FIR filter in the second digital microphone</label>
+        <description_user>
+Enable optional FIR filter in the G722 filter to droop the response slightly.
+This only has an effect if Codec0InputG722FilterEnable is also set.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="DigMic1SidetoneSourceA" psid="298">
+        <label>Configures the sidetone source point for the first channel of the second digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic1SidetoneSourceB" psid="299">
+        <label>Configures the sidetone source point for the second channel of the second digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic1SidetoneGainA" psid="300">
+        <label>Configures the sidetone gain for the first channel of the second digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic1SidetoneGainB" psid="301">
+        <label>Configures the sidetone gain for the second channel of the second digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="DigMic2InputRate" psid="304">
+        <label>Sample rate in Hz for the third digital microphone</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the third digital microphone.
+Valid choices are: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 40000, 44100,
+and 48000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>48000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2InputGain" psid="305">
+        <label>Input gain for the third digital microphone</label>
+        <description_user>
+This is a bitfield value. If bit 15 is cleared, the lower 4 bits contain
+a gain in 2's complement format, zero representing unity gain, and roughly 3dB steps.
+I.e. the approximate gains for each value between 0x0000 and 0x000F are:
+0x0007: 21dB
+0x0006: 18dB
+0x0005: 15dB
+0x0004: 12dB
+0x0003: 9dB
+0x0002: 6dB
+0x0001: 3dB
+0x0000: 0dB
+0x000F: -3dB
+0x000E: -6dB
+0x000D: -9dB
+0x000C: -12dB
+0x000B: -15dB
+0x000A: -18dB
+0x0009: -21dB
+0x0008: -24dB
+
+If bit 15 is set, the lower 9 bits represent a linear gain scale in steps of 1/32,
+i.e. from 0x8000 = mute, 0x8001 = approx. -30dB, to 0x81FF = approx. 24dB.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>65535</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2ChanSwap" psid="306">
+        <label>Swap the two channels of the third digital microphone</label>
+        <description_user>
+If set, the two channels of the third digital microphone are swapped,
+i.e. the bit clock is inverted.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2ClockRate" psid="307">
+        <label>Configures the clock rate for the third digital microphone</label>
+        <description_user>
+The value represents the clock rate in kHz. The supported values and resulting clock rates are:
+ 500: 500kHz
+1000: 1MHz
+2000: 2MHz
+4000: 4MHz
+        </description_user>
+        <type>uint16</type>
+        <range_min>500</range_min>
+        <range_max>4000</range_max>
+        <default>2000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2AmpSel" psid="308">
+        <label>Configures the input levels for the third digital microphone</label>
+        <description_user>
+Valid choices are: 0x0700, 0x0601, 0x0502, 0x0403.
+        </description_user>
+        <type>uint16</type>
+        <range_min>1027</range_min>
+        <range_max>1792</range_max>
+        <default>1792</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2SampleSize" psid="309">
+        <label>Sample size for the third digital microphone</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2DataSource" psid="310">
+        <label>Configures the signal routing within the third digital microphone</label>
+        <description_user>
+ADC data source selection from:
+0: output of the IIR Filter
+1: output of the digital gain stage
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2Route" psid="311">
+        <label>Configures the signal routing within the third digital microphone</label>
+        <description_user>
+ADC chain routing:
+0: IIR filter followed by Digital gain
+1: Digital gain followed by IIR filter
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2G722FilterEnable" psid="312">
+        <label>Enables optional G722 filter in the third digital microphone</label>
+        <description_user>
+Enables optional G722 filter in the third digital microphone. Improves noise performance.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic2G722FirEnable" psid="313">
+        <label>Enables optional G722 FIR filter in the third digital microphone</label>
+        <description_user>
+Enable optional FIR filter in the G722 filter to droop the response slightly.
+This only has an effect if Codec0InputG722FilterEnable is also set.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="DigMic2SidetoneSourceA" psid="314">
+        <label>Configures the sidetone source point for the first channel of the third digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic2SidetoneSourceB" psid="315">
+        <label>Configures the sidetone source point for the second channel of the third digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic2SidetoneGainA" psid="316">
+        <label>Configures the sidetone gain for the first channel of the third digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic2SidetoneGainB" psid="317">
+        <label>Configures the sidetone gain for the second channel of the third digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="DigMic3InputRate" psid="320">
+        <label>Sample rate in Hz for the fourth digital microphone</label>
+
+
+
+
+
+
+
+        <description_user>
+This key specifies the sample rate in hertz for the fourth digital microphone.
+Valid choices are: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 40000, 44100,
+and 48000.
+        </description_user>
+
+        <type>uint32</type>
+        <range_min>8000</range_min>
+
+
+
+        <range_max>48000</range_max>
+
+        <default>8000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3InputGain" psid="321">
+        <label>Input gain for the fourth digital microphone</label>
+        <description_user>
+This is a bitfield value. If bit 15 is cleared, the lower 4 bits contain
+a gain in 2's complement format, zero representing unity gain, and roughly 3dB steps.
+I.e. the approximate gains for each value between 0x0000 and 0x000F are:
+0x0007: 21dB
+0x0006: 18dB
+0x0005: 15dB
+0x0004: 12dB
+0x0003: 9dB
+0x0002: 6dB
+0x0001: 3dB
+0x0000: 0dB
+0x000F: -3dB
+0x000E: -6dB
+0x000D: -9dB
+0x000C: -12dB
+0x000B: -15dB
+0x000A: -18dB
+0x0009: -21dB
+0x0008: -24dB
+
+If bit 15 is set, the lower 9 bits represent a linear gain scale in steps of 1/32,
+i.e. from 0x8000 = mute, 0x8001 = approx. -30dB, to 0x81FF = approx. 24dB.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>65535</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3ChanSwap" psid="322">
+        <label>Swap the two channels of the fourth digital microphone</label>
+        <description_user>
+If set, the two channels of the fourth digital microphone are swapped,
+i.e. the bit clock is inverted.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3ClockRate" psid="323">
+        <label>Configures the clock rate for the fourth digital microphone</label>
+        <description_user>
+The value represents the clock rate in kHz. The supported values and resulting clock rates are:
+ 500: 500kHz
+1000: 1MHz
+2000: 2MHz
+4000: 4MHz
+        </description_user>
+        <type>uint16</type>
+        <range_min>500</range_min>
+        <range_max>4000</range_max>
+        <default>2000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3AmpSel" psid="324">
+        <label>Configures the input levels for the fourth digital microphone</label>
+        <description_user>
+Valid choices are: 0x0700, 0x0601, 0x0502, 0x0403.
+        </description_user>
+        <type>uint16</type>
+        <range_min>1027</range_min>
+        <range_max>1792</range_max>
+        <default>1792</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3SampleSize" psid="325">
+        <label>Sample size for the fourth digital microphone</label>
+        <description_user>
+The sample size for processing is either 16 or 24 bits.
+16: 16 bit
+24: 24 bit
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3DataSource" psid="326">
+        <label>Configures the signal routing within the fourth digital microphone</label>
+        <description_user>
+ADC data source selection from:
+0: output of the IIR Filter
+1: output of the digital gain stage
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>1</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3Route" psid="327">
+        <label>Configures the signal routing within the fourth digital microphone</label>
+        <description_user>
+ADC chain routing:
+0: IIR filter followed by Digital gain
+1: Digital gain followed by IIR filter
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3G722FilterEnable" psid="328">
+        <label>Enables optional G722 filter in the fourth digital microphone</label>
+        <description_user>
+Enables optional G722 filter in the fourth digital microphone. Improves noise performance.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigMic3G722FirEnable" psid="329">
+        <label>Enables optional G722 FIR filter in the fourth digital microphone</label>
+        <description_user>
+Enable optional FIR filter in the G722 filter to droop the response slightly.
+This only has an effect if Codec0InputG722FilterEnable is also set.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="DigMic3SidetoneSourceA" psid="330">
+        <label>Configures the sidetone source point for the first channel of the fourth digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic3SidetoneSourceB" psid="331">
+        <label>Configures the sidetone source point for the second channel of the fourth digital microphone</label>
+        <description_user>
+The valid choices are:
+0: Sidetone signal is taken from the output of the ADC IIR filter (default),
+1: Sidetone signal is taken from the output of the digital gain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic3SidetoneGainA" psid="332">
+        <label>Configures the sidetone gain for the first channel of the fourth digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DigMic3SidetoneGainB" psid="333">
+        <label>Configures the sidetone gain for the second channel of the fourth digital microphone</label>
+        <description_user>
+The gain is specified as an unsigned 4-bit value, with approximate 3dB steps, and unity gain for a value of 11.
+I.e. the range is approximately -33dB to +12dB.
+If this key is not set, the gain is taken from the key SidetoneGain.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>15</range_max>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif0InputSampleSize" psid="400">
+        <label>Sample size for the first SPDIF input</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif0ReceiveAccuracy" psid="401">
+        <label>Selects the receive frequency accuracy threshold for the first SPDIF input</label>
+        <description_user>
+0: Low accuracy (approx. 1%)
+1: High accuracy (approx. 0.4%)
+        </description_user>
+        <type>uint16</type>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif0OutputRate" psid="402">
+        <label>The sample rate in Hz for the first SPDIF output</label>
+        <description_user>
+This key specifies the sample rate in hertz for the first SPDIF output instance.
+Supported sample rates are: 22050, 24000, 32000, 44100, 48000, 88200, 96000, 176400, 192000.
+This setting applies to both channels.
+        </description_user>
+        <type>uint32</type>
+        <range_min>22050</range_min>
+        <range_max>192000</range_max>
+        <default>48000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif0OutputSampleSize" psid="403">
+        <label>Sample size for the first SPDIF output</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="Spdif1InputSampleSize" psid="404">
+        <label>Sample size for the second SPDIF input</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif1ReceiveAccuracy" psid="405">
+        <label>Selects the receive frequency accuracy threshold for the second SPDIF input</label>
+        <description_user>
+0: Low accuracy (approx. 1%)
+1: High accuracy (approx. 0.4%)
+        </description_user>
+        <type>uint16</type>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif1OutputRate" psid="406">
+        <label>The sample rate in Hz for the second SPDIF output</label>
+        <description_user>
+This key specifies the sample rate in hertz for the second SPDIF output instance.
+Supported sample rates are: 22050, 24000, 32000, 44100, 48000, 88200, 96000, 176400, 192000.
+This setting applies to both channels.
+        </description_user>
+        <type>uint32</type>
+        <range_min>22050</range_min>
+        <range_max>192000</range_max>
+        <default>48000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Spdif1OutputSampleSize" psid="407">
+        <label>Sample size for the second SPDIF output</label>
+        <description_user>
+The sample size is either 16 bits or 24 bits.
+16: 16 bit
+24: 24 bit
+This setting applies to both channels.
+        </description_user>
+        <type>uint16</type>
+        <range_min>16</range_min>
+        <range_max>24</range_max>
+        <default>24</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="RemoteWdPingTimeout" psid="416">
+     <label>Watchdog timeout multiplier for pinging secondary processor.</label>
+     <description_user>
+     Defines the period (in terms of multiples of Curator watchdog pings) during
+     which 0 will wait for a response from secondary processor.
+     Value 0 is intended for debugging purposes and causes 0 to report success
+     regardless of status of the secondary processor.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>10</range_max>
+     <default>2</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="EnablePxTimer" psid="417">
+     <label>Flag for enabling/disabling Px start/stop timer.</label>
+     <description_user>
+A timer is run to determine whether starting/stopping Px is successful or not. This flag disables it for debugging purposes.
+     </description_user>
+     <type>boolean</type>
+     <default>true</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+   <config_element name="HeapAllocation" psid="418">
+     <label>Sizes of the heaps for each processor</label>
+     <description_user>
+This key allows partitioning the memory available for heaps
+between the processor cores.
+The value is an array of 6 octets, each octet represents the size of
+a heap partition in kilobytes.
+Note octet string values are in hex.
+ octet 0: heap 1 for 0,
+ octet 1: heap 2 for 0,
+ octet 2: heap 3 for 0,
+ octet 3: heap 1 for P1,
+ octet 4: heap 2 for P1,
+ octet 5: heap 3 for P1.
+For CSRA68100, CSRA68105:
+ heap 1 for 0 uses slow memory accessible through DM1
+ heap 2 for 0 uses fast memory accessible through DM2
+ heap 3 for 0 uses fast memory accessible through DM1
+ heap 1 for P1 uses slow memory accessible through DM1
+ heap 2 for P1 uses fast memory accessible through DM2
+ heap 3 for P1 uses fast memory accessible through DM1
+For QCC302x, QCA669x, and QCC512x:
+ heap 1 for 0 uses memory accessible through DM1
+ heap 2 for 0 uses memory accessible through DM2
+ heap 3 for 0 is unused. Set to 0.
+ heap 1 for P1 uses memory accessible through DM1
+ heap 2 for P1 uses memory accessible through DM2
+ heap 3 for P1 is unused. Set to 0.
+For QCC304x, and QCC514x:
+ heap 1 for 0 uses.
+ heap 2 for 0 is unused. Set to 0.
+ heap 3 for 0 is unused. Set to 0.
+ heap 1 for P1 uses.
+ heap 2 for P1 is unused. Set to 0.
+ heap 3 for P1 is unused. Set to 0.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>6</range_min>
+     <range_max>6</range_max>
+
+     <default>[C0 00 00 A0 00 00]</default>
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+
+   <config_element name="ProfilerEnable" psid="423">
+     <label>Enable the built-in profiler</label>
+     <description_user>
+The audio subsystem software has a built-in profiler, which accounts
+processor time consumption to individual operators and other tasks.
+The profiler data can be read with a variety of debugging facilities.
+
+This key enables this profiler. It is disabled by default, as the
+profiler itself can consume a significant amount of processor time.
+     </description_user>
+     <type>boolean</type>
+     <function_list>
+         <function function_name="mibgetfn_common" type="get" />
+         <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+
+
+
+     <default>false</default>
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="MclkInvert" psid="425">
+     <label>Invert MCLK signal to change MCLK vs PCM/I2S phase alignment</label>
+     <description_user>
+This key allows the phase relationship between the MCLK signal and
+other signals of I2S/PCM interfaces (bit-clock etc) to be adjusted.
+
+It can be used with a generated MCLK output (but only if that output
+uses dedicated routing, i.e., 0xFE in the third element of
+Pcm*PioConfig) or an MCLK input signal.
+
+If set, any MCLK output does not change, but an inverted version of
+the MCLK signal is used internally by the device (for all PCM/I2S
+interfaces), with the net effect that the other interface signals are
+delayed by half an MCLK cycle relative to the MCLK signal.
+
+(If an MCLK signal is output as part of an interface using PIO routing --
+numbers other than 0xFE in Pcm*PioConfig -- this key cannot be used to
+effect a phase adjustment between the MCLK and other outputs. In this case
+the only effect will be to invert the MCLK output, which will only be
+observable if the MCLK signal does not have a 50/50 mark/space ratio.)
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+      <config_element name="USBSourceBufferSize" psid="426">
+          <label>Configures the USB source endpoint output buffer size (in words) </label>
+          <description_user>
+The output buffer of USB source endpoint needs to be large enough to not fill up during the
+longest period the connected operator may be blocked. The worst case for this
+is the sum of the run times for all the other operators in the system.
+The required buffering is then duration (s) * sample rate (Hz) * channels.
+          </description_user>
+          <type>uint16</type>
+          <range_min>0</range_min>
+          <range_max>4800</range_max>
+          <default>576</default>
+          <is_internal>false</is_internal>
+      </config_element>
+
+
+   <config_element name="DefaultLogLevel" psid="427">
+      <label>Configures the default audio subsystem log level</label>
+      <description_user>
+The audio subsystem logging provided in Pydbg or ACAT can be adjusted to show
+more or less verbose information. Although this can be configured at run time,
+early messages may be not be shown unless a higher default level is configured.
+      </description_user>
+      <type>uint16</type>
+      <range_min>0</range_min>
+      <range_max>5</range_max>
+      <default>2</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="Codec0UseClassABAmplifier" psid="428">
+     <label>Connect the DAC to a class AB amplifier instead of a class D amplifier</label>
+     <description_user>
+When this key is set to true, the audio DACs are connected to a class AB amplifier
+instead of a class D amplifier. The use of a class D amplifier is recommended in headphone
+applications while the use of a class AB amplifier is recommended for line output. The line
+can then be connected to another amplifier capable of driving the speakers used in a sound
+bar application.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+    <config_element name="PreferredROMOwner" psid="430">
+     <label>Select the preferential owner of the audio ROM.</label>
+     <description_user>
+This key selects which of the audio cpus is the preferential owner of the audio ROM.
+     </description_user>
+     <type>uint16</type>
+     <range_min>0</range_min>
+     <range_max>1</range_max>
+     <default>0</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+
+   <config_element name="HeapOverflowToFreeRAM" psid="432">
+     <label>Heap overflow to free ram configuration</label>
+     <description_user>
+Enable this to enable the heap memory to overflow to the free ram
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>true</default>
+   </config_element>
+
+    <config_element name="AudioEndpointKickPeriod" psid="433">
+      <label>Audio endpoint default kick period, in microseconds</label>
+      <description_user>
+This key changes the default time period for running audio processing.
+Larger values typically result in lower overall MIPS (and hence power)
+but will use more data RAM.
+This setting does not apply to HFP graphs using the AEC reference operator,
+or to any other overridden endpoints.
+      </description_user>
+      <type>uint16</type>
+      <range_min>1000</range_min>
+      <range_max>20000</range_max>
+      <default>2000</default>
+      <is_internal>false</is_internal>
+    </config_element>
+
+
+      <config_element name="USBSinkOutputBufferSize" psid="434">
+          <label>Configures the To Host USB (USB Tx) output buffer size in octets</label>
+          <description_user>
+This key configures the size of the output buffer for USB Sink (to Host) endpoint,
+the size will be rounded up to nearest power of two value. The buffer needs to be able
+to contain sufficient number of audio packets to cover jitter in the system. The required buffer
+size varies depending on the largest sample rate, channels and the frame size that are going to
+be supported. Use the production of the following four terms to configure the buffer size::
+
+-maximum number of packets: default and minimum is 3 but can be set using USBSinkMaxPacketsInOutputBuffer MIB key
+-channels: maximum number of channels to be supported (2 for stereo)
+-subframe_size: number of octets in each audio sub frame (3 for 24-bit support)
+-max packet len in frames: use (max_sample_rate/1000 + 1)
+          </description_user>
+          <type>uint16</type>
+          <range_min>0</range_min>
+          <range_max>4096</range_max>
+          <default>1024</default>
+          <is_internal>false</is_internal>
+      </config_element>
+
+      <config_element name="USBSourceInputBufferSize" psid="435">
+          <label>Configures the From Host USB (USB Rx) input buffer size in octets</label>
+          <description_user>
+This key configures the size of the input buffer for USB Source (from Host) endpoint,
+the size will be rounded up to nearest power of two value. The input buffer needs to
+be able to contain at least 2 audio packets to cover jitter in the system. The required buffer
+size varies depending on the largest sample rate, channels and the frame size that are going to
+be supported. Use the production of the following terms to configure the buffer size:terms:
+
+maximum number of packets: use 2
+channels: maximum number of channels to be supported (2 for stereo)
+subframe_size: number of octets in each audio sub frame (3 for 24-bit support)
+max packet len in frames: use (max_sample_rate/1000 + 1)
+          </description_user>
+          <type>uint16</type>
+          <range_min>0</range_min>
+          <range_max>4096</range_max>
+          <default>1024</default>
+          <is_internal>false</is_internal>
+      </config_element>
+
+      <config_element name="USBSinkInputBufferSize" psid="436">
+          <label>Configures the USB sink endpoint input buffer size (in words) </label>
+          <description_user>
+The input buffer of USB sink endpoint needs to be large enough to not fill up during
+the period that endpoint cannot send packets because its output buffer has the maximum
+number of packets. This situation can happen if the reader of output buffer (apps normally)
+is in busy time. Set this to a value corresponding to twice of USB audio packets configured
+by USBSinkMaxPacketsInOutputBuffer MIB key.
+          </description_user>
+          <type>uint16</type>
+          <range_min>0</range_min>
+          <range_max>4800</range_max>
+          <default>576</default>
+          <is_internal>false</is_internal>
+      </config_element>
+
+      <config_element name="USBSinkMaxPacketsInOutputBuffer" psid="437">
+          <label>Configures maximum number of packets in the USB to host output buffer </label>
+          <description_user>
+To control the to host latency, the USB sink endpoint will keep the maximum number of buffered packets in the
+output buffer at a certain number. The output buffer size MUST be big enough to be able to contain this number
+of packets.
+          </description_user>
+          <type>uint16</type>
+          <range_min>3</range_min>
+          <range_max>6</range_max>
+          <default>3</default>
+          <is_internal>false</is_internal>
+      </config_element>
+
+   <config_element name="AoVDutyCycleParameters" psid="440">
+        <label>Duty cycle configuration when running AoV in low power mode</label>
+        <description_user>
+            This key defines the parameters for calculating the duty cycle when running
+            Always on Voice with Wake on Voice in low power mode. The octet string key
+            value contains a value each for the total time (period) of the pulse width
+            (specified in 10s of milliseconds) and duty cycle in percentage.
+            Default is 30ms duty cycle every 100ms. Set both values to zero to turn OFF
+            duty cycle mode.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>2</range_min>
+        <range_max>2</range_max>
+        <is_internal>false</is_internal>
+        <default>[0A 1E]</default>
+    </config_element>
+
+
+
+    <config_element name="MclkSourceType" psid="441">
+        <label>Source for the MCLK</label>
+        <description_user>
+This key defines whether an external clock is used for the MCLK
+(or it is generated internally). Default internal.
+        </description_user>
+        <type>boolean</type>
+        <is_internal>false</is_internal>
+        <default>false</default>
+    </config_element>
+
+    <config_element name="MclkExtFreq" psid="442">
+        <label>External MCLK frequency</label>
+        <description_user>
+This key defines the frequency in Hz of the external clock used as MCLK.
+It is ignored if MclkSourceType is not "external".
+Value 0 means "measure on use" (default)
+        </description_user>
+        <type>uint32</type>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+
+
+
+    <config_element name="PcmClkSource" psid="443">
+        <label>Source of the PCM clock.</label>
+        <description_user>
+This key defines the clock used for PCM. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="Pcm1ClkSource" psid="444">
+        <label>Source of the PCM1 clock.</label>
+        <description_user>
+This key defines the clock used for PCM1. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+2: BORROW_PCM0
+3: BORROW_EPCM0
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>3</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="Pcm2ClkSource" psid="445">
+        <label>Source of the PCM2 clock.</label>
+        <description_user>
+This key defines the clock used for PCM2. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+2: BORROW_PCM0
+3: BORROW_EPCM0
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>3</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="Pcm3ClkSource" psid="446">
+        <label>Source of the PCM3 clock.</label>
+        <description_user>
+This key defines the clock used for PCM3. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+
+
+    <config_element name="I2sClkSource" psid="447">
+        <label>Source of the I2S clock.</label>
+        <description_user>
+This key defines the clock used for I2S. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="I2s1ClkSource" psid="448">
+        <label>Source of the I2S1 clock.</label>
+        <description_user>
+This key defines the clock used for I2S1. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+2: BORROW_PCM0
+3: BORROW_EPCM0
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>3</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="I2s2ClkSource" psid="449">
+        <label>Source of the I2S2 clock.</label>
+        <description_user>
+This key defines the clock used for I2S2. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+2: BORROW_PCM0
+3: BORROW_EPCM0
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>3</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="I2s3ClkSource" psid="450">
+        <label>Source of the I2S3 clock.</label>
+        <description_user>
+This key defines the clock used for I2S3. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+
+
+
+
+    <config_element name="Spdif0OutputClkSource" psid="451">
+        <label>Source of the Spdif0 out clock.</label>
+        <description_user>
+This key defines the clock used as out clock in SPDIF0. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="Spdif1OutputClkSource" psid="452">
+        <label>Source of the Spdif0 out clock.</label>
+        <description_user>
+This key defines the clock used as out clock in SPDIF1. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="Spdif2OutputClkSource" psid="453">
+        <label>Source of the Spdif2 out clock.</label>
+        <description_user>
+This key defines the clock used as out clock in SPDIF2. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+    <config_element name="Spdif3OutputClkSource" psid="454">
+        <label>Source of the Spdif3 out clock.</label>
+        <description_user>
+This key defines the clock used as out clock in SPDIF3. Values are:
+0: SYSTEM_ROOT_CLK
+1: MCLK
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>1</range_max>
+        <is_internal>false</is_internal>
+        <default>0</default>
+    </config_element>
+
+
+
+    <config_element name="PcmMclkMult" psid="455">
+        <label>Mclk scaling factor for PCM clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for PCM clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+    <config_element name="Pcm1MclkMult" psid="456">
+        <label>Mclk scaling factor for PCM1 clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for PCM1 clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+    <config_element name="Pcm2MclkMult" psid="457">
+        <label>Mclk scaling factor for PCM2 clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for PCM2 clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+    <config_element name="Pcm3MclkMult" psid="458">
+        <label>Mclk scaling factor for PCM3 clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for PCM3 clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+
+
+
+    <config_element name="I2sMclkMult" psid="459">
+        <label>Mclk scaling factor for I2S clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for I2S clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+    <config_element name="I2s1MclkMult" psid="460">
+        <label>Mclk scaling factor for I2S1 clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for I2S1 clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+    <config_element name="I2s2MclkMult" psid="461">
+        <label>Mclk scaling factor for I2S2 clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for I2S2 clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+    <config_element name="I2s3MclkMult" psid="462">
+        <label>Mclk scaling factor for I2S3 clock.</label>
+        <description_user>
+This key defines the scaling factor between MCLK and sync rate for I2S3 clock.
+Values are:
+128: ratio 128
+256: ratio 256
+384: ratio 384
+Default value is SYSTEM_ROOT_CLK.
+        </description_user>
+        <type>uint16</type>
+        <range_min>128</range_min>
+        <range_max>384</range_max>
+        <is_internal>false</is_internal>
+        <default>128</default>
+    </config_element>
+
+
+
+    <config_element name="P1PMHeapAllocation" psid="463">
+        <label>Number of banks of PM RAM to be allocated for P1 to use as PM heap</label>
+        <description_user>
+This key can be used to configure the number of banks of PM RAM to be allocated for Processor Core 1 to use as PM heap.
+The total number of banks available and bank size (in kilobytes) depends on the chip.
+For CSRA68100:
+ There are 7 banks, each 16kB
+For QCC340x and QCA669x:
+ There are 8 banks, each 8kB
+For QCC514x:
+ There are 14 banks, each 8kB
+P1 can be set up to have no PM heap, provided P1 is not required to process downloadable capabilities.
+Actual P1 PM heap size will also depend on the product
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>10</range_max>
+        <is_internal>false</is_internal>
+
+        <default>5</default>
+
+    </config_element>
+
+    <config_element name="DigiMic0WarmUpDuration" psid="464">
+        <label>Add duration in milliseconds for taking care of digital mic warm up time</label>
+        <description_user>
+This key can be used to set a duration in milliseconds until then digital mic instance_0 data will be forcefully muted.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>100</range_max>
+        <default>10</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigiMic1WarmUpDuration" psid="465">
+        <label>Add duration in milliseconds for taking care of digital mic warm up time</label>
+        <description_user>
+This key can be used to set a duration in milliseconds until then digital mic instance_1 data will be forcefully muted.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>100</range_max>
+        <default>10</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigiMic2WarmUpDuration" psid="466">
+        <label>Add duration in milliseconds for taking care of digital mic warm up time</label>
+        <description_user>
+This key can be used to set a duration in milliseconds until then digital mic instance_2 data will be forcefully muted.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>100</range_max>
+        <default>10</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="DigiMic3WarmUpDuration" psid="467">
+        <label>Add duration in milliseconds for taking care of digital mic warm up time</label>
+        <description_user>
+This key can be used to set a duration in milliseconds until then digital mic instance_3 data will be forcefully muted.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>100</range_max>
+        <default>10</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+   <config_element name="LogACCMDmsg" psid="468">
+     <label>Log ACCMD messages</label>
+     <description_user>
+Setting this key to TRUE configures the ACCMD to log
+the incoming and the outgoing messages to the debug log
+buffer.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+    <config_element name="Codec0OutAmpQualityMode" psid="469">
+        <label>Configure DAC for best THD using very high output power.</label>
+        <description_user>
+            To obtain the best THD with the very highest audio power output,
+            this MIB should be set to TRUE. This need only be set when
+            the application run the D-class or AB-Class amplifiers at or
+            near full-scale.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="AncEnableDelay" psid="471">
+        <label>Enable delay for ANC</label>
+        <description_user>
+                Delay required in milliseconds after enabling the codec output
+                while enabling ANC to reduce pops and clicks.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>65535</range_max>
+        <default>10</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="AncRampUpTime" psid="472">
+        <label>Gain ramp up delay for ANC enable</label>
+        <description_user>
+                 Time in milliseconds for ramping up the ANC gain after enabling
+                 ANC to reduce pops and clicks at the output.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>65535</range_max>
+        <default>1000</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="HeapAllocationSram" psid="474">
+          <label>Sizes of the heaps for the external SRAM</label>
+          <description_user>
+              This key allows partitioning the memory available for the external
+              heaps between the processor cores.
+              The value is an array of 6 octets, each pair of octets
+              represents the size in KB( e.g: 256KB is represented as 01 00).
+               octet 0 and 1: Size of external SRAM,
+               octet 2 and 3: Data heap size for 0,
+               octet 4 and 5: Data heap size for P1,
+               octet 6 and 7: reserved,
+               octet 8 and 9: reserved,
+               octet 10 and 11: reserved,
+               octet 12 and 13: reserved,
+          </description_user>
+          <type>octet_string</type>
+          <range_min>14</range_min>
+          <range_max>14</range_max>
+          <default>[00 00 00 00 00 00 00 00 00 00 00 00 00 00]</default>
+          <is_internal>false</is_internal>
+      </config_element>
+
+
+
+
+    <config_element name="AudioThreadOffload" psid="475">
+        <label>Enable thread offload</label>
+        <description_user> Enable thread offload</description_user>
+        <description_internal>
+             Configuring this key to 'true', when dual core support is not
+             enabled (CoreEnable = [00]), enables certain capabilities
+             to offload work onto the second core ("thread offload").
+        </description_internal>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+
+    <config_element name="RelaxMallocStrictness" psid="477">
+        <label>Relax strictness in memory allocation preference</label>
+        <description_user>
+           In use cases that are memory intensive, this key can be set to one
+           of four possible values to allow the malloc algorithm to try another
+           preference (eg: MALLOC_PREFERENCE_DM1 instead of MALLOC_PREFERENCE_DM2)
+           or another allocation method rather than failing the allocation totally.
+           Possible values:
+           0: Default.
+              Memory allocation mechanism attempts to allocate evenly between
+              DM1 and DM2 (called load balancing) for MALLOC_PREFERENCE_NONE.
+              No fallback for MALLOC_PREFERENCE_DM1 and MALLOC_PREFERENCE_DM2.
+           1: Load balancing enabled for MALLOC_PREFERENCE_NONE.
+              Failure to allocate from the requested region for
+              MALLOC_PREFERENCE_DM1 or MALLOC_PREFERENCE_DM2 will fallback
+              to the other region.
+           2: DM1 as the preferred region for MALLOC_PREFERENCE_NONE option
+              with no load balancing.
+              Failure to allocate from the requested region for
+              MALLOC_PREFERENCE_DM1 or MALLOC_PREFERENCE_DM2 will fallback
+              to the other region.
+           3: DM2 as the preferred region for MALLOC_PREFERENCE_NONE option
+              with no load balancing.
+              Failure to allocate from the requested region for
+              MALLOC_PREFERENCE_DM1 or MALLOC_PREFERENCE_DM2 will fallback
+              to the other region.
+           Please note this may have an impact on performance.
+
+           A non-zero PreferredSharedMallocThreshold key overrides this key
+           for sizes below than the specified value if free memory is
+           available in the shared heap.
+        </description_user>
+        <type>uint16</type>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+    <config_element name="Codec0OutClsDAmpDitherEnable" psid="480">
+        <label>Enable Dither on Codec 0 output</label>
+        <description_user>
+            Setting this MIB key whitens any tonal noise in the audio band
+            with a small SNR degradation. This MIB is applicable only for
+           Class D Closed loop mode.
+        </description_user>
+        <type>boolean</type>
+        <default>true</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    <config_element name="Codec0OutClsDAmpControlMode" psid="481">
+        <label>Enable Codec 0 output Amplifier control mode</label>
+        <description_user>
+            To reduce the pop/clicks while turning on Class D DAC, this
+            MIB should be set to true. Setting the MIB key to true may
+            result in a small increase in power consumption. This MIB
+            is applicable only for Class D closed loop mode.
+        </description_user>
+        <type>boolean</type>
+        <default>false</default>
+        <is_internal>false</is_internal>
+    </config_element>
+    <config_element name="DDSClockSource" psid="497">
+        <label>Configures the DDS clock source.</label>
+        <description_user>
+            This mib key is used in order to configure the DDS clock source
+            and frequency. Accepted values are:
+            0 : DDS clock will be running from SPLL at 80 MHz
+            1 : DDS will be running from XTAL clock at 32 MHz
+            X : Future use.
+        </description_user>
+        <type>uint16</type>
+        <range_min>0</range_min>
+        <range_max>2</range_max>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+
+
+    <config_element name="PreferredSharedMallocRanges" psid="501">
+        <label>Configures the threshold for allocating memory from the shared heap </label>
+        <description_user>
+            This key provides an option to allocate memory from the shared
+            heap as the first preference if the malloc preference is set to
+            MALLOC_PREFERENCE_NONE and the requested size falls within the
+            specified range.
+
+            The key must specify 3 different size ranges in the ascending order as
+            lower size range start, lower size range end, middle size range start,
+            middle size range end, higher size range start and higher size range end.
+        </description_user>
+        <type>octet_string</type>
+        <range_min>12</range_min>
+        <range_max>12</range_max>
+        <default>[0000 0000 0000 0000 0000 0000]</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+      
+
+      </metadata>
+</metadata_list>

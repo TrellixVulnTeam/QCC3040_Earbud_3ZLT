@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; AANC ACAT Logging Tool 0.3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="AANC ACAT Logging Tool 0.3.0 documentation" href="index.html"/>
+        <link rel="next" title="Configuration" href="configuration.html"/>
+        <link rel="prev" title="Overview" href="overview.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AANC ACAT Logging Tool
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#activate-environment">Activate Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-files">Example Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-arguments">Command-line Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connection-configuration">Connection Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#images">Images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transports">Transports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#graphical">Graphical</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#controls">Controls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tips">Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#standalone">Standalone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#no-operators-found">No operators found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#import-error-when-launching-the-tool">Import Error when launching the tool</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">AANC ACAT Logging Tool</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Usage</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<span id="usage-aanclogger"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>The following steps are required to launch the <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> tool:</p>
+<ol class="arabic simple">
+<li><p>Activate the environment (see <a class="reference internal" href="#usage-environment"><span class="std std-ref">Activate Environment</span></a>)</p></li>
+<li><p>Launch the tool, for example <code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection.json</span> <span class="pre">-p</span> <span class="pre">aanc_mono.json</span></code> (see
+<a class="reference internal" href="#usage-arguments"><span class="std std-ref">Command-line Arguments</span></a>, <a class="reference internal" href="#usage-configuration"><span class="std std-ref">Connection Configuration</span></a> and <a class="reference internal" href="#usage-graphical"><span class="std std-ref">Graphical</span></a> for more details)</p></li>
+</ol>
+<p>The primary usage of <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> is as a graphical tool where it provides a GUI with live-plot
+data that can be saved to <code class="docutils literal notranslate"><span class="pre">csv</span></code>. There is also a ‘standalone’ mode that will use the connection
+details to launch an interactive ACAT session.</p>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> tool is installed in the audio tools python virtual environment and comes with
+a sample <code class="docutils literal notranslate"><span class="pre">connection.json</span></code> file for the connection details along with a number of plot
+configurations for tuning different features of the adaptive ANC (AANC) or earbud fit test (EFT)
+capabilities.</p>
+<div class="section" id="activate-environment">
+<span id="usage-environment"></span><h3>Activate Environment<a class="headerlink" href="#activate-environment" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace the paths in the following examples with the source code and ADK Toolkit
+directories for your release. This example is using a QCC514x release with ADK Toolkit
+1.1.37.</p>
+</div>
+<ol class="arabic">
+<li><p>Open a command prompt and <code class="docutils literal notranslate"><span class="pre">cd</span></code> to the source code directory, e.g.
+<code class="docutils literal notranslate"><span class="pre">C:\qtil\QCC514x_QCC304x.SRC.1.0</span></code>.</p></li>
+<li><p>From here run the activate script from the ADK toolkit, e.g.
+<code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">C:\qtil\ADK_Toolkit_1.1.37_x64\activate.bat</span></code>.</p></li>
+<li><p>The audio virtual environment should be activated with a prompt, e.g.
+<code class="docutils literal notranslate"><span class="pre">ATK</span> <span class="pre">(C:\qtil\ADK_Toolkit_1.1.37_x64\)</span> <span class="pre">C:\qtil\QCC514x_QCC304x.SRC.1.0&gt;</span></code>.</p></li>
+<li><p>From here you should be able to run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">show</span> <span class="pre">aanclogger</span></code> and see, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Name</span><span class="p">:</span> <span class="n">aanclogger</span>
+<span class="n">Version</span><span class="p">:</span> <span class="mf">0.2</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">Summary</span><span class="p">:</span> <span class="n">A</span> <span class="n">wrapper</span> <span class="n">around</span> <span class="n">ACAT</span> <span class="n">to</span> <span class="n">log</span> <span class="n">AANC</span> <span class="n">data</span>
+<span class="n">Home</span><span class="o">-</span><span class="n">page</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">qualcomm</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
+<span class="n">Author</span><span class="p">:</span> <span class="n">Qualcomm</span>
+<span class="n">Author</span><span class="o">-</span><span class="n">email</span><span class="p">:</span>
+<span class="n">License</span><span class="p">:</span> <span class="n">Other</span><span class="o">/</span><span class="n">Proprietary</span> <span class="n">License</span>
+<span class="n">Location</span><span class="p">:</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC514x_QCC304x</span><span class="o">.</span><span class="n">SRC</span><span class="o">.</span><span class="mf">1.0</span>\<span class="n">tools</span>\<span class="n">python_workspace</span>\<span class="n">workspace_env37</span>
+<span class="n">Requires</span><span class="p">:</span> <span class="n">ipython</span><span class="p">,</span> <span class="n">matplotlib</span><span class="p">,</span> <span class="n">ACAT</span><span class="p">,</span> <span class="n">jsonschema</span>
+<span class="n">Required</span><span class="o">-</span><span class="n">by</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="example-files">
+<span id="usage-example-files"></span><h3>Example Files<a class="headerlink" href="#example-files" title="Permalink to this headline">¶</a></h3>
+<p>The example files are located within the <code class="docutils literal notranslate"><span class="pre">resources</span></code> folder of the <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> package. The
+location for the example files can be determined from the <code class="docutils literal notranslate"><span class="pre">Location</span></code> field in the output of
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">show</span> <span class="pre">aanclogger</span></code> (see the example in <a class="reference internal" href="#usage-environment"><span class="std std-ref">Activate Environment</span></a>), for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC514x_QCC304x</span><span class="o">.</span><span class="n">SRC</span><span class="o">.</span><span class="mf">1.0</span>\<span class="n">tools</span>\<span class="n">python_workspace</span>\<span class="n">workspace_env37</span>\<span class="n">aanclogger</span>\<span class="n">resources</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="command-line-arguments">
+<span id="usage-arguments"></span><h2>Command-line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Command-line arguments are as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">connection</span><span class="p">,</span> <span class="o">-</span><span class="n">c</span><span class="p">:</span> <span class="n">Path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">connection</span> <span class="n">JSON</span> <span class="n">configuration</span> <span class="n">file</span>
+<span class="o">--</span><span class="n">plot</span><span class="p">,</span> <span class="o">-</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">JSON</span> <span class="n">plot</span> <span class="n">configuration</span> <span class="n">file</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The path to these files can all be either absolute or local to the
+python package resource folder.</p>
+</div>
+<p>An example to launch a single earbud AANC session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">aanclogger</span> <span class="o">-</span><span class="n">c</span> <span class="n">connection</span><span class="o">.</span><span class="n">json</span> <span class="o">-</span><span class="n">p</span> <span class="n">aanc_mono</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>This will use the JSON configuration files in the package resource folder (see
+<a class="reference internal" href="#usage-example-files"><span class="std std-ref">Example Files</span></a>)</p>
+</div>
+<div class="section" id="connection-configuration">
+<span id="usage-configuration"></span><h2>Connection Configuration<a class="headerlink" href="#connection-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The connection configuration JSON file contains two top-level attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">images</span></code>: describes the path to the audio images for launching ACAT</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transports</span></code>: describes the transport configuration for connecting to the device(s)</p></li>
+</ul>
+<div class="section" id="images">
+<h3>Images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
+<p>The images attribute has the following properties:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">audio_path</span></code>: filesystem path to the <cite>audio</cite> folder for the source project</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chip</span></code>: name of the chip folder for the device</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kymera_audio</span></code>: name (or absolute path) to the ROM ELF file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">downloadables</span></code>: list of names (or absolute paths) to any downloadable ELF files to launch
+ACAT with</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> will try to use the <code class="docutils literal notranslate"><span class="pre">audio_path</span></code> and <code class="docutils literal notranslate"><span class="pre">chip</span></code> values to automatically locate
+the full filepath for the <code class="docutils literal notranslate"><span class="pre">kymera_audio</span></code> and <code class="docutils literal notranslate"><span class="pre">downloadables</span></code> ELF files. Alternatively the ELF
+files can be specified as absolute paths.</p>
+</div>
+<div class="section" id="transports">
+<h3>Transports<a class="headerlink" href="#transports" title="Permalink to this headline">¶</a></h3>
+<p>The transports attribute has the following properties:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>: string that represents the transport to the left device to attach to, for example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tc/usb2tc/100</span></code> for a usbdbg connection on device 100</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trb/usb2trb/156200</span></code> for a TRB connection on device 156200</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kalsim</span></code> for a connection to kalsim</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>: String that represents the transport to the right device to attach to. This can be left
+empty when connecting to a single device.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="graphical">
+<span id="usage-graphical"></span><h2>Graphical<a class="headerlink" href="#graphical" title="Permalink to this headline">¶</a></h2>
+<p>The graphical mode is invoked via the command-line option <code class="docutils literal notranslate"><span class="pre">-p</span></code> which is followed by a JSON file
+that describes the configuration for the tool to plot.</p>
+<p>Five configurations are provided with the <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> package and should be sufficient for most
+uses. These can be modified or replaced as required; more information can be found in
+<a class="reference internal" href="configuration.html#configuration-qcomaanc"><span class="std std-ref">Configuration</span></a>.</p>
+<p>The configurations provided are:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">aanc_mono.json</span></code>: plot a sample graph showing the operation of AANC on a single device.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aanc_stereo.json</span></code>: plot a sample graph showing the operation of AANC on two devices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aanc_ed_tuning.json</span></code>: plot variables that are useful for tuning the EDs (see the ANC tuning
+guide for more information).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aanc_self_speech_tuning.json</span></code>: plot variables that are useful for tuning the self speech
+detector (see the ANC tuning guide for more information).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">earbud_fit_test.json</span></code>: plot variables that are useful for tuning an EFT graph (see the ANC
+tuning guide for more information).</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The tool assumes that you have AANC running on the chip. The output should look something
+like what is shown above. If there are <code class="docutils literal notranslate"><span class="pre">KalAccess</span></code> Errors or notifications about the chip not
+being powered, that generally indicates that the chip is not running or is not running AANC.</p>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Plot gain, flags, and SPL levels: <code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection.json</span> <span class="pre">-p</span> <span class="pre">aanc_mono.json</span></code></p></li>
+<li><p>Stereo connection: <code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection_stereo.json</span> <span class="pre">-p</span> <span class="pre">aanc_stereo.json</span></code></p></li>
+<li><p>Tuning the EDs: <code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection.json</span> <span class="pre">-p</span> <span class="pre">aanc_ed_tuning.json</span></code></p></li>
+<li><p>Tuning self-speech: <code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection.json</span> <span class="pre">-p</span> <span class="pre">aanc_self_speech_tuning.json</span></code></p></li>
+<li><p>Tuning earbud fit test: <code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection_eft.json</span> <span class="pre">-p</span> <span class="pre">earbud_fit_test.json</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="controls">
+<h3>Controls<a class="headerlink" href="#controls" title="Permalink to this headline">¶</a></h3>
+<p>There are four buttons at the top of the figure that are useful for controlling the plot:</p>
+<div class="figure align-default">
+<img alt="Graph controls" src="_images/graph_buttons.png" />
+</div>
+<ul class="simple">
+<li><p>Save figure (black save icon): save the capture as a PNG</p></li>
+<li><p>Pause (blue pause icon): Pause the capture</p></li>
+<li><p>Play (blue play icon): Resume the capture (after pause or a reset connection)</p></li>
+<li><p>Save data (blue save icon): save the capture data as CSV</p></li>
+</ul>
+</div>
+<div class="section" id="tips">
+<h3>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The legend lines are clickable to show/hide the line in the plot.</p></li>
+<li><p>It’s quickest to pause the capture before moving/resizing the figure.</p></li>
+<li><p>If the tool is started without a connected device or if the connection is lost while running the
+graph will pause. If the connection is valid it can be restarted by clicking play.</p></li>
+</ul>
+<div class="figure align-default" id="id1">
+<img alt="Sample graph image" src="_images/graph_sample.png" />
+<p class="caption"><span class="caption-text">Sample graph</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="standalone">
+<h2>Standalone<a class="headerlink" href="#standalone" title="Permalink to this headline">¶</a></h2>
+<p>The <em>standalone</em> option is provided to launch straight into an ACAT session. This can be useful
+to debug issues without launching the graphical tool.</p>
+<p>Launch the session with:</p>
+<p><code class="docutils literal notranslate"><span class="pre">aanclogger</span> <span class="pre">-c</span> <span class="pre">connection.json</span></code></p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="no-operators-found">
+<h3>No operators found<a class="headerlink" href="#no-operators-found" title="Permalink to this headline">¶</a></h3>
+<p>This either means there are no operators running or the downloadable bundle
+passed to <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code> was not correct. From the standalone tool or ACAT tab in the ADK
+run <code class="docutils literal notranslate"><span class="pre">opmgr.analyse_all_operators()</span></code>. This should report the operators running and indicate
+whether or not the correct downloadable was passed to <code class="docutils literal notranslate"><span class="pre">aanclogger</span></code>.</p>
+</div>
+<div class="section" id="import-error-when-launching-the-tool">
+<h3>Import Error when launching the tool<a class="headerlink" href="#import-error-when-launching-the-tool" title="Permalink to this headline">¶</a></h3>
+<p>The error is <code class="docutils literal notranslate"><span class="pre">ImportError:</span> <span class="pre">DLL</span> <span class="pre">load</span> <span class="pre">failed:</span> <span class="pre">The</span> <span class="pre">specified</span> <span class="pre">module</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">found.</span></code> and includes
+<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> in the backtrace. This is likely due to the local python installation missing a C++
+runtime. There is a workaround for this by installing an additional package into the virtual
+environment: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">msvc-runtime</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

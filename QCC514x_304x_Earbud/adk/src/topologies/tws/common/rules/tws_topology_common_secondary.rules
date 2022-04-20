@@ -1,0 +1,79 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_common_secondary",
+
+            "doc": "Table of common rules for a TWS Secondary earbud",
+
+            "include_headers": [
+                "tws_topology_common_secondary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_secondary_ruleset.h",
+                "tws_topology_goals.h"
+            ],
+
+            "rules": [
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_SHUTDOWN",
+                    "rule_function": "ruleTwsTopSecShutDown",
+                    "output_message_id": "tws_topology_goal_system_stop",
+                    "doc": "When we are shutting down, disconnect everything."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_FAILED_PEER_CONNECT",
+                    "rule_function": "ruleTwsTopSecFailedConnectFindRole",
+                    "output_message_id": "tws_topology_goal_no_role_find_role",
+                    "doc": "If failed to connect the ACL to the Primary, decide if Secondary should return to no role and restart role selection."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopSecRoleSwitchPeerConnect",
+                    "output_message_id": "tws_topology_goal_secondary_connect_peer",
+                    "doc": "After switching to secondary role, decide if Secondary Earbud should create BREDR link to Primary Earbud."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_IN_CASE",
+                    "rule_function": "ruleTwsTopSecNoRoleIdle",
+                    "output_message_id": "tws_topology_goal_no_role_idle",
+                    "doc": "When Earbud put in the case, decide if it should drop links and transition to no role"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_CASE_LID_CLOSED",
+                    "rule_function": "ruleTwsTopSecNoRoleIdle",
+                    "output_message_id": "tws_topology_goal_no_role_idle",
+                    "doc": "When lid is closed, decide if it should drop links and transition to no role"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_FAILED_SWITCH_SECONDARY",
+                    "rule_function": "ruleTwsTopSecFailedSwitchSecondaryFindRole",
+                    "output_message_id": "tws_topology_goal_no_role_find_role",
+                    "doc": "If failed to switch to being a secondary, decide if device should return to no role and restart role selection."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_IN_CASE",
+                    "rule_function": "ruleTwsTopSecInCaseWatchdogStart",
+                    "output_message_id": "tws_topology_goal_start_watchdog",
+                    "doc": "Start watchdog timer"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_CASE_LID_CLOSED",
+                    "rule_function": "ruleTwsTopSecInCaseWatchdogStart",
+                    "output_message_id": "tws_topology_goal_start_watchdog",
+                    "doc": "Start watchdog timer"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_OUT_CASE",
+                    "rule_function": "ruleTwsTopSecOutOfCaseWatchdogStop",
+                    "output_message_id": "tws_topology_goal_stop_watchdog",
+                    "doc": "Stop watchdog timer"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_CASE_LID_OPEN",
+                    "rule_function": "ruleTwsTopSecOutOfCaseWatchdogStop",
+                    "output_message_id": "tws_topology_goal_stop_watchdog",
+                    "doc": "Stop watchdog timer"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,3 @@
+[console_scripts]
+pydbg = csr.front_end.pydbg_front_end:pkg_main
+

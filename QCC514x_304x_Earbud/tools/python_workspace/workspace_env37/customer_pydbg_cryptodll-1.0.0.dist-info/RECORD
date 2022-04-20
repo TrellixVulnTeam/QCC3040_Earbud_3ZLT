@@ -1,0 +1,8 @@
+csr/wheels/__init__.py,sha256=sDlKghU94x4H2Wtl1dEnIsqRsB1Ibbi7qDCEMGvUqZE,650
+csr/wheels/__pycache__/__init__.cpython-37.pyc,,
+csr/wheels/openssl/win64/libcrypto-1_1-x64.dll,sha256=p2Jhw4LUJWc3QmzN0-o5IyxcncXvOL9JVUAnjwkWsMc,3022848
+customer_pydbg_cryptodll-1.0.0.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+customer_pydbg_cryptodll-1.0.0.dist-info/METADATA,sha256=1ca1s-PqiZfftBkz1FZdS7xZ8EfxDC5TMTILa1fpRs8,957
+customer_pydbg_cryptodll-1.0.0.dist-info/RECORD,,
+customer_pydbg_cryptodll-1.0.0.dist-info/WHEEL,sha256=sYFzu0HyUSxn8eiGhMalYLMMwsSB68sTgB-kgJ2MU0w,123
+customer_pydbg_cryptodll-1.0.0.dist-info/top_level.txt,sha256=DbIi4SwtspHiEmxAMr4NyBxH4p653xdvvG6VauYCqDo,4

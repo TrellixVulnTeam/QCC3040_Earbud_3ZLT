@@ -1,0 +1,8 @@
+
+SchedOld1
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.SchedOld1``.
+
+.. automodule:: ACAT.Analysis.SchedOld1
+   :members:

@@ -1,0 +1,159 @@
+Functions
+=========
+In automatic mode, the ACAT Help file is accessed by running ACAT with
+either no Command Line arguments, or by entering ``-h`` or ``-help``; use
+the ``help()`` function to access help in interactive mode.
+
+
+Get a variable (Interactive mode)
+---------------------------------
+In interactive mode, use either the ``get()`` or
+``chipdata.get_var_strict()`` function to obtain the value of a variable.
+
+For example, to obtain the value of the ``total_pool_size`` variable:
+
+* Using ``get()`` function:
+
+  ::
+  
+    > get('total_pool_size')
+    Name: $_total_pool_size
+    Address: 0xe01afe
+    Value: 0xc30
+    Size: 1
+    Type: const unsigned int
+
+* Using ``chipdata.get_var_strict()`` function:
+
+  ::
+
+    > print chipdata.get_var_strict('$_total_pool_size')
+    Name: $_total_pool_size
+    Address: 0xe01afe
+    Value: 0xc30
+    Size: 1
+    Type: const 2 unsigned int
+
+
+get() function
+~~~~~~~~~~~~~~
+The ``get()`` function accepts spelling mistakes or incomplete variable names
+and may return suggestions for similar or incorrectly spelt search terms:
+always check that the correct variable is returned.
+
+The variable name is passed as either a string or an address, the ``get()``
+function returns and prints information about the specified variable, using the
+structure:
+
+ * Name
+ * Address
+ * Value
+ * Size (In words)
+ * Type
+ * Parent
+
+
+chipdata.get_var_strict() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To avoid the risk of incorrectly selecting similarly named variables during an
+analysis, use the ``chipdata.get_var_strict()`` function to search for exact
+variable names or addresses.
+
+This function returns an error if the requested variable name is modified in
+the firmware or entered incorrectly. Unlike ``get()``, this function does not
+return alternate or similarly named variables.
+
+.. note::
+    This function belongs to the base class ``ChipData``, which is an
+    interface implemented by all derived classes.
+
+
+Casting
+-------
+It is possible to Cast Pointer Values (pointer References), to any type.
+
+For example, to get the contents of the location pointed-to by the
+``first_event`` member of the ``casual_events_queue`` structure:
+
+ 1. Determine the type that is pointed-to. Inspect the contents of the
+    parent structure, using:
+
+   :: 
+
+    > get('casual_events_queue')
+    first_event is a member of the structure:
+    Name: $_casual_events_queue.first_event
+    Address: 0xffaa99
+    Value: 0x6b00
+    Size: 1
+    Type: struct tTimerStruct*
+    Parent: $_casual_events_queue
+   
+   In this example, ``first_event`` is a pointer of type ``tTimerStruct``.
+
+ 2. To interpret the ``tTimerStruct`` type, cast to it using:
+
+   ::
+
+    > cast_value = chipdata.cast(0x6b00, 'tTimerStruct')
+    > print cast_value
+    Name: struct tTimerStruct
+    Address: 0x6b00
+    Value: ['0x0', '0x120f8', '0x0', '0x615f', '0x0', '0x7c57a6', '0x0',
+    '0x7c57a6']
+    Size: 24
+    Type: struct tTimerStruct
+    Members:
+        Name: struct tTimerStruct.next
+        Address: 0x6b00
+        Value: 0x0
+        Size: 4
+        Type: struct tTimerStuctTag*
+        Parent: struct tTimerStruct
+        ----
+        Name: struct tTimerStruct.timer_id
+        Address: 0x6b04
+        Value: 0x120f8
+        Size: 4
+        Type: tTimerId
+        Parent: struct tTimerStruct
+        ----
+        Name: struct tTimerStruct.data_pointer
+        Address: 0x6b08
+        Value: 0x0
+        Size: 4
+        Type: [unknown type]*
+        Parent: struct tTimerStruct
+        ----
+        Name: struct tTimerStruct.TimedEventFunction
+        Address: 0x6b0c
+        Value: 0x615f
+        Size: 4
+        Type: struct tTimerEventFunction*
+        Parent: struct tTimerStruct
+        ----
+        Name: struct tTimerStruct.variant
+        Address: 0x6b10
+        Value: ['0x0', '0x7c57a6', '0x0', '0x7c57a6']
+        Size: 8
+        Type: union
+        Parent: struct tTimerStruct
+        Members:
+
+
+Casting variable as a pointer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If a variable is given as a Pointer, then the Pointer value is used to
+represent the Variable Address or its structure in memory and must be Cast
+to the respective type.
+
+When Cast, the associated memory contents are displayed in accordance with
+to the structure definition.
+
+.. note::
+    The Cast does not perform any check on the underlying data type.
+
+
+De-referencing pointers
+~~~~~~~~~~~~~~~~~~~~~~~
+The ``chipdata.cast()`` function is used to dereference Pointers.

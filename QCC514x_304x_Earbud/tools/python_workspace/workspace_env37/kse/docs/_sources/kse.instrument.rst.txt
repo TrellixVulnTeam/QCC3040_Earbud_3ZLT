@@ -1,0 +1,20 @@
+kse.instrument package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.instrument.acat
+   kse.instrument.kalaccess
+   kse.instrument.kalcmd
+   kse.instrument.kalsim
+
+Module contents
+---------------
+
+.. automodule:: kse.instrument
+   :members:
+   :undoc-members:
+   :show-inheritance:

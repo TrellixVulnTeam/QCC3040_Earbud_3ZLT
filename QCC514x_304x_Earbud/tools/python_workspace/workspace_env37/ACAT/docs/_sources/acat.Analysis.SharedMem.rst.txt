@@ -1,0 +1,8 @@
+
+SharedMem
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.SharedMem``.
+
+.. automodule:: ACAT.Analysis.SharedMem
+   :members:

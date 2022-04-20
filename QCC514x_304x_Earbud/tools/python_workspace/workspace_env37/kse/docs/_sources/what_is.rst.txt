@@ -1,0 +1,12 @@
+
+===========
+What is KSE
+===========
+
+KSE  is a set of python tools that allow you to connect to a hydra chip and send commands to
+kymera (kalimba audio framework).
+
+There are two execution environments.
+
+* Standalone. Without any external dependencies.
+* ADK. Alongside MDE, ADK Toolkit and ADK

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019-2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="bandwidth_manager">
+    <include_header name="marshal_common.h"/>
+    <include_header name="bandwidth_manager.h"/>
+
+    <source>
+#include "domain_marshal_types.h"
+
+extern uint32 BandwidthManager_ActiveFeaturesSize_cb(const void *parent,
+                                     const marshal_member_descriptor_t *member_descriptor,
+                                     uint32 array_element);
+
+#ifdef HOSTED_TEST_ENVIRONMENT
+uint32 BandwidthManager_ActiveFeaturesSize_cb(const void *parent,
+                                     const marshal_member_descriptor_t *member_descriptor,
+                                     uint32 array_element)
+{
+
+}
+#endif
+    </source>
+
+<typedef_struct name="feature_bitfields_t" basic="true" doc="Feature bitfields structure">
+    <member marshal="true" doc="Priority of feature">unsigned priority:3</member>
+    <member marshal="true" doc="Running status of feature">unsigned running:1</member>
+    <member marshal="true" doc="Throttle requirement of feature. TRUE, if bandwidth throttling required due to other high priority features are running.FALSE, otherwise">unsigned throttle_required:1</member>
+    <member marshal="true" doc="Identifier of feature">unsigned identifier:3</member>
+</typedef_struct>
+
+<typedef_struct name="bandwidth_manager_feature_info_t" doc="The structure used to keep track of the registered features">
+    <member marshal="false" doc="Callback function pointer of feature">bandwidth_manager_callback_t callback</member>
+    <member marshal="true" doc="Bitfield attributes of feature">feature_bitfields_t bitfields</member>
+</typedef_struct>
+
+<typedef_struct name="bandwidth_manager_info_t" has="dynamic_array" array_elements_cb="BandwidthManager_ActiveFeaturesSize_cb" doc="The structure used to store bandwidth features information and its activity">
+    <member marshal="false" doc="Task handler of messages sent to bandwidth manager">TaskData task</member>
+    <member marshal="true"  doc="Number of active features running">uint8 active_features_num</member>
+    <member marshal="false" doc="Number of registered features">uint8 registered_features_num</member>
+    <member marshal="true"  doc="Array of feature information stored upon BandwidthManager_RegisterFeature">bandwidth_manager_feature_info_t feature_info[BANDWIDTH_MGR_FEATURE_MAX]</member>
+</typedef_struct>
+</types>
+

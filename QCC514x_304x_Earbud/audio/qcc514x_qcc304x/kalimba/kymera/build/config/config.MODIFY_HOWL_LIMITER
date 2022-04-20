@@ -1,0 +1,22 @@
+############################################################################
+# Copyright (c) 2020 Qualcomm Technologies, Inc. and/or its subsidiaries
+############################################################################
+# Definitions for AEC Reference Sidetone howling limitier.
+#
+%cpp
+INSTALL_AEC_REFERENCE_HOWL_LIMITER
+
+%list ALL_INCDIRS
+../lib_private/hl_limiter
+
+# List of libraries to build
+%list CFG_LIBS
+../lib_private/hl_limiter/hl_limiter
+
+%list MAXIM_LIBS
+../lib_private/hl_limiter/hl_limiter
+
+
+
+
+

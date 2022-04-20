@@ -1,0 +1,8 @@
+
+KerDebugInfo
+==========================================================================
+
+This module can be imported from ``ACAT.Core.KerDebugInfo``.
+
+.. automodule:: ACAT.Core.KerDebugInfo
+   :members:

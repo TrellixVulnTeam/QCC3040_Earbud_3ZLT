@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kymera.kymera.kymera_base &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kymera.kymera.kymera_base</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kymera.kymera.kymera_base</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Kymera Base class&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">abstractproperty</span>
+
+
+<div class="viewcode-block" id="KymeraBase"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase">[docs]</a><span class="k">class</span> <span class="nc">KymeraBase</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Kymera abstract class</span>
+
+<span class="sd">    This class should be subclassed by all possible kymera implementation to give a compatible</span>
+<span class="sd">    API for the rest of the system</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uut (kats.core.uut_base.UutBase): Uut instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uut</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">__</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractproperty</span>
+    <span class="k">def</span> <span class="nf">platform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str: Platform name&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractproperty</span>
+    <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str: Interface name&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_create_operator"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_create_operator">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_create_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an operator in the stopped mode with endpoints</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cap_id (int): Id of the capability to instantiate</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Operator id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_create_operator_ex"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_create_operator_ex">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_create_operator_ex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">processor_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an operator (parameterised version) in the stopped mode with endpoints</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cap_id (int): Id of the capability to instantiate</span>
+<span class="sd">            priority (int): Priority, 0 is the lowest</span>
+<span class="sd">            processor_id (int): Processor, 0 is main</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Operator id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_destroy_operators"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_destroy_operators">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_destroy_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;When the operator is stopped, this commands destroys it and frees all of its resources</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (list[int]): Id of the operators to destroy</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_start_operators"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_start_operators">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_start_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Starts an operator and any endpoints connected to the operator, creating a data flow and</span>
+<span class="sd">        data processing</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (list[int]): Id of the operators to start</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_stop_operators"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_stop_operators">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_stop_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stops an operator</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (list[int]): Id of the operators to stop</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_reset_operators"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_reset_operators">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_reset_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reinitialize an operator</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (list[int]): Id of the operators to reset</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_operator_message"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_operator_message">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_operator_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op_id</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a message to the specified operator containing addiitional information,</span>
+<span class="sd">        such as configuration data, where the message does not destroy the operator or</span>
+<span class="sd">        affect its state</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            op_id (int): Id of the operator</span>
+<span class="sd">            msg (list[int]): Message to be sent</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Message response</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_get_capid_list"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_get_capid_list">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_get_capid_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request a list of the capability IDs supported by the device</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Capability ID</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_get_opid_list"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_get_opid_list">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_get_opid_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request a list of operator IDs supported by Kymera that are provided to the client</span>
+<span class="sd">        including the capability IDs that instantiated the operators</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cap_id (int): Capability ID or 0 for all capabilities</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Operator ID</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.opmgr_get_cap_info"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.opmgr_get_cap_info">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">opmgr_get_cap_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cap_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request the information structure for the specified capability from kymera</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cap_id (int): Capability ID</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Information</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_get_source"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_get_source">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_get_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a source endpoint of the specified type, including all parameters specific to that</span>
+<span class="sd">        type.</span>
+<span class="sd">        Extra information can be passed to the created endpoint using configuration commands.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type(int) : Type of endpoint</span>
+<span class="sd">            params (list[int]): Endpoint parameters</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Source endpoint id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_get_sink"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_get_sink">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_get_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a sink endpoint of the specified type, including all parameters specific to that</span>
+<span class="sd">        type.</span>
+<span class="sd">        Extra information can be passed to the created endpoint using configuration commands.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type (int) : Type of endpoint</span>
+<span class="sd">            params (list[int]): Endpoint parameters</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Sink endpoint id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_close_source"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_close_source">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_close_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close a source endpoint that was created using stream_if_get_source command.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source_id (int) : Source endpoint id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Source endpoint id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_close_sink"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_close_sink">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_close_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close a sink endpoint that was created using stream_if_get_sink command.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sink_id (int): Endpoint id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_configure_sid"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_configure_sid">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_configure_sid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ep_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Configure an already created endpoint</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ep_id (int): Endpoint id</span>
+<span class="sd">            key (str or int): id specific to the endpoint</span>
+<span class="sd">            value (any): Value of the parameter to be changed</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_connect"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_connect">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connect a source and a sink to create a transform with a unique numeric id,</span>
+<span class="sd">        where either source or sink can be the endpoint or terminal.</span>
+<span class="sd">        The command will fail if either</span>
+
+<span class="sd">        - Source or sink is already connected</span>
+<span class="sd">        - Source or sink id argument does not match the respective component real direction</span>
+
+<span class="sd">        If both source and sink have the same data type, for example, pcm samples or encoded data,</span>
+<span class="sd">        the connection will always work.</span>
+<span class="sd">        If data types are incompatible and the conversion is not completed automatically,</span>
+<span class="sd">        then manual data conversion is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source_id (int): Source endpoint id</span>
+<span class="sd">            sink_id (int): Sink endpoint id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Transform id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_transform_disconnect"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_transform_disconnect">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_transform_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transforms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disconnect one or more transforms.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            transforms (list[int]): Transforms id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_if_sync_sids"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_if_sync_sids">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_if_sync_sids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ep1</span><span class="p">,</span> <span class="n">ep2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Synchronize two endpoints in terms of their data flow, for example,</span>
+<span class="sd">        two endpoints of a stereo audio feed, and add the specified endpoints be a list.</span>
+<span class="sd">        It is possible to synchronize more than two endpoints, by using them in overlapping pairs in</span>
+<span class="sd">        successive stream_if_sync_sids() calls, for example, synchronize:</span>
+
+<span class="sd">        - a. (ep1, ep2)</span>
+<span class="sd">        - b. (ep2, ep3)</span>
+<span class="sd">        - c. (ep3, ep4)</span>
+
+<span class="sd">        If any of the specified endpoint IDs is zero, then the associated endpoint is</span>
+<span class="sd">        removed from the synchronized list.</span>
+<span class="sd">        Closing an endpoint also removes that endpoints synchronization.</span>
+<span class="sd">        When specifying endpoints to synchronize:</span>
+
+<span class="sd">        - Only synchronize endpoints of the same type, for example</span>
+<span class="sd">        - If any attempt is made to synchronize two endpoints different types,</span>
+<span class="sd">          then the operation will fail with STATUS_CMD_FAILED status code.</span>
+<span class="sd">        - Receipt of a terminal ID as source or sink ID is tolerated without error, however a</span>
+<span class="sd">          synchronization attempt of this type will have no effect</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ep1 (int): First endpoint id. If zero it has a unsync effect, it removes the other</span>
+<span class="sd">                endpoint from the synchronized group</span>
+<span class="sd">            ep2 (int): Second endpoint id. If zero it has a unsync effect, it removes the other</span>
+<span class="sd">                endpoint from the synchronized group</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KymeraBase.stream_get_connection_list"><a class="viewcode-back" href="../../../../kse.kymera.kymera.html#kse.kymera.kymera.kymera_base.KymeraBase.stream_get_connection_list">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stream_get_connection_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">sink_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request a list of transform ids and the ids of the transform endpoints from Kymera.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source_id (int): Source endpoint id. If non-zero only transforms that have matching</span>
+<span class="sd">                source will be returned</span>
+<span class="sd">            sink_id (int): Sink endpoint id. If non-zero only transforms that have matching sink</span>
+<span class="sd">                will be returned</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[tuple]: Info list triplet with transform id, source id and sink id</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

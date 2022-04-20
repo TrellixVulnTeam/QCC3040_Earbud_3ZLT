@@ -1,0 +1,6 @@
+[console_scripts]
+aanclogger = aanclogger.launch:main
+
+[html_documents]
+docs = aanclogger._doc:get_doc
+

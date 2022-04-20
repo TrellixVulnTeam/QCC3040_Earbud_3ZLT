@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Interactive &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="Interpreter" href="acat.Interpreter.Interpreter.html"/>
+        <link rel="prev" title="Automatic" href="acat.Interpreter.Automatic.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Interpreter.Automatic.html">Automatic</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Interactive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Interpreter.Interpreter.html">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>Interactive</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Interpreter.Interactive.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="interactive">
+<h1>Interactive<a class="headerlink" href="#interactive" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Interpreter.Interactive</span></code>.</p>
+<span class="target" id="module-ACAT.Interpreter.Interactive"></span><p>Interactive Mode Interpreter.</p>
+<p>This module enables users to run ACAT interactively.</p>
+<dl class="class">
+<dt id="ACAT.Interpreter.Interactive.HistoryConsole">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Interpreter.Interactive.</code><code class="sig-name descname">HistoryConsole</code><span class="sig-paren">(</span><em class="sig-param">local_vars</em>, <em class="sig-param">formatter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#HistoryConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.HistoryConsole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used enter to a interactive shell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>local_vars</strong> – Local variables.</p></li>
+<li><p><strong>formatter</strong> – A formatter instance.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.HistoryConsole.push">
+<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#HistoryConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.HistoryConsole.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a line to the interpreter.</p>
+<p>see <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole.push</span></code> for more.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>line</strong> (<em>str</em>) – A string to print.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Interpreter.Interactive.Interactive">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Interpreter.Interactive.</code><code class="sig-name descname">Interactive</code><span class="sig-paren">(</span><em class="sig-param">p0=None</em>, <em class="sig-param">p1=None</em>, <em class="sig-param">analyses=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class which encapsulates an interactive session.</p>
+<p>Kick things off by calling <code class="docutils literal notranslate"><span class="pre">run_all()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p0</strong> – A Processor instance.</p></li>
+<li><p><strong>p1</strong> – A Processor instance.</p></li>
+<li><p><strong>analyses</strong> (<em>list</em>) – A list of requested analyses. If this option is not
+provided all the default analyses will be performed.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.Interactive.help">
+<code class="sig-name descname">help</code><span class="sig-paren">(</span><em class="sig-param">arg=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive.help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the help text.</p>
+<p>This Overloads the built-in help function. <code class="docutils literal notranslate"><span class="pre">help()</span></code> prints the help
+text for Interactive mode. <code class="docutils literal notranslate"><span class="pre">help(foo)</span></code> calls the standard help
+routine for thing <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.Interactive.load_bundle">
+<code class="sig-name descname">load_bundle</code><span class="sig-paren">(</span><em class="sig-param">bundle_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive.load_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive.load_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a bundle (also known as KDCs) and sets it for both processors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bundle_path</strong> (<em>str</em>) – Path to the bundle name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.Interactive.mem_print">
+<code class="sig-name descname">mem_print</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">words</em>, <em class="sig-param">processor=0</em>, <em class="sig-param">words_per_line=8</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive.mem_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive.mem_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a slice of DM, starting from address and prints out the
+result in a nicely formatted manner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<em>int</em>) – Address to start from.</p></li>
+<li><p><strong>words</strong> (<em>int</em>) – Number of words to read from the memory.</p></li>
+<li><p><strong>processor</strong> (<em>int</em>) – Processor to use. Default is processor 0.</p></li>
+<li><p><strong>words_per_line</strong> (<em>int</em>) – Number of words to print out. Default value
+is 8 words.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.Interactive.reconnect">
+<code class="sig-name descname">reconnect</code><span class="sig-paren">(</span><em class="sig-param">wait_for_p1=False</em>, <em class="sig-param">timeout=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive.reconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive.reconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconnects to all live processors and reload debug info(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait_for_p1</strong> (<em>bool</em>) – If set to True <cite>reconnect</cite> will wait for
+P1 processor to boot as well, if there is one.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – Seconds to wait until P0 and/or P1 becomes available
+and booted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.Interactive.reconnect_cores">
+<em class="property">static </em><code class="sig-name descname">reconnect_cores</code><span class="sig-paren">(</span><em class="sig-param">cores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive.reconnect_cores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive.reconnect_cores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the <code class="docutils literal notranslate"><span class="pre">reconnect</span></code> on the given cores.</p>
+<p>After the reconnection if any of the cores comes back as not booted the
+method returns False, otherwise the result is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cores</strong> (<em>tuple</em>) – Core instances.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True, if all the cores are booted. False, otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Interpreter.Interactive.Interactive.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#Interactive.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.Interactive.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and run instruction from the command line.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Interpreter.Interactive.get_potential_object_names">
+<code class="sig-prename descclassname">ACAT.Interpreter.Interactive.</code><code class="sig-name descname">get_potential_object_names</code><span class="sig-paren">(</span><em class="sig-param">object_dict</em>, <em class="sig-param">object_start_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#get_potential_object_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.get_potential_object_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the available variables of given a path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_dict</strong> (<em>dict</em>) – Dictionary containing all the available object in
+the environment.</p></li>
+<li><p><strong>object_start_name</strong> (<em>str</em>) – <p>The name of the object in the environment.
+This name can be a relative name for example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>variable1.attribute1.sub_attribute1
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p>Lets assume we have an environment with two variables each with a few
+attributes.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>variable1,
+variable1.attribute1
+variable1.attribute1.sub_attribute1,
+variable1.attribute1.sub_attribute2,
+variable1.attribute2,
+variable2,
+variable2.attribute1
+</pre></div>
+</div>
+<p>As we can see each attribute counts as a separate variable.</p>
+<p>This function will return all the potential variables with the given start
+name. For example if the given name is “” the function will search in the
+environment and finds two potential matches:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>variable1
+variable2
+</pre></div>
+</div>
+<p>On the other hand if the object_start_name is <code class="docutils literal notranslate"><span class="pre">variable1.</span></code> the
+function will return the full name of the variable1 attributes which
+are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>variable1.attribute1
+variable1.attribute2
+</pre></div>
+</div>
+<p>Therefore <code class="docutils literal notranslate"><span class="pre">variable1.</span></code> is like a scope in the environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">variable1.blah</span></code> will return:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>variable1.attribute1
+variable1.attribute2
+</pre></div>
+</div>
+<p>because <code class="docutils literal notranslate"><span class="pre">blah</span></code> is not a valid of attribute <code class="docutils literal notranslate"><span class="pre">variable1</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Interpreter.Interactive.str_compare">
+<code class="sig-prename descclassname">ACAT.Interpreter.Interactive.</code><code class="sig-name descname">str_compare</code><span class="sig-paren">(</span><em class="sig-param">str_a</em>, <em class="sig-param">str_b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#str_compare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.str_compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str_a</strong> (<em>str</em>) – First string.</p></li>
+<li><p><strong>str_b</strong> (<em>str</em>) – Second string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>-1 if str_a should be before str_b in the ordered list.  1 if str_a
+should be after str_b in the ordered list.  0 the wo string should be
+in the same position.</p>
+</dd>
+</dl>
+<p>This function is a simple string compare with the exception that “_” is
+counted as the last element to put private functions and variables at the
+end of the list.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The function also assumes that if the two function contains “.” the
+part before the last “.” could be ignored.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Interpreter.Interactive.string_copleter">
+<code class="sig-prename descclassname">ACAT.Interpreter.Interactive.</code><code class="sig-name descname">string_copleter</code><span class="sig-paren">(</span><em class="sig-param">object_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Interpreter/Interactive.html#string_copleter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Interpreter.Interactive.string_copleter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a completer function for the readline module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>analyses_names</strong> (<em>list</em>) – List of the name of the analyses</p></li>
+<li><p><strong>analyses_dict</strong> (<em>dict</em>) – Dictionary containing all the analyses maped to
+the name.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Interpreter.Interpreter.html" class="btn btn-neutral float-right" title="Interpreter" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Interpreter.Automatic.html" class="btn btn-neutral" title="Automatic" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

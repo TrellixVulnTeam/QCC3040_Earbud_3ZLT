@@ -1,0 +1,22 @@
+kse.instrument.acat package
+===========================
+
+Submodules
+----------
+
+kse.instrument.acat.acat module
+-------------------------------
+
+.. automodule:: kse.instrument.acat.acat
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.instrument.acat
+   :members:
+   :undoc-members:
+   :show-inheritance:

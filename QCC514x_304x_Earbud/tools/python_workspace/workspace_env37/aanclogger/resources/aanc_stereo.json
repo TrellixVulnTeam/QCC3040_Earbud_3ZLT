@@ -1,0 +1,266 @@
+{
+    "operators": {
+        "left": [
+            {
+                "name": "a0i",
+                "cap_id": 16543,
+                "cap_idx": 0
+            }
+        ],
+        "right": [
+            {
+                "name": "a1i",
+                "cap_id": 16543,
+                "cap_idx": 0
+            }
+        ]
+    },
+    "handles": [
+        {
+            "name": "left_fxlms_gain",
+            "operator": "a0i",
+            "attr": "extra_op_data.ag.deref.p_fxlms.deref.adaptive_gain",
+            "log_fmt": "%d",
+            "conversion": {}
+        },
+        {
+            "name": "left_ff_fine_gain",
+            "operator": "a0i",
+            "attr": "extra_op_data.ff_gain.fine",
+            "log_fmt": "%d",
+            "conversion": {}
+        },
+        {
+            "name": "right_fxlms_gain",
+            "operator": "a1i",
+            "attr": "extra_op_data.ag.deref.p_fxlms.deref.adaptive_gain",
+            "log_fmt": "%d",
+            "conversion": {}
+        },
+        {
+            "name": "right_ff_fine_gain",
+            "operator": "a1i",
+            "attr": "extra_op_data.ff_gain.fine",
+            "log_fmt": "%d",
+            "conversion": {}
+        },
+        {
+            "name": "left_ed_ext_flag",
+            "operator": "a0i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000020",
+                "scale": "2**-5",
+                "offset": 0
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "left_ed_int_flag",
+            "operator": "a0i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000010",
+                "scale": "2**-4",
+                "offset": 1.1
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "left_quiet_detect_flag",
+            "operator": "a0i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00100000",
+                "scale": "2**-20",
+                "offset": 2.2
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "right_ed_ext_flag",
+            "operator": "a1i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000020",
+                "scale": "2**-5",
+                "offset": 3.3
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "right_ed_int_flag",
+            "operator": "a1i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000010",
+                "scale": "2**-4",
+                "offset": 4.4
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "right_quiet_detect_flag",
+            "operator": "a1i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00100000",
+                "scale": "2**-20",
+                "offset": 5.5
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "left_ed_ext_spl",
+            "operator": "a0i",
+            "attr": "extra_op_data.ag.deref.p_ed_ext.deref.spl",
+            "conversion": {
+                "qfmt": "12.20"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "left_ed_int_spl",
+            "operator": "a0i",
+            "attr": "extra_op_data.ag.deref.p_ed_int.deref.spl",
+            "conversion": {
+                "qfmt": "12.20"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "right_ed_ext_spl",
+            "operator": "a1i",
+            "attr": "extra_op_data.ag.deref.p_ed_ext.deref.spl",
+            "conversion": {
+                "qfmt": "12.20"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "right_ed_int_spl",
+            "operator": "a1i",
+            "attr": "extra_op_data.ag.deref.p_ed_int.deref.spl",
+            "conversion": {
+                "qfmt": "12.20"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        }
+    ],
+    "properties": {
+        "size": [7.5, 9],
+        "nplt": 250,
+        "nsave": 1500,
+        "title": "AANC Stereo",
+        "fig_x": 500,
+        "fig_y": 50
+    },
+    "defaults": {
+        "grid": "both",
+        "legend_location": "upper left",
+        "marker": ""
+    },
+    "graphs":
+    [
+        {
+            "title": "FxLMS Gain",
+            "subplot": [3, 1, 1],
+            "ylim": [0, 260],
+            "ylabel": "Gain",
+            "lines": [
+                {
+                    "attr": "left_fxlms_gain",
+                    "label": "Left Gain",
+                    "color": "maroon",
+                    "marker": "."
+                },
+                {
+                    "attr": "left_ff_fine_gain",
+                    "label": "Left HW Gain",
+                    "color": "navy"
+                },
+                {
+                    "attr": "right_fxlms_gain",
+                    "label": "Right Gain",
+                    "color": "tomato",
+                    "marker": "."
+                },
+                {
+                    "attr": "right_ff_fine_gain",
+                    "label": "Right HW Gain",
+                    "color": "cornflowerblue"
+                }
+            ]
+        },
+        {
+            "title": "Events",
+            "subplot": [3, 1, 2],
+            "ylim": [-0.1, 6.6],
+            "ylabel": "Event",
+            "lines": [
+                {
+                    "attr": "left_ed_ext_flag",
+                    "label": "Left Ext ED",
+                    "color": "maroon"
+                },
+                {
+                    "attr": "left_ed_int_flag",
+                    "label": "Left Int ED",
+                    "color": "navy"
+                },
+                {
+                    "attr": "left_quiet_detect_flag",
+                    "label": "Left Quiet Condition",
+                    "color": "green"
+                },
+                {
+                    "attr": "right_ed_ext_flag",
+                    "label": "Right Ext ED",
+                    "color": "tomato"
+                },
+                {
+                    "attr": "right_ed_int_flag",
+                    "label": "Right Int ED",
+                    "color": "cornflowerblue"
+                },
+                {
+                    "attr": "right_quiet_detect_flag",
+                    "label": "Right Quiet Condition",
+                    "color": "lightgreen"
+                }
+            ]
+        },
+        {
+            "title": "Signal Levels",
+            "subplot": [3, 1, 3],
+            "ylim": [-100, -40],
+            "ylabel": "Average Amplitude (dB)",
+            "lines": [
+                {
+                    "attr": "left_ed_ext_spl",
+                    "label": "Left Ext SPL",
+                    "color": "maroon"
+                },
+                {
+                    "attr": "left_ed_int_spl",
+                    "label": "Left Int SPL",
+                    "color": "navy"
+                },
+                {
+                    "attr": "right_ed_ext_spl",
+                    "label": "Right Ext SPL",
+                    "color": "tomato"
+                },
+                {
+                    "attr": "right_ed_int_spl",
+                    "label": "Right Int SPL",
+                    "color": "cornflowerblue"
+                }
+            ]
+        }
+    ]
+}

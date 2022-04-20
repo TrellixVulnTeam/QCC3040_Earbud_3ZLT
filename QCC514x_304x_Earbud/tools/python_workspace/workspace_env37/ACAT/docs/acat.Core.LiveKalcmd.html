@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LiveKalcmd &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="LiveSpi" href="acat.Core.LiveSpi.html"/>
+        <link rel="prev" title="LiveChip" href="acat.Core.LiveChip.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>LiveKalcmd</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.LiveKalcmd.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="livekalcmd">
+<h1>LiveKalcmd<a class="headerlink" href="#livekalcmd" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.LiveKalcmd</span></code>.</p>
+<span class="target" id="module-ACAT.Core.LiveKalcmd"></span><p>Live Kalcmd Interface.</p>
+<p>Module used to connect to a Kalcmd simulation.</p>
+<dl class="class">
+<dt id="ACAT.Core.LiveKalcmd.DmAccessorKalcmd">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.LiveKalcmd.</code><code class="sig-name descname">DmAccessorKalcmd</code><span class="sig-paren">(</span><em class="sig-param">kalcmd_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#DmAccessorKalcmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.DmAccessorKalcmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modified DM memory accessor for kalcmd.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>words_to_fetch</strong> – </p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.DmAccessorKalcmd.addresses_per_word">
+<code class="sig-name descname">addresses_per_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#DmAccessorKalcmd.addresses_per_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.DmAccessorKalcmd.addresses_per_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns address per word.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.DmAccessorKalcmd.get_address_width">
+<code class="sig-name descname">get_address_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#DmAccessorKalcmd.get_address_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.DmAccessorKalcmd.get_address_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Address Width.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.DmAccessorKalcmd.get_data_width">
+<code class="sig-name descname">get_data_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#DmAccessorKalcmd.get_data_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.DmAccessorKalcmd.get_data_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Data Width.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.LiveKalcmd.LiveKalcmd">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.LiveKalcmd.</code><code class="sig-name descname">LiveKalcmd</code><span class="sig-paren">(</span><em class="sig-param">kalcmd_object</em>, <em class="sig-param">processor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#LiveKalcmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.LiveKalcmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides access to chip data on a live chip over SPI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kalcmd_object</strong> – </p></li>
+<li><p><strong>processor</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.LiveKalcmd.get_all_banked_regs">
+<code class="sig-name descname">get_all_banked_regs</code><span class="sig-paren">(</span><em class="sig-param">addr_bank_sel_reg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#LiveKalcmd.get_all_banked_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.LiveKalcmd.get_all_banked_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all banked registers.</p>
+<p>Returns a string containing all banks in a banked register given
+the address of the register used to select the bank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr_bank_sel_reg</strong> – The address of the bank select register
+that controls the bank.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.LiveKalcmd.get_all_proc_regs">
+<code class="sig-name descname">get_all_proc_regs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#LiveKalcmd.get_all_proc_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.LiveKalcmd.get_all_proc_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing all processor registers.</p>
+<p>Dictionary maps name to value. NB on a running chip there is the
+obvious risk of tearing.  Consider stopping the chip if this is an
+issue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.LiveKalcmd.get_banked_reg">
+<code class="sig-name descname">get_banked_reg</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">bank=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#LiveKalcmd.get_banked_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.LiveKalcmd.get_banked_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value of a banked register in a specific bank.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Default is the current value in the register.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – Address of the banked register.</p></li>
+<li><p><strong>bank</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.LiveKalcmd.get_proc_reg">
+<code class="sig-name descname">get_proc_reg</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#LiveKalcmd.get_proc_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.LiveKalcmd.get_proc_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of a Processor Register.</p>
+<p>Return the value of the processor register specified in <code class="docutils literal notranslate"><span class="pre">name</span></code>.
+name is a string containing the name of the register in upper or
+lower case, with or without the prefix <code class="docutils literal notranslate"><span class="pre">REGFILE_</span></code>:</p>
+<blockquote>
+<div><p>e.g. <code class="docutils literal notranslate"><span class="pre">REGFILE_PC</span></code>, <code class="docutils literal notranslate"><span class="pre">rMAC</span></code>, <code class="docutils literal notranslate"><span class="pre">R10</span></code>.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – </p></li>
+<li><p><strong>AttributeError</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.LiveKalcmd.PmAccessorKalcmd">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.LiveKalcmd.</code><code class="sig-name descname">PmAccessorKalcmd</code><span class="sig-paren">(</span><em class="sig-param">kalcmd_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#PmAccessorKalcmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.PmAccessorKalcmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>PM memory accessor for kalcmd.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kalcmd_object</strong> – </p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.PmAccessorKalcmd.addresses_per_word">
+<code class="sig-name descname">addresses_per_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#PmAccessorKalcmd.addresses_per_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.PmAccessorKalcmd.addresses_per_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Address Per Word.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.PmAccessorKalcmd.get_address_width">
+<code class="sig-name descname">get_address_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#PmAccessorKalcmd.get_address_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.PmAccessorKalcmd.get_address_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Address Width.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveKalcmd.PmAccessorKalcmd.get_data_width">
+<code class="sig-name descname">get_data_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveKalcmd.html#PmAccessorKalcmd.get_data_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveKalcmd.PmAccessorKalcmd.get_data_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Data Width.</p>
+<p>kalaccess does not expose “pm data width” from dspinfo, but it’s
+the same for all current architectures.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.LiveSpi.html" class="btn btn-neutral float-right" title="LiveSpi" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.LiveChip.html" class="btn btn-neutral" title="LiveChip" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

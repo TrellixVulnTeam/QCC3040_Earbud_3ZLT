@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project path="">
+    <folder name="C Files">
+        <file path="../../src/main.c"/>
+        <file path="../../src/ultra_quiet_dac.c"/>
+    </folder>
+    <folder name="Header Files">
+        <file path="../../src/ultra_quiet_dac.h"/>
+    </folder>
+    <configurations>
+        <configuration name="debug" options="clean|build|deploy|run|default">
+            <devkitConfiguration>application</devkitConfiguration>
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <deployProject>deploy</deployProject>
+            <property name="BUILD_TYPE">DEBUG</property>
+            <property name="CHIP_TYPE">qcc514x_qcc304x</property>
+            <property name="CHIP_NAME">QCC514x_apps</property>
+            <property name="NUM_PIO_BANKS">3</property>
+            <property name="DBG_CORE">app/p1</property>
+            <property name="DEFAULT_LIBS">usb_early_init</property>
+            <property name="DEFS">APTX_ADAPTIVE_SUPPORT_96K AV_DEBUG BLUELAB BOARD_TX_POWER_PATH_LOSS=236 CHIP_LED_BASE_PIO=74 CHIP_NUM_LEDS=6 DEBUG DISABLE_TWS_PLUS DOWNLOAD_VOLUME_CONTROL FAST_CHARGE_CURRENT=140 FAST_CHARGE_EXTERNAL_RESISTOR=0 FORCE_LED_FLASHES HAVE_32BIT_DATA_WIDTH HAVE_3_LEDS HAVE_9_BUTTONS HAVE_THERMISTOR HYDRA HYDRACORE INCLUDE_APTX_ADAPTIVE INCLUDE_AV INCLUDE_CHARGER INCLUDE_DECODERS_ON_P1 INCLUDE_DEVICE_TEST_SERVICE_RADIOTEST_V2 INCLUDE_DFU INCLUDE_FAST_PAIR INCLUDE_GATT INCLUDE_GATT_BATTERY_SERVER INCLUDE_GATT_GAIA_SERVER INCLUDE_HFP INCLUDE_PROMPTS INCLUDE_SPEAKER_EQ INCLUDE_SWB INCLUDE_TEMPERATURE INCLUDE_TONES INSTALL_HYDRA_LOG NUMBER_OF_PIO_BANKS=3 PRE_CHARGE_CURRENT=20 QCC5144_AA_DEV_BRD_R2_AA THERMISTOR_ADC=adcsel_led5 THERMISTOR_DATA_FILE=thermistor_lp4549652p3m.h THERMISTOR_ON=15 USE_BDADDR_FOR_LEFT_RIGHT WIRED_AUDIO_LINE_IN_PIO=5 __KALIMBA__ __QCC514X__</property>
+            <property name="EXTRA_WARNINGS">FALSE</property>
+            <property name="FLASH_CONFIG">../../128Mbit_default_flash_config.py</property>
+            <property name="HW_VARIANT"></property>
+            <property name="INCPATHS">../../../../adk/src/installed_libs\include\profiles\default_qcc514x_qcc304x ../../../../audio/qcc514x_qcc304x/kalimba/kymera/common/interface/gen/k32 ../../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs\include\firmware_qcc514x_qcc304x ../../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs\include\firmware_qcc514x_qcc304x/app ../../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs\include\standard ../../src ../../src/chains</property>
+            <property name="LIBPATHS">../../../../adk/src/installed_libs\lib\default_qcc514x_qcc304x\native ../../../../os/qcc514x_qcc304x/hydra_os/src/installed_libs\lib\os\qcc514x_qcc304x</property>
+            <property name="LIBS">logging task_list usb_device_class vmal</property>
+            <property name="OUTPUT">loopback</property>
+            <property name="OUTPUT_TYPE">EXECUTABLE</property>
+            <property name="PRESERVED_LIBS">qcc514x_qcc304x </property>
+            <property name="STRIP_SYMBOLS">FALSE</property>
+            <property name="GC_SECTIONS">TRUE</property>
+            <property name="SW_VARIANT"></property>
+            <property name="argument"></property>
+            <property name="default"></property>
+            <property name="description"></property>
+            <property name="devkit_group"></property>
+            <property name="permission"></property>
+            <property name="BUILD_ID">../../../../adk/tools/packages/buildid/examples/timestamp.py</property>
+        </configuration>
+    </configurations>
+</project>

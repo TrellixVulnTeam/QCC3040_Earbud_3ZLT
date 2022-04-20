@@ -1,0 +1,26 @@
+var structcharger_task_data =
+[
+    [ "chg_mon_reading", "structcharger_task_data.html#a1228a6dd2eba6d61254fa1ed54124c5a", null ],
+    [ "current_increasing", "structcharger_task_data.html#ab8f98d8394e683bbad7b4733f73049ee", null ],
+    [ "current_limit", "structcharger_task_data.html#a22cff93d9f7cfa745868dadd64b38f10", null ],
+    [ "current_limit_detected", "structcharger_task_data.html#ade190fa33d8fddc5257f2fefa145bb5b", null ],
+    [ "disable_reason", "structcharger_task_data.html#a6d63c0564cf339bee4d9d3df65fbd408", null ],
+    [ "disallow_dormant", "structcharger_task_data.html#a1fcd6daefdb34239e9567edf61755226", null ],
+    [ "ext_mode_enabled", "structcharger_task_data.html#ad06489cde3d2914c450e38873f6d0137", null ],
+    [ "fast_current", "structcharger_task_data.html#a141da15335e097296c163e935c2a7a6a", null ],
+    [ "force_allow_power_off", "structcharger_task_data.html#a60736517a7db0d12cea27ff4f12ea085", null ],
+    [ "is_connected", "structcharger_task_data.html#abb1c3cec1dfe95ecebbe649a3e1fde41", null ],
+    [ "is_enabled", "structcharger_task_data.html#a262d8b4cd30645cef03750dce04ce3d4", null ],
+    [ "max_supported_current", "structcharger_task_data.html#a3e32c981f58378575b6ce5bf207282bf", null ],
+    [ "power_source_vbat", "structcharger_task_data.html#a07b571bbbd2ee1f094e25275b092c5cb", null ],
+    [ "status", "structcharger_task_data.html#af47ee7764432416c90923641f88989f8", null ],
+    [ "task", "structcharger_task_data.html#aba8d7e5c1906844fdb6e47953d3518fc", null ],
+    [ "test_attached_status", "structcharger_task_data.html#a55da40881bc58419bb90a3750787dda9", null ],
+    [ "test_mode", "structcharger_task_data.html#a0128399853af6f8247b7c43a7acf1470", null ],
+    [ "usb_enumerated", "structcharger_task_data.html#a17a0c60ca45d389dbccc3c97d5d02742", null ],
+    [ "usb_leds_forced_off", "structcharger_task_data.html#ac9ce8ba27e77f79b9ea6dbdc8ba0d700", null ],
+    [ "usb_suspend", "structcharger_task_data.html#accbbe577a16eb446d806aa297e3071f9", null ],
+    [ "vchg_monitor_enabled", "structcharger_task_data.html#af1abb132fa5dc1d1b92523d06f3005f6", null ],
+    [ "vchg_monitor_read_pending", "structcharger_task_data.html#a5bb6b60036509d2ca0e893c79c4948fe", null ],
+    [ "vref_reading", "structcharger_task_data.html#a2137b9917fa546f25e224d0a1be7562a", null ]
+];

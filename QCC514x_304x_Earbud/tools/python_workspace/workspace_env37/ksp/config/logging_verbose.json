@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "dev_mode": {
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    }
+  },
+  "handlers": {
+    "ksp.console": {
+      "class": "logging.StreamHandler",
+      "formatter": "dev_mode",
+      "stream": "ext://sys.stdout",
+      "level": "DEBUG"
+    },
+    "ksp.info_file_handler": {
+      "class": "logging.handlers.TimedRotatingFileHandler",
+      "filename": "ksp_info.log",
+      "formatter": "dev_mode",
+      "backupCount": 7,
+      "encoding": "utf8",
+      "level": "DEBUG"
+    },
+    "ksp.error_file_handler": {
+      "class": "logging.handlers.TimedRotatingFileHandler",
+      "filename": "ksp_error.log",
+      "formatter": "dev_mode",
+      "backupCount": 7,
+      "encoding": "utf8",
+      "level": "ERROR"
+    }
+  },
+  "root": {
+    "level": "DEBUG",
+    "handlers": ["ksp.console", "ksp.info_file_handler", "ksp.error_file_handler"]
+  }
+}
+

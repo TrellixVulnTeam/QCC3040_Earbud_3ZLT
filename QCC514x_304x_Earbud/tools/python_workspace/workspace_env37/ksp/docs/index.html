@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to KSP’s documentation! &mdash; KSP 0.5.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSP 0.5.1 documentation" href="#"/>
+        <link rel="next" title="Installation" href="1_installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> KSP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="1_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_how_to_use.html">How to Use KSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_scripts.html">Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="z_definitions.html">Terms and definitions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">KSP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>Welcome to KSP’s documentation!</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-ksp-s-documentation">
+<h1>Welcome to KSP’s documentation!<a class="headerlink" href="#welcome-to-ksp-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Qualcomm® Kymera™ Stream Probe (KSP) is a debugging tool that enables
+users of the audio subsystem to sniff audio/data from inside a running
+graph in Qualcomm® Kymera. It can be used to probe and record internal
+transforms of a graph.</p>
+<img alt="_images/introduction_image.png" src="_images/introduction_image.png" />
+<div class="section" id="description-of-terms-used-in-ksp">
+<h2>Description of terms used in KSP<a class="headerlink" href="#description-of-terms-used-in-ksp" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>Stream</em>: KSP can sniff more than one channel (connection buffer). In
+KSP buffers are grouped into streams. All channels within a stream
+must be synchronized in real time. See Find transform IDs using ACAT
+section.</p></li>
+<li><p><em>Channel</em>: A channel has a one to one relation to a connection buffer. A
+stream can have up to 4 channels. All channels in the same stream must
+be synchronized, this means encoded streams can only have one channel.
+Streams that are configured with unsynchronized channels can cause the
+KSP operator to stall.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>The following limitations should be considered when using the application:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The chips supported are:</p>
+<ul>
+<li><p>CSRA6810x</p></li>
+<li><p>QCC302x/3x</p></li>
+<li><p>QCC304x</p></li>
+<li><p>QCC512x</p></li>
+<li><p>QCC514x</p></li>
+</ul>
+</li>
+<li><p>Apps must be based on an ADK application.</p></li>
+<li><p>A TRB connection must be available.</p></li>
+<li><p>KSP cannot be active at the same time as TRB logging.</p></li>
+<li><p>KSP does not support USB DBG as a transport interface.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The prerequisites required to use KSP are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>One of the following python version:</p>
+<ul>
+<li><p>Python 3.6 (64-bit).</p></li>
+<li><p>Python 3.7 (64-bit).</p></li>
+<li><p>Python 3.8 (64-bit).</p></li>
+<li><p>Python 3.9 (64-bit).</p></li>
+</ul>
+</li>
+<li><p>A development board.</p></li>
+<li><p>A working ADK based customer application.</p></li>
+<li><p>A working ACAT.</p></li>
+<li><p>TRBI200 connection.</p></li>
+<li><p>KSP downloadable for the chip, provide as part of the ADK.</p></li>
+</ul>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="1_installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1_installation.html#add-kymera-downloadable">Add Kymera downloadable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1_installation.html#ksp-install">KSP install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1_installation.html#step-1-ensure-environment-variables-are-safe">Step 1: Ensure environment variables are safe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1_installation.html#step-2-create-a-python-virtual-environment">Step 2: Create a Python virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1_installation.html#step-3-install-the-ksp-from-a-wheel-package">Step 3: Install the KSP from a wheel package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1_installation.html#access-ksp-in-an-adk-installation">Access KSP in an ADK Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2_how_to_use.html">How to Use KSP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#find-transform-ids-using-acat">Find transform IDs using ACAT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2_how_to_use.html#sniffing-hardware-channels">Sniffing hardware channels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_how_to_use.html#multi-channel-ksp-streams">Multi channel KSP streams</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#starting-the-ksp-command-line-interface">Starting the KSP command-line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2_how_to_use.html#configure-streams">Configure Streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_how_to_use.html#set-the-output-filename">Set the Output Filename</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_how_to_use.html#add-date-and-time-to-the-output-filename">Add Date and Time to the output filename</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_how_to_use.html#use-the-ksp-built-in-capability">Use the KSP Built-in Capability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#start-and-stop">Start and Stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#manually-start-and-stop-the-probe">Manually Start and Stop the probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_how_to_use.html#non-interactive-operation">Non-interactive operation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3_troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3_troubleshooting.html#ensure-good-readings">Ensure good readings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_troubleshooting.html#starting-the-ksp-operator-fails">Starting the KSP operator fails</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_troubleshooting.html#ksp-stopped-in-the-middle-of-recording">KSP stopped in the middle of recording</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4_scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4_scripts.html#ksp-extract-script">KSP Extract Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_scripts.html#ksp-reader-script">KSP Reader Script</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="z_definitions.html">Terms and definitions</a></li>
+</ul>
+</div>
+<div class="admonition copyrightsection">
+<p class="admonition-title">Copyright</p>
+<p>© 2021 Qualcomm Technologies, Inc. and/or its affiliated companies. All Rights Reserved.</p>
+<p>Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries. Other products and brand names may be trademarks or registered trademarks of their respective owners.</p>
+<p>References in this documentation to &quot;Qualcomm&quot; may mean Qualcomm Incorporated, Qualcomm Technologies, Inc., and/or other subsidiaries or business units within the Qualcomm corporate structure, as applicable. Qualcomm Incorporated includes Qualcomm's licensing business, QTL, and the vast majority of its patent portfolio. Qualcomm Technologies, Inc., a wholly-owned subsidiary of Qualcomm Incorporated, operates, along with its subsidiaries, substantially all of Qualcomm's engineering, research and development functions, and substantially all of its product and services businesses, including its semiconductor business, QCT.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="1_installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.5.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

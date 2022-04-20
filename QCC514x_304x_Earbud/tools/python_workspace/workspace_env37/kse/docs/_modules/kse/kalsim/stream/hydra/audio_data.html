@@ -1,0 +1,925 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.stream.hydra.audio_data &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.stream.hydra.audio_data</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.stream.hydra.audio_data</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Hydra audio data service streams&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="kn">from</span> <span class="nn">kats.core.stream_base</span> <span class="k">import</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">,</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">,</span> \
+    <span class="n">CALLBACK_EOF</span><span class="p">,</span> <span class="n">STATE_STARTED</span><span class="p">,</span> <span class="n">STREAM_NAME</span><span class="p">,</span> <span class="n">STREAM_RATE</span><span class="p">,</span> <span class="n">STREAM_DATA_WIDTH</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.schema</span> <span class="k">import</span> <span class="n">DefaultValidatingDraft4Validator</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.audio_sink_service</span> <span class="k">import</span> <span class="n">HydraAudioSink</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.audio_source_service</span> <span class="k">import</span> <span class="n">HydraAudioSource</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.constants</span> <span class="k">import</span> <span class="n">DEVICE_TYPE_L2CAP</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.util</span> <span class="k">import</span> <span class="n">get_buffer_stats</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.library.period</span> <span class="k">import</span> <span class="n">compute_period</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.hydra.hydra</span> <span class="k">import</span> <span class="n">StreamHydra</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.kalsim_helper</span> <span class="k">import</span> <span class="n">get_file_user_stream_config</span><span class="p">,</span> <span class="n">get_user_stream_config</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.kalsim_stream</span> <span class="k">import</span> <span class="n">KalsimStream</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.packet.packetiser</span> <span class="k">import</span> <span class="n">Packetiser</span>
+<span class="kn">from</span> <span class="nn">kats.library.audio_file.audio</span> <span class="k">import</span> <span class="n">audio_get_instance</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">get_instance</span><span class="p">,</span> <span class="n">get_instance_num</span><span class="p">,</span> <span class="n">register_instance</span>
+<span class="kn">from</span> <span class="nn">kats.library.test_base</span> <span class="k">import</span> <span class="n">add_output_file</span>
+
+<span class="n">BACKING</span> <span class="o">=</span> <span class="s1">&#39;backing&#39;</span>
+<span class="n">BACKING_FILE</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span>
+<span class="n">BACKING_DATA</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+<span class="n">FILENAME</span> <span class="o">=</span> <span class="s1">&#39;filename&#39;</span>
+<span class="n">CHANNELS</span> <span class="o">=</span> <span class="s1">&#39;channels&#39;</span>
+<span class="n">CHANNELS_DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CHANNEL</span> <span class="o">=</span> <span class="s1">&#39;channel&#39;</span>
+<span class="n">CHANNEL_DEFAULT</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">SAMPLE_RATE</span> <span class="o">=</span> <span class="s1">&#39;sample_rate&#39;</span>
+<span class="n">SAMPLE_WIDTH</span> <span class="o">=</span> <span class="s1">&#39;sample_width&#39;</span>
+<span class="n">FRAME_SIZE</span> <span class="o">=</span> <span class="s1">&#39;frame_size&#39;</span>
+<span class="n">FRAME_SIZE_DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">DELAY</span> <span class="o">=</span> <span class="s1">&#39;delay&#39;</span>
+<span class="n">DELAY_DEFAULT</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">LOOP</span> <span class="o">=</span> <span class="s1">&#39;loop&#39;</span>
+<span class="n">LOOP_DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CALLBACK_CONSUME</span> <span class="o">=</span> <span class="s1">&#39;callback_consume&#39;</span>
+<span class="n">KICK_ENABLE</span> <span class="o">=</span> <span class="s1">&#39;kick_enable&#39;</span>
+<span class="n">KICK_ENABLE_DEFAULT</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">DEVICE_TYPE</span> <span class="o">=</span> <span class="s1">&#39;device_type&#39;</span>
+<span class="n">DEVICE_TYPE_DEFAULT</span> <span class="o">=</span> <span class="n">DEVICE_TYPE_L2CAP</span>
+<span class="n">SERVICE_TAG</span> <span class="o">=</span> <span class="s1">&#39;service_tag&#39;</span>
+<span class="n">SERVICE_TAG_DEFAULT</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">DATA_BUFFER_SIZE</span> <span class="o">=</span> <span class="s1">&#39;data_buffer_size&#39;</span>
+<span class="n">DATA_BUFFER_SIZE_DEFAULT</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">METADATA_ENABLE</span> <span class="o">=</span> <span class="s1">&#39;metadata_enable&#39;</span>
+<span class="n">METADATA_ENABLE_DEFAULT</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">METADATA_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;metadata_format&#39;</span>
+<span class="n">METADATA_FORMAT_BASIC</span> <span class="o">=</span> <span class="s1">&#39;basic&#39;</span>
+<span class="n">METADATA_FORMAT_TIMESTAMPED</span> <span class="o">=</span> <span class="s1">&#39;timestamped&#39;</span>
+<span class="n">METADATA_FORMAT_DEFAULT</span> <span class="o">=</span> <span class="n">METADATA_FORMAT_BASIC</span>
+<span class="c1"># METADATA_CHANNEL = &#39;metadata_channel&#39;</span>
+<span class="c1"># METADATA_CHANNEL_DEFAULT = 0</span>
+<span class="n">METADATA_BUFFER_SIZE</span> <span class="o">=</span> <span class="s1">&#39;metadata_buffer_size&#39;</span>
+<span class="n">METADATA_BUFFER_SIZE_DEFAULT</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">TTP_DELAY</span> <span class="o">=</span> <span class="s1">&#39;ttp_delay&#39;</span>
+<span class="n">TTP_DELAY_DEFAULT</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">METADATA_BASE_LENGTH</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">METADATA_HEADER_LENGTH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">METADATA_FORMAT_BASIC</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">METADATA_FORMAT_TIMESTAMPED</span><span class="p">:</span> <span class="mi">16</span>
+<span class="p">}</span>
+
+<span class="n">PARAM_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;oneOf&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">BACKING</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">],</span>
+            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">BACKING</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">BACKING_FILE</span><span class="p">]},</span>
+                <span class="n">FILENAME</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">},</span>
+                <span class="n">CHANNELS</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="n">CHANNEL</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                <span class="n">SAMPLE_RATE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                <span class="n">SAMPLE_WIDTH</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">32</span><span class="p">]},</span>
+                <span class="n">FRAME_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="n">DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                <span class="n">LOOP</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="n">KICK_ENABLE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">KICK_ENABLE_DEFAULT</span><span class="p">},</span>
+                <span class="n">DEVICE_TYPE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                <span class="n">SERVICE_TAG</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="n">DATA_BUFFER_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">DATA_BUFFER_SIZE_DEFAULT</span><span class="p">},</span>
+                <span class="n">METADATA_ENABLE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">METADATA_ENABLE_DEFAULT</span><span class="p">},</span>
+                <span class="n">METADATA_FORMAT</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">METADATA_FORMAT_BASIC</span><span class="p">,</span> <span class="n">METADATA_FORMAT_TIMESTAMPED</span><span class="p">],</span>
+                                  <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">METADATA_FORMAT_DEFAULT</span><span class="p">},</span>
+                <span class="c1"># METADATA_CHANNEL: {&#39;type&#39;: &#39;boolean&#39;, &#39;default&#39;: METADATA_CHANNEL_DEFAULT},</span>
+                <span class="n">METADATA_BUFFER_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                       <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">METADATA_BUFFER_SIZE_DEFAULT</span><span class="p">},</span>
+                <span class="n">TTP_DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">TTP_DELAY_DEFAULT</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">BACKING</span><span class="p">],</span>
+            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">BACKING</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">BACKING_DATA</span><span class="p">]},</span>
+                <span class="n">SAMPLE_WIDTH</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">32</span><span class="p">]},</span>
+                <span class="n">FRAME_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">HYDRA_TYPE</span> <span class="o">=</span> <span class="s1">&#39;hydra_type&#39;</span>
+<span class="n">HYDRA_TYPE_SUBSYSTEM</span> <span class="o">=</span> <span class="s1">&#39;subsystem&#39;</span>
+<span class="n">HYDRA_BAC_HANDLE</span> <span class="o">=</span> <span class="s1">&#39;hydra_bac_handle&#39;</span>
+
+
+<div class="viewcode-block" id="StreamHydraAudioData"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData">[docs]</a><span class="k">class</span> <span class="nc">StreamHydraAudioData</span><span class="p">(</span><span class="n">KalsimStream</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Hydra audio data streams</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        stream_type (str): Type of stream</span>
+
+<span class="sd">            - &quot;source&quot;. Data is pushed into kymera</span>
+<span class="sd">            - &quot;sink&quot;. Data is extracted from kymera</span>
+
+<span class="sd">        backing (str): Origin (for sources) or destination (for sinks) of data.</span>
+<span class="sd">            This parameter defines what other parameters are needed.</span>
+
+<span class="sd">            - &quot;file&quot;. Data is backed by a file, if it is &quot;source&quot; is the contents to be</span>
+<span class="sd">              streamed, if it is a &quot;sink&quot; is the file where data will be written to.</span>
+<span class="sd">            - &quot;data&quot;. Data is coming from (&quot;source&quot;) or going to (&quot;sink) an external software</span>
+<span class="sd">              component. This allow to have loops where a sink stream loops back to a</span>
+<span class="sd">              source stream.</span>
+
+<span class="sd">        filename (str): Filename to back the stream</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Mandatory</span>
+
+<span class="sd">                - raw files only store audio data but no information about number of channels,</span>
+<span class="sd">                  sampling frequency or data format.</span>
+<span class="sd">                  This information (*channels*, *sample_rate*, *sample_width*) has to be supplied</span>
+<span class="sd">                - wav files store number of channels, sampling frequency and sample data format.</span>
+<span class="sd">                  Note that if *sample_rate* is provided then information in the file is overridden</span>
+<span class="sd">                - qwav files store number of channels, sampling frequency, sample data format,</span>
+<span class="sd">                  optional metadata and optional packet based information</span>
+
+<span class="sd">            - backing ==&quot;data&quot;. Unavailable</span>
+
+<span class="sd">        channels (int): Number of channels/streams in the audio file</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Only for source streams, sink streams are always created with 1</span>
+<span class="sd">              channel (optional default=1).</span>
+<span class="sd">            - backing ==&quot;data&quot;. Unavailable</span>
+
+<span class="sd">        channel (int): Channel index in the audio file</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Only for source streams, sink streams are always created with 1</span>
+<span class="sd">              channel (optional default=0).</span>
+<span class="sd">            - backing ==&quot;data&quot;. Unavailable</span>
+
+<span class="sd">        sample_rate (int): Sample rate in hertzs.</span>
+
+<span class="sd">            - backing==&quot;file&quot;. For raw source files (mandatory), wav source files (optional)</span>
+<span class="sd">              and all sink files (mandatory). For sources if it is 0 it means as fast as possible.</span>
+<span class="sd">            - backing==&quot;data&quot;. Unavailable.</span>
+
+<span class="sd">        sample_width (int): Number of bits per sample. Only 8 bits is recommended</span>
+
+<span class="sd">            - backing==&quot;file&quot;. For raw source files (mandatory) and all sink files (mandatory).</span>
+<span class="sd">            - backing==&quot;data&quot;. Valid for all file types and stream types (mandatory).</span>
+
+<span class="sd">        frame_size (int): Number of frames per transfer</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Valid for all file types and stream types (optional, default=1).</span>
+<span class="sd">            - backing==&quot;data&quot;. Only used in sink streams (optional default=1).</span>
+
+<span class="sd">        delay (float): Delay in seconds from start to real start.</span>
+<span class="sd">            Indicates the delay between the stream start command and the actual start in seconds</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Only for source streams (optional default=0.0)</span>
+<span class="sd">            - backing ==&quot;data&quot;. Unavailable</span>
+
+<span class="sd">        loop (int): Number of times the source is played, when the source gets to end of file</span>
+<span class="sd">            it is rewinded and replayed, only for source streams (optional default=1)</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Available</span>
+<span class="sd">            - backing ==&quot;data&quot;. Unavailable</span>
+
+<span class="sd">        kick_enable (bool): Enables kicking the hydra audio data service every time audio is sent,</span>
+<span class="sd">            for source streams (optional default=True)</span>
+<span class="sd">        device_type (int): Hydra audio data service device type, for all streams</span>
+<span class="sd">            (optional default=12 meaning l2cap/a2dp)</span>
+<span class="sd">        service_tag (int): Hydra audio data service tag, for all stream</span>
+<span class="sd">            (optional default=None meaning autogenerated)</span>
+<span class="sd">        data_buffer_size (int): Size of the buffer in the hydra audio data service,</span>
+<span class="sd">            (optional default=1024)</span>
+<span class="sd">        metadata_enable (bool): Metadata should be sent alongside the audio data, this metadata</span>
+<span class="sd">            will be auto-generated if the format is not qwav or extracted from the qwav file,</span>
+<span class="sd">            for source streams (optional default=False)</span>
+<span class="sd">        metadata_format (str): Metadata format, &quot;basic&quot; or &quot;timestamped&quot;</span>
+<span class="sd">            (optional, default=&quot;basic&quot;)</span>
+<span class="sd">        metadata_channel (int): Metadata channel in the qwav file,</span>
+<span class="sd">            for source qwav streams (optional default=0)</span>
+<span class="sd">        metadata_buffer_size (int): Size of the buffer in the hydra audio data service</span>
+<span class="sd">            (optional default=256)</span>
+<span class="sd">        ttp_delay (int): Time to play delay in seconds for source timestamped streams,</span>
+<span class="sd">            (optional default=0.050)</span>
+<span class="sd">        callback_consume (function): Function to be invoked when data is available</span>
+
+<span class="sd">            - backing==&quot;file&quot;. Unavailable</span>
+<span class="sd">            - backing ==&quot;data&quot;. Only used in sink streams (mandatory) but can be set in the</span>
+<span class="sd">              config method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="n">DefaultValidatingDraft4Validator</span><span class="p">(</span><span class="n">PARAM_SCHEMA</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># helper modules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;uut&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># configuration values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">BACKING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_data_received</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># backing=data sink stream callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">delay</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">kick_enable</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KICK_ENABLE</span><span class="p">,</span> <span class="n">KICK_ENABLE_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">device_type</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">DEVICE_TYPE</span><span class="p">,</span> <span class="n">DEVICE_TYPE_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SERVICE_TAG</span><span class="p">,</span> <span class="n">SERVICE_TAG_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">data_buffer_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">DATA_BUFFER_SIZE</span><span class="p">,</span> <span class="n">DATA_BUFFER_SIZE_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">METADATA_ENABLE</span><span class="p">,</span> <span class="n">METADATA_ENABLE_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">METADATA_FORMAT</span><span class="p">,</span> <span class="n">METADATA_FORMAT_DEFAULT</span><span class="p">)</span>
+        <span class="c1"># self.__config.metadata_channel = kwargs.pop(METADATA_CHANNEL, METADATA_CHANNEL_DEFAULT)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_buffer_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">METADATA_BUFFER_SIZE</span><span class="p">,</span>
+                                                        <span class="n">METADATA_BUFFER_SIZE_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">ttp_delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">TTP_DELAY</span><span class="p">,</span> <span class="n">TTP_DELAY_DEFAULT</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># timer when looping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># source with packet based streaming</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_metadata</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_timer_id</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># sink manual streaming timer id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_timer_remain</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># sink manual timer remainder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># sink manual streaming audio data buffer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_FILE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">)</span>
+            <span class="n">add_output_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">DELAY</span><span class="p">,</span> <span class="n">DELAY_DEFAULT</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">delay</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">LOOP</span><span class="p">,</span> <span class="n">LOOP_DEFAULT</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">user_callback_eof</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CALLBACK_EOF</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">params</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_init_</span><span class="si">%s</span><span class="s1">_file&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stream_type</span><span class="p">))(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">CALLBACK_EOF</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eof</span>  <span class="c1"># required for loop</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># BACKING_DATA</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_WIDTH</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FRAME_SIZE</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CALLBACK_CONSUME</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">params</span> <span class="o">=</span> <span class="n">get_user_stream_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">HYDRA_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">HYDRA_TYPE_SUBSYSTEM</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">HYDRA_BAC_HANDLE</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># we will modify this when we know the handle</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="n">kwargs2</span> <span class="o">=</span> <span class="n">get_user_stream_config</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+            <span class="n">kwargs2</span><span class="p">[</span><span class="n">HYDRA_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">HYDRA_TYPE_SUBSYSTEM</span>
+            <span class="n">kwargs2</span><span class="p">[</span><span class="n">HYDRA_BAC_HANDLE</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># we will modify this when we know the handle</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span> <span class="o">=</span> <span class="n">StreamHydra</span><span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;unknown kwargs:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_default_packet_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">,</span> <span class="n">frame_size</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">):</span>
+        <span class="c1"># FIXME be careful with loop as all loops but first should not zero frst packet</span>
+        <span class="n">period_usec</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1000000.0</span> <span class="o">*</span> <span class="n">frame_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+        <span class="n">packet_info</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">ind</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">period_usec</span> <span class="o">*</span> <span class="n">ind</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">period_usec</span> <span class="o">*</span> <span class="p">(</span><span class="n">ind</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))),</span>  <span class="c1"># timestamp</span>
+             <span class="n">ind</span> <span class="o">*</span> <span class="n">frame_size</span><span class="p">,</span>  <span class="c1"># offset</span>
+             <span class="n">frame_size</span><span class="p">]</span>  <span class="c1"># length</span>
+            <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">/</span> <span class="n">frame_size</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">%</span> <span class="n">frame_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;excluding </span><span class="si">%s</span><span class="s1"> bytes as it is not a multiple of frame_size&#39;</span><span class="p">,</span>
+                              <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">%</span> <span class="n">frame_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">packet_info</span>
+
+    <span class="k">def</span> <span class="nf">_init_source_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CHANNELS</span><span class="p">,</span> <span class="n">CHANNELS_DEFAULT</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CHANNEL</span><span class="p">,</span> <span class="n">CHANNEL_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_RATE</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_WIDTH</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FRAME_SIZE</span><span class="p">,</span> <span class="n">FRAME_SIZE_DEFAULT</span><span class="p">)</span>
+
+        <span class="n">audio_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;channels&#39;</span><span class="p">:</span> <span class="n">channels</span><span class="p">,</span>  <span class="c1"># some formats do not require</span>
+            <span class="s1">&#39;sample_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>  <span class="c1"># some formats do not require</span>
+            <span class="s1">&#39;sample_width&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">,</span>  <span class="c1"># some formats do not require</span>
+            <span class="s1">&#39;allow_encoded&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">audio_instance</span> <span class="o">=</span> <span class="n">audio_get_instance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">audio_kwargs</span><span class="p">)</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_num</span><span class="p">()</span>
+        <span class="c1"># we allow overriding sample_rate from what is in the file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_sample_width</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">channel</span> <span class="o">&gt;=</span> <span class="n">channels</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;channels:</span><span class="si">%s</span><span class="s1"> channel:</span><span class="si">%s</span><span class="s1"> inconsistency&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">channels</span><span class="p">,</span> <span class="n">channel</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_sample_rate</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stream filename:</span><span class="si">%s</span><span class="s1"> sample_rate not set&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stream filename:</span><span class="si">%s</span><span class="s1"> sample_width not set&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+
+        <span class="c1"># kalsim supports raw and wav files with only 1 stream in the file at the file designated</span>
+        <span class="c1"># sample_rate</span>
+        <span class="n">file_sample_rate</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_sample_rate</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">channels</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.qwav&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">==</span> <span class="n">file_sample_rate</span> <span class="ow">or</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">file_sample_rate</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">get_file_user_stream_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_data</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">audio_data</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_data</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">file_sample_rate</span>
+
+            <span class="c1"># check if the format supports packet_info and that packet_info actually is there</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">audio_instance</span><span class="p">,</span> <span class="s1">&#39;get_packet_data_size&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                    <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_packet_data_size</span><span class="p">(</span><span class="s1">&#39;audio&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="p">)):</span>
+                <span class="n">packet_info</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_packet_data</span><span class="p">(</span><span class="s1">&#39;audio&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">packet_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_default_packet_info</span><span class="p">(</span><span class="n">audio_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">,</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span> <span class="o">=</span> <span class="n">Packetiser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">,</span> <span class="n">packet_info</span><span class="p">)</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">get_user_stream_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">)</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">STREAM_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">STREAM_RATE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span>  <span class="c1"># pointless in qwav with packet_info</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">STREAM_DATA_WIDTH</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span>
+
+        <span class="k">del</span> <span class="n">audio_instance</span>
+        <span class="k">return</span> <span class="n">params</span>
+
+    <span class="k">def</span> <span class="nf">_init_sink_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_WIDTH</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FRAME_SIZE</span><span class="p">,</span> <span class="n">FRAME_SIZE_DEFAULT</span><span class="p">)</span>
+
+        <span class="c1"># kalsim supports raw and wav files with only 1 stream</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.qwav&#39;</span><span class="p">):</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">get_file_user_stream_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">get_user_stream_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">)</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">STREAM_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">STREAM_RATE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">STREAM_DATA_WIDTH</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span>
+        <span class="k">return</span> <span class="n">params</span>
+
+    <span class="k">def</span> <span class="nf">_induce_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_size</span><span class="p">,</span> <span class="n">check_space</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">check_space</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_buffer_stats</span><span class="p">()</span>
+            <span class="n">space</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">space</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">space</span> <span class="o">&lt;</span> <span class="n">frame_size</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;induce:</span><span class="si">%s</span><span class="s1"> not enough space:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">frame_size</span><span class="p">,</span> <span class="n">space</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">induce</span><span class="p">(</span><span class="n">frame_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="n">metadata_value</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;H&#39;</span><span class="p">,</span> <span class="mh">0x8000</span> <span class="o">|</span> <span class="n">frame_size</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span> <span class="o">==</span> <span class="n">METADATA_FORMAT_TIMESTAMPED</span><span class="p">:</span>
+                <span class="n">delay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">ttp_delay</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+                <span class="n">ttp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">+</span> <span class="n">delay</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;L&#39;</span><span class="p">,</span> <span class="n">ttp</span><span class="p">))</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;L&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;B&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;5B&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># padding</span>
+            <span class="k">if</span> <span class="n">check_space</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_metadata_buffer_stats</span><span class="p">()</span>
+                <span class="c1"># metadata buffer is always 8 bits</span>
+                <span class="k">if</span> <span class="n">space</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_value</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;metadata induce:</span><span class="si">%s</span><span class="s1"> not enough space:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                                       <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_value</span><span class="p">),</span> <span class="n">space</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">metadata_value</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">kick_enable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">kick</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span> <span class="o">+=</span> <span class="n">frame_size</span>
+
+    <span class="k">def</span> <span class="nf">_send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="n">STATE_STARTED</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">induce</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># this will force EOF to be signalled</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                    <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span>
+                <span class="n">send</span> <span class="o">=</span> <span class="p">(</span><span class="n">send</span> <span class="k">if</span> <span class="n">send</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_induce_block</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
+
+                <span class="n">period</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span>
+                <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_remain</span> <span class="o">=</span> <span class="n">compute_period</span><span class="p">(</span>
+                    <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_remain</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span>
+                    <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_data</span><span class="p">)</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_space_available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avail</span><span class="p">,</span> <span class="n">space</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="c1"># avail = int((avail * 8) / self.get_data_width())</span>
+            <span class="n">space</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">space</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">())</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">induce</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># this will force EOF to be signalled</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                    <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">space</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">:</span>
+                <span class="n">send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span>
+                <span class="n">send</span> <span class="o">=</span> <span class="p">(</span><span class="n">send</span> <span class="k">if</span> <span class="n">send</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_induce_block</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">avail</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">avail</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">())</span>
+            <span class="c1"># space = int((space * 8) / self.get_data_width())</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">avail</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+                <span class="c1"># Here we have to get as many metadata packets as available</span>
+                <span class="c1"># to understand how much audio data is available</span>
+                <span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">rd_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_meta_data_read_handle</span><span class="p">()</span>
+                <span class="n">wr_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_meta_data_write_handle</span><span class="p">()</span>
+                <span class="n">meta_length</span> <span class="o">=</span> <span class="n">METADATA_HEADER_LENGTH</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span><span class="p">]</span>
+
+                <span class="n">meta_avail</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_buffer_stats</span><span class="p">(</span><span class="n">rd_handle</span><span class="p">,</span> <span class="n">wr_handle</span><span class="p">)</span>
+                <span class="k">while</span> <span class="n">meta_avail</span> <span class="o">&gt;</span> <span class="n">meta_length</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span>
+                        <span class="n">METADATA_HEADER_LENGTH</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span><span class="p">])</span>
+                    <span class="c1"># we trust the audio data length that comes in metadata</span>
+                    <span class="n">avail</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;H&#39;</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0x8000</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span> <span class="o">==</span> <span class="n">METADATA_FORMAT_TIMESTAMPED</span><span class="p">:</span>
+                        <span class="n">_ttp</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;L&#39;</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="c1"># if there is metadata we ignore frame_size</span>
+                    <span class="n">length</span> <span class="o">+=</span> <span class="n">avail</span>
+                    <span class="n">meta_avail</span> <span class="o">-=</span> <span class="n">meta_length</span>
+                <span class="n">length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">length</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">length</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">induce</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">length</span><span class="p">:</span>
+                    <span class="c1"># extract data</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_FILE</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="o">+=</span> <span class="n">data</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback to be invoked when the source stream start delay has elapsed to actually start</span>
+<span class="sd">        the stream.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timer_id (int): Timer id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_FILE</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="p">:</span>  <span class="c1"># with packetiser support</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sent_samples</span>
+                    <span class="n">send</span> <span class="o">=</span> <span class="p">(</span><span class="n">send</span> <span class="k">if</span> <span class="n">send</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_induce_block</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">period</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span>
+                        <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_remain</span> <span class="o">=</span> <span class="n">compute_period</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_timer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span>
+                            <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># backing=data</span>
+                <span class="c1"># we receive data with calls to consume</span>
+                <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># sink stream</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_FILE</span><span class="p">:</span>
+                <span class="c1"># if we have kalsim support then the start call above will handle streaming</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># without kalsim support</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># backing=data</span>
+                <span class="c1"># we receive data in the hydra audio data service space callback</span>
+                <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__eof</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Internal End of file callback.</span>
+
+<span class="sd">        This is used to accommodate the loop paramater which allows a source stream to</span>
+<span class="sd">        automatically restart without delay multiple times</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">user_callback_eof</span><span class="p">()</span>
+
+<div class="viewcode-block" id="StreamHydraAudioData.create"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.create">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">service_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">service_tag</span> <span class="o">=</span> <span class="n">get_instance_num</span><span class="p">(</span><span class="s1">&#39;hydra_service&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">md_buffer_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_buffer_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span>
+        <span class="n">md_length</span> <span class="o">=</span> <span class="n">METADATA_HEADER_LENGTH</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span><span class="p">]</span> <span class="o">-</span> <span class="n">METADATA_BASE_LENGTH</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_FILE</span> <span class="ow">and</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="p">):</span>
+                <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space_available</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span> <span class="o">=</span> <span class="n">HydraAudioSink</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="p">,</span>
+                <span class="n">device_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">device_type</span><span class="p">,</span>
+                <span class="n">service_tag</span><span class="o">=</span><span class="n">service_tag</span><span class="p">,</span>
+                <span class="n">data_buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">data_buffer_size</span><span class="p">,</span>
+                <span class="n">metadata_buffer_size</span><span class="o">=</span><span class="n">md_buffer_size</span><span class="p">,</span>
+                <span class="n">metadata_header_length</span><span class="o">=</span><span class="n">md_length</span><span class="p">,</span>
+                <span class="n">space_handler</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span> <span class="o">=</span> <span class="n">HydraAudioSource</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="p">,</span>
+                <span class="n">device_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">device_type</span><span class="p">,</span>
+                <span class="n">service_tag</span><span class="o">=</span><span class="n">service_tag</span><span class="p">,</span>
+                <span class="n">data_buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">data_buffer_size</span><span class="p">,</span>
+                <span class="n">metadata_buffer_size</span><span class="o">=</span><span class="n">md_buffer_size</span><span class="p">,</span>
+                <span class="n">metadata_header_length</span><span class="o">=</span><span class="n">md_length</span><span class="p">,</span>
+                <span class="n">space_handler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_space_available</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;hydra_service&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.config"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.config">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Configure stream&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">CALLBACK_CONSUME</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CALLBACK_CONSUME</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;callback_consume:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;callback_consume:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">callback_consume</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="n">bac_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_data_write_handle</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bac_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_data_read_handle</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">HYDRA_BAC_HANDLE</span><span class="p">]</span> <span class="o">=</span> <span class="n">bac_handle</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config_param</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parameters</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+                <span class="n">bac_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_meta_data_write_handle</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">bac_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_meta_data_read_handle</span><span class="p">()</span>
+            <span class="n">kwargs_metadata</span> <span class="o">=</span> <span class="p">{</span><span class="n">HYDRA_BAC_HANDLE</span><span class="p">:</span> <span class="n">bac_handle</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs_metadata</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.start"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.start">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start stream&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">loop</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">delay</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;delaying start for </span><span class="si">%s</span><span class="s1"> seconds&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">delay</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">delay</span><span class="p">,</span>
+                                                                             <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.stop"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.stop">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop stream&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_cancel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_timer_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_cancel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_timer_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.destroy"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.destroy">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destroy stream&quot;&quot;&quot;</span>
+        <span class="c1"># Note that stopping the service will destroy the endpoint associated with it</span>
+        <span class="c1"># hence we delay stopping the service until we are destroying the stream</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">check_started</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_FILE</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;creating file </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">audio_instance</span> <span class="o">=</span> <span class="n">audio_get_instance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">allow_encoded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">audio_instance</span><span class="o">.</span><span class="n">add_audio_stream</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span><span class="p">)</span>
+            <span class="n">audio_instance</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">audio_instance</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">sink_audio_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.insert"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.insert">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">check_space</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inserts data with the size specified in stream_format property</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data(list[int]): Data to insert</span>
+<span class="sd">            check_space (bool): Check if there is space before inserting, otherwise raise</span>
+<span class="sd">                exception.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If there is no space in MMU buffer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">check_space</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_buffer_stats</span><span class="p">()</span>
+            <span class="n">space</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">space</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_width</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">space</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;insert:</span><span class="si">%s</span><span class="s1"> not enough space:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">space</span><span class="p">))</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_enable</span><span class="p">:</span>
+            <span class="n">metadata_value</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;H&#39;</span><span class="p">,</span> <span class="mh">0x8000</span> <span class="o">|</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">metadata_format</span> <span class="o">==</span> <span class="n">METADATA_FORMAT_TIMESTAMPED</span><span class="p">:</span>
+                <span class="n">delay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">ttp_delay</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+                <span class="n">ttp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">+</span> <span class="n">delay</span>
+                <span class="n">ttp</span> <span class="o">=</span> <span class="n">ttp</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFF</span>  <span class="c1"># limit value to 32 bits</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;L&#39;</span><span class="p">,</span> <span class="n">ttp</span><span class="p">))</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;L&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;B&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">metadata_value</span> <span class="o">+=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;5B&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># padding</span>
+            <span class="k">if</span> <span class="n">check_space</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_metadata_buffer_stats</span><span class="p">()</span>
+                <span class="c1"># metadata buffer is always 8 bits</span>
+                <span class="k">if</span> <span class="n">space</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_value</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;metadata insert:</span><span class="si">%s</span><span class="s1"> not enough space:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                                       <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">metadata_value</span><span class="p">),</span> <span class="n">space</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">metadata_value</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">kick_enable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">kick</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.get_endpoint_id"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.get_endpoint_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Endpoint id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">audio_hydra</span><span class="o">.</span><span class="n">get_endpoint_id</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.consume"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.consume">[docs]</a>    <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_num</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">input_num</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_DATA</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamHydraAudioData.eof_detected"><a class="viewcode-back" href="../../../../../kse.kalsim.stream.hydra.html#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.eof_detected">[docs]</a>    <span class="k">def</span> <span class="nf">eof_detected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_num</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">input_num</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">backing</span> <span class="o">==</span> <span class="n">BACKING_DATA</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eof</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+.. _graph_stream:
+
+=======
+Streams
+=======
+
+All streams must have ``interface`` and ``type`` properties defined:
+
+   * ``interface`` selects the type of the stream.
+      - :ref:`pcm <stream_kalsim_wired>` hardware stream.
+      - :ref:`l2cap <stream_kalsim_a2dp>` software stream.
+      - :ref:`file <stream_kalsim_a2dp>` software stream.
+      - :ref:`timestamped <stream_kalsim_a2dp>` software stream.
+      - :ref:`tester <stream_kalsim_a2dp>` software stream.
+
+   * ``type`` is the stream direction, source and sink respectively.
+      - ``source`` for stream that pushes data into kymera
+      - ``sink`` for stream that extracts data out of kymera
+
+.. _stream_kalsim_wired:
+
+wired
+-----
+
+    This applies to ``pcm`` interfaces.
+
+    .. note::
+        * All streams are sample-based.
+        * All streams should have sample width 16 or 24.
+        * Provided source files should have only one channel and the parameter channel
+          should not be used otherwise the performance penalty is very significant.
+        * When there are multiple source or sink streams, the order of creation of streams and
+          the corresponding endpoints must match.
+          This is for kalsim to connect appropriate streams to the corresponding endpoint.
+        * File format qwav is not supported
+
+    .. autoclass:: kse.kalsim.stream.hydra.hw.StreamHw
+        :noindex:
+
+    **Examples**
+
+    Stream pcm audio from this raw file containing a stream sampled at 8 KHz and 16 bits::
+
+            {
+                "interface": "pcm",
+                "type": "source",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw",
+                    "sample_rate": 8000,
+                    "sample_width": 16
+                }
+            }
+
+    Stream pcm audio to this wav file pushing at 8 KHz and 16 bits::
+
+            {
+                "interface": "pcm",
+                "type": "sink",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "tmp/result_0.wav",
+                    "sample_rate": 8000,
+                    "sample_width": 16
+                }
+            }
+
+    Stream pcm audio from this wav file, playing the file 3 times with 1 second silence before
+    the first loop::
+
+            {
+                "interface": "pcm",
+                "type": "sink",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/153_Prompts_176.4_kHz_Music_Detected_8k.wav",
+                    "loop": 3,
+                    "delay": 1.0
+                }
+            }
+
+
+.. _stream_kalsim_a2dp:
+
+a2dp
+----
+
+    This applies to ``l2cap``, ``file``, ``timestamped`` and ``tester`` interfaces.
+    All those cases are particularizations of the general audio_data case
+    where ``device_type`` does not have to be set.
+
+    .. note::
+        * All streams are packet-based.
+        * All streams should have sample width 8.
+        * kymera only consumes a2dp stream data in 2 or 4 bytes blocks (depending on type).
+          This means, that a problem occurs when the last segment of the data from the stream
+          is less than the block size. In case the last segment of 1 bytes arrive at
+          the endpoint, Kymera would be waiting indefinitely for the next byte,
+          which never arrives. This causes a hang in the graph.
+        * qwav file format is not supported.
+        * ``l2cap`` and ``file`` are big endian with block size 2 bytes. Only ``source``.
+        * ``timestamped`` is big endian with  block size 2 bytes
+        * ``tester`` is little endian with block size 4 bytes.
+
+
+    .. autoclass:: kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData
+        :noindex:
+
+
+    **Examples**
+
+    Stream audio from this sbc encoded file, as fast as there is space in the hydra audio data
+    service buffer, in blocks of 123 bytes.
+    Sbc fle is 369 kbps bit rate and a frame size of 123 bytes::
+
+            {
+                "interface": "l2cap",
+                "type": "source",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/sine_800_60s_sbc1_2c_48000_16b.sbc",
+                    "sample_rate": 0,
+                    "sample_width": 8,
+                    "frame_size": 123
+                }
+            }
+
+    Stream audio from this sbc encoded file (which contains rtp headers), at a rate of 51 KBytes/sec
+    in blocks of 136 bytes, and generate metadata in short format along side::
+
+        The bit rate that was used to generate the above file = 369000 kbps
+        The equivalent bytes per second                       = 369000/8 bytes/second = 46,125 bytes/second
+        The frame size of the original .sbc file              = 123 bytes
+        The frame rate of the original .sbc file = 46125/123  = 375 frames/second
+        The rtp header size of the resultant rtp_sbc file     = 13 bytes
+        The total frame size of the resultant rtp_sbc file    = (123 + 13) bytes = 136 bytes
+        The frame rate needed for the resultant rtp_sbc file  = 375 × 136 = 51000 bytes/second
+
+            {
+                "interface": "l2cap",
+                "type": "source",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/sine_2000_300s_rtp_sbc1_2c_48000_16b.sbc",
+                    "sample_rate": 51000,
+                    "sample_width": 8,
+                    "frame_size": 136,
+                    "metadata_enable": true
+                }
+            }
+
+    Stream audio to this file, as fast as there is space in the hydra audio data service buffer::
+
+            {
+                "interface": "timestamped",
+                "type": "sink",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "tmp/result_slave.aac",
+                    "sample_rate": 48000,
+                    "sample_width": 8,
+                    "frame_size": 1
+                }
+            }
+
+
+    Stream audio to this file, as fast as there is space in the hydra audio data
+    service buffer, in blocks of 118 bytes::
+
+            {
+                "interface": "tester",
+                "type": "sink",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "tmp/result_0.sbc",
+                    "sample_rate": 0,
+                    "sample_width": 8,
+                    "frame_size": 118
+                }
+            }
+

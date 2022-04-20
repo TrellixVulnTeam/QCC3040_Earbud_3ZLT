@@ -1,0 +1,8 @@
+[console_scripts]
+ksp = ksp.launcher:main
+ksp_extract = ksp.scripts.extract:main
+ksp_reader = ksp.scripts.reader:main
+
+[html_documents]
+docs = ksp:get_documents
+

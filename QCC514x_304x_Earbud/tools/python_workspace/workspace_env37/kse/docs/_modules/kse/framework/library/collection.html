@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.framework.library.collection &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.framework.library.collection</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.framework.library.collection</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Collections library utilities</span>
+
+<span class="sd">All function in this module handle json objects</span>
+<span class="sd">A json object is the representation of valid json in python.</span>
+<span class="sd">The object supports dict and list containers and any values.</span>
+<span class="sd">Subelements could be containers as well.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
+
+<span class="kn">from</span> <span class="nn">.config</span> <span class="k">import</span> <span class="n">get_config_param</span>
+
+<span class="n">OUT_MODE_INPLACE</span> <span class="o">=</span> <span class="s1">&#39;inplace&#39;</span>
+<span class="n">OUT_MODE_SHALLOW_COPY</span> <span class="o">=</span> <span class="s1">&#39;shallow_copy&#39;</span>
+<span class="n">OUT_MODE_DEEP_COPY</span> <span class="o">=</span> <span class="s1">&#39;deep_copy&#39;</span>
+<span class="n">OUT_MODES</span> <span class="o">=</span> <span class="p">[</span><span class="n">OUT_MODE_INPLACE</span><span class="p">,</span> <span class="n">OUT_MODE_SHALLOW_COPY</span><span class="p">,</span> <span class="n">OUT_MODE_DEEP_COPY</span><span class="p">]</span>
+
+<span class="n">OUT_MODE_FUNC</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">OUT_MODE_INPLACE</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="n">OUT_MODE_SHALLOW_COPY</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">,</span>
+    <span class="n">OUT_MODE_DEEP_COPY</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span>
+
+<span class="p">}</span>
+
+<span class="n">DICT_MODE_OVERWRITE</span> <span class="o">=</span> <span class="s1">&#39;overwrite&#39;</span>
+<span class="n">DICT_MODE_APPEND</span> <span class="o">=</span> <span class="s1">&#39;append&#39;</span>
+<span class="n">DICT_MODES</span> <span class="o">=</span> <span class="p">[</span><span class="n">DICT_MODE_OVERWRITE</span><span class="p">,</span> <span class="n">DICT_MODE_APPEND</span><span class="p">]</span>
+
+<span class="n">LIST_MODE_OVERWRITE</span> <span class="o">=</span> <span class="s1">&#39;overwrite&#39;</span>
+<span class="n">LIST_MODE_APPEND</span> <span class="o">=</span> <span class="s1">&#39;append&#39;</span>
+<span class="n">LIST_MODE_OVERWRITE_APPEND</span> <span class="o">=</span> <span class="s1">&#39;overwrite_append&#39;</span>
+<span class="n">LIST_MODE_APPEND_ALWAYS</span> <span class="o">=</span> <span class="s1">&#39;append_always&#39;</span>
+<span class="n">LIST_MODES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">LIST_MODE_OVERWRITE</span><span class="p">,</span>
+    <span class="n">LIST_MODE_APPEND</span><span class="p">,</span>
+    <span class="n">LIST_MODE_OVERWRITE_APPEND</span><span class="p">,</span>
+    <span class="n">LIST_MODE_APPEND_ALWAYS</span><span class="p">]</span>
+
+<span class="n">SEPARATOR_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+
+<div class="viewcode-block" id="json_merge"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.collection.json_merge">[docs]</a><span class="k">def</span> <span class="nf">json_merge</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Merge two json objects.</span>
+
+<span class="sd">    This function will return data1 data (base) with whatever modifications included in data2.</span>
+<span class="sd">    The decision to add more data in data1 that was not originally present but present in data2 is</span>
+<span class="sd">    defined by dict_mode and list_mode</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data1 (dict/list): Base input data</span>
+<span class="sd">        data2 (dict/list): New data</span>
+<span class="sd">        out_mode (str). How to return data, set it to</span>
+<span class="sd">            - OUT_MODE_INPLACE all operation will be done in data1</span>
+<span class="sd">            - OUT_MODE_SHALLOW_COPY all operations will be done in a shallow copy of data1</span>
+<span class="sd">            - OUT_MODE_DEEP_COPY all operations will be done in a deep copy of data1</span>
+<span class="sd">        dict_mode (str). How to handle dict</span>
+<span class="sd">            - DICT_MODE_OVERWRITE keys that are already present in data1 will be overwritten with</span>
+<span class="sd">              data2 if they exist, but new keys in data2 will be omitted.</span>
+<span class="sd">            - DICT_MODE_APPEND keys only in data1 will be left intact, both in data1 and data2 will</span>
+<span class="sd">              return data2 values and only in data2 will return data2 values (default)</span>
+<span class="sd">        list_mode (str). How to handle list</span>
+<span class="sd">            - LIST_MODE_OVERWRITE only indexes in data1 will be overwritten with data2 if they exist</span>
+<span class="sd">              in both data1 and data2</span>
+<span class="sd">            - LIST_MODE_APPEND indexes only in data1 will be left intact, both in data1 and data2</span>
+<span class="sd">              will return data2 values and only in data2 will return data2 values</span>
+<span class="sd">            - LIST_MODE_OVERWRITE_APPEND values in data2 will overwrite existing indices in data1</span>
+<span class="sd">              and new indices in data2 will append (default)</span>
+<span class="sd">            - LIST_MODE_APPEND_ALWAYS values in data2 will be appended to values in data1</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict/list: Output data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out_mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;out_mode&#39;</span><span class="p">,</span> <span class="n">OUT_MODE_INPLACE</span><span class="p">)</span>
+    <span class="n">dict_mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dict_mode&#39;</span><span class="p">,</span> <span class="n">DICT_MODE_APPEND</span><span class="p">)</span>
+    <span class="n">list_mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;list_mode&#39;</span><span class="p">,</span> <span class="n">LIST_MODE_OVERWRITE_APPEND</span><span class="p">)</span>
+    <span class="n">rec_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;out_mode&#39;</span><span class="p">:</span> <span class="n">out_mode</span><span class="p">,</span>
+        <span class="s1">&#39;dict_mode&#39;</span><span class="p">:</span> <span class="n">dict_mode</span><span class="p">,</span>
+        <span class="s1">&#39;list_mode&#39;</span><span class="p">:</span> <span class="n">list_mode</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">out_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">OUT_MODES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;out_mode:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dict_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DICT_MODES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;dict_mode:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">list_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">LIST_MODES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;list_mode:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">OUT_MODE_FUNC</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">out_mode</span><span class="p">)(</span><span class="n">data1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_merge</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">data2</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="o">**</span><span class="n">rec_kwargs</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">dict_mode</span> <span class="o">==</span> <span class="n">DICT_MODE_APPEND</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">OUT_MODE_FUNC</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">out_mode</span><span class="p">)(</span><span class="n">data2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">list_mode</span> <span class="o">==</span> <span class="n">LIST_MODE_APPEND_ALWAYS</span><span class="p">:</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">list_mode</span> <span class="ow">in</span> <span class="p">[</span><span class="n">LIST_MODE_OVERWRITE</span><span class="p">,</span> <span class="n">LIST_MODE_OVERWRITE_APPEND</span><span class="p">]:</span>
+                        <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_merge</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">rec_kwargs</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">list_mode</span> <span class="ow">in</span> <span class="p">[</span><span class="n">LIST_MODE_OVERWRITE_APPEND</span><span class="p">,</span> <span class="n">LIST_MODE_APPEND</span><span class="p">]:</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">OUT_MODE_FUNC</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">out_mode</span><span class="p">)(</span><span class="n">data2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">OUT_MODE_FUNC</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">out_mode</span><span class="p">)(</span><span class="n">data2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="json_substitute_env"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.collection.json_substitute_env">[docs]</a><span class="k">def</span> <span class="nf">json_substitute_env</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Substitute string values that contain $ENV or $(ENV) with the value of the environmental</span>
+<span class="sd">    variable</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        json_substitute_env({&#39;a&#39;: &#39;$TMP/trash&#39;})</span>
+<span class="sd">        {&#39;a&#39;: &#39;/tmp/trash&#39; }</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (dict/list): Input data</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict/list: Output data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_substitute_env</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_substitute_env</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">str_template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">env_data</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">))</span>
+        <span class="n">env_data</span> <span class="o">=</span> <span class="n">json_merge</span><span class="p">(</span><span class="n">env_data</span><span class="p">,</span> <span class="n">get_config_param</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">str_template</span><span class="o">.</span><span class="n">safe_substitute</span><span class="p">(</span><span class="o">**</span><span class="n">env_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="json_flatten"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.collection.json_flatten">[docs]</a><span class="k">def</span> <span class="nf">json_flatten</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">SEPARATOR_DEFAULT</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Flatten a dictionary or a list</span>
+
+<span class="sd">    All elements will be handled as scalars but subclasses of dicts and/or lists</span>
+
+<span class="sd">    For the following input::</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;a&quot;: 1,</span>
+<span class="sd">            &quot;b&quot;: {</span>
+<span class="sd">                &quot;c&quot;: 1,</span>
+<span class="sd">                &quot;d&quot;: [0, 1, 2]</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Get the following flattened output::</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;a&quot;: 1,</span>
+<span class="sd">            &quot;b.c&quot;: 1,</span>
+<span class="sd">            &quot;b.d.0&quot;: 0,</span>
+<span class="sd">            &quot;b.d.1&quot;: 1,</span>
+<span class="sd">            &quot;b.d.2&quot;: 2</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (list/dict): Data to flatten</span>
+<span class="sd">        separator (str): Separator for returned flattened data dict</span>
+<span class="sd">        object_pairs_hook (class): Class to use for output, by default dict()</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict Flattened data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">object_pairs_hook</span> <span class="o">=</span> <span class="nb">dict</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">object_pairs_hook</span> <span class="k">else</span> <span class="n">object_pairs_hook</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">json_flatten</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">object_pairs_hook</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">:</span>
+                    <span class="n">tmp</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">json_flatten</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">object_pairs_hook</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">:</span>
+                    <span class="n">tmp</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">ret</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">tmp</span></div>
+
+
+<div class="viewcode-block" id="json_unflatten"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.collection.json_unflatten">[docs]</a><span class="k">def</span> <span class="nf">json_unflatten</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">SEPARATOR_DEFAULT</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Un-flatten a dictionary or a list.</span>
+
+<span class="sd">    For the following input::</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;a&quot;: 1,</span>
+<span class="sd">            &quot;b.c&quot;: 1,</span>
+<span class="sd">            &quot;b.d.0&quot;: 0,</span>
+<span class="sd">            &quot;b.d.1&quot;: 1,</span>
+<span class="sd">            &quot;b.d.2&quot;: 2</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Get the following un-flattened output::</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;a&quot;: 1,</span>
+<span class="sd">            &quot;b&quot;: {</span>
+<span class="sd">                &quot;c&quot;: 1,</span>
+<span class="sd">                &quot;d&quot;: [0, 1, 2]</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (dict): Flattened data</span>
+<span class="sd">        separator (str): Separator for input flattened data dict</span>
+<span class="sd">        object_pairs_hook (class): Class to use for dicts, by default dict()</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict/list: Un-flattened data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_check_list_length</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">SEPARATOR_DEFAULT</span><span class="p">):</span>
+        <span class="n">comp</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">root</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">entry</span> <span class="o">==</span> <span class="n">comp</span> <span class="ow">or</span> <span class="n">entry</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comp</span> <span class="o">+</span> <span class="n">separator</span><span class="p">):</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;list </span><span class="si">%s</span><span class="s1"> does not have zero index&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root</span><span class="p">))</span>
+
+        <span class="n">base</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">base</span><span class="p">)</span> <span class="k">if</span> <span class="n">root</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)[</span><span class="n">length</span><span class="p">])</span>
+                    <span class="n">last</span> <span class="o">=</span> <span class="n">last</span> <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">last</span> <span class="k">else</span> <span class="n">index</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint:disable=broad-except</span>
+                    <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">last</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_get_list_index</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint:disable=broad-except</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">pos</span>
+
+    <span class="n">object_pairs_hook</span> <span class="o">=</span> <span class="nb">dict</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">object_pairs_hook</span> <span class="k">else</span> <span class="n">object_pairs_hook</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+        <span class="n">data2</span> <span class="o">=</span> <span class="n">data</span>  <span class="c1"># we create a copy of the reference in order not to lose track of it</span>
+        <span class="n">entries</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">ent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">entries</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">_get_list_index</span><span class="p">(</span><span class="n">ent</span><span class="p">)</span>
+            <span class="n">current_dict</span> <span class="o">=</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="n">pos_next</span> <span class="o">=</span> <span class="n">_get_list_index</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="n">ind</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">next_dict</span> <span class="o">=</span> <span class="n">pos_next</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="n">next_ent</span> <span class="o">=</span> <span class="n">entries</span><span class="p">[</span><span class="n">ind</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">current_dict</span> <span class="ow">and</span> <span class="n">next_dict</span><span class="p">:</span>  <span class="c1"># current dict next dict</span>
+                <span class="k">if</span> <span class="n">data2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">data2</span> <span class="ow">or</span> <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">next_ent</span> <span class="ow">in</span> <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]:</span>
+                    <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">][</span><span class="n">next_ent</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="n">current_dict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">next_dict</span><span class="p">:</span>  <span class="c1"># current dict next list</span>
+                <span class="k">if</span> <span class="n">data2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">data2</span> <span class="ow">or</span> <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_check_list_length</span><span class="p">(</span>
+                        <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">[:</span><span class="n">ind</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">)</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">current_dict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">next_dict</span><span class="p">:</span>  <span class="c1"># current list next list</span>
+                <span class="k">if</span> <span class="n">data2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_check_list_length</span><span class="p">(</span>
+                        <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">[:</span><span class="n">ind</span><span class="p">]),</span> <span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">)</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+                <span class="k">if</span> <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_check_list_length</span><span class="p">(</span>
+                        <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">[:</span><span class="n">ind</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">)</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">current_dict</span> <span class="ow">and</span> <span class="n">next_dict</span><span class="p">:</span>  <span class="c1"># current list next dict</span>
+                <span class="k">if</span> <span class="n">data2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_check_list_length</span><span class="p">(</span>
+                        <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">[:</span><span class="n">ind</span><span class="p">]),</span> <span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">)</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+                <span class="k">if</span> <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">next_ent</span> <span class="ow">in</span> <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]:</span>
+                    <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">][</span><span class="n">next_ent</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+
+        <span class="n">ent</span> <span class="o">=</span> <span class="n">entries</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">_get_list_index</span><span class="p">(</span><span class="n">ent</span><span class="p">)</span>
+        <span class="n">current_list</span> <span class="o">=</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pos</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_list</span><span class="p">:</span>  <span class="c1"># dictionary</span>
+            <span class="k">if</span> <span class="n">data2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="n">object_pairs_hook</span><span class="p">()</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+            <span class="n">data2</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># list</span>
+            <span class="k">if</span> <span class="n">data2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_check_list_length</span><span class="p">(</span>
+                    <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">val</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="n">separator</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+            <span class="n">data2</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

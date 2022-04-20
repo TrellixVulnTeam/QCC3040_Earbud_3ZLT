@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>compression &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="constants" href="acat.Core.constants.html"/>
+        <link rel="prev" title="argument_parser" href="acat.Core.argument_parser.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>compression</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.compression.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="compression">
+<h1>compression<a class="headerlink" href="#compression" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.compression</span></code>.</p>
+<span class="target" id="module-ACAT.Core.compression"></span><p>File Compressor.</p>
+<p>Handle compressed files.</p>
+<dl class="exception">
+<dt id="ACAT.Core.compression.CompressionException">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.compression.</code><code class="sig-name descname">CompressionException</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/compression.html#CompressionException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.compression.CompressionException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for exceptions thrown by the compression class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – </p></li>
+<li><p><strong>msg</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.compression.CoredumpNotFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.compression.</code><code class="sig-name descname">CoredumpNotFoundError</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/compression.html#CoredumpNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.compression.CoredumpNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The zip file didn’t contain any coredumps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.compression.TooManyCoredumpsFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.compression.</code><code class="sig-name descname">TooManyCoredumpsFoundError</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/compression.html#TooManyCoredumpsFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.compression.TooManyCoredumpsFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The zip file contained multiple coredumps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.compression.extract">
+<code class="sig-prename descclassname">ACAT.Core.compression.</code><code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param">zip_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/compression.html#extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.compression.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract a zip file with single file inside it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>zip_path</strong> (<em>str</em>) – Zip filename.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The contents of the zipped file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.compression.get_coredump_lines">
+<code class="sig-prename descclassname">ACAT.Core.compression.</code><code class="sig-name descname">get_coredump_lines</code><span class="sig-paren">(</span><em class="sig-param">zip_filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/compression.html#get_coredump_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.compression.get_coredump_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a zipped coredump into a temp file and return the filename.</p>
+<p>This function inspects the given zip file for coredumps which are
+distinguished by their extensions. When there is a coredump, it
+extracts the coredump and returns it as a list of lines.</p>
+<p>If the zip file has more than one coredump or none, the function
+raises an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>zip_filename</strong> (<em>str</em>) – Zip filename.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of lines in the coredump file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>contents (list)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>BadZipFile</strong> – If the given zip file is not a valid zip file.</p></li>
+<li><p><a class="reference internal" href="#ACAT.Core.compression.TooManyCoredumpsFoundError" title="ACAT.Core.compression.TooManyCoredumpsFoundError"><strong>TooManyCoredumpsFoundError</strong></a> – When there are multiple coredump files
+    in the zip file.</p></li>
+<li><p><a class="reference internal" href="#ACAT.Core.compression.CoredumpNotFoundError" title="ACAT.Core.compression.CoredumpNotFoundError"><strong>CoredumpNotFoundError</strong></a> – When there is no coredump file in the zip
+    file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.compression.is_zip">
+<code class="sig-prename descclassname">ACAT.Core.compression.</code><code class="sig-name descname">is_zip</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/compression.html#is_zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.compression.is_zip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the given filename is a zip file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The full path to a physical file on the disk.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the given filename is a zip file, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.constants.html" class="btn btn-neutral float-right" title="constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.argument_parser.html" class="btn btn-neutral" title="argument_parser" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

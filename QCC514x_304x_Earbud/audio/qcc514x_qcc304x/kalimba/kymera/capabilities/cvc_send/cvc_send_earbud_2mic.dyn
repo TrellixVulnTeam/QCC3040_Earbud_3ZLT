@@ -1,0 +1,9 @@
+// *****************************************************************************
+// Copyright (c) 2014 - 2020 Qualcomm Technologies International, Ltd.
+// %%version
+// *****************************************************************************
+
+#define CVC_SEND_MAJOR_CONFIG    0           // Headset configurtion of cvc send
+#define CVC_DYN_NUM_MICS         2
+#define CVC_HEADSET_APP_CONFIG   3           // Earbud In-ear
+#include "cvc_send_data_inear.dyn"

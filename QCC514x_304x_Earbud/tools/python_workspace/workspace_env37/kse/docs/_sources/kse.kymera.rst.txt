@@ -1,0 +1,19 @@
+kse.kymera package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.kymera.capability
+   kse.kymera.endpoint
+   kse.kymera.kymera
+
+Module contents
+---------------
+
+.. automodule:: kse.kymera
+   :members:
+   :undoc-members:
+   :show-inheritance:

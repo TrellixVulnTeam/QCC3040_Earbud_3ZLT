@@ -1,0 +1,1444 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.instrument.kalcmd.kalcmd &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.instrument.kalcmd.kalcmd</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.instrument.kalcmd.kalcmd</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Kalimba Command (kalcmd) instrument&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">_thread</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">import</span> <span class="nn">kalcmd2</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.config</span> <span class="k">import</span> <span class="n">get_config_param</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.instrument</span> <span class="k">import</span> <span class="n">Instrument</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_exception</span><span class="p">,</span> <span class="n">log_input</span><span class="p">,</span> <span class="n">log_output</span><span class="p">,</span> <span class="n">dump</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.trback</span> <span class="k">import</span> <span class="n">set_traceback</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.util</span> <span class="k">import</span> <span class="n">RLockTimeout</span>
+<span class="kn">from</span> <span class="nn">.msg_header</span> <span class="k">import</span> <span class="n">MsgHeader</span>
+
+<span class="n">INSTRUMENT</span> <span class="o">=</span> <span class="s1">&#39;kalcmd&#39;</span>
+<span class="n">SERVER</span> <span class="o">=</span> <span class="s1">&#39;server&#39;</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="s1">&#39;port&#39;</span>
+
+<span class="n">KALCMD_EVENT_TERMINATE</span> <span class="o">=</span> <span class="s1">&#39;terminate&#39;</span>
+<span class="n">KALCMD_EVENT_TIMER</span> <span class="o">=</span> <span class="s1">&#39;timer&#39;</span>
+<span class="n">KALCMD_EVENT_MESSAGE</span> <span class="o">=</span> <span class="s1">&#39;message&#39;</span>
+<span class="n">KALCMD_EVENT_STREAM_DATA</span> <span class="o">=</span> <span class="s1">&#39;stream_data&#39;</span>
+<span class="n">KALCMD_EVENT_STREAM_EOF</span> <span class="o">=</span> <span class="s1">&#39;stream_eof&#39;</span>
+
+<span class="n">KALCMD2_EVENT</span> <span class="o">=</span> <span class="s1">&#39;event&#39;</span>
+<span class="n">KALCMD2_RETURN_CODE</span> <span class="o">=</span> <span class="s1">&#39;return_code&#39;</span>
+<span class="n">KALCMD2_PAYLOAD</span> <span class="o">=</span> <span class="s1">&#39;payload&#39;</span>
+<span class="n">KALCMD2_VALUE</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
+<span class="n">KALCMD2_TIME</span> <span class="o">=</span> <span class="s1">&#39;time&#39;</span>
+<span class="n">KALCMD2_KAL_ARCH</span> <span class="o">=</span> <span class="s1">&#39;kal_arch&#39;</span>
+<span class="n">KALCMD2_NAME</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
+<span class="n">KALCMD2_MAJOR</span> <span class="o">=</span> <span class="s1">&#39;major&#39;</span>
+<span class="n">KALCMD2_MINOR</span> <span class="o">=</span> <span class="s1">&#39;minor&#39;</span>
+<span class="n">KALCMD2_COOKIE</span> <span class="o">=</span> <span class="s1">&#39;cookie&#39;</span>
+<span class="n">KALCMD2_STREAM_ID</span> <span class="o">=</span> <span class="s1">&#39;stream_id&#39;</span>
+<span class="n">KALCMD2_STREAM_IDS</span> <span class="o">=</span> <span class="s1">&#39;stream_ids&#39;</span>
+<span class="n">KALCMD2_SAMPLES</span> <span class="o">=</span> <span class="s1">&#39;samples&#39;</span>
+<span class="n">KALCMD2_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;format&#39;</span>
+<span class="n">KALCMD2_SAMPLES_INDUCED</span> <span class="o">=</span> <span class="s1">&#39;samples_induced&#39;</span>
+<span class="n">KALCMD2_CLOCK_SPEED</span> <span class="o">=</span> <span class="s1">&#39;clock_speed&#39;</span>
+<span class="n">KALCMD2_WORDS</span> <span class="o">=</span> <span class="s1">&#39;words&#39;</span>
+
+<span class="n">WAKE_TIMER_USEC</span> <span class="o">=</span> <span class="mi">50000</span>  <span class="c1"># this dictates maximum time between sent messages</span>
+<span class="n">WAKE_TIMER_COOKIE</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span>
+
+<span class="n">SOCKET_SERVER_TIMEOUT</span> <span class="o">=</span> <span class="mi">60</span>  <span class="c1"># socket communication timeout in server mode without debugger</span>
+<span class="n">SOCKET_SERVER_TIMEOUT_DEBUGGER</span> <span class="o">=</span> <span class="mi">3600</span>  <span class="c1"># socket communication timeout in server mode with debugger</span>
+
+<span class="n">LOCK_TIMEOUT_DEFAULT</span> <span class="o">=</span> <span class="mi">3</span>
+
+
+<span class="c1"># pylint: disable=too-many-public-methods</span>
+<div class="viewcode-block" id="Kalcmd"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd">[docs]</a><span class="k">class</span> <span class="nc">Kalcmd</span><span class="p">(</span><span class="n">Instrument</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kalimba kalcmd2 instrument</span>
+
+<span class="sd">    This instrument handles kalcmd2 but when connecting it is able to coordinate</span>
+<span class="sd">    kalsim (kalimba simulator) and</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        server (bool): If True create a server socket where kalsim should connect, if not connect</span>
+<span class="sd">        port (int): Port number for the socket connection, if server is True then 0 is find free</span>
+<span class="sd">            port in the system</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">interface</span> <span class="o">=</span> <span class="s1">&#39;kalcmd&#39;</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;minItems&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">SERVER</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span> <span class="p">},</span>
+                <span class="n">PORT</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;init server:</span><span class="si">%s</span><span class="s1"> port:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># kalcmd2 command</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">kalsim_ready</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># kalcmd2 connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># kalcmd2/kalsim accept socket</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># kalcmd2/kalsim bind socket</span>
+        <span class="n">lock_timeout</span> <span class="o">=</span> <span class="n">get_config_param</span><span class="p">(</span><span class="s1">&#39;KALCMD_LOCK_TIMEOUT&#39;</span><span class="p">,</span> <span class="n">LOCK_TIMEOUT_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">RLockTimeout</span><span class="p">(</span><span class="n">lock_timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># kalcmd2 socket connection has started</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">KALCMD_EVENT_TERMINATE</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">KALCMD_EVENT_TIMER</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">KALCMD_EVENT_MESSAGE</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">KALCMD_EVENT_STREAM_DATA</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">KALCMD_EVENT_STREAM_EOF</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server</span><span class="p">:</span>
+            <span class="n">socket</span><span class="o">.</span><span class="n">setdefaulttimeout</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">socket</span><span class="o">.</span><span class="n">setdefaulttimeout</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_start_kalsim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting kalsim&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_disconnect_kalsim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_connect_kalaccess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;connecting kalaccess&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_disconnect_kalaccess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_create_background_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;creating kalcmd2 background thread&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_background_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s1">&#39;kalcmd background&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_wait_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">kalsim_ready</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unable to connect&#39;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">handler</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;handler&#39;</span><span class="p">:</span> <span class="n">handler</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span> <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">_invoke_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_callbacks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">callback</span><span class="p">[</span><span class="s1">&#39;handler&#39;</span><span class="p">]](</span><span class="o">*</span><span class="p">(</span><span class="n">callback</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">]),</span> <span class="o">**</span><span class="p">(</span><span class="n">callback</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_handle_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim relative timer time:</span><span class="si">%s</span><span class="s1">s cookie:</span><span class="si">%s</span><span class="s1"> added&#39;</span><span class="p">,</span>
+                       <span class="n">WAKE_TIMER_USEC</span> <span class="o">/</span> <span class="mf">1000000.0</span><span class="p">,</span> <span class="n">WAKE_TIMER_COOKIE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_timer_rel</span><span class="p">(</span><span class="n">WAKE_TIMER_USEC</span><span class="p">,</span> <span class="n">WAKE_TIMER_COOKIE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">kalsim_ready</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_process_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">INIT_EVENT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim init event&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_init</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">TERMINATE_EVENT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim terminate event&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_callback</span><span class="p">(</span><span class="n">KALCMD_EVENT_TERMINATE</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">KALSIM_ERROR_EVENT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim error event&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">MESSAGE_EVENT</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_received_message</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim message event msg ret_code:</span><span class="si">%s</span><span class="s1"> header:</span><span class="si">%s</span><span class="s1"> payload:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                           <span class="n">msg</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;header&#39;</span><span class="p">],</span>
+                           <span class="n">dump</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="n">KALCMD2_PAYLOAD</span><span class="p">],</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_callback</span><span class="p">(</span><span class="n">KALCMD_EVENT_MESSAGE</span><span class="p">,</span> <span class="n">msg</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;header&#39;</span><span class="p">],</span>
+                               <span class="n">msg</span><span class="p">[</span><span class="n">KALCMD2_PAYLOAD</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">TIMER_EVENT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_connected</span><span class="p">()</span>
+            <span class="n">cur_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_time</span><span class="p">()</span>
+            <span class="n">cookie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_timer_cookie</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">cookie</span> <span class="o">!=</span> <span class="n">WAKE_TIMER_COOKIE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim timer event cookie:</span><span class="si">%s</span><span class="s1"> at </span><span class="si">%.06f</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="n">cookie</span><span class="p">,</span> <span class="n">cur_time</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_callback</span><span class="p">(</span><span class="n">KALCMD_EVENT_TIMER</span><span class="p">,</span> <span class="n">cookie</span><span class="p">,</span> <span class="n">cur_time</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_timer_rel</span><span class="p">(</span><span class="n">WAKE_TIMER_USEC</span><span class="p">,</span> <span class="n">WAKE_TIMER_COOKIE</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">WATCHDOG_EVENT</span><span class="p">:</span>
+            <span class="n">cur_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_time</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;kalsim watchdog event at </span><span class="si">%.06f</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="n">cur_time</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">STREAM_DATA_EVENT</span><span class="p">:</span>
+            <span class="n">stream</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_data_event_query</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim stream data event stream:</span><span class="si">%s</span><span class="s1"> samples:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_callback</span><span class="p">(</span><span class="n">KALCMD_EVENT_STREAM_DATA</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_events</span><span class="o">.</span><span class="n">STREAM_EOF_EVENT</span><span class="p">:</span>
+            <span class="n">stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_eof_event_query</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;kalsim stream eof event stream:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_callback</span><span class="p">(</span><span class="n">KALCMD_EVENT_STREAM_EOF</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+        <span class="c1"># Note NO_EVENT and STREAM_DONE_EVENT not handled</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_background_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;background thread starting&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_interrupt_main_thread</span><span class="p">(</span><span class="n">trback</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">trback</span><span class="p">:</span>
+                <span class="n">set_traceback</span><span class="p">(</span><span class="n">trback</span><span class="p">)</span>
+            <span class="c1"># this will make main thread to receive KeyBoardInterrupt exception</span>
+            <span class="n">_thread</span><span class="o">.</span><span class="n">interrupt_main</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_msgs</span><span class="p">:</span>
+                        <span class="n">header</span><span class="p">,</span> <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_msgs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_send_message</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+                    <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_next_event</span><span class="p">()</span>
+                    <span class="n">ret_code</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">ret_code</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;received ret_code </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ret_code</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">event</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[</span><span class="n">KALCMD2_EVENT</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;received event </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                            <span class="n">_interrupt_main_thread</span><span class="p">()</span>
+                            <span class="k">break</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;unable to communicate with kalcmd2&#39;</span><span class="p">)</span>
+                    <span class="n">_interrupt_main_thread</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+                    <span class="k">break</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_invoke_callbacks</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;unable to invoke callbacks&#39;</span><span class="p">)</span>
+                <span class="n">_interrupt_main_thread</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+                <span class="k">break</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;background thread exiting&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Kalcmd.get_lock_object"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_lock_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_lock_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the lock object associated with shared access to kalcmd/kalsim socket</span>
+<span class="sd">        This can be acquired to block the background thread from issuing a get_next_event</span>
+<span class="sd">        which is equivalent to stopping firmware</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            kallock = kalcmd.get_lock_object()</span>
+<span class="sd">            kallock.acquire()</span>
+<span class="sd">            # do operations with firmware stopped</span>
+<span class="sd">            kalloc.release()</span>
+
+
+<span class="sd">            # or even better</span>
+<span class="sd">            kallock = kalcmd.get_lock_object()</span>
+<span class="sd">            with kallock:</span>
+<span class="sd">                # do operations with firmware stopped</span>
+<span class="sd">                print(kalcmd.get_current_time())</span>
+<span class="sd">                import time</span>
+<span class="sd">                time.sleep(1)</span>
+<span class="sd">                print(kalcmd.get_current_time())</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            RLockTimeout: Lock object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span></div>
+
+<div class="viewcode-block" id="Kalcmd.connect"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.connect">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kalsim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kalaccess</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connect to kalcmd2/kalsim</span>
+<span class="sd">        If kalsim is None the will try to connect to an externally executed kalsim</span>
+<span class="sd">        If kalsim is an instrument this will start the kalsim binary and connect to it</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kalsim (kats.instrument.kalsim): kalsim instrument or None</span>
+<span class="sd">            kalaccess (kats.instrument.kalaccess): kalaccess instrment or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;kalcmd already connected&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="n">kalsim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="n">kalaccess</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># ==========================================================================================</span>
+        <span class="c1"># create server socket</span>
+        <span class="c1"># configure the socket as blocking. Non blocking sockets will</span>
+        <span class="c1"># throw an exception if recv is called without data in the buffer.</span>
+        <span class="c1"># ==========================================================================================</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">bind_to</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">bind_to</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;kalcmd socket bind:</span><span class="si">%s</span><span class="s1"> failed&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bind_to</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;server socket created </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="o">.</span><span class="n">set_port</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">kalsim_launched</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start_kalsim</span><span class="p">()</span>
+            <span class="n">kalsim_launched</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Note, there is a problem in the connection when running in the grid,</span>
+                <span class="c1"># some slow machines can make kalsim run slow and not being able to connect to us</span>
+                <span class="c1"># in 10 seconds, so lets increase that time</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">kalsim</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">kalsim</span><span class="o">.</span><span class="n">get_debug</span><span class="p">():</span>
+                    <span class="n">timeout</span> <span class="o">=</span> <span class="n">SOCKET_SERVER_TIMEOUT</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># debugger could freeze kalcmd socket for a while</span>
+                    <span class="n">timeout</span> <span class="o">=</span> <span class="n">SOCKET_SERVER_TIMEOUT_DEBUGGER</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">addr</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;server socket accept timeout, exiting&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;server socket connected by remote client&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalmsg_server_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kalsim_launched</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># give kalsim time to open server connection</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;connecting client socket to localhost:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalmsg_client_connection</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">socket</span>
+
+        <span class="c1"># ==========================================================================================</span>
+        <span class="c1"># create kalcmd2 background polling thread</span>
+        <span class="c1"># ==========================================================================================</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_background_thread</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">:</span>
+            <span class="c1"># once kalcmd is connected to kalsim, kalsim still has to load the firmware before</span>
+            <span class="c1"># enabling the debugger port and that takes a while, we have to wait here because if</span>
+            <span class="c1"># we try to connect immediately then kalaccess will fail</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;waiting 10 sec before connecting kalaccess&#39;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># give kalsim time to start</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connect_kalaccess</span><span class="p">()</span>
+
+        <span class="c1"># ==========================================================================================</span>
+        <span class="c1"># wait for kalsim ready</span>
+        <span class="c1"># ==========================================================================================</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_ready</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;connected&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kalcmd.check_connected"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.check_connected">[docs]</a>    <span class="k">def</span> <span class="nf">check_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if instrument is connected to kalsim and ready for operation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: kalsim ready to be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">kalsim_ready</span></div>
+
+<div class="viewcode-block" id="Kalcmd.disconnect"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.disconnect">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disconnect instrument.</span>
+
+<span class="sd">        After the call the only available operation would be connect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_disconnect_kalaccess</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_connected</span><span class="p">():</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">terminate</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                        <span class="k">pass</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_disconnect_kalsim</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                        <span class="k">pass</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">sock</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                        <span class="k">pass</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                        <span class="k">pass</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">server_sock</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># wait for background thread to die</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_background_thread</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">kalsim_ready</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Kalcmd.install_terminate_handler"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.install_terminate_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">install_terminate_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Install handler to be invoked when TERMINATE_EVENT is received from kalcmd2</span>
+
+<span class="sd">        This handler will be invoked when the event is received as</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def terminate_handler():</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (func()): Handler to install</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">KALCMD_EVENT_TERMINATE</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span></div>
+
+<div class="viewcode-block" id="Kalcmd.install_timer_handler"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.install_timer_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">install_timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Install handler to be invoked when TIMER_EVENT is received from kalcmd2</span>
+
+<span class="sd">        This handler will be invoked when the event is received as</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def timer_handler(cookie, cur_time):</span>
+<span class="sd">                # cookie (int) same parameter used in add_absolute_timer / add_relative_timer</span>
+<span class="sd">                # cur_time (float) current time in seconds</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (func(cookie, cur_time)): Handler to install</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">KALCMD_EVENT_TIMER</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span></div>
+
+<div class="viewcode-block" id="Kalcmd.install_message_handler"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.install_message_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">install_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Install handler to be invoked when MESSAGE_EVENT is received from kalcmd2</span>
+
+<span class="sd">        This handler will be invoked when the event is received as</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def message_handler(stream_id, samples):</span>
+<span class="sd">                # return_code (int) message return code, 0 for ok</span>
+<span class="sd">                # header (any) message header</span>
+<span class="sd">                # payload (list[any]) message received</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (func(return_code, header, payload)): Handler to install</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">KALCMD_EVENT_MESSAGE</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span></div>
+
+<div class="viewcode-block" id="Kalcmd.install_stream_data_handler"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.install_stream_data_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">install_stream_data_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Install handler to be invoked when STREAM_DATA_EVENT is received from kalcmd2</span>
+
+<span class="sd">        This handler will be invoked when the event is received as</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def stream_data_handler(stream_id, samples):</span>
+<span class="sd">                # stream_id (int) same return in stream_create method</span>
+<span class="sd">                # samples (int) number of samples in/needed by stream</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (func(stream_id, samples)): Handler to install</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">KALCMD_EVENT_STREAM_DATA</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span></div>
+
+<div class="viewcode-block" id="Kalcmd.install_stream_eof_handler"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.install_stream_eof_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">install_stream_eof_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Install handler to be invoked when STREAM_EOF_EVENT is received from kalcmd2</span>
+
+<span class="sd">        This handler will be invoked when the event is received as</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def stream_eof_handler(stream_id):</span>
+<span class="sd">                # stream_id (int) same return in stream_create method</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (func(stream_id)): Handler to install</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">KALCMD_EVENT_STREAM_EOF</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span></div>
+
+<div class="viewcode-block" id="Kalcmd.set_relative_timer"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.set_relative_timer">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">set_relative_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookie</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set relative simulated timer, if it already exists then modify</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cookie (int): Timer id</span>
+<span class="sd">            period (flaot): Period in seconds</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if the timer is not added correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cookie</span> <span class="o">==</span> <span class="n">WAKE_TIMER_COOKIE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;cookie:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cookie</span><span class="p">))</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">period</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">))</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_timer_rel</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">cookie</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.set_absolute_timer"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.set_absolute_timer">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">set_absolute_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookie</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set absolute simulated timer, if it already exists then modify</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cookie (int): Timer id</span>
+<span class="sd">            period (flaot): Period in seconds</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if the timer is not added correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cookie</span> <span class="o">==</span> <span class="n">WAKE_TIMER_COOKIE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;cookie:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cookie</span><span class="p">))</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">period</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">))</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">set_timer_abs</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">cookie</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.peek"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.peek">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Peek memory</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Memory space as specified in kalcmd2.kalmem_spaces</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            size (int): Memory size as specified in kalcmd.kal_widths</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Memory value</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if memory is not read correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_VALUE</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.poke"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.poke">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">poke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Poke memory</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Memory space as specified in kalcmd2.kalmem_spaces</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            size (int): Memory size as specified in kalcmd.kal_widths</span>
+<span class="sd">            value (int): Value to write</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if memory is not written correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">poke</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.interrupt"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.interrupt">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">interrupt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interrupt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assert interrupt</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interrupt (int): Interrupt number</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if interrupt is not asserted correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">interrupt</span><span class="p">(</span><span class="n">interrupt</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.send_message"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.send_message">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send message to kalimba</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            header (list[int]): Header to be sent</span>
+<span class="sd">            payload (list[int]): Message to be sent</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if the message is not delivered correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pend_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">header</span><span class="p">,</span> <span class="n">payload</span><span class="p">])</span></div>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">_send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send message to kalimba (real send)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            header (list[int]): Header to be sent</span>
+<span class="sd">            payload (list[int]): Message to be sent</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if the message is not delivered correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="n">MsgHeader</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+
+<div class="viewcode-block" id="Kalcmd.get_current_time"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_current_time">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_current_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get current time since simulation started</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Time in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_TIME</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000000.0</span></div>
+
+<div class="viewcode-block" id="Kalcmd.terminate"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.terminate">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;return_code&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_code</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a terminate command.</span>
+
+<span class="sd">        This will make kalsim exit</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            return_code (int): Termination code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">terminate</span><span class="p">(</span><span class="n">return_code</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+    <span class="c1"># stream_change obsolete</span>
+    <span class="c1"># stream_get_info obsolete</span>
+
+    <span class="c1"># get message handled internally</span>
+
+<div class="viewcode-block" id="Kalcmd.get_kalimba_arch"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalimba_arch">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_kalimba_arch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get Kalimba architecture</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Kalimba architecture</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_kal_arch</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_KAL_ARCH</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.get_kalimba_name"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalimba_name">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_kalimba_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get Kalimba name</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Kalimba name</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_kalimba_name</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_NAME</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Kalcmd.get_version"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_version">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kalcmd2 version</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Version</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_version</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_MAJOR</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_MINOR</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.get_last_timer_cookie"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_last_timer_cookie">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_last_timer_cookie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get cookie of the last timer that reported an event</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Timer cookie</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_last_timer_cookie</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_COOKIE</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_create"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_create">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create kalsim stream</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Stream id</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_create</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_STREAM_ID</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_destroy"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_destroy">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destroy an existing stream</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_destroy</span><span class="p">(</span><span class="n">stream_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_list"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_list">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all created streams</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Stream id</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">streams_list</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_STREAM_IDS</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_query_property"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_query_property">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_query_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query stream property</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+<span class="sd">            key (str): Property</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Property value</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_query_property</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_VALUE</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_change_property"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_change_property">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_change_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change stream property</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+<span class="sd">            key (str): Property</span>
+<span class="sd">            val (str): Property value</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_change_property</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_commit_changes"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_commit_changes">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_commit_changes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply all property changes in the stream</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_commit_changes</span><span class="p">(</span><span class="n">stream_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_insert"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_insert">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%#06x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">,</span> <span class="n">data_size</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert data into an stream</span>
+
+<span class="sd">        This is used for write streams that are kalcmd backed,</span>
+<span class="sd">        could be either kalcmd or kalsim driven</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+<span class="sd">            data_size (int): Data size in bits</span>
+<span class="sd">            data (list[int]): Data elements of size data_size</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_insert</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_size</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_extract"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_extract">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%#06x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">,</span> <span class="n">sample_num</span><span class="p">,</span> <span class="n">sign_extend</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract data from a stream</span>
+
+<span class="sd">        This is used for read streams that are kalcmd backed,</span>
+<span class="sd">        could be either kalcmd or kalsim driven</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+<span class="sd">            sample_num (int): Number of samples</span>
+<span class="sd">            sign_extend (bool): Do we want to sign extend the data elements</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Data elements</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_extract</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="n">sample_num</span><span class="p">,</span> <span class="n">sign_extend</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_SAMPLES</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_induce"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_induce">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_induce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">,</span> <span class="n">sample_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert data into an stream</span>
+
+<span class="sd">        This is used for write streams that are file backed and kalcmd driven</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id (int): Stream id</span>
+<span class="sd">            data (list[int]): Data elements of size data_size</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_induce</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="n">sample_number</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_SAMPLES_INDUCED</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_eof_event_query"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_eof_event_query">[docs]</a>    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_eof_event_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query the last stream with an active EOF event</span>
+
+<span class="sd">        Should be called after a STREAM_EOF_EVENT is received</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Stream id</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_eof_event_query</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_STREAM_ID</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_data_event_query"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_data_event_query">[docs]</a>    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_data_event_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query stream state</span>
+
+<span class="sd">        Should be called after a STREAM_DATA_EVENT is received</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Stream id</span>
+<span class="sd">            int: Number of samples</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_data_event_query</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_STREAM_ID</span><span class="p">],</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;num_of_samples&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_rewind"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_rewind">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">stream_rewind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Rewind stream</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_rewind</span><span class="p">(</span><span class="n">stream_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.stream_flush"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_flush">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">stream_flush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flush the stream designated with the stream_id.</span>
+
+<span class="sd">        Accepts all kinds of streams however, it will only actually flush output streams to files.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_id:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">stream_flush</span><span class="p">(</span><span class="n">stream_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+    <span class="c1"># get_flag_state obsolete</span>
+
+    <span class="c1"># def handles_to_same_buffer(self, handle):</span>
+    <span class="c1"># It can query if two BAC handles correspond to the same physical buffer in the system</span>
+    <span class="c1"># (defined to be if they share same start address),</span>
+    <span class="c1"># this was designed to be generic between Bluecore and Hydra.</span>
+
+<div class="viewcode-block" id="Kalcmd.get_buffer_size"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_buffer_size">[docs]</a>    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get buffer size</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: size</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.get_handle_offset"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_handle_offset">[docs]</a>    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_handle_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get handle offset in buffer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handle (int): BAC handle</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: offset</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_handle_offset</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;offset&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.get_handle_sample_size"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_handle_sample_size">[docs]</a>    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_handle_sample_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get handle sample size in buffer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handle (int): BAC handle</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Sample size in bits</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_handle_sample_size</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;sample_size&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.query_stats"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.query_stats">[docs]</a>    <span class="k">def</span> <span class="nf">query_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">watchdog</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;It is a dict like performance querying mechanism. (KATS 2 used it, see the</span>
+<span class="sd">        following example code).</span>
+<span class="sd">        It is mostly the same information as you can get from Kalsim if -kalcmd2-pref and</span>
+<span class="sd">        -kalcmd2-perf-print are enabled, however now query able from Kalcmd2 instead of the console.</span>
+<span class="sd">        (see B-216072 for the Kalsim bug and B-219617 for the KATS2 side)</span>
+
+<span class="sd">        print(&quot;Watchdog stats&quot;)</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;simulation_load&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;wait_load&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;proc_load&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;event_count&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;command_count&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;timers_fired_count&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;timers_added_count&quot;, kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;real_time&quot;,kalcmd_stat.WATCHDOG));</span>
+<span class="sd">        print(&quot;Total stats&quot;)</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;simulation_load&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;wait_load&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;proc_load&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;event_count&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;command_count&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;timers_fired_count&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;timers_added_count&quot;, kalcmd_stat.TOTAL));</span>
+<span class="sd">        print(kalcmd_inst.query_stats(&quot;real_time&quot;, kalcmd_stat.TOTAL));</span>
+
+<span class="sd">        This only works if kalcmd2-perf is enabled on the command line.</span>
+<span class="sd">        The first argument is the to be queried key, while the second argument describes the scale</span>
+<span class="sd">        of the query. Kalsim maintains performance internal counters and timers at two scales.</span>
+<span class="sd">        (kalcmd_stat.WATCHDOG is per watchdog event, while kalcmd_stat.TOTAL is since start up,</span>
+<span class="sd">        up to the last watchdog)</span>
+
+<span class="sd">        Simulation_load + wait_load + proc_load should equal about 1.0.</span>
+<span class="sd">        Simulation load represents the fraction of time Kalsim spend simulating during the whole</span>
+<span class="sd">        time between the two watch dog events.</span>
+<span class="sd">        Wait_load represent the time spend waiting on the socket, while proc_load represent the time</span>
+<span class="sd">        Kalcmd2 spend processing the commands.</span>
+<span class="sd">        The things that end with count are simple counters.</span>
+<span class="sd">        The names should be descriptive enough if your familiar with kalcmd2.</span>
+
+<span class="sd">        Real time represents the amount of time in second it took for Kalsim to simulate between the</span>
+<span class="sd">        two watchdogs for kalcmd_stat.WATCHDOG.</span>
+<span class="sd">        (which always come in intervals of 1 simulated sec)</span>
+<span class="sd">        While in the TOTAL mode it represents the total time spend simulating up to the last</span>
+<span class="sd">        watchdog.</span>
+<span class="sd">        For safety reasons it probably best to only use this call directly after WATCHDOG_EVENT.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">query_stats</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">watchdog</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.change_max_clock_speed"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.change_max_clock_speed">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">change_max_clock_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clock_speed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change clock speed</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clock_speed (int): Clock speed in MHz</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">change_max_clockspeed</span><span class="p">(</span><span class="n">clock_speed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.query_max_clock_speed"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.query_max_clock_speed">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">query_max_clock_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kalimba maximum clock speed</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Maximum clock speed in MHz</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">query_max_clock_speed</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_CLOCK_SPEED</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.query_dsp_register"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.query_dsp_register">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">query_dsp_register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kalimba register value</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            register (int): Register as in kalcmd2.kal_regs</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Register value</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">query_dsp_reg</span><span class="p">(</span><span class="n">register</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_VALUE</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.get_kalsim_version"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalsim_version">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">get_kalsim_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kalimba simulator version</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict:</span>
+<span class="sd">                build_date (str): Build date in human readable format</span>
+<span class="sd">                major (str): Major version</span>
+<span class="sd">                minor (str): Minor version</span>
+<span class="sd">                release_version (bool): Release version</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_kalsim_version</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span></div>
+
+<div class="viewcode-block" id="Kalcmd.block_mem_write"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.block_mem_write">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">block_mem_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write kalimba memory in blocks of uint32_t data</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Memory space as specified in kalcmd2.kalmem_spaces</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            data (list[int]): Data to be written</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">block_mem_write</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Kalcmd.block_mem_read"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.block_mem_read">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">block_mem_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">num_words</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read kalimba memory in blocks of uint32_t data</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            memory_space (int): Memory space as specified in kalcmd2.kalmem_spaces</span>
+<span class="sd">            address (int): Memory address</span>
+<span class="sd">            num_words (int): Number of uint32_t data blocks to read</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Data read</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">block_mem_read</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">num_words</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_WORDS</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Kalcmd.print_message"><a class="viewcode-back" href="../../../../kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd.print_message">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="nd">@log_exception</span>
+    <span class="k">def</span> <span class="nf">print_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a message to be displayed in kalsim console</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message(str): Message to send</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if kalsim does not responds correctly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]</span> <span class="o">!=</span> <span class="n">kalcmd2</span><span class="o">.</span><span class="n">kalcmd_response</span><span class="o">.</span><span class="n">KALCMD_OK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">KALCMD2_RETURN_CODE</span><span class="p">]))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

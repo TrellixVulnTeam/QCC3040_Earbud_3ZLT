@@ -1,0 +1,26 @@
+############################################################################
+#  Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+#  All Rights Reserved.
+#  Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+#  Notifications and licenses are retained for attribution purposes only
+############################################################################
+
+#
+# Capabilities to include in the build
+#
+%list CFG_CAPABILITIES
+AANC_LITE_16K
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib_private/aanc
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/aanc_lite/aanc_lite
+
+%build
+RELEASE_BUILD=TRUE
+
+%list PREBUILT_LIBS
+libaanc.a

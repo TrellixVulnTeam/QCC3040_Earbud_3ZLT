@@ -1,0 +1,1127 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.instrument.kalcmd package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.instrument package" href="kse.instrument.html"/>
+        <link rel="next" title="kse.instrument.kalsim package" href="kse.instrument.kalsim.html"/>
+        <link rel="prev" title="kse.instrument.kalaccess package" href="kse.instrument.kalaccess.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.instrument.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.instrument.html#module-kse.instrument">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.instrument.html">kse.instrument package</a> &raquo;</li>
+      
+    <li>kse.instrument.kalcmd package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.instrument.kalcmd.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-instrument-kalcmd-package">
+<h1>kse.instrument.kalcmd package<a class="headerlink" href="#kse-instrument-kalcmd-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.instrument.kalcmd.kalcmd">
+<span id="kse-instrument-kalcmd-kalcmd-module"></span><h2>kse.instrument.kalcmd.kalcmd module<a class="headerlink" href="#module-kse.instrument.kalcmd.kalcmd" title="Permalink to this headline">¶</a></h2>
+<p>Kalimba Command (kalcmd) instrument</p>
+<dl class="class">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd">
+<em class="property">class </em><code class="sig-prename descclassname">kse.instrument.kalcmd.kalcmd.</code><code class="sig-name descname">Kalcmd</code><span class="sig-paren">(</span><em class="sig-param">server=False</em>, <em class="sig-param">port=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.framework.library.instrument.Instrument</span></code></p>
+<p>kalimba kalcmd2 instrument</p>
+<p>This instrument handles kalcmd2 but when connecting it is able to coordinate
+kalsim (kalimba simulator) and</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>bool</em>) – If True create a server socket where kalsim should connect, if not connect</p></li>
+<li><p><strong>port</strong> (<em>int</em>) – Port number for the socket connection, if server is True then 0 is find free
+port in the system</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.block_mem_read">
+<code class="sig-name descname">block_mem_read</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">num_words</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.block_mem_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.block_mem_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read kalimba memory in blocks of uint32_t data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Memory space as specified in kalcmd2.kalmem_spaces</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>num_words</strong> (<em>int</em>) – Number of uint32_t data blocks to read</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Data read</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.block_mem_write">
+<code class="sig-name descname">block_mem_write</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.block_mem_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.block_mem_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write kalimba memory in blocks of uint32_t data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Memory space as specified in kalcmd2.kalmem_spaces</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data to be written</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.change_max_clock_speed">
+<code class="sig-name descname">change_max_clock_speed</code><span class="sig-paren">(</span><em class="sig-param">clock_speed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.change_max_clock_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.change_max_clock_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change clock speed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>clock_speed</strong> (<em>int</em>) – Clock speed in MHz</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.check_connected">
+<code class="sig-name descname">check_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.check_connected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.check_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if instrument is connected to kalsim and ready for operation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>kalsim ready to be used</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">kalsim=None</em>, <em class="sig-param">kalaccess=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to kalcmd2/kalsim
+If kalsim is None the will try to connect to an externally executed kalsim
+If kalsim is an instrument this will start the kalsim binary and connect to it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kalsim</strong> (<em>kats.instrument.kalsim</em>) – kalsim instrument or None</p></li>
+<li><p><strong>kalaccess</strong> (<em>kats.instrument.kalaccess</em>) – kalaccess instrment or None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect instrument.</p>
+<p>After the call the only available operation would be connect</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_buffer_size">
+<code class="sig-name descname">get_buffer_size</code><span class="sig-paren">(</span><em class="sig-param">handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_buffer_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get buffer size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>size</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_current_time">
+<code class="sig-name descname">get_current_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_current_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_current_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current time since simulation started</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Time in seconds</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_handle_offset">
+<code class="sig-name descname">get_handle_offset</code><span class="sig-paren">(</span><em class="sig-param">handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_handle_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_handle_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get handle offset in buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handle</strong> (<em>int</em>) – BAC handle</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>offset</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_handle_sample_size">
+<code class="sig-name descname">get_handle_sample_size</code><span class="sig-paren">(</span><em class="sig-param">handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_handle_sample_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_handle_sample_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get handle sample size in buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handle</strong> (<em>int</em>) – BAC handle</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sample size in bits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalimba_arch">
+<code class="sig-name descname">get_kalimba_arch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_kalimba_arch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalimba_arch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Kalimba architecture</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Kalimba architecture</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalimba_name">
+<code class="sig-name descname">get_kalimba_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_kalimba_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalimba_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Kalimba name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Kalimba name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalsim_version">
+<code class="sig-name descname">get_kalsim_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_kalsim_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_kalsim_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalimba simulator version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>build_date (str): Build date in human readable format
+major (str): Major version
+minor (str): Minor version
+release_version (bool): Release version</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_last_timer_cookie">
+<code class="sig-name descname">get_last_timer_cookie</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_last_timer_cookie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_last_timer_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get cookie of the last timer that reported an event</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Timer cookie</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_lock_object">
+<code class="sig-name descname">get_lock_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_lock_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_lock_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the lock object associated with shared access to kalcmd/kalsim socket
+This can be acquired to block the background thread from issuing a get_next_event
+which is equivalent to stopping firmware</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kallock</span> <span class="o">=</span> <span class="n">kalcmd</span><span class="o">.</span><span class="n">get_lock_object</span><span class="p">()</span>
+<span class="n">kallock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="c1"># do operations with firmware stopped</span>
+<span class="n">kalloc</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+
+<span class="c1"># or even better</span>
+<span class="n">kallock</span> <span class="o">=</span> <span class="n">kalcmd</span><span class="o">.</span><span class="n">get_lock_object</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">kallock</span><span class="p">:</span>
+    <span class="c1"># do operations with firmware stopped</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">kalcmd</span><span class="o">.</span><span class="n">get_current_time</span><span class="p">())</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">kalcmd</span><span class="o">.</span><span class="n">get_current_time</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Lock object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="kse.framework.library.html#kse.framework.library.util.RLockTimeout" title="kse.framework.library.util.RLockTimeout">RLockTimeout</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.get_version">
+<code class="sig-name descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalcmd2 version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Version</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.install_message_handler">
+<code class="sig-name descname">install_message_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.install_message_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.install_message_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when MESSAGE_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">message_handler</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+    <span class="c1"># return_code (int) message return code, 0 for ok</span>
+    <span class="c1"># header (any) message header</span>
+    <span class="c1"># payload (list[any]) message received</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>func</em><em>(</em><em>return_code</em><em>, </em><em>header</em><em>, </em><em>payload</em><em>)</em>) – Handler to install</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.install_stream_data_handler">
+<code class="sig-name descname">install_stream_data_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.install_stream_data_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.install_stream_data_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when STREAM_DATA_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">stream_data_handler</span><span class="p">(</span><span class="n">stream_id</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+    <span class="c1"># stream_id (int) same return in stream_create method</span>
+    <span class="c1"># samples (int) number of samples in/needed by stream</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>func</em><em>(</em><em>stream_id</em><em>, </em><em>samples</em><em>)</em>) – Handler to install</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.install_stream_eof_handler">
+<code class="sig-name descname">install_stream_eof_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.install_stream_eof_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.install_stream_eof_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when STREAM_EOF_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">stream_eof_handler</span><span class="p">(</span><span class="n">stream_id</span><span class="p">):</span>
+    <span class="c1"># stream_id (int) same return in stream_create method</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>func</em><em>(</em><em>stream_id</em><em>)</em>) – Handler to install</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.install_terminate_handler">
+<code class="sig-name descname">install_terminate_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.install_terminate_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.install_terminate_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when TERMINATE_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">terminate_handler</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>func</em><em>(</em><em>)</em>) – Handler to install</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.install_timer_handler">
+<code class="sig-name descname">install_timer_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.install_timer_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.install_timer_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when TIMER_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">timer_handler</span><span class="p">(</span><span class="n">cookie</span><span class="p">,</span> <span class="n">cur_time</span><span class="p">):</span>
+    <span class="c1"># cookie (int) same parameter used in add_absolute_timer / add_relative_timer</span>
+    <span class="c1"># cur_time (float) current time in seconds</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>func</em><em>(</em><em>cookie</em><em>, </em><em>cur_time</em><em>)</em>) – Handler to install</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'kalcmd'</em><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.interrupt">
+<code class="sig-name descname">interrupt</code><span class="sig-paren">(</span><em class="sig-param">interrupt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.interrupt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.interrupt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert interrupt</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interrupt</strong> (<em>int</em>) – Interrupt number</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if interrupt is not asserted correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.peek">
+<code class="sig-name descname">peek</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.peek"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Peek memory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Memory space as specified in kalcmd2.kalmem_spaces</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Memory size as specified in kalcmd.kal_widths</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Memory value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if memory is not read correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.poke">
+<code class="sig-name descname">poke</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">size</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.poke"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.poke" title="Permalink to this definition">¶</a></dt>
+<dd><p>Poke memory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Memory space as specified in kalcmd2.kalmem_spaces</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Memory size as specified in kalcmd.kal_widths</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – Value to write</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if memory is not written correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.print_message">
+<code class="sig-name descname">print_message</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.print_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.print_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to be displayed in kalsim console</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to send</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.query_dsp_register">
+<code class="sig-name descname">query_dsp_register</code><span class="sig-paren">(</span><em class="sig-param">register</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.query_dsp_register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.query_dsp_register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalimba register value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>register</strong> (<em>int</em>) – Register as in kalcmd2.kal_regs</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Register value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.query_max_clock_speed">
+<code class="sig-name descname">query_max_clock_speed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.query_max_clock_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.query_max_clock_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalimba maximum clock speed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Maximum clock speed in MHz</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.query_stats">
+<code class="sig-name descname">query_stats</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">watchdog</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.query_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.query_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is a dict like performance querying mechanism. (KATS 2 used it, see the
+following example code).
+It is mostly the same information as you can get from Kalsim if -kalcmd2-pref and
+-kalcmd2-perf-print are enabled, however now query able from Kalcmd2 instead of the console.
+(see B-216072 for the Kalsim bug and B-219617 for the KATS2 side)</p>
+<p>print(“Watchdog stats”)
+print(kalcmd_inst.query_stats(“simulation_load”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“wait_load”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“proc_load”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“event_count”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“command_count”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“timers_fired_count”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“timers_added_count”, kalcmd_stat.WATCHDOG));
+print(kalcmd_inst.query_stats(“real_time”,kalcmd_stat.WATCHDOG));
+print(“Total stats”)
+print(kalcmd_inst.query_stats(“simulation_load”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“wait_load”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“proc_load”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“event_count”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“command_count”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“timers_fired_count”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“timers_added_count”, kalcmd_stat.TOTAL));
+print(kalcmd_inst.query_stats(“real_time”, kalcmd_stat.TOTAL));</p>
+<p>This only works if kalcmd2-perf is enabled on the command line.
+The first argument is the to be queried key, while the second argument describes the scale
+of the query. Kalsim maintains performance internal counters and timers at two scales.
+(kalcmd_stat.WATCHDOG is per watchdog event, while kalcmd_stat.TOTAL is since start up,
+up to the last watchdog)</p>
+<p>Simulation_load + wait_load + proc_load should equal about 1.0.
+Simulation load represents the fraction of time Kalsim spend simulating during the whole
+time between the two watch dog events.
+Wait_load represent the time spend waiting on the socket, while proc_load represent the time
+Kalcmd2 spend processing the commands.
+The things that end with count are simple counters.
+The names should be descriptive enough if your familiar with kalcmd2.</p>
+<p>Real time represents the amount of time in second it took for Kalsim to simulate between the
+two watchdogs for kalcmd_stat.WATCHDOG.
+(which always come in intervals of 1 simulated sec)
+While in the TOTAL mode it represents the total time spend simulating up to the last
+watchdog.
+For safety reasons it probably best to only use this call directly after WATCHDOG_EVENT.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.schema">
+<code class="sig-name descname">schema</code><em class="property"> = {'items': {'properties': {'port': {'type': 'integer'}, 'server': {'type': 'boolean'}}, 'type': 'object'}, 'minItems': 1, 'type': 'array', 'uniqueItems': True}</em><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.send_message">
+<code class="sig-name descname">send_message</code><span class="sig-paren">(</span><em class="sig-param">header</em>, <em class="sig-param">payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.send_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send message to kalimba</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Header to be sent</p></li>
+<li><p><strong>payload</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to be sent</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if the message is not delivered correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.set_absolute_timer">
+<code class="sig-name descname">set_absolute_timer</code><span class="sig-paren">(</span><em class="sig-param">cookie</em>, <em class="sig-param">period</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.set_absolute_timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.set_absolute_timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set absolute simulated timer, if it already exists then modify</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cookie</strong> (<em>int</em>) – Timer id</p></li>
+<li><p><strong>period</strong> (<em>flaot</em>) – Period in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if the timer is not added correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.set_relative_timer">
+<code class="sig-name descname">set_relative_timer</code><span class="sig-paren">(</span><em class="sig-param">cookie</em>, <em class="sig-param">period</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.set_relative_timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.set_relative_timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set relative simulated timer, if it already exists then modify</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cookie</strong> (<em>int</em>) – Timer id</p></li>
+<li><p><strong>period</strong> (<em>flaot</em>) – Period in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if the timer is not added correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_change_property">
+<code class="sig-name descname">stream_change_property</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">key</em>, <em class="sig-param">val</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_change_property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_change_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change stream property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – Property</p></li>
+<li><p><strong>val</strong> (<em>str</em>) – Property value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_commit_changes">
+<code class="sig-name descname">stream_commit_changes</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_commit_changes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_commit_changes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply all property changes in the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_create">
+<code class="sig-name descname">stream_create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create kalsim stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_data_event_query">
+<code class="sig-name descname">stream_data_event_query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_data_event_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_data_event_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query stream state</p>
+<p>Should be called after a STREAM_DATA_EVENT is received</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream id
+int: Number of samples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_destroy">
+<code class="sig-name descname">stream_destroy</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy an existing stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_eof_event_query">
+<code class="sig-name descname">stream_eof_event_query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_eof_event_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_eof_event_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query the last stream with an active EOF event</p>
+<p>Should be called after a STREAM_EOF_EVENT is received</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_extract">
+<code class="sig-name descname">stream_extract</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">sample_num</em>, <em class="sig-param">sign_extend=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract data from a stream</p>
+<p>This is used for read streams that are kalcmd backed,
+could be either kalcmd or kalsim driven</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p></li>
+<li><p><strong>sample_num</strong> (<em>int</em>) – Number of samples</p></li>
+<li><p><strong>sign_extend</strong> (<em>bool</em>) – Do we want to sign extend the data elements</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Data elements</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_flush">
+<code class="sig-name descname">stream_flush</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flush the stream designated with the stream_id.</p>
+<p>Accepts all kinds of streams however, it will only actually flush output streams to files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stream_id</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_induce">
+<code class="sig-name descname">stream_induce</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">sample_number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_induce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_induce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert data into an stream</p>
+<p>This is used for write streams that are file backed and kalcmd driven</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data elements of size data_size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_insert">
+<code class="sig-name descname">stream_insert</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">data_size</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert data into an stream</p>
+<p>This is used for write streams that are kalcmd backed,
+could be either kalcmd or kalsim driven</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p></li>
+<li><p><strong>data_size</strong> (<em>int</em>) – Data size in bits</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data elements of size data_size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_list">
+<code class="sig-name descname">stream_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all created streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_query_property">
+<code class="sig-name descname">stream_query_property</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_query_property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_query_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query stream property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – Property</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Property value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.stream_rewind">
+<code class="sig-name descname">stream_rewind</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.stream_rewind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.stream_rewind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rewind stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if kalsim does not responds correctly</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.kalcmd.Kalcmd.terminate">
+<code class="sig-name descname">terminate</code><span class="sig-paren">(</span><em class="sig-param">return_code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/kalcmd.html#Kalcmd.terminate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.kalcmd.Kalcmd.terminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a terminate command.</p>
+<p>This will make kalsim exit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>return_code</strong> (<em>int</em>) – Termination code</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.instrument.kalcmd.msg_header">
+<span id="kse-instrument-kalcmd-msg-header-module"></span><h2>kse.instrument.kalcmd.msg_header module<a class="headerlink" href="#module-kse.instrument.kalcmd.msg_header" title="Permalink to this headline">¶</a></h2>
+<p>Kalimba Command (kalcmd) generic message header</p>
+<dl class="class">
+<dt id="kse.instrument.kalcmd.msg_header.MsgHeader">
+<em class="property">class </em><code class="sig-prename descclassname">kse.instrument.kalcmd.msg_header.</code><code class="sig-name descname">MsgHeader</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/msg_header.html#MsgHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.msg_header.MsgHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kalcmd2.kalcmd_msg_header</span></code></p>
+<p>Generic class for translating header as list[int] to kalcmd2.kalcmd_msg_header</p>
+<dl class="method">
+<dt id="kse.instrument.kalcmd.msg_header.MsgHeader.header">
+<code class="sig-name descname">header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/msg_header.html#MsgHeader.header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.msg_header.MsgHeader.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get header</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>actual header</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.kalcmd.msg_header.MsgHeader.length">
+<code class="sig-name descname">length</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/kalcmd/msg_header.html#MsgHeader.length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.kalcmd.msg_header.MsgHeader.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get length of header</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Length of the header in octets when implemented</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.instrument.kalcmd">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.instrument.kalcmd" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.instrument.kalsim.html" class="btn btn-neutral float-right" title="kse.instrument.kalsim package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.instrument.kalaccess.html" class="btn btn-neutral" title="kse.instrument.kalaccess package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

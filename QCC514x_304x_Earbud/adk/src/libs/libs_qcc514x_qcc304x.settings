@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <group name="mde#1/makefile_project"/>
+    <group name="mde#1/makefile_project/Run on Device">
+        <item name="deploy">
+            <item name="device">device://tc/usb2tc/106/qcc3040</item>
+        </item>
+        <item name="watches">
+            <item name="number">0</item>
+        </item>
+        <item name="preferredFormats">
+            <item name="number">0</item>
+        </item>
+        <item name="breakpoints">
+            <item name="number">0</item>
+        </item>
+    </group>
+</settings>

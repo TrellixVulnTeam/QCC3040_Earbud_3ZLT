@@ -1,0 +1,6 @@
+[console_scripts]
+kse_shell = kse.kalsim.kalsim_shell:main
+
+[html_documents]
+docs = kse._doc:get_doc
+

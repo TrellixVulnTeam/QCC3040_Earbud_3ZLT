@@ -1,0 +1,663 @@
+@startuml inline_umlgraph_1.png
+        object OPR_AANC
+        OPR_AANC : id = EB_CAP_ID_ADAPTIVE_ANC_REF
+        object EPR_AANC_VOICE_DECTECTION_IN #lightgreen
+        OPR_AANC "PLAYBACK_IN(0)" <-- EPR_AANC_VOICE_DECTECTION_IN
+        object EPR_AANC_FF_MIC_IN #lightgreen
+        OPR_AANC "EXT_FF_MIC(3)" <-- EPR_AANC_FF_MIC_IN
+        object EPR_AANC_ERR_MIC_IN #lightgreen
+        OPR_AANC "INT_ERR_MIC(2)" <-- EPR_AANC_ERR_MIC_IN
+@enduml
+@startuml inline_umlgraph_2.png
+        object OPR_AANC_FBC_FF_MIC_PATH
+        OPR_AANC_FBC_FF_MIC_PATH : id = EB_CAP_ID_CVC_FBC
+        object OPR_AANC_FBC_ERR_MIC_PATH
+        OPR_AANC_FBC_ERR_MIC_PATH : id = EB_CAP_ID_CVC_FBC
+        object EPR_AANC_FBC_FF_MIC_REF_IN #lightgreen
+        OPR_AANC_FBC_FF_MIC_PATH "REF_IN(0)" <-- EPR_AANC_FBC_FF_MIC_REF_IN
+        object EPR_AANC_FBC_FF_MIC_IN #lightgreen
+        OPR_AANC_FBC_FF_MIC_PATH "MIC_IN(1)" <-- EPR_AANC_FBC_FF_MIC_IN
+        object EPR_AANC_FBC_ERR_MIC_REF_IN #lightgreen
+        OPR_AANC_FBC_ERR_MIC_PATH "REF_IN(0)" <-- EPR_AANC_FBC_ERR_MIC_REF_IN
+        object EPR_AANC_FBC_ERR_MIC_IN #lightgreen
+        OPR_AANC_FBC_ERR_MIC_PATH "MIC_IN(1)" <-- EPR_AANC_FBC_ERR_MIC_IN
+        object EPR_AANC_FBC_FF_MIC_OUT #lightblue
+        EPR_AANC_FBC_FF_MIC_OUT <-- "MIC_OUT(0)" OPR_AANC_FBC_FF_MIC_PATH
+        object EPR_AANC_FBC_ERR_MIC_OUT #lightblue
+        EPR_AANC_FBC_ERR_MIC_OUT <-- "MIC_OUT(0)" OPR_AANC_FBC_ERR_MIC_PATH
+@enduml
+@startuml inline_umlgraph_3.png
+        object OPR_AANC_SPLT_MIC_REF_PATH
+        OPR_AANC_SPLT_MIC_REF_PATH : id = CAP_ID_SPLITTER
+        object EPR_SPLT_MIC_REF_IN #lightgreen
+        OPR_AANC_SPLT_MIC_REF_PATH "IN(0)" <-- EPR_SPLT_MIC_REF_IN
+        object EPR_SPLT_MIC_REF_OUT1 #lightblue
+        EPR_SPLT_MIC_REF_OUT1 <-- "OUT1(0)" OPR_AANC_SPLT_MIC_REF_PATH
+        object EPR_SPLT_MIC_REF_OUT2 #lightblue
+        EPR_SPLT_MIC_REF_OUT2 <-- "OUT2(1)" OPR_AANC_SPLT_MIC_REF_PATH
+@enduml
+@startuml inline_umlgraph_4.png
+        object OPR_AEC
+        OPR_AEC : id = CAP_ID_AEC_REF
+        object EPR_AEC_INPUT1 #lightgreen
+        OPR_AEC "INPUT1(0)" <-- EPR_AEC_INPUT1
+        object EPR_AEC_INPUT2 #lightgreen
+        OPR_AEC "INPUT2(1)" <-- EPR_AEC_INPUT2
+        object EPR_AEC_MIC1_IN #lightgreen
+        OPR_AEC "MIC1_IN(2)" <-- EPR_AEC_MIC1_IN
+        object EPR_AEC_MIC2_IN #lightgreen
+        OPR_AEC "MIC2_IN(3)" <-- EPR_AEC_MIC2_IN
+        object EPR_AEC_MIC3_IN #lightgreen
+        OPR_AEC "MIC3_IN(4)" <-- EPR_AEC_MIC3_IN
+        object EPR_AEC_MIC4_IN #lightgreen
+        OPR_AEC "MIC4_IN(5)" <-- EPR_AEC_MIC4_IN
+        object EPR_AEC_REFERENCE_OUT #lightblue
+        EPR_AEC_REFERENCE_OUT <-- "REFERENCE_OUT(0)" OPR_AEC
+        object EPR_AEC_SPEAKER1_OUT #lightblue
+        EPR_AEC_SPEAKER1_OUT <-- "SPEAKER1_OUT(1)" OPR_AEC
+        object EPR_AEC_SPEAKER2_OUT #lightblue
+        EPR_AEC_SPEAKER2_OUT <-- "SPEAKER2_OUT(2)" OPR_AEC
+        object EPR_AEC_MIC1_OUT #lightblue
+        EPR_AEC_MIC1_OUT <-- "MIC1_OUT(3)" OPR_AEC
+        object EPR_AEC_MIC2_OUT #lightblue
+        EPR_AEC_MIC2_OUT <-- "MIC2_OUT(4)" OPR_AEC
+        object EPR_AEC_MIC3_OUT #lightblue
+        EPR_AEC_MIC3_OUT <-- "MIC3_OUT(5)" OPR_AEC
+        object EPR_AEC_MIC4_OUT #lightblue
+        EPR_AEC_MIC4_OUT <-- "MIC4_OUT(6)" OPR_AEC
+@enduml
+@startuml inline_umlgraph_5.png
+        object OPR_LATENCY_BUFFER
+        OPR_LATENCY_BUFFER : id = EB_CAP_ID_SWITCHED_PASSTHROUGH
+        object OPR_APTX_ADAPTIVE_TWS_PLUS_DECODER
+        OPR_APTX_ADAPTIVE_TWS_PLUS_DECODER : id = EB_CAP_ID_APTX_ADAPTIVE_DECODE
+        OPR_APTX_ADAPTIVE_TWS_PLUS_DECODER "IN(0)"<-- "OUT(0)" OPR_LATENCY_BUFFER
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_LATENCY_BUFFER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_APTX_ADAPTIVE_TWS_PLUS_DECODER
+@enduml
+@startuml inline_umlgraph_6.png
+        object OPR_FIT_TEST_BASIC_PT
+        OPR_FIT_TEST_BASIC_PT : id = CAP_ID_BASIC_PASS
+        object OPR_FIT_TEST
+        OPR_FIT_TEST : id = EB_CAP_ID_EARBUD_FIT_TEST
+        OPR_FIT_TEST "PLAYBACK_IN(0)"<-- "OUTPUT1(0)" OPR_FIT_TEST_BASIC_PT
+        OPR_FIT_TEST "INT_MIC_IN(1)"<-- "OUTPUT2(1)" OPR_FIT_TEST_BASIC_PT
+        object EPR_FIT_TEST_PLAYBACK_IN #lightgreen
+        OPR_FIT_TEST_BASIC_PT "INPUT1(0)" <-- EPR_FIT_TEST_PLAYBACK_IN
+        object EPR_FIT_TEST_INT_MIC_IN #lightgreen
+        OPR_FIT_TEST_BASIC_PT "INPUT2(1)" <-- EPR_FIT_TEST_INT_MIC_IN
+@enduml
+@startuml inline_umlgraph_7.png
+        object OPR_RTP_DECODER
+        OPR_RTP_DECODER : id = CAP_ID_RTP_DECODE
+        object OPR_APTX_DEMUX
+        OPR_APTX_DEMUX : id = EB_CAP_ID_APTX_CLASSIC_DEMUX
+        object OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER : id = EB_CAP_ID_SWITCHED_PASSTHROUGH
+        object OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC : id = CAP_ID_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        OPR_APTX_DEMUX "IN(0)"<-- "OUT(0)" OPR_RTP_DECODER
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC "IN(0)"<-- "OUT_0(0)" OPR_APTX_DEMUX
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER "IN(0)"<-- "OUT_1(1)" OPR_APTX_DEMUX
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_RTP_DECODER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_FORWARDING_MEDIA #lightblue
+        EPR_SOURCE_FORWARDING_MEDIA <-- "OUT(0)" OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+@enduml
+@startuml inline_umlgraph_8.png
+        object OPR_RTP_DECODER
+        OPR_RTP_DECODER : id = CAP_ID_RTP_DECODE
+        object OPR_APTX_DEMUX
+        OPR_APTX_DEMUX : id = EB_CAP_ID_APTX_CLASSIC_DEMUX
+        object OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER : id = EB_CAP_ID_SWITCHED_PASSTHROUGH
+        object OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC : id = CAP_ID_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        OPR_APTX_DEMUX "IN(0)"<-- "OUT(0)" OPR_RTP_DECODER
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC "IN(0)"<-- "OUT_1(1)" OPR_APTX_DEMUX
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER "IN(0)"<-- "OUT_0(0)" OPR_APTX_DEMUX
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_RTP_DECODER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_FORWARDING_MEDIA #lightblue
+        EPR_SOURCE_FORWARDING_MEDIA <-- "OUT(0)" OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+@enduml
+@startuml inline_umlgraph_9.png
+        object OPR_RTP_DECODER
+        OPR_RTP_DECODER : id = CAP_ID_RTP_DECODE
+        object OPR_AAC_DECODER
+        OPR_AAC_DECODER : id = EB_CAP_ID_AAC_DECODER
+        object OPR_LEFT_RIGHT_MIXER
+        OPR_LEFT_RIGHT_MIXER : id = CAP_ID_MIXER
+        OPR_AAC_DECODER "IN(0)"<-- "OUT(0)" OPR_RTP_DECODER
+        OPR_LEFT_RIGHT_MIXER "IN_L(0)"<-- "OUT_0(0)" OPR_AAC_DECODER
+        OPR_LEFT_RIGHT_MIXER "IN_R(1)"<-- "OUT_1(1)" OPR_AAC_DECODER
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_RTP_DECODER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_LEFT_RIGHT_MIXER
+@enduml
+@startuml inline_umlgraph_10.png
+        object OPR_RTP_DECODER
+        OPR_RTP_DECODER : id = CAP_ID_RTP_DECODE
+        object OPR_APTX_ADAPTIVE_DECODER
+        OPR_APTX_ADAPTIVE_DECODER : id = EB_CAP_ID_APTX_ADAPTIVE_DECODE
+        OPR_APTX_ADAPTIVE_DECODER "IN(0)"<-- "OUT(0)" OPR_RTP_DECODER
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_RTP_DECODER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_APTX_ADAPTIVE_DECODER
+@enduml
+@startuml inline_umlgraph_11.png
+        object OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER : id = CAP_ID_SWITCHED_PASSTHROUGH_CONSUMER
+        object OPR_APTX_ADAPTIVE_DECODER
+        OPR_APTX_ADAPTIVE_DECODER : id = EB_CAP_ID_APTX_ADAPTIVE_DECODE
+        OPR_APTX_ADAPTIVE_DECODER "IN(0)"<-- "OUT(0)" OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_APTX_ADAPTIVE_DECODER
+@enduml
+@startuml inline_umlgraph_12.png
+        object OPR_RTP_DECODER
+        OPR_RTP_DECODER : id = CAP_ID_RTP_DECODE
+        object OPR_APTX_DEMUX
+        OPR_APTX_DEMUX : id = EB_CAP_ID_APTX_CLASSIC_DEMUX
+        object OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER : id = EB_CAP_ID_SWITCHED_PASSTHROUGH
+        object OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC : id = CAP_ID_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        object OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC_SECONDARY
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC_SECONDARY : id = CAP_ID_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        object OPR_LEFT_RIGHT_MIXER
+        OPR_LEFT_RIGHT_MIXER : id = CAP_ID_MIXER
+        OPR_APTX_DEMUX "IN(0)"<-- "OUT(0)" OPR_RTP_DECODER
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER "IN_0(0)"<-- "OUT_0(0)" OPR_APTX_DEMUX
+        OPR_SWITCHED_PASSTHROUGH_CONSUMER "IN_1(1)"<-- "OUT_1(1)" OPR_APTX_DEMUX
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC "IN(0)"<-- "OUT_0(0)" OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC_SECONDARY "IN(0)"<-- "OUT_1(1)" OPR_SWITCHED_PASSTHROUGH_CONSUMER
+        OPR_LEFT_RIGHT_MIXER "IN_0(0)"<-- "OUT(0)" OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC
+        OPR_LEFT_RIGHT_MIXER "IN_1(1)"<-- "OUT(0)" OPR_APTX_CLASSIC_MONO_DECODER_NO_AUTOSYNC_SECONDARY
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_RTP_DECODER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_LEFT_RIGHT_MIXER
+@enduml
+@startuml inline_umlgraph_13.png
+        object OPR_RTP_DECODER
+        OPR_RTP_DECODER : id = CAP_ID_RTP_DECODE
+        object OPR_SBC_DECODER
+        OPR_SBC_DECODER : id = CAP_ID_SBC_DECODER
+        object OPR_LEFT_RIGHT_MIXER
+        OPR_LEFT_RIGHT_MIXER : id = CAP_ID_MIXER
+        OPR_SBC_DECODER "IN(0)"<-- "OUT(0)" OPR_RTP_DECODER
+        OPR_LEFT_RIGHT_MIXER "IN_L(0)"<-- "OUT_0(0)" OPR_SBC_DECODER
+        OPR_LEFT_RIGHT_MIXER "IN_R(1)"<-- "OUT_1(1)" OPR_SBC_DECODER
+        object EPR_SINK_MEDIA #lightgreen
+        OPR_RTP_DECODER "IN(0)" <-- EPR_SINK_MEDIA
+        object EPR_SOURCE_DECODED_PCM #lightblue
+        EPR_SOURCE_DECODED_PCM <-- "OUT(0)" OPR_LEFT_RIGHT_MIXER
+@enduml
+@startuml inline_umlgraph_14.png
+        object OPR_MIC_RESAMPLER
+        OPR_MIC_RESAMPLER : id = CAP_ID_IIR_RESAMPLER
+        object EPR_AEC_RESAMPLER_IN_REF #lightgreen
+        OPR_MIC_RESAMPLER "IN_REF(0)" <-- EPR_AEC_RESAMPLER_IN_REF
+        object EPR_MIC_RESAMPLER_IN1 #lightgreen
+        OPR_MIC_RESAMPLER "IN1(1)" <-- EPR_MIC_RESAMPLER_IN1
+        object EPR_MIC_RESAMPLER_IN2 #lightgreen
+        OPR_MIC_RESAMPLER "IN2(2)" <-- EPR_MIC_RESAMPLER_IN2
+        object EPR_MIC_RESAMPLER_IN3 #lightgreen
+        OPR_MIC_RESAMPLER "IN3(3)" <-- EPR_MIC_RESAMPLER_IN3
+        object EPR_AEC_RESAMPLER_OUT_REF #lightblue
+        EPR_AEC_RESAMPLER_OUT_REF <-- "OUT_REF(0)" OPR_MIC_RESAMPLER
+        object EPR_MIC_RESAMPLER_OUT1 #lightblue
+        EPR_MIC_RESAMPLER_OUT1 <-- "OUT1(1)" OPR_MIC_RESAMPLER
+        object EPR_MIC_RESAMPLER_OUT2 #lightblue
+        EPR_MIC_RESAMPLER_OUT2 <-- "OUT2(2)" OPR_MIC_RESAMPLER
+        object EPR_MIC_RESAMPLER_OUT3 #lightblue
+        EPR_MIC_RESAMPLER_OUT3 <-- "OUT3(3)" OPR_MIC_RESAMPLER
+@enduml
+@startuml inline_umlgraph_15.png
+        object OPR_ADD_HEADROOM
+        OPR_ADD_HEADROOM : id = CAP_ID_BASIC_PASS
+        object OPR_SPEAKER_EQ
+        OPR_SPEAKER_EQ : id = CAP_ID_PEQ
+        object OPR_REMOVE_HEADROOM
+        OPR_REMOVE_HEADROOM : id = CAP_ID_BASIC_PASS
+        OPR_SPEAKER_EQ "IN(0)"<-- "OUT(0)" OPR_ADD_HEADROOM
+        OPR_REMOVE_HEADROOM "IN(0)"<-- "OUT(0)" OPR_SPEAKER_EQ
+        object EPR_MUSIC_PROCESSING_IN_L #lightgreen
+        OPR_ADD_HEADROOM "IN(0)" <-- EPR_MUSIC_PROCESSING_IN_L
+        object EPR_MUSIC_PROCESSING_OUT_L #lightblue
+        EPR_MUSIC_PROCESSING_OUT_L <-- "OUT(0)" OPR_REMOVE_HEADROOM
+@enduml
+@startuml inline_umlgraph_16.png
+        object OPR_ADD_HEADROOM
+        OPR_ADD_HEADROOM : id = CAP_ID_BASIC_PASS
+        object OPR_SPEAKER_EQ
+        OPR_SPEAKER_EQ : id = CAP_ID_PEQ
+        object OPR_USER_EQ
+        OPR_USER_EQ : id = CAP_ID_PEQ
+        object OPR_REMOVE_HEADROOM
+        OPR_REMOVE_HEADROOM : id = CAP_ID_BASIC_PASS
+        OPR_SPEAKER_EQ "IN(0)"<-- "OUT(0)" OPR_ADD_HEADROOM
+        OPR_USER_EQ "IN(0)"<-- "OUT(0)" OPR_SPEAKER_EQ
+        OPR_REMOVE_HEADROOM "IN(0)"<-- "OUT(0)" OPR_USER_EQ
+        object EPR_MUSIC_PROCESSING_IN_L #lightgreen
+        OPR_ADD_HEADROOM "IN(0)" <-- EPR_MUSIC_PROCESSING_IN_L
+        object EPR_MUSIC_PROCESSING_OUT_L #lightblue
+        EPR_MUSIC_PROCESSING_OUT_L <-- "OUT(0)" OPR_REMOVE_HEADROOM
+@enduml
+@startuml inline_umlgraph_17.png
+        object OPR_SOURCE_SYNC
+        OPR_SOURCE_SYNC : id = CAP_ID_SOURCE_SYNC
+        object OPR_VOLUME_CONTROL
+        OPR_VOLUME_CONTROL : id = CAP_ID_OUTPUT_VOL_CTRL
+        OPR_VOLUME_CONTROL "MAIN_IN(0)"<-- "OUT(0)" OPR_SOURCE_SYNC
+        object EPR_SINK_MIXER_MAIN_IN #lightgreen
+        OPR_SOURCE_SYNC "IN(0)" <-- EPR_SINK_MIXER_MAIN_IN
+        object EPR_VOLUME_AUX #lightgreen
+        OPR_VOLUME_CONTROL "AUX_IN(1)" <-- EPR_VOLUME_AUX
+        object EPR_SOURCE_MIXER_OUT #lightblue
+        EPR_SOURCE_MIXER_OUT <-- "OUT(0)" OPR_VOLUME_CONTROL
+@enduml
+@startuml inline_umlgraph_18.png
+        object OPR_SOURCE_SYNC
+        OPR_SOURCE_SYNC : id = CAP_ID_SOURCE_SYNC
+        object OPR_VOLUME_CONTROL
+        OPR_VOLUME_CONTROL : id = CAP_ID_OUTPUT_VOL_CTRL
+        OPR_VOLUME_CONTROL "MAIN_IN(0)"<-- "OUT(0)" OPR_SOURCE_SYNC
+        object EPR_SINK_MIXER_MAIN_IN #lightgreen
+        OPR_SOURCE_SYNC "IN(0)" <-- EPR_SINK_MIXER_MAIN_IN
+        object EPR_VOLUME_AUX #lightgreen
+        OPR_VOLUME_CONTROL "AUX_IN(1)" <-- EPR_VOLUME_AUX
+        object EPR_SOURCE_MIXER_OUT #lightblue
+        EPR_SOURCE_MIXER_OUT <-- "OUT(0)" OPR_VOLUME_CONTROL
+@enduml
+@startuml inline_umlgraph_19.png
+        object OPR_SOURCE_SYNC
+        OPR_SOURCE_SYNC : id = CAP_ID_SOURCE_SYNC
+        object OPR_VOLUME_CONTROL
+        OPR_VOLUME_CONTROL : id = CAP_ID_OUTPUT_VOL_CTRL
+        object OPR_COMPANDER
+        OPR_COMPANDER : id = CAP_ID_COMPANDER
+        OPR_VOLUME_CONTROL "MAIN_IN(0)"<-- "OUT(0)" OPR_SOURCE_SYNC
+        OPR_COMPANDER "MONO_IN(0)"<-- "OUT(0)" OPR_VOLUME_CONTROL
+        object EPR_SINK_MIXER_MAIN_IN #lightgreen
+        OPR_SOURCE_SYNC "IN(0)" <-- EPR_SINK_MIXER_MAIN_IN
+        object EPR_VOLUME_AUX #lightgreen
+        OPR_VOLUME_CONTROL "AUX_IN(1)" <-- EPR_VOLUME_AUX
+        object EPR_SOURCE_MIXER_OUT #lightblue
+        EPR_SOURCE_MIXER_OUT <-- "OUT(0)" OPR_COMPANDER
+@enduml
+@startuml inline_umlgraph_20.png
+        object OPR_TONE_PROMPT_PCM_BUFFER
+        OPR_TONE_PROMPT_PCM_BUFFER : id = CAP_ID_BASIC_PASS
+        object EPR_PROMPT_IN #lightgreen
+        OPR_TONE_PROMPT_PCM_BUFFER "IN(0)" <-- EPR_PROMPT_IN
+        object EPR_TONE_PROMPT_CHAIN_OUT #lightblue
+        EPR_TONE_PROMPT_CHAIN_OUT <-- "OUT(0)" OPR_TONE_PROMPT_PCM_BUFFER
+@enduml
+@startuml inline_umlgraph_21.png
+        object OPR_TONE_PROMPT_ENCODED_BUFFER
+        OPR_TONE_PROMPT_ENCODED_BUFFER : id = CAP_ID_BASIC_PASS
+        object OPR_SBC_DECODER
+        OPR_SBC_DECODER : id = CAP_ID_SBC_DECODER
+        OPR_SBC_DECODER "IN(0)"<-- "OUT(0)" OPR_TONE_PROMPT_ENCODED_BUFFER
+        object EPR_PROMPT_IN #lightgreen
+        OPR_TONE_PROMPT_ENCODED_BUFFER "IN(0)" <-- EPR_PROMPT_IN
+        object EPR_TONE_PROMPT_CHAIN_OUT #lightblue
+        EPR_TONE_PROMPT_CHAIN_OUT <-- "OUT(0)" OPR_SBC_DECODER
+@enduml
+@startuml inline_umlgraph_22.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_SCO_RCV
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_SCO_SEND
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_NB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_CVCHS1MIC_SEND_NB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_23.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_SCO_RCV
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_SCO_SEND
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_NB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_CVCHS2MIC_MONO_SEND_NB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_CVC_SEND_IN2 #lightgreen
+        OPR_CVC_SEND "IN2(2)" <-- EPR_CVC_SEND_IN2
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_24.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_SCO_RCV
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_SCO_SEND
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_NB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = EB_CAP_ID_CVC_3MIC_NB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_CVC_SEND_IN2 #lightgreen
+        OPR_CVC_SEND "IN2(2)" <-- EPR_CVC_SEND_IN2
+        object EPR_CVC_SEND_IN3 #lightgreen
+        OPR_CVC_SEND "IN3(3)" <-- EPR_CVC_SEND_IN3
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_25.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_SCO_SWBS_DEC
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_SCO_SWBS_ENC
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_SWB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_CVCHS1MIC_SEND_SWB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_26.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_SCO_SWBS_DEC
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_SCO_SWBS_ENC
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_SWB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_CVCHS2MIC_MONO_SEND_SWB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_CVC_SEND_IN2 #lightgreen
+        OPR_CVC_SEND "IN2(2)" <-- EPR_CVC_SEND_IN2
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_27.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_SCO_SWBS_DEC
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_SCO_SWBS_ENC
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_SWB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = EB_CAP_ID_CVC_3MIC_SWB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_CVC_SEND_IN2 #lightgreen
+        OPR_CVC_SEND "IN2(2)" <-- EPR_CVC_SEND_IN2
+        object EPR_CVC_SEND_IN3 #lightgreen
+        OPR_CVC_SEND "IN3(3)" <-- EPR_CVC_SEND_IN3
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_28.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_WBS_DEC
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_WBS_ENC
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_WB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_CVCHS1MIC_SEND_WB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_29.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_WBS_DEC
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_WBS_ENC
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_WB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_CVCHS2MIC_MONO_SEND_WB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_CVC_SEND_IN2 #lightgreen
+        OPR_CVC_SEND "IN2(2)" <-- EPR_CVC_SEND_IN2
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_30.png
+        object OPR_SCO_RECEIVE
+        OPR_SCO_RECEIVE : id = CAP_ID_WBS_DEC
+        object OPR_SCO_SEND
+        OPR_SCO_SEND : id = CAP_ID_WBS_ENC
+        object OPR_CVC_RECEIVE
+        OPR_CVC_RECEIVE : id = CAP_ID_CVC_RECEIVE_WB
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = EB_CAP_ID_CVC_3MIC_WB
+        OPR_CVC_RECEIVE "IN(0)"<-- "OUT(0)" OPR_SCO_RECEIVE
+        OPR_SCO_SEND "IN(0)"<-- "OUT(0)" OPR_CVC_SEND
+        object EPR_SCO_FROM_AIR #lightgreen
+        OPR_SCO_RECEIVE "SCO_IN(0)" <-- EPR_SCO_FROM_AIR
+        object EPR_CVC_SEND_REF_IN #lightgreen
+        OPR_CVC_SEND "REFERENCE(0)" <-- EPR_CVC_SEND_REF_IN
+        object EPR_CVC_SEND_IN1 #lightgreen
+        OPR_CVC_SEND "IN1(1)" <-- EPR_CVC_SEND_IN1
+        object EPR_CVC_SEND_IN2 #lightgreen
+        OPR_CVC_SEND "IN2(2)" <-- EPR_CVC_SEND_IN2
+        object EPR_CVC_SEND_IN3 #lightgreen
+        OPR_CVC_SEND "IN3(3)" <-- EPR_CVC_SEND_IN3
+        object EPR_SCO_SPEAKER #lightblue
+        EPR_SCO_SPEAKER <-- "OUT(0)" OPR_CVC_RECEIVE
+        object EPR_SCO_TO_AIR #lightblue
+        EPR_SCO_TO_AIR <-- "SCO_OUT(0)" OPR_SCO_SEND
+@enduml
+@startuml inline_umlgraph_31.png
+        object OPR_TONE_GEN
+        OPR_TONE_GEN : id = CAP_ID_RINGTONE_GENERATOR
+        object OPR_TONE_PROMPT_PCM_BUFFER
+        OPR_TONE_PROMPT_PCM_BUFFER : id = CAP_ID_BASIC_PASS
+        OPR_TONE_PROMPT_PCM_BUFFER "IN(0)"<-- "OUT(0)" OPR_TONE_GEN
+        object EPR_TONE_PROMPT_CHAIN_OUT #lightblue
+        EPR_TONE_PROMPT_CHAIN_OUT <-- "OUT(0)" OPR_TONE_PROMPT_PCM_BUFFER
+@enduml
+@startuml inline_umlgraph_32.png
+        object OPR_MSBC_ENCODER
+        OPR_MSBC_ENCODER : id = CAP_ID_ASYNC_WBS_ENC
+        object EPR_VA_ENCODE_IN #lightgreen
+        OPR_MSBC_ENCODER "IN(0)" <-- EPR_VA_ENCODE_IN
+        object EPR_VA_ENCODE_OUT #lightblue
+        EPR_VA_ENCODE_OUT <-- "OUT(0)" OPR_MSBC_ENCODER
+@enduml
+@startuml inline_umlgraph_33.png
+        object OPR_OPUS_ENCODER
+        OPR_OPUS_ENCODER : id = CAP_ID_DOWNLOAD_OPUS_CELT_ENCODE
+        object EPR_VA_ENCODE_IN #lightgreen
+        OPR_OPUS_ENCODER "IN(0)" <-- EPR_VA_ENCODE_IN
+        object EPR_VA_ENCODE_OUT #lightblue
+        EPR_VA_ENCODE_OUT <-- "OUT(0)" OPR_OPUS_ENCODER
+@enduml
+@startuml inline_umlgraph_34.png
+        object OPR_SBC_ENCODER
+        OPR_SBC_ENCODER : id = CAP_ID_SBC_ENCODER
+        object EPR_VA_ENCODE_IN #lightgreen
+        OPR_SBC_ENCODER "IN(0)" <-- EPR_VA_ENCODE_IN
+        object EPR_VA_ENCODE_OUT #lightblue
+        EPR_VA_ENCODE_OUT <-- "OUT(0)" OPR_SBC_ENCODER
+@enduml
+@startuml inline_umlgraph_35.png
+        object OPR_VA_GRAPH_MANAGER
+        OPR_VA_GRAPH_MANAGER : id = CAP_ID_DOWNLOAD_VA_GRAPH_MANAGER
+@enduml
+@startuml inline_umlgraph_36.png
+        object OPR_MIC_GAIN
+        OPR_MIC_GAIN : id = CAP_ID_BASIC_PASS
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_VA_CVC_1MIC
+        OPR_CVC_SEND "MIC1_IN(1)"<-- "OUT(0)" OPR_MIC_GAIN
+        object EPR_VA_MIC_AEC_IN #lightgreen
+        OPR_CVC_SEND "AEC_IN(0)" <-- EPR_VA_MIC_AEC_IN
+        object EPR_VA_MIC_MIC1_IN #lightgreen
+        OPR_MIC_GAIN "IN(0)" <-- EPR_VA_MIC_MIC1_IN
+        object EPR_VA_MIC_ENCODE_OUT #lightblue
+        EPR_VA_MIC_ENCODE_OUT <-- "OUT(CVC_1MIC_VA_OUTPUT_TERMINAL)" OPR_CVC_SEND
+@enduml
+@startuml inline_umlgraph_37.png
+        object OPR_VAD
+        OPR_VAD : id = CAP_ID_VAD
+        object OPR_SPLITTER
+        OPR_SPLITTER : id = CAP_ID_SPLITTER
+        object OPR_MIC_GAIN
+        OPR_MIC_GAIN : id = CAP_ID_BASIC_PASS
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_VA_CVC_1MIC
+        OPR_CVC_SEND "MIC1_IN(1)"<-- "OUT(0)" OPR_MIC_GAIN
+        OPR_VAD "IN(0)"<-- "OUT(CVC_1MIC_VA_OUTPUT_TERMINAL)" OPR_CVC_SEND
+        OPR_SPLITTER "IN(0)"<-- "OUT(0)" OPR_VAD
+        object EPR_VA_MIC_AEC_IN #lightgreen
+        OPR_CVC_SEND "AEC_IN(0)" <-- EPR_VA_MIC_AEC_IN
+        object EPR_VA_MIC_MIC1_IN #lightgreen
+        OPR_MIC_GAIN "IN(0)" <-- EPR_VA_MIC_MIC1_IN
+        object EPR_VA_MIC_WUW_OUT #lightblue
+        EPR_VA_MIC_WUW_OUT <-- "DETECTION_OUT(0)" OPR_SPLITTER
+        object EPR_VA_MIC_ENCODE_OUT #lightblue
+        EPR_VA_MIC_ENCODE_OUT <-- "CAPTURE_OUT(1)" OPR_SPLITTER
+@enduml
+@startuml inline_umlgraph_38.png
+        object OPR_MIC_GAIN
+        OPR_MIC_GAIN : id = CAP_ID_BASIC_PASS
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_VA_CVC_2MIC
+        OPR_CVC_SEND "MIC1_IN(1)"<-- "MIC1_OUT(0)" OPR_MIC_GAIN
+        OPR_CVC_SEND "MIC2_IN(2)"<-- "MIC2_OUT(1)" OPR_MIC_GAIN
+        object EPR_VA_MIC_AEC_IN #lightgreen
+        OPR_CVC_SEND "AEC_IN(0)" <-- EPR_VA_MIC_AEC_IN
+        object EPR_VA_MIC_MIC1_IN #lightgreen
+        OPR_MIC_GAIN "MIC1_IN(0)" <-- EPR_VA_MIC_MIC1_IN
+        object EPR_VA_MIC_MIC2_IN #lightgreen
+        OPR_MIC_GAIN "MIC2_IN(1)" <-- EPR_VA_MIC_MIC2_IN
+        object EPR_VA_MIC_ENCODE_OUT #lightblue
+        EPR_VA_MIC_ENCODE_OUT <-- "OUT(1)" OPR_CVC_SEND
+@enduml
+@startuml inline_umlgraph_39.png
+        object OPR_VAD
+        OPR_VAD : id = CAP_ID_VAD
+        object OPR_SPLITTER
+        OPR_SPLITTER : id = CAP_ID_SPLITTER
+        object OPR_MIC_GAIN
+        OPR_MIC_GAIN : id = CAP_ID_BASIC_PASS
+        object OPR_CVC_SEND
+        OPR_CVC_SEND : id = CAP_ID_VA_CVC_2MIC
+        OPR_CVC_SEND "MIC1_IN(1)"<-- "MIC1_OUT(0)" OPR_MIC_GAIN
+        OPR_CVC_SEND "MIC2_IN(2)"<-- "MIC2_OUT(1)" OPR_MIC_GAIN
+        OPR_VAD "IN(0)"<-- "OUT(1)" OPR_CVC_SEND
+        OPR_SPLITTER "IN(0)"<-- "OUT(0)" OPR_VAD
+        object EPR_VA_MIC_AEC_IN #lightgreen
+        OPR_CVC_SEND "AEC_IN(0)" <-- EPR_VA_MIC_AEC_IN
+        object EPR_VA_MIC_MIC1_IN #lightgreen
+        OPR_MIC_GAIN "MIC1_IN(0)" <-- EPR_VA_MIC_MIC1_IN
+        object EPR_VA_MIC_MIC2_IN #lightgreen
+        OPR_MIC_GAIN "MIC2_IN(1)" <-- EPR_VA_MIC_MIC2_IN
+        object EPR_VA_MIC_WUW_OUT #lightblue
+        EPR_VA_MIC_WUW_OUT <-- "DETECTION_OUT(0)" OPR_SPLITTER
+        object EPR_VA_MIC_ENCODE_OUT #lightblue
+        EPR_VA_MIC_ENCODE_OUT <-- "CAPTURE_OUT(1)" OPR_SPLITTER
+@enduml
+@startuml inline_umlgraph_40.png
+        object OPR_WUW
+        OPR_WUW : id = CAP_ID_VA_APVA
+        object EPR_VA_WUW_IN #lightgreen
+        OPR_WUW "IN(0)" <-- EPR_VA_WUW_IN
+@enduml
+@startuml inline_umlgraph_41.png
+        object OPR_WUW
+        OPR_WUW : id = CAP_ID_VA_GVA
+        object EPR_VA_WUW_IN #lightgreen
+        OPR_WUW "IN(0)" <-- EPR_VA_WUW_IN
+@enduml
+@startuml inline_umlgraph_42.png
+        object OPR_WUW
+        OPR_WUW : id = CAP_ID_QVA
+        object EPR_VA_WUW_IN #lightgreen
+        OPR_WUW "IN(0)" <-- EPR_VA_WUW_IN
+@enduml

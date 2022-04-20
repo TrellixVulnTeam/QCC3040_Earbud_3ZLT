@@ -1,0 +1,8 @@
+
+PatchesOld1
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.PatchesOld1``.
+
+.. automodule:: ACAT.Analysis.PatchesOld1
+   :members:

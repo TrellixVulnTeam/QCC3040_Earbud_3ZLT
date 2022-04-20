@@ -1,0 +1,38 @@
+kse.kymera.kymera package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.kymera.kymera.generic
+   kse.kymera.kymera.hydra
+
+Submodules
+----------
+
+kse.kymera.kymera.kymera module
+-------------------------------
+
+.. automodule:: kse.kymera.kymera.kymera
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.kymera.kymera.kymera\_base module
+-------------------------------------
+
+.. automodule:: kse.kymera.kymera.kymera_base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.kymera.kymera
+   :members:
+   :undoc-members:
+   :show-inheritance:

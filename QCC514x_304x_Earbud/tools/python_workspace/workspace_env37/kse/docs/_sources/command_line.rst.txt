@@ -1,0 +1,131 @@
+==================
+Command-line tools
+==================
+
+.. _command_line_kse_shell:
+
+kse_shell
+---------
+
+usage: kse_shell [-h] [-c CONFIG] [-l LOG] [--log_level LEVEL] [--repl REPL]
+                 [--hide_prompt] [--platform PLATFORM]
+                 [--capability_description CAPABILITY_DESCRIPTION]
+                 [--script SCRIPT [SCRIPT ...]] [--exit]
+                 [--acat_analyses VAL [VAL ...]] [--acat_bundle VAL [VAL ...]]
+                 [--acat_firmware_log_enable] [--acat_firmware_log_level VAL]
+                 [--acat_firmware_log_timer_update_period VAL]
+                 [--acat_path VAL] [--acat_use]
+                 [--hydra_ftp_server_directory VAL]
+                 [--hydra_ftp_server_prefix VAL] [--hydra_ftp_server_skip]
+                 [--ka_path VAL] [--ka_skip] [--ka_subsystem VAL]
+                 [--kc_client] [--kc_port VAL]
+                 [--ks_cmdline_args VAL [VAL ...]] [--ks_debug]
+                 [--ks_debug_port VAL] [--ks_firmware VAL] [--ks_path VAL]
+                 [--ks_quiet] [--ks_skip] [--ks_timer_update_period VAL]
+                 [--ks_verbose] [--license_manager_filename VAL]
+                 [--license_manager_use] [--pstore_filename VAL]
+                 [--pstore_use]
+
+Kalsim Shell. This in an utility to debug, prototype and test interactively
+kalimba code running in kalsim. It does coordinate three different pieces of
+software, kalcmd2, kalsim and kalaccess placing a nice REPL on top of it
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Configuration file (default: )
+  -l LOG, --log LOG     Log configuration file (default:
+                        config/log.shell.cfg.json)
+  --log_level LEVEL     Log level (default: 30)
+  --repl REPL           Read Eval Print Loop tool (default: ipython)
+  --hide_prompt         Do not display prompt (default: False)
+  --platform PLATFORM   Chip platform (default: crescendo)
+  --capability_description CAPABILITY_DESCRIPTION
+                        Configuration file with description of capabilities
+                        (default: config/capability.cfg.json)
+  --script SCRIPT [SCRIPT ...]
+                        Script to execute after kalsim connect. For script
+                        arguments enclose it with "" as --script "script1.py
+                        arg1" "script2.py arg1 arg2" (default: None)
+  --exit                Exit after connection (default: False)
+  --acat_analyses VAL [VAL ...]
+                        ACAT analyses to load, empty for all (default: [])
+  --acat_bundle VAL [VAL ...]
+                        ACAT bundle file/s, additional firmware files to be
+                        loaded besides main firmware (default: [])
+  --acat_firmware_log_enable
+                        if set ACAT firmware log is enabled (default: False)
+  --acat_firmware_log_level VAL
+                        firmware log level (default: 2)
+  --acat_firmware_log_timer_update_period VAL
+                        firmware log polling time in seconds (default: 0.5)
+  --acat_path VAL       if set ACAT will be used from here, if not it should
+                        be installed as a package (default: None)
+  --acat_use            if set ACAT will be started, for this to work ks_debug
+                        should be set (default: False)
+  --hydra_ftp_server_directory VAL
+                        hydra ftp server directory. (default:
+                        firmware/kalsim/crescendo)
+  --hydra_ftp_server_prefix VAL
+                        hydra ftp server filename prefix. (default: )
+  --hydra_ftp_server_skip
+                        if set Hydra FTP server will not be started. (default:
+                        False)
+  --ka_path VAL         if set kalaccess will be used from here, if not it
+                        should be installed as a package (default: None)
+  --ka_skip             for kalaccess to be connected, kalsim has to be
+                        started in debug mode (see below) and this flag should
+                        not be set, if kalsim is started in debug mode and
+                        kalaccess is skipped then an external kalaccess should
+                        be connected and a run issued for the initialisation
+                        phase to complete (default: False)
+  --ka_subsystem VAL    kalaccess subsystem for connect (default: 3)
+  --kc_client           if set kalcmd acts as client in reference to kalsim,
+                        the parameter kc_port should be set to non priviledged
+                        port (above 1023) otherwise kalcmd is a server
+                        (default: False)
+  --kc_port VAL         kalcmd port for kalsim connections, if kc_client is
+                        not set, 0 is a valid value which means any free port,
+                        if kc_client is set then an available port should be
+                        set (default: 0)
+  --ks_cmdline_args VAL [VAL ...]
+                        kalsim extra command line arguments, please surround
+                        every parameter with '' and add a leading space as in
+                        ' --param' (default: ['--disable-dots'])
+  --ks_debug            kalsim enable debug, valid kalaccess parameters should
+                        be provided (default: False)
+  --ks_debug_port VAL   kalsim will open debugger using this port, valid port
+                        and valid kalaccess parameters must be provided
+                        (default: 31400)
+  --ks_firmware VAL     kymera binary path without extension, it is used in
+                        acat as well (default:
+                        firmware/kalsim/crescendo/kymera_crescendo_audio)
+  --ks_path VAL         kalsim binary path (default: kalsim_crescendo_audio)
+  --ks_quiet            kalsim enable quiet mode (default: False)
+  --ks_skip             if set kalsim binary will not be started and no other
+                        kalsim parameter will be used, kalcmd will try to
+                        connect to an existing kalsim process, for this to
+                        work {'option_strings': ['--ks_skip'], 'dest':
+                        'ks_skip', 'nargs': 0, 'const': True, 'default':
+                        False, 'type': None, 'choices': None, 'required':
+                        False, 'help': 'if set kalsim binary will not be
+                        started and no other kalsim parameter\n will be used,
+                        kalcmd will try to connect to an existing kalsim
+                        process,\n for this to work %s should not be 0\n
+                        otherwise kalsim will be executed', 'metavar': None,
+                        'container': <argparse._ArgumentGroup object at
+                        0x7f8c1d70ea20>, 'prog': 'kse_shell'} should not be 0
+                        otherwise kalsim will be executed (default: False)
+  --ks_timer_update_period VAL
+                        kalsim timer simulation accuracy (default: None)
+  --ks_verbose          kalsim enable verbose mode (default: False)
+  --license_manager_filename VAL
+                        License Manager config filename. (default:
+                        config/license.cfg.json)
+  --license_manager_use
+                        if set License Manager will be started. (default:
+                        False)
+  --pstore_filename VAL
+                        PStore filename. (default: config/pstore.cfg.json)
+  --pstore_use          if set PStore will be started. (default: False)
+

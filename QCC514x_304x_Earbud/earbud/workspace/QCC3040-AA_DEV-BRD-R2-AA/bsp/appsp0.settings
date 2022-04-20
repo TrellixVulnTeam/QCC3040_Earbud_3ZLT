@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <group name="mde#1/prebuilt_image"/>
+    <group name="mde#1/prebuilt_image/Run on Device">
+        <item name="deploy">
+            <item name="device">device://tc/usb2tc/106/qcc3040</item>
+        </item>
+    </group>
+</settings>

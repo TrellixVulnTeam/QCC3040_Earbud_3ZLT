@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.component package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim package" href="kse.kalsim.html"/>
+        <link rel="next" title="kse.kalsim.endpoint package" href="kse.kalsim.endpoint.html"/>
+        <link rel="prev" title="kse.kalsim.capability.common package" href="kse.kalsim.capability.common.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+    <li>kse.kalsim.component package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.component.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-component-package">
+<h1>kse.kalsim.component package<a class="headerlink" href="#kse-kalsim-component-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.component.hydra_ftp_server">
+<span id="kse-kalsim-component-hydra-ftp-server-module"></span><h2>kse.kalsim.component.hydra_ftp_server module<a class="headerlink" href="#module-kse.kalsim.component.hydra_ftp_server" title="Permalink to this headline">¶</a></h2>
+<p>Hydra FTP Server</p>
+<dl class="class">
+<dt id="kse.kalsim.component.hydra_ftp_server.Handle">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.component.hydra_ftp_server.</code><code class="sig-name descname">Handle</code><span class="sig-paren">(</span><em class="sig-param">handle</em>, <em class="sig-param">session_id</em>, <em class="sig-param">mode</em>, <em class="sig-param">filename</em>, <em class="sig-param">file_spec</em>, <em class="sig-param">address</em>, <em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/component/hydra_ftp_server.html#Handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handle object</p>
+<dl class="method">
+<dt id="kse.kalsim.component.hydra_ftp_server.Handle.filename">
+<em class="property">property </em><code class="sig-name descname">filename</code><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Handle.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.component.hydra_ftp_server.Handle.handle">
+<em class="property">property </em><code class="sig-name descname">handle</code><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Handle.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.component.hydra_ftp_server.Handle.pos">
+<em class="property">property </em><code class="sig-name descname">pos</code><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Handle.pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kse.kalsim.component.hydra_ftp_server.HydraFtpServer">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.component.hydra_ftp_server.</code><code class="sig-name descname">HydraFtpServer</code><span class="sig-paren">(</span><em class="sig-param">hydra_protocol</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/component/hydra_ftp_server.html#HydraFtpServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.HydraFtpServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hydra File transfer protocol server class</p>
+<p>This class provides a ftp server to support kalsim firmware patches.
+On instantiation it registers itself with firmware and listens for requests coming
+(read, write, delete).</p>
+<p>Currently it only supports a read only filesystem without seek support.
+Valid files are those with extension hcf in the selected directory
+Those files come in the format subsysN_configL or subsysN_dataL or subsysN_patchP_fwFFWW unless
+a prefix is selected which is prepended to filenames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hydra_protocol</strong> (<em>kats.kalsim.hydra_service.protocol.HydraProtocol</em>) – Protocol handler</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – Directory containing files</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – Prefix to be applied to every file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="kse.kalsim.component.hydra_ftp_server.Session">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.component.hydra_ftp_server.</code><code class="sig-name descname">Session</code><span class="sig-paren">(</span><em class="sig-param">session_id</em>, <em class="sig-param">address</em>, <em class="sig-param">port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/component/hydra_ftp_server.html#Session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Session object</p>
+<dl class="method">
+<dt id="kse.kalsim.component.hydra_ftp_server.Session.address">
+<em class="property">property </em><code class="sig-name descname">address</code><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Session.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server address</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.component.hydra_ftp_server.Session.port">
+<em class="property">property </em><code class="sig-name descname">port</code><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Session.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server port</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.component.hydra_ftp_server.Session.session_id">
+<em class="property">property </em><code class="sig-name descname">session_id</code><a class="headerlink" href="#kse.kalsim.component.hydra_ftp_server.Session.session_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Session id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.component.pstore">
+<span id="kse-kalsim-component-pstore-module"></span><h2>kse.kalsim.component.pstore module<a class="headerlink" href="#module-kse.kalsim.component.pstore" title="Permalink to this headline">¶</a></h2>
+<p>PSKeys storage server</p>
+<dl class="class">
+<dt id="kse.kalsim.component.pstore.PStore">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.component.pstore.</code><code class="sig-name descname">PStore</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">register=True</em>, <em class="sig-param">delay=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/component/pstore.html#PStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.component.pstore.PStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Persistent Store service class</p>
+<p>This class provides a persistent storage server to support kalsim firmware images.
+On instantiation it registers itself with firmware and listens for requests coming
+(read, write, delete).</p>
+<p>Initial storage state format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="p">[</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="mi">1</span>
+        <span class="p">]</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="mi">2</span><span class="p">,</span>
+        <span class="p">[</span>
+            <span class="mi">4</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Containing two keys, key id 1 with value [0, 1] and key id 2 with value [4]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename containing Store initial data</p></li>
+<li><p><strong>register</strong> (<em>bool</em>) – Register pstore against kymera</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – Time in seconds to delay response to kymera (in kymera/firmware domain)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.component.pstore.PStore.ps_read">
+<code class="sig-name descname">ps_read</code><span class="sig-paren">(</span><em class="sig-param">key_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/component/pstore.html#PStore.ps_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.component.pstore.PStore.ps_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read current storage key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key_id</strong> (<em>int</em>) – Key identifier</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Key value, empty list for inexistent key</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.component">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.component" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.endpoint.html" class="btn btn-neutral float-right" title="kse.kalsim.endpoint package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.capability.common.html" class="btn btn-neutral" title="kse.kalsim.capability.common package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

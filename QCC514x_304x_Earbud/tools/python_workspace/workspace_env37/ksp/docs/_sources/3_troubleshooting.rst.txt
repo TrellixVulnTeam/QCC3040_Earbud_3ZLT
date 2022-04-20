@@ -1,0 +1,56 @@
+Troubleshooting
+===============
+
+Ensure good readings
+--------------------
+Consider the following when using KSP to get a good reading:
+
+  - Use a TRB clock speed of 40 MHz or higher.
+
+    If necessary, use the following commands in the Pydbg shell to change
+    the speed:
+    ::
+
+      >>> device.transport.get_freq_mhz()
+      20.0
+      >>> device.transport.set_freq_mhz(40)
+      >>> device.transport.get_freq_mhz()
+      40.0
+      >>>
+
+    .. note::
+      KSP checks this speed at the beginning of the execution. If the
+      value is too low, for example less than ``40 MHz``, it displays a warning
+      message to the user. Then, the user has the option to increase
+      the speed which is persistent throughout the session.
+  - Limit the number of TRB connections to the chip.
+  - USB2 may cause a bottleneck when reading data. Use USB3 instead of
+    USB2 if it is available in the system.
+  - The running KSP operator consumes resources on the chip, i.e. the
+    processor capacity. The user must observe the available resources
+    during the reading. If the resources are overwhelmed there might be
+    glitches in the output and it cannot be considered as a good reading. 
+
+
+Starting the KSP operator fails
+-------------------------------
+When using the KSP, if starting the operator fails:
+
+  - Check if the right KSP downloadable is selected and the deployment for
+    the chip was successful.
+  - Check PM and DM RAM consumption. There must be enough memory to run
+    the KSP operator.
+  - Check if there are enough MIPS. Reduce the number of channels and/or
+    configure streams for data types with shorter size if the throughput
+    is high.
+  - Make sure TRB logging from apps is not running at the same time. 
+
+
+KSP stopped in the middle of recording
+--------------------------------------
+If KSP stops in the middle of recording, the operator may not be removed
+cleanly. If this happens a clean restart is required:
+
+  1. Kill the python process.
+  2. Close the cmd window.
+  3. Restart the development board and start the use case again.

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+<!--Chain for AEC reference-->
+
+<chain name="CHAIN_AANC_FBC" id="1" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_AANC_FBC_FF_MIC_PATH" id="EB_CAP_ID_CVC_FBC">
+        <sink name="REF_IN" terminal="0"/>
+        <sink name="MIC_IN" terminal="1"/>
+        <source name="MIC_OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_AANC_FBC_ERR_MIC_PATH" id="EB_CAP_ID_CVC_FBC">
+        <sink name="REF_IN" terminal="0"/>
+        <sink name="MIC_IN" terminal="1"/>
+        <source name="MIC_OUT" terminal="0"/>
+    </operator>
+
+    <input sink="OPR_AANC_FBC_FF_MIC_PATH.REF_IN" role="EPR_AANC_FBC_FF_MIC_REF_IN"/>
+    <input sink="OPR_AANC_FBC_FF_MIC_PATH.MIC_IN" role="EPR_AANC_FBC_FF_MIC_IN"/>
+    <output source="OPR_AANC_FBC_FF_MIC_PATH.MIC_OUT" role="EPR_AANC_FBC_FF_MIC_OUT"/>
+
+    <input sink="OPR_AANC_FBC_ERR_MIC_PATH.REF_IN" role="EPR_AANC_FBC_ERR_MIC_REF_IN"/>
+    <input sink="OPR_AANC_FBC_ERR_MIC_PATH.MIC_IN" role="EPR_AANC_FBC_ERR_MIC_IN"/>
+    <output source="OPR_AANC_FBC_ERR_MIC_PATH.MIC_OUT" role="EPR_AANC_FBC_ERR_MIC_OUT"/>
+
+</chain>

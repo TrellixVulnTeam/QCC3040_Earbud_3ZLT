@@ -1,0 +1,34 @@
+############################################################################
+#  Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+#  All Rights Reserved.
+#  Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+#  Notifications and licenses are retained for attribution purposes only
+############################################################################
+
+#
+# Capabilities to include in the build
+#
+%list CFG_CAPABILITIES
+EARBUD_FIT_TEST_16K
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib_private/aanc/aanc_afb
+../lib_private/aanc/fit100
+../lib_private/cvc_modules/svad100
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/earbud_fit_test/earbud_fit_test
+
+
+%build
+RELEASE_BUILD=TRUE
+
+# Prebuilt libraries were built only for QCC514x (strettoplus v11)
+# Prebuilt library files (.a and .reloc) must be placed under
+#
+# \kalimba\kymera\lib_release\($CONFIG)
+
+%list PREBUILT_LIBS
+libaanc.a

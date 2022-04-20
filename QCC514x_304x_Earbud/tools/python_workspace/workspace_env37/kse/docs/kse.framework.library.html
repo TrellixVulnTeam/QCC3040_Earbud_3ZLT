@@ -1,0 +1,1162 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.framework.library package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.framework package" href="kse.framework.html"/>
+        <link rel="next" title="kse.instrument package" href="kse.instrument.html"/>
+        <link rel="prev" title="kse.framework package" href="kse.framework.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.framework.html">kse.framework package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.framework.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.framework.html#module-kse.framework">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.framework.html">kse.framework package</a> &raquo;</li>
+      
+    <li>kse.framework.library package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.framework.library.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-framework-library-package">
+<h1>kse.framework.library package<a class="headerlink" href="#kse-framework-library-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.framework.library.collection">
+<span id="kse-framework-library-collection-module"></span><h2>kse.framework.library.collection module<a class="headerlink" href="#module-kse.framework.library.collection" title="Permalink to this headline">¶</a></h2>
+<p>Collections library utilities</p>
+<p>All function in this module handle json objects
+A json object is the representation of valid json in python.
+The object supports dict and list containers and any values.
+Subelements could be containers as well.</p>
+<dl class="function">
+<dt id="kse.framework.library.collection.json_flatten">
+<code class="sig-prename descclassname">kse.framework.library.collection.</code><code class="sig-name descname">json_flatten</code><span class="sig-paren">(</span><em class="sig-param">val</em>, <em class="sig-param">separator='.'</em>, <em class="sig-param">object_pairs_hook=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/collection.html#json_flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.collection.json_flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten a dictionary or a list</p>
+<p>All elements will be handled as scalars but subclasses of dicts and/or lists</p>
+<p>For the following input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Get the following flattened output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b.c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b.d.0&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;b.d.1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b.d.2&quot;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list/dict</em>) – Data to flatten</p></li>
+<li><p><strong>separator</strong> (<em>str</em>) – Separator for returned flattened data dict</p></li>
+<li><p><strong>object_pairs_hook</strong> (<em>class</em>) – Class to use for output, by default dict()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict Flattened data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.collection.json_merge">
+<code class="sig-prename descclassname">kse.framework.library.collection.</code><code class="sig-name descname">json_merge</code><span class="sig-paren">(</span><em class="sig-param">data1</em>, <em class="sig-param">data2</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/collection.html#json_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.collection.json_merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge two json objects.</p>
+<p>This function will return data1 data (base) with whatever modifications included in data2.
+The decision to add more data in data1 that was not originally present but present in data2 is
+defined by dict_mode and list_mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data1</strong> (<em>dict/list</em>) – Base input data</p></li>
+<li><p><strong>data2</strong> (<em>dict/list</em>) – New data</p></li>
+<li><p><strong>out_mode</strong> (<em>str</em>) – <ul>
+<li><p>OUT_MODE_INPLACE all operation will be done in data1</p></li>
+<li><p>OUT_MODE_SHALLOW_COPY all operations will be done in a shallow copy of data1</p></li>
+<li><p>OUT_MODE_DEEP_COPY all operations will be done in a deep copy of data1</p></li>
+</ul>
+</p></li>
+<li><p><strong>dict_mode</strong> (<em>str</em>) – <ul>
+<li><p>DICT_MODE_OVERWRITE keys that are already present in data1 will be overwritten with
+data2 if they exist, but new keys in data2 will be omitted.</p></li>
+<li><p>DICT_MODE_APPEND keys only in data1 will be left intact, both in data1 and data2 will
+return data2 values and only in data2 will return data2 values (default)</p></li>
+</ul>
+</p></li>
+<li><p><strong>list_mode</strong> (<em>str</em>) – <ul>
+<li><p>LIST_MODE_OVERWRITE only indexes in data1 will be overwritten with data2 if they exist
+in both data1 and data2</p></li>
+<li><p>LIST_MODE_APPEND indexes only in data1 will be left intact, both in data1 and data2
+will return data2 values and only in data2 will return data2 values</p></li>
+<li><p>LIST_MODE_OVERWRITE_APPEND values in data2 will overwrite existing indices in data1
+and new indices in data2 will append (default)</p></li>
+<li><p>LIST_MODE_APPEND_ALWAYS values in data2 will be appended to values in data1</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict/list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.collection.json_substitute_env">
+<code class="sig-prename descclassname">kse.framework.library.collection.</code><code class="sig-name descname">json_substitute_env</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/collection.html#json_substitute_env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.collection.json_substitute_env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Substitute string values that contain $ENV or $(ENV) with the value of the environmental
+variable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">json_substitute_env</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;$TMP/trash&#39;</span><span class="p">})</span>
+<span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;/tmp/trash&#39;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict/list</em>) – Input data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict/list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.collection.json_unflatten">
+<code class="sig-prename descclassname">kse.framework.library.collection.</code><code class="sig-name descname">json_unflatten</code><span class="sig-paren">(</span><em class="sig-param">val</em>, <em class="sig-param">separator='.'</em>, <em class="sig-param">object_pairs_hook=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/collection.html#json_unflatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.collection.json_unflatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Un-flatten a dictionary or a list.</p>
+<p>For the following input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b.c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b.d.0&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;b.d.1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b.d.2&quot;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Get the following un-flattened output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – Flattened data</p></li>
+<li><p><strong>separator</strong> (<em>str</em>) – Separator for input flattened data dict</p></li>
+<li><p><strong>object_pairs_hook</strong> (<em>class</em>) – Class to use for dicts, by default dict()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Un-flattened data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict/list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.config">
+<span id="kse-framework-library-config-module"></span><h2>kse.framework.library.config module<a class="headerlink" href="#module-kse.framework.library.config" title="Permalink to this headline">¶</a></h2>
+<p>Configuration options</p>
+<dl class="data">
+<dt id="kse.framework.library.config.DEBUG_SESSION">
+<code class="sig-prename descclassname">kse.framework.library.config.</code><code class="sig-name descname">DEBUG_SESSION</code><em class="property"> = False</em><a class="headerlink" href="#kse.framework.library.config.DEBUG_SESSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>constant indicating we are running inside a pydev debug session</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.config.check_debug_session">
+<code class="sig-prename descclassname">kse.framework.library.config.</code><code class="sig-name descname">check_debug_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/config.html#check_debug_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.config.check_debug_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if we are running in a pydev debug session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>pydev session executing</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.config.get_config_param">
+<code class="sig-prename descclassname">kse.framework.library.config.</code><code class="sig-name descname">get_config_param</code><span class="sig-paren">(</span><em class="sig-param">param=None</em>, <em class="sig-param">default_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/config.html#get_config_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.config.get_config_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get configuration parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param</strong> (<em>str</em><em> or </em><em>None</em>) – Parameter name or None for all</p></li>
+<li><p><strong>default_value</strong> (<em>any</em>) – Default value if parameter does not exist</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parameter value or all parameters value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.config.parse_string_config_param">
+<code class="sig-prename descclassname">kse.framework.library.config.</code><code class="sig-name descname">parse_string_config_param</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/config.html#parse_string_config_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.config.parse_string_config_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse string with command line parameters in the form</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_string_config_param</span><span class="p">([</span><span class="s2">&quot;param1:1&quot;</span><span class="p">,</span> <span class="s2">&quot;param2:True&quot;</span><span class="p">,</span> <span class="s2">&quot;param3:value3&quot;</span><span class="p">])</span>
+<span class="go">{&#39;param1&#39;: 1, &#39;param2&#39;: True, &#39;param3&#39;: &#39;value3&#39;}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Parameter string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parsed parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.config.set_config_param">
+<code class="sig-prename descclassname">kse.framework.library.config.</code><code class="sig-name descname">set_config_param</code><span class="sig-paren">(</span><em class="sig-param">param</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/config.html#set_config_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.config.set_config_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set configuration parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param</strong> (<em>str</em>) – Parameter name</p></li>
+<li><p><strong>value</strong> (<em>any</em>) – Parameter value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.constant">
+<span id="kse-framework-library-constant-module"></span><h2>kse.framework.library.constant module<a class="headerlink" href="#module-kse.framework.library.constant" title="Permalink to this headline">¶</a></h2>
+<p>Framework constants</p>
+<dl class="data">
+<dt id="kse.framework.library.constant.INPUT_DATA">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">INPUT_DATA</code><em class="property"> = 'input_data'</em><a class="headerlink" href="#kse.framework.library.constant.INPUT_DATA" title="Permalink to this definition">¶</a></dt>
+<dd><p>input data label for configuration and result files</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.INSTRUMENT">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">INSTRUMENT</code><em class="property"> = 'instrument'</em><a class="headerlink" href="#kse.framework.library.constant.INSTRUMENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>instrument label for configuration and result files</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.INSTRUMENT_PATH">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">INSTRUMENT_PATH</code><em class="property"> = 'kats.instrument'</em><a class="headerlink" href="#kse.framework.library.constant.INSTRUMENT_PATH" title="Permalink to this definition">¶</a></dt>
+<dd><p>instrument location in global package</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.UUT">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">UUT</code><em class="property"> = 'uut'</em><a class="headerlink" href="#kse.framework.library.constant.UUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>uut label for configuration and result files</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.WORKSPACE_CONFIG">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">WORKSPACE_CONFIG</code><em class="property"> = 'config'</em><a class="headerlink" href="#kse.framework.library.constant.WORKSPACE_CONFIG" title="Permalink to this definition">¶</a></dt>
+<dd><p>workspace directory for configuration files</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.WORKSPACE_ENV">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">WORKSPACE_ENV</code><em class="property"> = 'KATS_WORKSPACE'</em><a class="headerlink" href="#kse.framework.library.constant.WORKSPACE_ENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>environment variable for workspace</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.WORKSPACE_LOG">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">WORKSPACE_LOG</code><em class="property"> = 'log'</em><a class="headerlink" href="#kse.framework.library.constant.WORKSPACE_LOG" title="Permalink to this definition">¶</a></dt>
+<dd><p>workspace directory for log files</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.WORKSPACE_RESULT">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">WORKSPACE_RESULT</code><em class="property"> = 'result'</em><a class="headerlink" href="#kse.framework.library.constant.WORKSPACE_RESULT" title="Permalink to this definition">¶</a></dt>
+<dd><p>workspace directory for result files</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="kse.framework.library.constant.WORKSPACE_TMP">
+<code class="sig-prename descclassname">kse.framework.library.constant.</code><code class="sig-name descname">WORKSPACE_TMP</code><em class="property"> = 'tmp'</em><a class="headerlink" href="#kse.framework.library.constant.WORKSPACE_TMP" title="Permalink to this definition">¶</a></dt>
+<dd><p>workspace directory for tmp files</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.factory">
+<span id="kse-framework-library-factory-module"></span><h2>kse.framework.library.factory module<a class="headerlink" href="#module-kse.framework.library.factory" title="Permalink to this headline">¶</a></h2>
+<p>Factory support library</p>
+<dl class="function">
+<dt id="kse.framework.library.factory.find_subclass">
+<code class="sig-prename descclassname">kse.framework.library.factory.</code><code class="sig-name descname">find_subclass</code><span class="sig-paren">(</span><em class="sig-param">package</em>, <em class="sig-param">base_class</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/factory.html#find_subclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.factory.find_subclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all classes subclassing a given class contained in any module located in a given
+package or subpackages.</p>
+<p>With the following structure</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kats</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">package1</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">file1</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">package2</span><span class="o">/</span>
+            <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+            <span class="n">file2</span><span class="o">.</span><span class="n">py</span>
+
+<span class="n">find_subclass</span><span class="p">(</span><span class="s1">&#39;kats.package1&#39;</span><span class="p">,</span> <span class="n">MyBaseClass</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>would return all classes in the files file1.py and file2.py that subclass MyBaseClass</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>package</strong> (<em>str</em>) – Package</p></li>
+<li><p><strong>base_class</strong> (<em>any</em>) – Base or abstract class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of classes found subclassing base_class</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[any]</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the case of abstract classes, this call will not check if the classes found
+are valid MyBaseClass subclasses, that is comply will all abstractmethod and
+abstract property.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.factory.find_subclass_dir">
+<code class="sig-prename descclassname">kse.framework.library.factory.</code><code class="sig-name descname">find_subclass_dir</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">base_class</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/factory.html#find_subclass_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.factory.find_subclass_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all classes subclassing a given class contained in a specified directory</p>
+<p>With the following structure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Location to search for classes</p></li>
+<li><p><strong>base_class</strong> (<em>any</em>) – Base or abstract class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of classes found subclassing base_class</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[any]</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the case of abstract classes, this call will not check if the classes found
+are valid MyBaseClass subclasses, that is comply will all abstractmethod and
+abstract property.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.file_json">
+<span id="kse-framework-library-file-json-module"></span><h2>kse.framework.library.file_json module<a class="headerlink" href="#module-kse.framework.library.file_json" title="Permalink to this headline">¶</a></h2>
+<p>JSON file utilities.</p>
+<dl class="function">
+<dt id="kse.framework.library.file_json.dump">
+<code class="sig-prename descclassname">kse.framework.library.file_json.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_json.html#dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_json.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Path to file to dump</p></li>
+<li><p><strong>data</strong> (<em>dict</em><em> or </em><em>list</em>) – Data to be dumped</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.file_json.load">
+<code class="sig-prename descclassname">kse.framework.library.file_json.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_json.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_json.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to file to load</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File contents</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.file_util">
+<span id="kse-framework-library-file-util-module"></span><h2>kse.framework.library.file_util module<a class="headerlink" href="#module-kse.framework.library.file_util" title="Permalink to this headline">¶</a></h2>
+<p>File utilities.</p>
+<dl class="function">
+<dt id="kse.framework.library.file_util.dump">
+<code class="sig-prename descclassname">kse.framework.library.file_util.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_util.html#dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_util.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write file</p>
+<p>It does support files ending in:</p>
+<blockquote>
+<div><p>.yaml (yaml files)
+.json (json files, default)</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Path to file to dump</p></li>
+<li><p><strong>data</strong> (<em>dict</em><em> or </em><em>list</em>) – Data to be dumped</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.file_util.get_config_filename">
+<code class="sig-prename descclassname">kse.framework.library.file_util.</code><code class="sig-name descname">get_config_filename</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_util.html#get_config_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_util.get_config_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get filename of a configuration file</p>
+<p>Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment
+variable defined are made relative to config directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.file_util.get_log_filename">
+<code class="sig-prename descclassname">kse.framework.library.file_util.</code><code class="sig-name descname">get_log_filename</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_util.html#get_log_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_util.get_log_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get filename of a log file</p>
+<p>Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment
+variable defined are made relative to log directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.file_util.get_result_filename">
+<code class="sig-prename descclassname">kse.framework.library.file_util.</code><code class="sig-name descname">get_result_filename</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_util.html#get_result_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_util.get_result_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get filename of a result file</p>
+<p>Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment
+variable defined are made relative to result directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.file_util.get_tmp_filename">
+<code class="sig-prename descclassname">kse.framework.library.file_util.</code><code class="sig-name descname">get_tmp_filename</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_util.html#get_tmp_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_util.get_tmp_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get filename of a file inside tmp directory</p>
+<p>Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment
+variable defined are made relative to result directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.file_util.load">
+<code class="sig-prename descclassname">kse.framework.library.file_util.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">strict=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/file_util.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.file_util.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load file</p>
+<p>It does support files ending in:</p>
+<blockquote>
+<div><p>.yaml (yaml files)
+.json (json files, default)</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Path to file to load</p></li>
+<li><p><strong>strict</strong> (<em>bool</em>) – Load in strict mode, this mode is slower but dicts will be returned
+as OrderedDict hence ordering is kept (python 3.6 will keep order even in dicts)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File contents</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.instrument">
+<span id="kse-framework-library-instrument-module"></span><h2>kse.framework.library.instrument module<a class="headerlink" href="#module-kse.framework.library.instrument" title="Permalink to this headline">¶</a></h2>
+<p>KATS framework Test Base Instrument class</p>
+<dl class="class">
+<dt id="kse.framework.library.instrument.Instrument">
+<em class="property">class </em><code class="sig-prename descclassname">kse.framework.library.instrument.</code><code class="sig-name descname">Instrument</code><a class="reference internal" href="_modules/kse/framework/library/instrument.html#Instrument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.instrument.Instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base Class that every instrument must subclass</p>
+<dl class="method">
+<dt id="kse.framework.library.instrument.Instrument.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.framework.library.instrument.Instrument.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instrument name/interface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.framework.library.instrument.Instrument.schema">
+<em class="property">abstract property </em><code class="sig-name descname">schema</code><a class="headerlink" href="#kse.framework.library.instrument.Instrument.schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instrument schema</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.log">
+<span id="kse-framework-library-log-module"></span><h2>kse.framework.library.log module<a class="headerlink" href="#module-kse.framework.library.log" title="Permalink to this headline">¶</a></h2>
+<p>Logging extensions</p>
+<dl class="function">
+<dt id="kse.framework.library.log.dump">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">pattern='%02x'</em>, <em class="sig-param">elem_line=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the string representation of an array dump.</p>
+<p>This dumps an array as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">32</span><span class="p">]</span>
+<span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="s1">&#39;01 02 7f 20&#39;</span>
+
+<span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;0x</span><span class="si">%02x</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="s1">&#39;0x01 0x02 0x7f 0x20&#39;</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">121</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">323</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">121256</span><span class="p">,</span> <span class="mi">32334</span><span class="p">,</span> <span class="mi">2321</span><span class="p">,</span> <span class="mi">2312</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">12344</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="mh">0x0079</span> <span class="mh">0x0138</span> <span class="mh">0x007f</span> <span class="mh">0x00e8</span> <span class="mh">0x0143</span> <span class="mh">0x00ea</span> <span class="mh">0x1d9a8</span> <span class="mh">0x7e4e</span>
+<span class="mh">0x0911</span> <span class="mh">0x0908</span> <span class="mh">0x000c</span> <span class="mh">0x0017</span> <span class="mh">0x0079</span> <span class="mh">0x0079</span> <span class="mh">0x3038</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data list</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>) – Per element conversion from value to string representation</p></li>
+<li><p><strong>elem_line</strong> (<em>int</em>) – If None then ommit any line-feeds in the output, otherwise limit the
+elements per line to this value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.log_docstring">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">log_docstring</code><span class="sig-paren">(</span><em class="sig-param">level=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#log_docstring"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.log_docstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to emit a log message in the logger self._log with the docstring of the method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – Log level of the message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.log_exception">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">log_exception</code><span class="sig-paren">(</span><em class="sig-param">wrapper=None</em>, <em class="sig-param">enabled=None</em>, <em class="sig-param">adapter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#log_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.log_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs an exception if any exception is raised in the decorated function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wrapped</strong> (<em>function</em>) – Wrapped function which needs to be called by your wrapper function.</p></li>
+<li><p><strong>instance</strong> (<em>any</em>) – Object to which the wrapped function was bound when it was called.</p></li>
+<li><p><strong>args</strong> (<em>tuple</em><em>[</em><em>any</em><em>]</em>) – Positional arguments supplied when the decorated function was called.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Keyword arguments supplied when the decorated function was called.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.log_input">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">log_input</code><span class="sig-paren">(</span><em class="sig-param">level=10</em>, <em class="sig-param">formatters=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#log_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.log_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to emit a log message in the logger self._log when the function is invoked</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>int</em>) – Log level of the message</p></li>
+<li><p><strong>formatters</strong> (<em>dict</em>) – Specific log format for the given parameter.
+The parameter name is the key and its format specifier should be its value.</p></li>
+<li><p><strong>ignore</strong> (<em>list</em>) – Arguments and Keyword Arguments which should be ignored in the log.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.log_input_output">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">log_input_output</code><span class="sig-paren">(</span><em class="sig-param">in_level=10</em>, <em class="sig-param">out_level=10</em>, <em class="sig-param">formatters=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#log_input_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.log_input_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to emit a log message in the logger self._log when the function is invoked
+and another one when the function returns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_level</strong> (<em>int</em>) – Log level of the message when invoked</p></li>
+<li><p><strong>out_level</strong> (<em>int</em>) – Log level of the message when returns</p></li>
+<li><p><strong>formatters</strong> (<em>dict</em>) – Specific log format for the given parameter. The parameter name is the
+key and its format specifier should be its value. To format the return
+value, use <cite>return</cite> as the key.</p></li>
+<li><p><strong>ignore</strong> (<em>list</em>) – Arguments and Keyword Arguments which should be ignored in the log.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.log_level_to_int">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">log_level_to_int</code><span class="sig-paren">(</span><em class="sig-param">level</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#log_level_to_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.log_level_to_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a log level in integer or str format to integer format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>str/int</em>) – Log level</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Log level</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.log_output">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">log_output</code><span class="sig-paren">(</span><em class="sig-param">level=10</em>, <em class="sig-param">formatters=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#log_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.log_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to emit a log message in the logger self._log when the function returns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>int</em>) – Log level of the message</p></li>
+<li><p><strong>formatters</strong> (<em>dict</em>) – Specific log format for the given parameter. The parameter name is the
+key and its format specifier should be its value. To format the return
+value, use <cite>return</cite> as the key.</p></li>
+<li><p><strong>ignore</strong> (<em>list</em>) – Arguments and Keyword Arguments which should be ignored in the log.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.patch_log_formatter">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">patch_log_formatter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#patch_log_formatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.patch_log_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Monkey patch python logging standard module so that the default logging.Formatter format
+is HH:MM:SS.mmm instead of YYYY-MM-DD HH:MM:SS,mmm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.log.setup_logging">
+<code class="sig-prename descclassname">kse.framework.library.log.</code><code class="sig-name descname">setup_logging</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">level</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/log.html#setup_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.log.setup_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure logging module</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em><em> or </em><em>None</em>) – Configuration</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – Log level</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.repl">
+<span id="kse-framework-library-repl-module"></span><h2>kse.framework.library.repl module<a class="headerlink" href="#module-kse.framework.library.repl" title="Permalink to this headline">¶</a></h2>
+<p>KATS framework Read Evaluate Print Loop utilities</p>
+<dl class="function">
+<dt id="kse.framework.library.repl.launch_bpython">
+<code class="sig-prename descclassname">kse.framework.library.repl.</code><code class="sig-name descname">launch_bpython</code><span class="sig-paren">(</span><em class="sig-param">banner</em>, <em class="sig-param">namespace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/repl.html#launch_bpython"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.repl.launch_bpython" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke the bpython Read Evaluate Print Loop</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>banner</strong> (<em>str</em>) – Display banner</p></li>
+<li><p><strong>namespace</strong> (<em>dict</em>) – Namespace to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.repl.launch_ipython">
+<code class="sig-prename descclassname">kse.framework.library.repl.</code><code class="sig-name descname">launch_ipython</code><span class="sig-paren">(</span><em class="sig-param">banner</em>, <em class="sig-param">namespace</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/repl.html#launch_ipython"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.repl.launch_ipython" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke the ipython Read Evaluate Print Loop</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>banner</strong> (<em>str</em>) – Display banner</p></li>
+<li><p><strong>namespace</strong> (<em>dict</em>) – Namespace to use</p></li>
+<li><p><strong>magic</strong> (<em>Magics</em>) – Magics instance</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.repl.launch_ptpython">
+<code class="sig-prename descclassname">kse.framework.library.repl.</code><code class="sig-name descname">launch_ptpython</code><span class="sig-paren">(</span><em class="sig-param">banner</em>, <em class="sig-param">namespace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/repl.html#launch_ptpython"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.repl.launch_ptpython" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke the ptpython Read Evaluate Print Loop</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>banner</strong> (<em>str</em>) – Display banner</p></li>
+<li><p><strong>namespace</strong> (<em>dict</em>) – Namespace to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.repl.launch_python">
+<code class="sig-prename descclassname">kse.framework.library.repl.</code><code class="sig-name descname">launch_python</code><span class="sig-paren">(</span><em class="sig-param">banner</em>, <em class="sig-param">namespace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/repl.html#launch_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.repl.launch_python" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke the python standard Read Evaluate Print Loop</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>banner</strong> (<em>str</em>) – Display banner</p></li>
+<li><p><strong>namespace</strong> (<em>dict</em>) – Namespace to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.repl.launch_repl">
+<code class="sig-prename descclassname">kse.framework.library.repl.</code><code class="sig-name descname">launch_repl</code><span class="sig-paren">(</span><em class="sig-param">repl</em>, <em class="sig-param">namespace</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/repl.html#launch_repl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.repl.launch_repl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke the Read Evaluate Print Loop interface</p>
+<p>This will try to invoke the requested repl with the provided namespace in kwargs
+if it fails it will invoke a normal python interpreter session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repl</strong> (<em>str</em>) – Read Evaluate Print Loop tool to use</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Set of keywords and values to be added to the debug session</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.schema">
+<span id="kse-framework-library-schema-module"></span><h2>kse.framework.library.schema module<a class="headerlink" href="#module-kse.framework.library.schema" title="Permalink to this headline">¶</a></h2>
+<p>JSON schema extension</p>
+<dl class="function">
+<dt id="kse.framework.library.schema.extend_with_default">
+<code class="sig-prename descclassname">kse.framework.library.schema.</code><code class="sig-name descname">extend_with_default</code><span class="sig-paren">(</span><em class="sig-param">validator_class</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/schema.html#extend_with_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.schema.extend_with_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend validator with default processing</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.trback">
+<span id="kse-framework-library-trback-module"></span><h2>kse.framework.library.trback module<a class="headerlink" href="#module-kse.framework.library.trback" title="Permalink to this headline">¶</a></h2>
+<p>Traceback inter thread notification library</p>
+<dl class="function">
+<dt id="kse.framework.library.trback.get_traceback">
+<code class="sig-prename descclassname">kse.framework.library.trback.</code><code class="sig-name descname">get_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/trback.html#get_traceback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.trback.get_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets last thread traceback set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Traceback</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.trback.set_traceback">
+<code class="sig-prename descclassname">kse.framework.library.trback.</code><code class="sig-name descname">set_traceback</code><span class="sig-paren">(</span><em class="sig-param">traceback</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/trback.html#set_traceback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.trback.set_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets last thread traceback</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>traceback</strong> (<em>str</em>) – Traceback</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library.util">
+<span id="kse-framework-library-util-module"></span><h2>kse.framework.library.util module<a class="headerlink" href="#module-kse.framework.library.util" title="Permalink to this headline">¶</a></h2>
+<p>Utility extensions</p>
+<dl class="class">
+<dt id="kse.framework.library.util.RLockTimeout">
+<em class="property">class </em><code class="sig-prename descclassname">kse.framework.library.util.</code><code class="sig-name descname">RLockTimeout</code><span class="sig-paren">(</span><em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/util.html#RLockTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.util.RLockTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Reentrant lock implementation with timeout as python 2 and 3.1 does not support this feature.</p>
+<p>A reentrant lock is a synchronization primitive that may be acquired multiple times by the same
+thread. Internally, it uses the concepts of “owning thread” and “recursion level” in addition
+to the locked/unlocked state used by primitive locks. In the locked state, some thread owns the
+lock; in the unlocked state, no thread owns it.</p>
+<p>To lock the lock, a thread calls its acquire() method; this returns once the thread owns the
+lock.
+To unlock the lock, a thread calls its release() method. acquire()/release() call pairs may be
+nested; only the final release() (the release() of the outermost pair) resets the lock to
+unlocked and allows another thread blocked in acquire() to proceed.</p>
+<p>Reentrant locks also support the context management protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>float</em>) – Default timeout value for acquire so that with lock can use non standard
+timeout value</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.framework.library.util.RLockTimeout.acquire">
+<code class="sig-name descname">acquire</code><span class="sig-paren">(</span><em class="sig-param">blocking=True</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/util.html#RLockTimeout.acquire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.util.RLockTimeout.acquire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acquire a lock, blocking or non-blocking.</p>
+<p>When invoked without arguments:
+if this thread already owns the lock, increment the recursion level by one,
+and return immediately.
+Otherwise, if another thread owns the lock, block until the lock is unlocked.
+Once the lock is unlocked (not owned by any thread), then grab ownership,
+set the recursion level to one, and return.
+If more than one thread is blocked waiting until the lock is unlocked, only one at a time
+will be able to grab ownership of the lock. There is no return value in this case.</p>
+<p>When invoked with the blocking argument set to true, do the same thing as when called
+without arguments, and return true.</p>
+<p>When invoked with the blocking argument set to false, do not block.
+If a call without an argument would block, return false immediately; otherwise,
+do the same thing as when called without arguments, and return true.</p>
+<p>When invoked with the floating-point timeout argument set to a positive value, block for
+at most the number of seconds specified by timeout and as long as the lock cannot be
+acquired. Return true if the lock has been acquired, false if the timeout has elapsed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.framework.library.util.RLockTimeout.release">
+<code class="sig-name descname">release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/util.html#RLockTimeout.release"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.util.RLockTimeout.release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release a lock, decrementing the recursion level.</p>
+<p>If after the decrement it is zero, reset the lock to unlocked (not owned by any thread),
+and if any other threads are blocked waiting for the lock to become unlocked,
+allow exactly one of them to proceed.
+If after the decrement the recursion level is still nonzero, the lock remains locked and
+owned by the calling thread.</p>
+<p>Only call this method when the calling thread owns the lock.
+A RuntimeError is raised if this method is called when the lock is unlocked.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.util.check_package_editable">
+<code class="sig-prename descclassname">kse.framework.library.util.</code><code class="sig-name descname">check_package_editable</code><span class="sig-paren">(</span><em class="sig-param">package</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/util.html#check_package_editable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.util.check_package_editable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if package is installed in editable mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package</strong> (<em>str</em>) – Package name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Package installed in editable mode</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.framework.library.util.install_public">
+<code class="sig-prename descclassname">kse.framework.library.util.</code><code class="sig-name descname">install_public</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">instance</em>, <em class="sig-param">prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/framework/library/util.html#install_public"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.framework.library.util.install_public" title="Permalink to this definition">¶</a></dt>
+<dd><p>Monkey patch an instance of a class with methods coming from another instance</p>
+<p>This will include all the public methods of an instance in another instance with the same
+name or optionally the same name with a prefix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<em>any</em>) – Instance of the class that imports the methods</p></li>
+<li><p><strong>instance</strong> (<em>any</em>) – Instance of the class that exports the methods</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – Optional prefix to preprend to the imported methods</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.framework.library">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.framework.library" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.instrument.html" class="btn btn-neutral float-right" title="kse.instrument package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.framework.html" class="btn btn-neutral" title="kse.framework package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

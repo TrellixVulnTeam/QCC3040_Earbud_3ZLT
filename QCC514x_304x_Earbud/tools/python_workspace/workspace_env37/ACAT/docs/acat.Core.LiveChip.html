@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LiveChip &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="LiveKalcmd" href="acat.Core.LiveKalcmd.html"/>
+        <link rel="prev" title="KerDebugInfo" href="acat.Core.KerDebugInfo.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>LiveChip</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.LiveChip.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="livechip">
+<h1>LiveChip<a class="headerlink" href="#livechip" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.LiveChip</span></code>.</p>
+<span class="target" id="module-ACAT.Core.LiveChip"></span><p>Live Chip Interface.</p>
+<p>Base module to connect to a live chip.</p>
+<dl class="class">
+<dt id="ACAT.Core.LiveChip.LiveChip">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.LiveChip.</code><code class="sig-name descname">LiveChip</code><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides access to chip data on a live chip over SPI.</p>
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.get_all_proc_regs">
+<code class="sig-name descname">get_all_proc_regs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.get_all_proc_regs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.get_all_proc_regs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing all processor registers.</p>
+<p>Dictionary maps name to value.  NB on a running chip there is the
+obvious risk of tearing.  Consider stopping the chip if this is an
+issue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em>, <em class="sig-param">ignore_overflow=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of one or more addresses.</p>
+<p>This allows you to grab a chunk of memory, e.g. get_data(0x600,
+50). Addresses can be from any valid DM region (DM1, PM RAM,
+mapped NVMEM, memory-mapped registers, etc.).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The length supplied is measured in addressable units.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr)</span></code> will return a single value;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr,</span> <span class="pre">1)</span></code> will return a list with a single member.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_data(addr,</span> <span class="pre">10)</span></code> will return a list with ten
+members or a list with three members (when the memory is
+octet addressed, 32bit words).</p></li>
+</ul>
+</div></blockquote>
+</div>
+<p>Note that reading PM RAM via DM is not supported (since not all chips
+map PM into DM). Use <cite>get_data_pm()</cite> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> – </p></li>
+<li><p><strong>ignore_overflow</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignore if the read goes out
+from the memory region and append zeros. This is useful if
+an union is at the end of the memory region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – If the address is out of range.</p></li>
+<li><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.OutOfRangeError" title="ACAT.Core.exceptions.OutOfRangeError"><strong>OutOfRangeError</strong></a> – If the address is valid but the length is not
+    (i.e. address+length is not a valid address).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.get_data_pm">
+<code class="sig-name descname">get_data_pm</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">length=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.get_data_pm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.get_data_pm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get data from PM.</p>
+<p>This method works in the exactly the same way as get_data(self,
+address, length = 0) method, but it returns data from PM region
+instead of DM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>length</strong> (<em>int</em><em>, </em><em>optional</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.get_firmware_id">
+<code class="sig-name descname">get_firmware_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.get_firmware_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.get_firmware_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the firmware ID integer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.get_firmware_id_string">
+<code class="sig-name descname">get_firmware_id_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.get_firmware_id_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.get_firmware_id_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the firmware ID string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.get_proc_reg">
+<code class="sig-name descname">get_proc_reg</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.get_proc_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.get_proc_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value of the processor register specified in <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">name</span></code> is a string containing the name of the register in upper or
+lower case, with or without the prefix <code class="docutils literal notranslate"><span class="pre">REGFILE_</span></code> e.g.
+<code class="docutils literal notranslate"><span class="pre">REGFILE_PC</span></code>, <code class="docutils literal notranslate"><span class="pre">rMAC</span></code>, <code class="docutils literal notranslate"><span class="pre">R10</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – </p></li>
+<li><p><strong>AttributeError</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.is_volatile">
+<code class="sig-name descname">is_volatile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.is_volatile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.is_volatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a live device over SPI so the contents is volatile.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.LiveChip.LiveChip.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#LiveChip.set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.LiveChip.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the contents of one or more addresses.</p>
+<p>This allows you to write a list of values to a chunk of memory.
+Addresses can only be from any valid DM RAM or memory mapped
+register region.  e.g. set_data(0x3e5d, [1 2 3])</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set_data(address,</span> <span class="pre">[val])</span></code> writes address with a single value val.</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">set_data(address,</span> <span class="pre">[val1</span> <span class="pre">...</span> <span class="pre">valn])</span></code> writes the list of values</dt><dd><p>to memory starting from address.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<p>This function should only be implemented for live chips. And should not
+be called if the chip is not live.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>value</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – If the address is out of range.</p></li>
+<li><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.OutOfRangeError" title="ACAT.Core.exceptions.OutOfRangeError"><strong>OutOfRangeError</strong></a> – If the address is valid but the length is not
+    (i.e. address+length is not a valid address).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.LiveChip.re_entrant_lock_decorator">
+<code class="sig-prename descclassname">ACAT.Core.LiveChip.</code><code class="sig-name descname">re_entrant_lock_decorator</code><span class="sig-paren">(</span><em class="sig-param">function</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/LiveChip.html#re_entrant_lock_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.LiveChip.re_entrant_lock_decorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locks the threading before executing a function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> – Function to decorate.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.LiveKalcmd.html" class="btn btn-neutral float-right" title="LiveKalcmd" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.KerDebugInfo.html" class="btn btn-neutral" title="KerDebugInfo" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.uut.hydra.uut &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.uut.hydra.uut</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.uut.hydra.uut</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Kalsim UUT abstraction for kalsim&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">kats.core.uut_base</span> <span class="k">import</span> <span class="n">UutBase</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span><span class="p">,</span> <span class="n">log_output</span><span class="p">,</span> <span class="n">log_input_output</span>
+<span class="kn">from</span> <span class="nn">..kalsim.io</span> <span class="k">import</span> <span class="n">IO</span>
+<span class="kn">from</span> <span class="nn">..kalsim.message</span> <span class="k">import</span> <span class="n">Message</span>
+<span class="kn">from</span> <span class="nn">..kalsim.timer</span> <span class="k">import</span> <span class="n">Timer</span>
+
+
+<div class="viewcode-block" id="HydraUut"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut">[docs]</a><span class="k">class</span> <span class="nc">HydraUut</span><span class="p">(</span><span class="n">UutBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Unit Under Test abstraction for crescendo running in kalsim.</span>
+
+<span class="sd">    It requires a kalcmd instrument instance to operate.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kalcmd (kats.instrument.kalcmd.kalcmd.Kalcmd): Kalcmd instrument</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">platform</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;crescendo&#39;</span><span class="p">,</span> <span class="s1">&#39;stre&#39;</span><span class="p">,</span> <span class="s1">&#39;streplus&#39;</span><span class="p">,</span> <span class="s1">&#39;maorgen1&#39;</span><span class="p">,</span> <span class="s1">&#39;maor&#39;</span><span class="p">]</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="s1">&#39;hydra&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kalcmd</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;init kalcmd:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">kalcmd</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_io</span> <span class="o">=</span> <span class="n">IO</span><span class="p">(</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="n">kalcmd</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">kalcmd</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HydraUut.timer_get_time"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.timer_get_time">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">timer_get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="HydraUut.timer_add_relative"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.timer_add_relative">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">timer_add_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">add_relative_timer</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.timer_add_absolute"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.timer_add_absolute">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">timer_add_absolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">add_absolute_timer</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.timer_cancel"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.timer_cancel">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">timer_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">cancel_timer</span><span class="p">(</span><span class="n">timer_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.timer_check_expired"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.timer_check_expired">[docs]</a>    <span class="k">def</span> <span class="nf">timer_check_expired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">check_timer_expired</span><span class="p">(</span><span class="n">timer_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.timer_wait_relative"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.timer_wait_relative">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">timer_wait_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">wait_relative_timer</span><span class="p">(</span><span class="n">period</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.message_register_handler"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.message_register_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">message_register_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="o">.</span><span class="n">register_message_handler</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="n">flt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.message_unregister_handler"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.message_unregister_handler">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">message_unregister_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="o">.</span><span class="n">unregister_message_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.message_send"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.message_send">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">message_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.message_send_recv"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.message_send_recv">[docs]</a>    <span class="nd">@log_input_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="o">.</span><span class="n">send_recv_message</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="n">flt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.message_recv"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.message_recv">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">message_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="o">.</span><span class="n">recv_message</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="n">flt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.mem_peek"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.mem_peek">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">mem_peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_io</span><span class="o">.</span><span class="n">mem_peek</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.mem_poke"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.mem_poke">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">mem_poke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_io</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.mem_block_read"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.mem_block_read">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">mem_block_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">num_dwords</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_io</span><span class="o">.</span><span class="n">mem_block_read</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">num_dwords</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.mem_block_write"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.mem_block_write">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;dwords&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%08x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">mem_block_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">dwords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_io</span><span class="o">.</span><span class="n">mem_block_write</span><span class="p">(</span><span class="n">memory_space</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">dwords</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraUut.interrupt"><a class="viewcode-back" href="../../../../../kse.kalsim.uut.hydra.html#kse.kalsim.uut.hydra.uut.HydraUut.interrupt">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">interrupt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interrupt</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_io</span><span class="o">.</span><span class="n">interrupt</span><span class="p">(</span><span class="n">interrupt</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>exceptions &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="Formatter" href="acat.Display.Formatter.html"/>
+        <link rel="prev" title="patch" href="acat.Core.patch.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>exceptions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.exceptions.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="exceptions">
+<h1>exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.exceptions</span></code>.</p>
+<span class="target" id="module-ACAT.Core.exceptions"></span><p>Exceptions.</p>
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.AmbiguousSymbolError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">AmbiguousSymbolError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#AmbiguousSymbolError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.AmbiguousSymbolError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiple symbol matches were found and couldn’t decide which to return.</p>
+<p>When raising the exception, we can choose to pass a simple string
+argument(as normal for exceptions), or pass a tuple of (string,
+args_list).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.AnalysisError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">AnalysisError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#AnalysisError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.AnalysisError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executing the analysis faces a problem.</p>
+<p>An error occurred; we can’t complete this analysis.  When raising the
+exception, we can choose to pass a simple string argument(as normal
+for exceptions), or pass a tuple of (string, argument).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.BundleMissingError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">BundleMissingError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#BundleMissingError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.BundleMissingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A downloadable bundle elf is missing.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.ChipNotPoweredError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">ChipNotPoweredError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#ChipNotPoweredError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.ChipNotPoweredError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The connection to the Live chip appears to have been lost.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.ChipNotSet">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">ChipNotSet</code><span class="sig-paren">(</span><em class="sig-param">info=None</em>, <em class="sig-param">index=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#ChipNotSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.ChipNotSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals if the chip type is not yet set internally. This could
+happen if it is not clear form the coredump or live connection the
+version of the chip.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.ChipdataError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">ChipdataError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#ChipdataError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.ChipdataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>General exceptions for chipdata errors.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.CoredumpParsingError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">CoredumpParsingError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#CoredumpParsingError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.CoredumpParsingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error occurred while parsing the coredump.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugAndChipdataError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugAndChipdataError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugAndChipdataError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugAndChipdataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>General exceptions for debug information and chipdata.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugInfoError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugInfoError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugInfoError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugInfoError" title="Permalink to this definition">¶</a></dt>
+<dd><p>General exceptions for debug information.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugInfoNoLabelError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugInfoNoLabelError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugInfoNoLabelError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugInfoNoLabelError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code label not found in debug info.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugInfoNoVariableError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugInfoNoVariableError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugInfoNoVariableError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugInfoNoVariableError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable not found in debug info.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugLogError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugLogError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugLogError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugLogError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Errors associated with Debug Log.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugLogFormatterStringError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugLogFormatterStringError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugLogFormatterStringError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugLogFormatterStringError" title="Permalink to this definition">¶</a></dt>
+<dd><p>When something goes wrong during reading a formatter string.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.DebugLogNotFound">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">DebugLogNotFound</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#DebugLogNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.DebugLogNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the firmware doesn’t have debug log compiled in.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.FatalAnalysisError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">FatalAnalysisError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#FatalAnalysisError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.FatalAnalysisError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executing the analysis faces a problem that we can not recover from.</p>
+<p>A fatal error occurred; we should stop all analysis and bail out!
+(This is drastic: only use if we really can’t do <em>any</em> work at all.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.FormatterError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">FormatterError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#FormatterError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.FormatterError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals a formatter error.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.HeapNotSupported">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">HeapNotSupported</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#HeapNotSupported"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.HeapNotSupported" title="Permalink to this definition">¶</a></dt>
+<dd><p>The build does not support the heap.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDebuginfoCallError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDebuginfoCallError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDebuginfoCallError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDebuginfoCallError" title="Permalink to this definition">¶</a></dt>
+<dd><p>DebugInfo received an invalid call.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDebuginfoEnumError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDebuginfoEnumError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDebuginfoEnumError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDebuginfoEnumError" title="Permalink to this definition">¶</a></dt>
+<dd><p>DebugInfo received an invalid call.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDebuginfoTypeError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDebuginfoTypeError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDebuginfoTypeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDebuginfoTypeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>DebugInfo received an invalid call.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDmAddressError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDmAddressError</code><span class="sig-paren">(</span><em class="sig-param">info=None</em>, <em class="sig-param">index=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDmAddressError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDmAddressError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address is an invalid DM address.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDmConstAddressError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDmConstAddressError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDmConstAddressError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDmConstAddressError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address is an invalid DM constant address.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDmConstLengthError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDmConstLengthError</code><span class="sig-paren">(</span><em class="sig-param">max_length</em>, <em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDmConstLengthError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDmConstLengthError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length of the DM constant read is invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_length</strong> – Maximum read size length.</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Words address.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidDmLengthError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidDmLengthError</code><span class="sig-paren">(</span><em class="sig-param">max_length</em>, <em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidDmLengthError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidDmLengthError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length of the DM read is invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_length</strong> – Maximum read size length.</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Words address.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.InvalidPmAddressError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">InvalidPmAddressError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#InvalidPmAddressError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.InvalidPmAddressError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address is an invalid PM address.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.NotDmRegion">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">NotDmRegion</code><span class="sig-paren">(</span><em class="sig-param">info=None</em>, <em class="sig-param">index=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#NotDmRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.NotDmRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals if an address was badly assumed to be in DM memory.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.NotPmRegion">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">NotPmRegion</code><span class="sig-paren">(</span><em class="sig-param">info=None</em>, <em class="sig-param">index=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#NotPmRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.NotPmRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals if an address was badly assumed to be in PM memory.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.OutOfRangeError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">OutOfRangeError</code><span class="sig-paren">(</span><em class="sig-param">info=None</em>, <em class="sig-param">index=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#OutOfRangeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.OutOfRangeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The supplied address was valid, but the range was not.</p>
+<p>When raising the exception, we pass a tuple of (string,
+last_valid_key).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.OutdatedFwAnalysisError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">OutdatedFwAnalysisError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#OutdatedFwAnalysisError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.OutdatedFwAnalysisError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The firmware is outdated compared to the analyses.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.UnknownPmEncodingError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">UnknownPmEncodingError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#UnknownPmEncodingError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.UnknownPmEncodingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unknown PM encoding for the address.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.UsageError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">UsageError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#UsageError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.UsageError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something has been called in the wrong way.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.VariableMemberMissing">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">VariableMemberMissing</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#VariableMemberMissing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.VariableMemberMissing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable has no member with the specific name.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.VariableNotPointerError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">VariableNotPointerError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#VariableNotPointerError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.VariableNotPointerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable is not a pointer therefore cannot be dereferenced.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Core.exceptions.WaitForError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Core.exceptions.</code><code class="sig-name descname">WaitForError</code><a class="reference internal" href="_modules/ACAT/Core/exceptions.html#WaitForError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.exceptions.WaitForError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation did not finish.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Display.Formatter.html" class="btn btn-neutral float-right" title="Formatter" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.patch.html" class="btn btn-neutral" title="patch" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

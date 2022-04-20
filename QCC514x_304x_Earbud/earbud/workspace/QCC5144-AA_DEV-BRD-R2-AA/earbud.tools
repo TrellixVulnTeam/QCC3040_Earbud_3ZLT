@@ -1,0 +1,7 @@
+../../../adk/tools/packages
+../../../os/qcc514x_qcc304x/hydra_os/src/fw/tools
+../../../os/qcc514x_qcc304x/hydra_os/src/fw/tools/make
+../../../audio/scripts
+../../../audio/tools/packages
+../../../audio/qcc514x_qcc304x/tools/acat
+../../../audio/qcc514x_qcc304x/tools/packages

@@ -1,0 +1,8 @@
+
+Buffers
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Buffers``.
+
+.. automodule:: ACAT.Analysis.Buffers
+   :members:

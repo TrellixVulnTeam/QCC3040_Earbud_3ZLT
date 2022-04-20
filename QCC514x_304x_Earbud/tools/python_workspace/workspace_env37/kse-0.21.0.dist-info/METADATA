@@ -1,0 +1,281 @@
+Metadata-Version: 2.1
+Name: kse
+Version: 0.21.0
+Summary: Kymera Simulation Environment
+Home-page: http://www.qualcomm.com/
+Author: Qualcomm
+Author-email: kats_dev@qti.qualcomm.com
+Maintainer: QCSR Audio FW
+Maintainer-email: kats_dev@qti.qualcomm.com
+License: Other/Proprietary License
+Keywords: kse,kalimba,simulator,environment,simulation
+Platform: Windows
+Platform: Linux
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Customer Service
+Classifier: Intended Audience :: DevelopersIntended Audience :: Information Technology
+Classifier: Intended Audience :: Manufacturing
+Classifier: Intended Audience :: Telecommunications Industry
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Software Development :: Testing
+Requires-Python: >=3.6, <4
+Requires-Dist: ipython (<8,>=5.2.2)
+Requires-Dist: jsonschema (<4,>=2.6.0)
+Requires-Dist: kalcmd2 (<3,>=2.8.2)
+Requires-Dist: wrapt (<2,>=1.10.8)
+
+
+KSE (Kymera Simulation Environment) is a Python-based command shell for
+interactive prototyping, testing, and debugging of Kymera operators running
+in a simulated environment. When the shell is started, the session is loaded
+with objects available for the user to interact with Kymera.
+
+The audio subsystem is simulated using kalsim/kalcmd2 (kalimba simulator).
+
+**Chip platforms supported**
+
+    * Crescendo
+    * Stretto
+    * Strettoplus
+    * Maorgen1
+    * Maor
+
+**Environment characteristics**
+
+    * Python 3.6+
+    * Windows and Linux support
+
+**Known limitations**
+
+    * Only single kalimba core is supported
+    * No 32 bit Linux support
+    * Hardware interfaces are simulated
+
+Changelog
+=========
+
+0.21.0
+------
+
+28th May 2021
+
+Major changes
+
+* Add pstore support
+
+0.20.0
+------
+
+22nd April 2021
+
+Maintenance release with minor changes
+
+0.19.0
+------
+
+22nd March 2021
+
+Major changes
+
+* Documentation improvements: created example for getting profiler information with ACAT
+* Update kalsim version to 2021a
+* Updated capability.cfg.json
+
+0.18.0
+------
+
+15th February 2021
+
+Major changes
+
+* Update kalsim version to 2020b
+* Add maor support, document maor platform
+* Updated capability.cfg.json
+
+0.17.0
+------
+
+18th January 2021
+
+Major changes
+
+* Document maorgen1 platform
+
+0.16.0
+------
+
+15th December 2020
+
+Major changes
+
+* Added maorgen1 support
+* Added python 3.9 support
+
+0.15.0
+------
+
+6th November 2020
+
+Major changes
+
+* Fixed documentation copyright
+* Maintenance release
+
+.. warning:: **Incompatible changes**
+
+    * Removed python 3.5 support
+
+0.14.0
+------
+
+15th October 2020
+
+Major changes
+
+* Included documentation
+* Added documentation to wheel
+* Do not wrap audio data service buffers
+* Updated capability.cfg.json
+
+0.13.0
+------
+
+28th August 2020
+
+Major changes
+
+* None
+
+0.12.0
+------
+
+8th July 2020
+
+Major changes
+
+* None
+
+.. warning:: **Incompatible changes**
+
+    * Removed python 2 support
+
+0.11.0
+------
+
+22nd May 2020
+
+Major changes
+
+* Added koperator support
+* Updated to kalsim version 2020a
+
+0.10.0
+------
+
+9th April 2020
+
+Maintenance release with minor changes
+
+0.9.0
+------
+
+24th February 2020
+
+Major changes
+
+* Added python 3.8 support
+* Updated to kalcmd2 version 2.8.1
+* Updated to kalsim version 2019d
+
+0.8.0
+------
+
+13th December 2019
+
+Major changes
+
+* Delayed ACAT startup until chip is fully loaded
+
+.. warning:: **Incompatible changes**
+
+    * Moved firmware log to standard log
+
+0.7.0
+------
+
+1st November 2019
+
+Major changes
+
+* kalsim MIB key handling (corresponding KSE version should have this support as well)
+* graph configurable options
+
+.. warning:: **Incompatible changes**
+
+    * Removed clock_get_frequency uut method
+    * Updated capability names to match firmware
+
+0.6.0
+------
+
+13th September 2019
+
+Major changes
+
+* Added auraplus support
+
+.. warning:: **Incompatible changes**
+
+    * Dropped support for python 3.4
+
+0.5.0
+-----
+
+19th July 2019
+
+* Matched capability names with firmware
+
+.. warning:: **Incompatible changes**
+
+    * Updated capability.cfg.json to match firmware capability names
+
+0.4.0
+-----
+
+31st May 2019
+
+* Added support for python 3.7
+* Synchronised release cycle with kats
+
+0.3.0
+-----
+
+17th September 2018
+
+* Enabled stream rate matching and flushing support
+* Added unsolicited message example
+* Added support for python 3
+* Created standalone wheel package
+* Graph allow connections endpoint source to sink
+
+0.2.1
+-----
+
+4th May 2018
+
+Changes
+
+* Added universal (pcm, a2dp, file, tester, timestamped) streams
+* Added graph helper
+* Added patching support
+
+

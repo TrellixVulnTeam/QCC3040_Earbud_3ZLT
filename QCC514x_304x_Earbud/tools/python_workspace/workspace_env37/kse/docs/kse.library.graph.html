@@ -1,0 +1,867 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.library.graph package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.library package" href="kse.library.html"/>
+        <link rel="next" title="kse.library.types package" href="kse.library.types.html"/>
+        <link rel="prev" title="kse.library.audio_file package" href="kse.library.audio_file.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.library.html">kse.library package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.library.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.capability">kse.library.capability module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.module">kse.library.module module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.registry">kse.library.registry module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.template">kse.library.template module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library.test_base">kse.library.test_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.library.html#module-kse.library">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.library.html">kse.library package</a> &raquo;</li>
+      
+    <li>kse.library.graph package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.library.graph.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-library-graph-package">
+<h1>kse.library.graph package<a class="headerlink" href="#kse-library-graph-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.library.graph.graph">
+<span id="kse-library-graph-graph-module"></span><h2>kse.library.graph.graph module<a class="headerlink" href="#module-kse.library.graph.graph" title="Permalink to this headline">¶</a></h2>
+<p>Graph library</p>
+<dl class="class">
+<dt id="kse.library.graph.graph.Graph">
+<em class="property">class </em><code class="sig-prename descclassname">kse.library.graph.graph.</code><code class="sig-name descname">Graph</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">koperator_enable=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generic graph library</p>
+<p>This class handles all elements in a class (streams, endpoints, operators and koperators).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – Input data configuration</p></li>
+<li><p><strong>koperator_enable</strong> (<em>bool</em>) – Enable koperators</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.check_node_in_graph">
+<code class="sig-name descname">check_node_in_graph</code><span class="sig-paren">(</span><em class="sig-param">node_type</em>, <em class="sig-param">node_index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.check_node_in_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.check_node_in_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that a node is in the graph.
+Nodes not defined in the graph will not be created</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> (<em>str</em>) – Node type, one of ‘stream’, ‘endpoint’, ‘operator’ or ‘koperator’</p></li>
+<li><p><strong>node_index</strong> (<em>int</em>) – Zero based node index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Node is in graph</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_endpoint">
+<code class="sig-name descname">get_endpoint</code><span class="sig-paren">(</span><em class="sig-param">endpoint_type</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Endpoint type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based endpoint index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str: Interface
+str: Type (source or sink)
+list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_endpoint_method">
+<code class="sig-name descname">get_endpoint_method</code><span class="sig-paren">(</span><em class="sig-param">endpoint_type</em>, <em class="sig-param">index</em>, <em class="sig-param">method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_endpoint_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_endpoint_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint configuration entry for an specific method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Endpoint type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based endpoint index</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method configuration is requested</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_endpoint_node">
+<code class="sig-name descname">get_endpoint_node</code><span class="sig-paren">(</span><em class="sig-param">endpoint_type</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_endpoint_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_endpoint_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Endpoint type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based endpoint index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Ednpoint node</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kse.library.graph.graph.Node" title="kse.library.graph.graph.Node">Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_endpoint_num">
+<code class="sig-name descname">get_endpoint_num</code><span class="sig-paren">(</span><em class="sig-param">endpoint_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_endpoint_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_endpoint_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>endpoint_type</strong> (<em>str</em>) – Endpoint type (‘source’ or ‘sink’ or None)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of endpoints found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_endpoint_raw">
+<code class="sig-name descname">get_endpoint_raw</code><span class="sig-paren">(</span><em class="sig-param">endpoint_type</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_endpoint_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_endpoint_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint configuration raw entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Endpoint type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based endpoint index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Endpoint entry</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_graph">
+<code class="sig-name descname">get_graph</code><span class="sig-paren">(</span><em class="sig-param">index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get graph entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based graph index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Graph configuration</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[[str,str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_graph_connections">
+<code class="sig-name descname">get_graph_connections</code><span class="sig-paren">(</span><em class="sig-param">index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_graph_connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_graph_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get graph connections as nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based graph index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Node: From node
+Node: To node</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_graph_num">
+<code class="sig-name descname">get_graph_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_graph_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_graph_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of graph entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of graphs found</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_koperator">
+<code class="sig-name descname">get_koperator</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_koperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_koperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kats operator configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str: Interface
+list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_koperator_method">
+<code class="sig-name descname">get_koperator_method</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_koperator_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_koperator_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kats operator configuration entry for an specific method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method configuration is requested</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_koperator_node">
+<code class="sig-name descname">get_koperator_node</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_koperator_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_koperator_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kats operator node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>kats operator node</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kse.library.graph.graph.Node" title="kse.library.graph.graph.Node">Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_koperator_num">
+<code class="sig-name descname">get_koperator_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_koperator_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_koperator_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kats operator configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of operators found</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_koperator_raw">
+<code class="sig-name descname">get_koperator_raw</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_koperator_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_koperator_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kats operator configuration raw entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>kats operator entry</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_node_in_connections">
+<code class="sig-name descname">get_node_in_connections</code><span class="sig-paren">(</span><em class="sig-param">node_type</em>, <em class="sig-param">node_index</em>, <em class="sig-param">input_num=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_node_in_connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_node_in_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all connections in the graph to this node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> (<em>str</em>) – Node type, one of ‘stream’, ‘endpoint’, ‘operator’ or ‘koperator’</p></li>
+<li><p><strong>node_index</strong> (<em>int</em>) – Zero based node index</p></li>
+<li><p><strong>input_num</strong> (<em>int</em>) – Number of inputs in node</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Connections</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[int,int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_node_out_connections">
+<code class="sig-name descname">get_node_out_connections</code><span class="sig-paren">(</span><em class="sig-param">node_type</em>, <em class="sig-param">node_index</em>, <em class="sig-param">output_num=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_node_out_connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_node_out_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all connections in the graph from this node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> (<em>str</em>) – Node type, one of ‘stream’, ‘endpoint’, ‘operator’ or ‘koperator’</p></li>
+<li><p><strong>node_index</strong> (<em>int</em>) – Zero based node index</p></li>
+<li><p><strong>output_num</strong> (<em>int</em>) – Number of  outputs in node</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Connections</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[int,int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_operator">
+<code class="sig-name descname">get_operator</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str: Interface
+list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_operator_method">
+<code class="sig-name descname">get_operator_method</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_operator_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_operator_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator configuration entry for an specific method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method configuration is requested</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_operator_node">
+<code class="sig-name descname">get_operator_node</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_operator_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_operator_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Operator node</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kse.library.graph.graph.Node" title="kse.library.graph.graph.Node">Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_operator_num">
+<code class="sig-name descname">get_operator_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_operator_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_operator_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of operators found</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_operator_raw">
+<code class="sig-name descname">get_operator_raw</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_operator_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_operator_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator configuration raw entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based operator index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Operator entry</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_stream">
+<code class="sig-name descname">get_stream</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Stream type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str: Interface
+str: Type (source or sink)
+list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_stream_method">
+<code class="sig-name descname">get_stream_method</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">index</em>, <em class="sig-param">method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_stream_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_stream_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream configuration entry for an specific method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Stream type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based endpoint index</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method configuration is requested</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list: Positional arguments
+dict: Keyword arguments</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_stream_node">
+<code class="sig-name descname">get_stream_node</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_stream_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_stream_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Stream type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stream node</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kse.library.graph.graph.Node" title="kse.library.graph.graph.Node">Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_stream_num">
+<code class="sig-name descname">get_stream_num</code><span class="sig-paren">(</span><em class="sig-param">stream_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_stream_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_stream_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream configuration entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stream_type</strong> (<em>str</em>) – Stream type (‘source’ or ‘sink’ or None)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of streams found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_stream_raw">
+<code class="sig-name descname">get_stream_raw</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_stream_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_stream_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream configuration raw entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Stream type (‘source’ or ‘sink’ or None)</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Zero-based index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stream entry</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_sync">
+<code class="sig-name descname">get_sync</code><span class="sig-paren">(</span><em class="sig-param">index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_sync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_sync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sync entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based sync index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sync configuration</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_sync_connections">
+<code class="sig-name descname">get_sync_connections</code><span class="sig-paren">(</span><em class="sig-param">index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_sync_connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_sync_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sync connections as nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero-based sync index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Nodes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#kse.library.graph.graph.Node" title="kse.library.graph.graph.Node">Node</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Graph.get_sync_num">
+<code class="sig-name descname">get_sync_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Graph.get_sync_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Graph.get_sync_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of sync entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of sync found</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kse.library.graph.graph.Node">
+<em class="property">class </em><code class="sig-prename descclassname">kse.library.graph.graph.</code><code class="sig-name descname">Node</code><span class="sig-paren">(</span><em class="sig-param">node_type</em>, <em class="sig-param">node_index</em>, <em class="sig-param">node_modifier=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Representation of a graph terminal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_type</strong> (<em>str</em>) – Node type, one of ‘stream’, ‘endpoint’, ‘operator’ or ‘koperator’</p></li>
+<li><p><strong>node_index</strong> (<em>int</em>) – Zero based node index</p></li>
+<li><p><strong>node_modifier</strong> (<em>list/None</em>) – Terminal information as [‘i’, 0] or [‘o’, 1]</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.library.graph.graph.Node.get_index">
+<code class="sig-name descname">get_index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Node.get_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Node.get_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get zero based terminal index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Terminal node index</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Node.get_modifier">
+<code class="sig-name descname">get_modifier</code><span class="sig-paren">(</span><em class="sig-param">index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Node.get_modifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Node.get_modifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get terminal modifiers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int/None</em>) – Modifier to get or None for all</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Terminal node modifier/s</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any/list[any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.library.graph.graph.Node.get_type">
+<code class="sig-name descname">get_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/library/graph/graph.html#Node.get_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.library.graph.graph.Node.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get terminal type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Terminal type</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.library.graph">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.library.graph" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.library.types.html" class="btn btn-neutral float-right" title="kse.library.types package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.library.audio_file.html" class="btn btn-neutral" title="kse.library.audio_file package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

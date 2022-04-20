@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.framework.library.file_util &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.framework.library.file_util</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.framework.library.file_util</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;File utilities.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">.constant</span> <span class="k">import</span> <span class="n">WORKSPACE_CONFIG</span><span class="p">,</span> <span class="n">WORKSPACE_ENV</span><span class="p">,</span> <span class="n">WORKSPACE_LOG</span><span class="p">,</span> <span class="n">WORKSPACE_RESULT</span><span class="p">,</span> \
+    <span class="n">WORKSPACE_TMP</span>
+
+<span class="n">JSON_EXTENSION</span> <span class="o">=</span> <span class="s1">&#39;.json&#39;</span>
+<span class="n">YAML_EXTENSION</span> <span class="o">=</span> <span class="s1">&#39;.yaml&#39;</span>
+
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.file_util.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load file</span>
+
+<span class="sd">    It does support files ending in:</span>
+
+<span class="sd">        .yaml (yaml files)</span>
+<span class="sd">        .json (json files, default)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to file to load</span>
+<span class="sd">        strict (bool): Load in strict mode, this mode is slower but dicts will be returned</span>
+<span class="sd">            as OrderedDict hence ordering is kept (python 3.6 will keep order even in dicts)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        any: File contents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">strict</span>  <span class="c1"># older messagepack support compatibility</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">YAML_EXTENSION</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.file_yaml</span> <span class="k">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">yaml_load</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">yaml_load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">.file_json</span> <span class="k">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">json_load</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">json_load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="dump"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.file_util.dump">[docs]</a><span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write file</span>
+
+<span class="sd">    It does support files ending in:</span>
+
+<span class="sd">        .yaml (yaml files)</span>
+<span class="sd">        .json (json files, default)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to file to dump</span>
+<span class="sd">        data (dict or list): Data to be dumped</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">YAML_EXTENSION</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.file_yaml</span> <span class="k">import</span> <span class="n">dump</span> <span class="k">as</span> <span class="n">yaml_dump</span>
+        <span class="n">yaml_dump</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">.file_json</span> <span class="k">import</span> <span class="n">dump</span> <span class="k">as</span> <span class="n">json_dump</span>
+        <span class="n">json_dump</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_config_filename"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.file_util.get_config_filename">[docs]</a><span class="k">def</span> <span class="nf">get_config_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get filename of a configuration file</span>
+
+<span class="sd">    Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment</span>
+<span class="sd">    variable defined are made relative to config directory</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Path to file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">workspace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">WORKSPACE_ENV</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">workspace</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workspace</span><span class="p">,</span> <span class="n">WORKSPACE_CONFIG</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filename</span></div>
+
+
+<div class="viewcode-block" id="get_result_filename"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.file_util.get_result_filename">[docs]</a><span class="k">def</span> <span class="nf">get_result_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get filename of a result file</span>
+
+<span class="sd">    Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment</span>
+<span class="sd">    variable defined are made relative to result directory</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Path to file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">workspace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">WORKSPACE_ENV</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">workspace</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workspace</span><span class="p">,</span> <span class="n">WORKSPACE_RESULT</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filename</span></div>
+
+
+<div class="viewcode-block" id="get_tmp_filename"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.file_util.get_tmp_filename">[docs]</a><span class="k">def</span> <span class="nf">get_tmp_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get filename of a file inside tmp directory</span>
+
+<span class="sd">    Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment</span>
+<span class="sd">    variable defined are made relative to result directory</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Path to file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">workspace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">WORKSPACE_ENV</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">workspace</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workspace</span><span class="p">,</span> <span class="n">WORKSPACE_TMP</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filename</span></div>
+
+
+<div class="viewcode-block" id="get_log_filename"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.file_util.get_log_filename">[docs]</a><span class="k">def</span> <span class="nf">get_log_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get filename of a log file</span>
+
+<span class="sd">    Absolute path are left unmodified, relative paths with KATS_WORKSPACE environment</span>
+<span class="sd">    variable defined are made relative to log directory</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Path to file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">workspace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">WORKSPACE_ENV</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">workspace</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workspace</span><span class="p">,</span> <span class="n">WORKSPACE_LOG</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filename</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

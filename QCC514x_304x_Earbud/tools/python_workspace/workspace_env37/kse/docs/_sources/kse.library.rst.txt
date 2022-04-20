@@ -1,0 +1,63 @@
+kse.library package
+===================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.library.audio_file
+   kse.library.graph
+   kse.library.types
+
+Submodules
+----------
+
+kse.library.capability module
+-----------------------------
+
+.. automodule:: kse.library.capability
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.module module
+-------------------------
+
+.. automodule:: kse.library.module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.registry module
+---------------------------
+
+.. automodule:: kse.library.registry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.template module
+---------------------------
+
+.. automodule:: kse.library.template
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.test\_base module
+-----------------------------
+
+.. automodule:: kse.library.test_base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.library
+   :members:
+   :undoc-members:
+   :show-inheritance:

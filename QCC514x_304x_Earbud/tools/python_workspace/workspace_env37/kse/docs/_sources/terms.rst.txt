@@ -1,0 +1,55 @@
+=====================
+Terms and definitions
+=====================
+
++-------------+------------------------------------------------------------------------------+
+| Term        | Definition                                                                   |
++=============+==============================================================================+
+| Kymera      | Qualcomm® Kalimba audio framework.                                           |
+|             | It contains processing blocks called capabilities.                           |
+|             | Capabilities extend the audio processing features of the Digital Signal      |
+|             | Processor (DSP). Capabilities to Kymera are provided by entities called      |
+|             | Operators.                                                                   |
++-------------+------------------------------------------------------------------------------+
+| Kalsim      | Kalsim is an instruction set simulator that runs on a host PC,               |
+|             | to simulate the operation of a Kalimba DSP.                                  |
+|             | The key features of Kalsim include:                                          |
+|             |                                                                              |
+|             | * Complete bit-exact simulation of the Kalimba instruction set.              |
+|             | * Debugging interface operation is the same as real hardware, giving         |
+|             |   complete interoperability with standard Kalimba debugging tools.           |
+|             | * Kalimba peripheral simulation including MMU ports, flash file system,      |
+|             |   interrupt controller, and timers.                                          |
+|             | * High performance host to Kalimba I/O.                                      |
+|             | * Reproducibility of execution. This includes run-to-run identical timing of |
+|             |   interrupts and streams, even while debugging tools are attached.           |
+|             | * Detection of unmapped memory accesses.                                     |
+|             | * Instruction tracing.                                                       |
+|             |                                                                              |
+|             | The simulated Kalimba DSP Core is closely modelled on the real hardware.     |
+|             | It decodes the instructions, and performs the intended operations with       |
+|             | bit-exact accuracy and similar timing as the real hardware.                  |
++-------------+------------------------------------------------------------------------------+
+| Kalimba     | Name of the DSP architecture contained in Qualcomm® chips.                   |
++-------------+------------------------------------------------------------------------------+
+| Kalcmd      | Control interface for automated test of Kalimba code running in Kalsim.      |
++-------------+------------------------------------------------------------------------------+
+| Platform    | Chip architecture, can be ``"crescendo"``, ``"stre"``, ``"streplus"``.       |
++-------------+------------------------------------------------------------------------------+
+| Paths       | When a command-line tool receives a parameter that is a config file or       |
+|             | result file, the path to the file could be absolute or relative. If it is    |
+|             | relative, it will be relative to:                                            |
+|             |                                                                              |
+|             | * ``$KATS_WORKSPACE/config`` for configuration files                         |
+|             | * ``$KATS_WORKSPACE/result`` for result files                                |
+|             | * ``$KATS_WORKSPACE/log`` for log output files                               |
+|             | * ``$KATS_WORKSPACE`` for other files                                        |
++-------------+------------------------------------------------------------------------------+
+| File        | Command-line utilities should be able to understand all file formats         |
+| formats     | providing the extension matches the contents.                                |
+|             |                                                                              |
+|             | * ``json`` for files ending in ``.json``                                     |
+|             | * ``yaml`` for files ending in ``.yaml``                                     |
+|             |                                                                              |
+|             | Note ``yaml`` support is not installed by default                            |
++-------------+------------------------------------------------------------------------------+

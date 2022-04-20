@@ -1,0 +1,8 @@
+
+compression
+==========================================================================
+
+This module can be imported from ``ACAT.Core.compression``.
+
+.. automodule:: ACAT.Core.compression
+   :members:

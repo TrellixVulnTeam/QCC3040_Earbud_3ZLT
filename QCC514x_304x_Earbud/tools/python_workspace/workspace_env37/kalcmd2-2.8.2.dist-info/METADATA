@@ -1,0 +1,28 @@
+Metadata-Version: 2.0
+Name: kalcmd2
+Version: 2.8.2
+Summary: kalcmd interface
+Home-page: https://www.qualcomm.com
+Author: Qualcomm
+Author-email: UNKNOWN
+License: Other/Proprietary License
+Keywords: kalimba kalsim kalcmd kalcmd2
+Platform: Windows
+Platform: Linux
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+
+Python interface to Kalsim's kalcmd2 interface.
+
+

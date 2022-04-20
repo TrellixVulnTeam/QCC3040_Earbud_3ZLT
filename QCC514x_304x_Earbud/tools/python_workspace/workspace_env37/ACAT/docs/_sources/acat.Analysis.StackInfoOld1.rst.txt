@@ -1,0 +1,8 @@
+
+StackInfoOld1
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.StackInfoOld1``.
+
+.. automodule:: ACAT.Analysis.StackInfoOld1
+   :members:

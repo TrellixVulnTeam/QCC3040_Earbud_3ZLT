@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: customer-pydbg-qcc514x-qcc304x
+Version: 2.20.1
+Summary: Pydbg support for the qcc514x_qcc304x platform
+Home-page: UNKNOWN
+Author: Qualcomm Technologies International, ltd
+Author-email: UNKNOWN
+License: Qualcomm Proprietary
+Keywords: embedded firmware development Hydra
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Debugging Tools
+Classifier: License :: Proprietary
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Requires-Dist: customer-pydbg-base (>=2.20.1)
+Requires-Dist: customer-pydbg-cextn (==1.4.2)
+Requires-Dist: customer-pydbg-cryptodll (==1.0.0)
+Requires-Dist: customer-pydbg-hydratrans (==1.1.1)
+
+Pydbg support for the qcc514x_qcc304x platform.  To be installed alongisde the pydbg-base package
+
+

@@ -1,0 +1,124 @@
+.. _configuration_qcomaanc:
+
+Configuration
++++++++++++++
+
+Overview
+========
+
+The graphs that are plotted are configured via a JSON file. Examples reside in the
+``resources`` subdirectory of ``aanclogger`` and can be used as a starting point for customization.
+
+.. Note:: See :ref:`usage_example_files` for the path to this folder.
+
+Flow
+----
+The configuration flow is as follows:
+
+Define Operators ? Define Handles ? Define Graphs
+
+Top-level Attributes
+--------------------
+There are five top-level attributes in the graph configuration:
+
+* ``operators``: defines the operators to query
+* ``handles``: defines the attributes to read
+* ``properties``: defines the overall GUI properties
+* ``defaults``,: defines any default graph values
+* ``graphs``: defines the graphs that are plotted
+
+Properties
+==========
+
+``properties`` apply to data capture and the figure window.
+
+Data Capture:
+
+* ``nplt``: Number of data points to display on the graph.
+* ``nsave``: Number of data points to save to CSV.
+* ``refresh_rate``: Nominal refresh rate for updating the graphs (ms).
+
+Figure Window:
+
+* ``title``: Title of the figure created when the tool is launched.
+* ``fig_x``: Default x co-ordinate for the figure.
+* ``fig_y``: Default y co-ordinate for the figure.
+
+.. _configuration_operators:
+
+Operators
+=========
+
+There are two attributes in ``operators``: ``left`` and ``right``, which contain a list of operators
+to look for on the left or right device as specified in ``connection.json``.
+
+The operators are defined by:
+
+* ``name``: Name for the operator as used in the ``handles`` definitions.
+* ``cap_id``: Capability ID for the operator.
+* ``cap_idx``: Index of the capability in the graph (0 based).
+
+  * If there is only a single operator of the specified capability this will be 0.
+  * If there are multiple operators for the given capability then this should be set to the index
+    for the required operator (for example if there are three operators with the same
+    capability ID and the second one is the one that is under test this should be ``1``).
+
+.. _configuration_handles:
+
+Handles
+=======
+
+This is a list of attributes that should be plotted. They are defined by:
+
+* ``name``: Name of the handle used in the ``graphs`` definition.
+* ``operator``: Name of the operator to query (see :ref:`configuration_operators`)
+* ``attr``: Attribute in the operator to plot.
+
+  * This is most commonly a descendant of the ``extra_op_data`` data structure in the operator and
+    can be anything that can be read from ACAT.
+  * ACAT can derefence pointers with known data structures, so for example the FxLMS adaptive gain
+    in AANC is ``extra_op_data.ag.deref.p_fxlms.deref.adaptive_gain``.
+  * This must be a single data value: ``aanclogger`` does not support representing arrays or lists.
+* ``log_fmt``: sprintf style logging format when saving the attribute to CSV.
+* ``conversion``: conversion to apply to the format. This can be:
+
+  * ``bitmask``: A hexadecimal string that is applied to the value via AND.
+  * ``scale``: number to scale the value by (or string specifying powers, e.g. ``"2**-9"``)
+  * ``offset``: An offset to apply to the value. This is the last conversion.
+  * ``qfmt``: Q-format to apply to the value. This is applied in preference to any other
+    conversion.
+
+
+Defaults
+========
+
+``defaults`` are default properties used in the graph configuration section and can be overridden by
+specific entries on a given plot:
+
+* ``grid``: Default state for the grid on the plots.
+* ``legend_location``: Default legend location for the plots.
+* ``marker``: Default marker for the plots.
+
+Graphs
+======
+
+The ``graphs`` attribute is a list of dictionaries. Each dictionary defines a subplot using a
+``matplotlib`` style specifier.
+
+* ``title``: Title for the subplot
+* ``subplot``: Subplot specification (``matplotlib`` style - e.g. ``[3, 1, 1]`` for a 3x1 series
+  of plots in which this defines the first plot).
+* ``ylim``: Limits to display the y axis.
+* ``ylabel``: Label for the y axis.
+* ``lines``: A list of dictionaries that describe the line attributes to be plotted on the given graph.
+
+Lines
+-----
+
+The ``lines`` sub-attribute for a ``graph`` specifies what gets plotted. Each line has:
+
+* ``attr``: Attribute name (see :ref:`configuration_handles`). Note that simple operators
+  (``+, -, *, /``) can be applied to two attributes, for example: ``ed_ext_spl_max - ed_ext_spl``.
+* ``label``: Label given in the legend.
+* ``color``: Color for the line.
+* ``marker``: Marker used to plot the line.

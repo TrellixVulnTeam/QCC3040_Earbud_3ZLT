@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.graph package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim package" href="kse.kalsim.html"/>
+        <link rel="next" title="kse.kalsim.hydra_service package" href="kse.kalsim.hydra_service.html"/>
+        <link rel="prev" title="kse.kalsim.endpoint.hydra package" href="kse.kalsim.endpoint.hydra.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+    <li>kse.kalsim.graph package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.graph.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-graph-package">
+<h1>kse.kalsim.graph package<a class="headerlink" href="#kse-kalsim-graph-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.graph.graph">
+<span id="kse-kalsim-graph-graph-module"></span><h2>kse.kalsim.graph.graph module<a class="headerlink" href="#module-kse.kalsim.graph.graph" title="Permalink to this headline">¶</a></h2>
+<p>Graph class</p>
+<dl class="class">
+<dt id="kse.kalsim.graph.graph.Graph">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.graph.graph.</code><code class="sig-name descname">Graph</code><span class="sig-paren">(</span><em class="sig-param">stream</em>, <em class="sig-param">endpoint</em>, <em class="sig-param">capability</em>, <em class="sig-param">kcapability</em>, <em class="sig-param">kymera</em>, <em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Kalimba graph handler</p>
+<p>This class handles all elements in a class (streams, endpoints, operators and koperators).
+It has the capability to create, configure, connect, start streaming, stop streaming,
+disconnect and destroy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> (<em>kats.kalsim.stream.stream_factory.StreamFactory</em>) – Stream factory</p></li>
+<li><p><strong>endpoint</strong> (<em>kats.kymera.endpoint.endpoint_factory.EndpointFactory</em>) – Endpoint factory</p></li>
+<li><p><strong>capability</strong> (<em>kats.kymera.capability.capability_factory.CapabilityFactory</em>) – Capability factry</p></li>
+<li><p><strong>kcapability</strong> (<em>kats.kalsim.capability.capability_factory.CapabilityFactory</em>) – KCapability factr</p></li>
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Kymera instance</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Input data configuration</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.check_active">
+<code class="sig-name descname">check_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.check_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.check_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if all source streams have reached EOF in the already built internal graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures all elements (streams, endpoints and operators) in the already built internal
+graph.
+Synchronises endpoints as required</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect all elements (endpoints and operators) in the already built internal graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the internal graph from the configuration entries in input_data
+stream, endpoint, operator and graph.</p>
+<p>Creates all the elements (streams, endpoints and operators)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy all streams, endpoints and operators in the already built internal graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>group_operator</strong> (<em>bool</em>) – Destroy all operators in one go</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnects all elements (endpoints and operators) in the already built graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_endpoint">
+<code class="sig-name descname">get_endpoint</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero based index of the endpoint</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Endpoint instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>kats.core.endpoint_base.EndpointBase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_endpoint_num">
+<code class="sig-name descname">get_endpoint_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_endpoint_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_endpoint_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of endpoint instances available in the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of endpoint instances</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_graph_connection">
+<code class="sig-name descname">get_graph_connection</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_graph_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_graph_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get transform id for a certain connection in the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero based index of the connection</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Transform id or None of the connection has not been created</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_koperator">
+<code class="sig-name descname">get_koperator</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_koperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_koperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kats operator instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero based index of the kats operator</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Operator instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>kats.kalsim.operator.operator_base.OperatorBase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_koperator_num">
+<code class="sig-name descname">get_koperator_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_koperator_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_koperator_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of kats operator instances available in the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of kats operator instances</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_operator">
+<code class="sig-name descname">get_operator</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get operator instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero based index of the operator</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Operator instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>kats.kymera.capability.capability_base.CapabilityBase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_operator_num">
+<code class="sig-name descname">get_operator_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_operator_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_operator_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of operator instances available in the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of operator instances</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_stream">
+<code class="sig-name descname">get_stream</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Zero based index of the stream</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stream instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>kats.core.stream_base.StreamBase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.get_stream_num">
+<code class="sig-name descname">get_stream_num</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.get_stream_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.get_stream_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of stream instances available in the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of stream instances</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload configuration.</p>
+<p>This method is useful if configuration is not known when this helper is instantiated</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>dict</em>) – Input data configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.play">
+<code class="sig-name descname">play</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">sleep=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Play a graph.</p>
+<p>This will load and optional configuration data, and create, config, connect, start,
+wait for EOF, stop, disconnect and destroy a graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – Input data configuration</p></li>
+<li><p><strong>sleep</strong> (<em>float</em>) – Sleep time between graph active state checks in seconds</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts streaming all source and sink streams in the already built internal
+graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_operator</strong> (<em>bool</em>) – Start all operators in one go</p></li>
+<li><p><strong>min_time</strong> (<em>float</em>) – Minimum playing time</p></li>
+<li><p><strong>autostop</strong> (<em>bool</em>) – Stop streams when graph has played</p></li>
+<li><p><strong>autostop_delay</strong> (<em>float</em>) – Time to wait before stopping the streams after graph has played</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.graph.graph.Graph.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/graph/graph.html#Graph.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.graph.graph.Graph.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops all elements (streams and operators) in the already built internal graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>group_operator</strong> (<em>bool</em>) – Stop all operators in one go</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.graph">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.graph" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.hydra_service.html" class="btn btn-neutral float-right" title="kse.kalsim.hydra_service package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.endpoint.hydra.html" class="btn btn-neutral" title="kse.kalsim.endpoint.hydra package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

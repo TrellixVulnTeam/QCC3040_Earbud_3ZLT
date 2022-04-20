@@ -1,0 +1,12 @@
+.. _overview_aanclogger:
+
+Overview
+++++++++
+
+``aanclogger`` is a python library that is provided with the Qualcomm ADK that wraps ``ACAT`` to
+provide an interface to plot operator attributes in real time from one or two running chips. It is
+primarily developed to assist in the design and tuning of kymera graphs running adaptive ANC (AANC)
+on QCC514x+/QCC304x+.
+
+The package provides an executable, ``aanclogger.exe``, that can be used to launch ACAT and enter
+the logging environment.

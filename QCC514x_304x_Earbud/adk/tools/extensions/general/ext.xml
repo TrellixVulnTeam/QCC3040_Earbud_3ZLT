@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid></uuid>
+        <devkit></devkit>
+        <checksum></checksum>
+        <version></version>
+        <build></build>
+        <target>amd64</target>
+    </ext_id>
+    <ext_info>
+        <name>Extensions to extensions</name>
+        <description>Extends search path for extensions to other domains</description>
+    </ext_info>
+    <plugins type="merge">
+        <extensions type="merge">
+            <path>wsroot://audio/extensions</path>
+        </extensions>
+    </plugins>
+</root>

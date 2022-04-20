@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Streams &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="Graphs" href="graph.html"/>
+        <link rel="next" title="Endpoints" href="graph_endpoint.html"/>
+        <link rel="prev" title="Graphs" href="graph.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Graph examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="graph.html">Graphs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="graph.html#streams">Streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#endpoints">Endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#operators">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#connections">Connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#creating-a-full-graph">Creating a full graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#kymera-graph">Kymera Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graph.html#playing-a-graph">Playing a Graph</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="graph.html#reference">Reference</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="graph_endpoint.html">Endpoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="graph_operator.html">Operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">Command-line tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+        <li><a href="graph.html">Graphs</a> &raquo;</li>
+      
+    <li>Streams</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/graph_stream.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="streams">
+<span id="graph-stream"></span><h1>Streams<a class="headerlink" href="#streams" title="Permalink to this headline">¶</a></h1>
+<p>All streams must have <code class="docutils literal notranslate"><span class="pre">interface</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code> properties defined:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">interface</span></code> selects the type of the stream.</dt><dd><ul>
+<li><p><a class="reference internal" href="#stream-kalsim-wired"><span class="std std-ref">pcm</span></a> hardware stream.</p></li>
+<li><p><a class="reference internal" href="#stream-kalsim-a2dp"><span class="std std-ref">l2cap</span></a> software stream.</p></li>
+<li><p><a class="reference internal" href="#stream-kalsim-a2dp"><span class="std std-ref">file</span></a> software stream.</p></li>
+<li><p><a class="reference internal" href="#stream-kalsim-a2dp"><span class="std std-ref">timestamped</span></a> software stream.</p></li>
+<li><p><a class="reference internal" href="#stream-kalsim-a2dp"><span class="std std-ref">tester</span></a> software stream.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code> is the stream direction, source and sink respectively.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code> for stream that pushes data into kymera</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sink</span></code> for stream that extracts data out of kymera</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="wired">
+<span id="stream-kalsim-wired"></span><h2>wired<a class="headerlink" href="#wired" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This applies to <code class="docutils literal notranslate"><span class="pre">pcm</span></code> interfaces.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>All streams are sample-based.</p></li>
+<li><p>All streams should have sample width 16 or 24.</p></li>
+<li><p>Provided source files should have only one channel and the parameter channel
+should not be used otherwise the performance penalty is very significant.</p></li>
+<li><p>When there are multiple source or sink streams, the order of creation of streams and
+the corresponding endpoints must match.
+This is for kalsim to connect appropriate streams to the corresponding endpoint.</p></li>
+<li><p>File format qwav is not supported</p></li>
+</ul>
+</div>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.hw.</code><code class="sig-name descname">StreamHw</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Hydra hw streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – <p>Type of stream</p>
+<ul>
+<li><p>”source”. Data is pushed into kymera</p></li>
+<li><p>”sink”. Data is extracted from kymera</p></li>
+</ul>
+</p></li>
+<li><p><strong>backing</strong> (<em>str</em>) – <p>Origin (for sources) or destination (for sinks) of data.
+This parameter defines what other parameters are needed.</p>
+<ul>
+<li><p>”file”. Data is backed by a file, if it is “source” is the contents to be
+streamed, if it is “sink” is the file where data will be written to.</p></li>
+<li><p>”data”. Data is coming from (“source”) or going to (“sink”) an external software
+component. This allow to have loops where a sink stream loops back to a
+source stream.</p></li>
+</ul>
+</p></li>
+<li><p><strong>device</strong> (<em>int</em>) – Mapping between stream and endpoint, being the first hw source stream
+mapped to the first hw source endpoint and so on, sources and sinks mapping is
+independent. <strong>Currently unused</strong></p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – <p>Filename to back the stream</p>
+<ul>
+<li><p>backing==”file”. Mandatory</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overridden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format,
+optional metadata and optional packet based information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – <p>Number of channels/streams in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=1).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – <p>Channel index in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=0).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – <p>Sample rate in hertzs.</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory), wav source files (optional)
+and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all sink files (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – <p>Number of bits per sample</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all file types and stream types (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – <p>Number of frames per transfer</p>
+<ul>
+<li><p>backing==”file”. Valid for all file types and stream types (optional, default=1).</p></li>
+<li><p>backing==”data”. Only used in sink streams (optional default=1).</p></li>
+</ul>
+</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – <p>Delay in seconds from start to real start.
+Indicates the delay between the stream start command and the actual start in seconds</p>
+<ul>
+<li><p>backing==”file”. Only for source streams (optional default=0.0)</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>loop</strong> (<em>int</em>) – <p>Number of times the source is played, when the source gets to end of file
+it is rewinded and replayed, only for source streams (optional default=1)</p>
+<ul>
+<li><p>backing==”file”. Available</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>callback_consume</strong> (<em>function</em><em>(</em><em>int</em><em>)</em>) – <p>Callback function when data is received</p>
+<ul>
+<li><p>backing==”file”. Unavailable</p></li>
+<li><p>backing==”data”. Only used in sink streams (mandatory) but can be set in the
+config method.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Stream pcm audio from this raw file containing a stream sampled at 8 KHz and 16 bits:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Stream pcm audio to this wav file pushing at 8 KHz and 16 bits:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;tmp/result_0.wav&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+        <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Stream pcm audio from this wav file, playing the file 3 times with 1 second silence before
+the first loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/153_Prompts_176.4_kHz_Music_Detected_8k.wav&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;loop&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="a2dp">
+<span id="stream-kalsim-a2dp"></span><h2>a2dp<a class="headerlink" href="#a2dp" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This applies to <code class="docutils literal notranslate"><span class="pre">l2cap</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamped</span></code> and <code class="docutils literal notranslate"><span class="pre">tester</span></code> interfaces.
+All those cases are particularizations of the general audio_data case
+where <code class="docutils literal notranslate"><span class="pre">device_type</span></code> does not have to be set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>All streams are packet-based.</p></li>
+<li><p>All streams should have sample width 8.</p></li>
+<li><p>kymera only consumes a2dp stream data in 2 or 4 bytes blocks (depending on type).
+This means, that a problem occurs when the last segment of the data from the stream
+is less than the block size. In case the last segment of 1 bytes arrive at
+the endpoint, Kymera would be waiting indefinitely for the next byte,
+which never arrives. This causes a hang in the graph.</p></li>
+<li><p>qwav file format is not supported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">l2cap</span></code> and <code class="docutils literal notranslate"><span class="pre">file</span></code> are big endian with block size 2 bytes. Only <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timestamped</span></code> is big endian with  block size 2 bytes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tester</span></code> is little endian with block size 4 bytes.</p></li>
+</ul>
+</div>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.audio_data.</code><code class="sig-name descname">StreamHydraAudioData</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Hydra audio data streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – <p>Type of stream</p>
+<ul>
+<li><p>”source”. Data is pushed into kymera</p></li>
+<li><p>”sink”. Data is extracted from kymera</p></li>
+</ul>
+</p></li>
+<li><p><strong>backing</strong> (<em>str</em>) – <p>Origin (for sources) or destination (for sinks) of data.
+This parameter defines what other parameters are needed.</p>
+<ul>
+<li><p>”file”. Data is backed by a file, if it is “source” is the contents to be
+streamed, if it is a “sink” is the file where data will be written to.</p></li>
+<li><p>”data”. Data is coming from (“source”) or going to (“sink) an external software
+component. This allow to have loops where a sink stream loops back to a
+source stream.</p></li>
+</ul>
+</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – <p>Filename to back the stream</p>
+<ul>
+<li><p>backing==”file”. Mandatory</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overridden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format,
+optional metadata and optional packet based information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – <p>Number of channels/streams in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=1).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – <p>Channel index in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=0).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – <p>Sample rate in hertzs.</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory), wav source files (optional)
+and all sink files (mandatory). For sources if it is 0 it means as fast as possible.</p></li>
+<li><p>backing==”data”. Unavailable.</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – <p>Number of bits per sample. Only 8 bits is recommended</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all file types and stream types (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – <p>Number of frames per transfer</p>
+<ul>
+<li><p>backing==”file”. Valid for all file types and stream types (optional, default=1).</p></li>
+<li><p>backing==”data”. Only used in sink streams (optional default=1).</p></li>
+</ul>
+</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – <p>Delay in seconds from start to real start.
+Indicates the delay between the stream start command and the actual start in seconds</p>
+<ul>
+<li><p>backing==”file”. Only for source streams (optional default=0.0)</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>loop</strong> (<em>int</em>) – <p>Number of times the source is played, when the source gets to end of file
+it is rewinded and replayed, only for source streams (optional default=1)</p>
+<ul>
+<li><p>backing==”file”. Available</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>kick_enable</strong> (<em>bool</em>) – Enables kicking the hydra audio data service every time audio is sent,
+for source streams (optional default=True)</p></li>
+<li><p><strong>device_type</strong> (<em>int</em>) – Hydra audio data service device type, for all streams
+(optional default=12 meaning l2cap/a2dp)</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Hydra audio data service tag, for all stream
+(optional default=None meaning autogenerated)</p></li>
+<li><p><strong>data_buffer_size</strong> (<em>int</em>) – Size of the buffer in the hydra audio data service,
+(optional default=1024)</p></li>
+<li><p><strong>metadata_enable</strong> (<em>bool</em>) – Metadata should be sent alongside the audio data, this metadata
+will be auto-generated if the format is not qwav or extracted from the qwav file,
+for source streams (optional default=False)</p></li>
+<li><p><strong>metadata_format</strong> (<em>str</em>) – Metadata format, “basic” or “timestamped”
+(optional, default=”basic”)</p></li>
+<li><p><strong>metadata_channel</strong> (<em>int</em>) – Metadata channel in the qwav file,
+for source qwav streams (optional default=0)</p></li>
+<li><p><strong>metadata_buffer_size</strong> (<em>int</em>) – Size of the buffer in the hydra audio data service
+(optional default=256)</p></li>
+<li><p><strong>ttp_delay</strong> (<em>int</em>) – Time to play delay in seconds for source timestamped streams,
+(optional default=0.050)</p></li>
+<li><p><strong>callback_consume</strong> (<em>function</em>) – <p>Function to be invoked when data is available</p>
+<ul>
+<li><p>backing==”file”. Unavailable</p></li>
+<li><p>backing ==”data”. Only used in sink streams (mandatory) but can be set in the
+config method.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Examples</strong></p>
+<p>Stream audio from this sbc encoded file, as fast as there is space in the hydra audio data
+service buffer, in blocks of 123 bytes.
+Sbc fle is 369 kbps bit rate and a frame size of 123 bytes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;l2cap&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/sine_800_60s_sbc1_2c_48000_16b.sbc&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s2">&quot;frame_size&quot;</span><span class="p">:</span> <span class="mi">123</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Stream audio from this sbc encoded file (which contains rtp headers), at a rate of 51 KBytes/sec
+in blocks of 136 bytes, and generate metadata in short format along side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>The bit rate that was used to generate the above file = 369000 kbps
+The equivalent bytes per second                       = 369000/8 bytes/second = 46,125 bytes/second
+The frame size of the original .sbc file              = 123 bytes
+The frame rate of the original .sbc file = 46125/123  = 375 frames/second
+The rtp header size of the resultant rtp_sbc file     = 13 bytes
+The total frame size of the resultant rtp_sbc file    = (123 + 13) bytes = 136 bytes
+The frame rate needed for the resultant rtp_sbc file  = 375 × 136 = 51000 bytes/second
+
+    {
+        &quot;interface&quot;: &quot;l2cap&quot;,
+        &quot;type&quot;: &quot;source&quot;,
+        &quot;kwargs&quot;: {
+            &quot;backing&quot;: &quot;file&quot;,
+            &quot;filename&quot;: &quot;resource/sine_2000_300s_rtp_sbc1_2c_48000_16b.sbc&quot;,
+            &quot;sample_rate&quot;: 51000,
+            &quot;sample_width&quot;: 8,
+            &quot;frame_size&quot;: 136,
+            &quot;metadata_enable&quot;: true
+        }
+    }
+</pre></div>
+</div>
+<p>Stream audio to this file, as fast as there is space in the hydra audio data service buffer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamped&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;tmp/result_slave.aac&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">48000</span><span class="p">,</span>
+        <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s2">&quot;frame_size&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Stream audio to this file, as fast as there is space in the hydra audio data
+service buffer, in blocks of 118 bytes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;tester&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;tmp/result_0.sbc&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="s2">&quot;frame_size&quot;</span><span class="p">:</span> <span class="mi">118</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="graph_endpoint.html" class="btn btn-neutral float-right" title="Endpoints" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="graph.html" class="btn btn-neutral" title="Graphs" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

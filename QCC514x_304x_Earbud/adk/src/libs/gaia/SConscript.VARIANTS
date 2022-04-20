@@ -1,0 +1,23 @@
+#
+# Compilation variants for Generic Application Interface Architecture library
+# [default]       GATT and SPP transports
+#  debug          GATT and SPP transport; verbose debugging
+#  test           GAIA library calling mocked FW traps
+#  rfcomm         GATT and RFCOMM transports
+#  rfcomm_debug   GATT and RFCOMM transports; verbose debugging
+#
+
+import os
+
+Import('l_env')
+
+l_env['VARIANTS'] += Split('debug rfcomm rfcomm_debug')
+
+if l_env['CONFIGURATION'] == 'test':
+    inc_files = Split("""message.h sink.h source.h ps.h partition.h vm.h boot.h
+                         stream.h adc.h file.h kalimba.h loader.h psu.h""")
+    l_env.Append(CPPFLAGS=" -include firmware_mock/include/".join(f))
+
+l_env['CONFIG_FLAGS']['debug'] = Split('DEBUG_GAIA DEBUG_GAIA_COMMAND DEBUG_GAIA_TRANSPORT')
+l_env['CONFIG_FLAGS']['rfcomm'] = Split('GAIA_TRANSPORT_NO_SPP GAIA_TRANSPORT_RFCOMM')
+l_env['CONFIG_FLAGS']['rfcomm_debug'] = Split('GAIA_TRANSPORT_NO_SPP GAIA_TRANSPORT_RFCOMM DEBUG_GAIA DEBUG_GAIA_COMMAND DEBUG_GAIA_TRANSPORT')

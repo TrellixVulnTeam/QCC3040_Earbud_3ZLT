@@ -1,0 +1,8 @@
+
+PlainTextFormatter
+==========================================================================
+
+This module can be imported from ``ACAT.Display.PlainTextFormatter``.
+
+.. automodule:: ACAT.Display.PlainTextFormatter
+   :members:

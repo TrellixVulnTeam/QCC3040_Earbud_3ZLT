@@ -1,0 +1,181 @@
+============
+Installation
+============
+
+Add Kymera downloadable
+-----------------------
+To use KSP in a ROM chip, the first step is to add the downloadable into
+the application's file system.
+
+For a standard ADK sink application, the user should add the required
+kymera downloadable (``download_ksp.dkcs`` or ``download_ksp.edkcs``) to
+the ``customer_ro_filesystem`` or ``ro_fs project``.
+
+The application with the new downloadable works as before, but now
+supports KSP.
+
+Downloadable KSP can normally be found in the
+**audio/kalimba_ROM_nnnn/kymera/prebuilt_dkcs** subfolder in the ADK
+installation directory.
+
+
+.. note::
+
+  KSP tool loads and instantiates the operator when needed. The user must not
+  change the application code to use KSP.
+
+
+KSP install
+-----------
+
+This section covers the manual installation of the KSP package. If using
+KSP from an ADK, refer to :ref:`access-ksp-in-an-adk-installation`.
+
+.. warning::
+
+  The installation of KSP described is using the Windows standard command
+  prompt, that is ``cmd.exe``.
+
+The tool is a Python command-line application to read KSP packets sent
+from audio subsystem, and to extract audio/data channels from sniffed
+packets.
+
+The tool establishes a client to listen and receive data and then starts
+the KSP capability on the chip to sniff and send transform buffers data.
+
+KSP works on Python 3.6 64-bit, Python 3.7 64-bit, Python 3.8 64-bit and Python
+3.9 64-bit. If it is not installed by default, install it from the
+`Python Official`_ website. Alternatively, the ADK contains a copy of its Python
+in the tools directory.
+
+.. _Python Official: https://www.python.org/downloads/
+
+.. note::
+
+  To continue with the installation, the path to the Python interpreter on
+  the host PC is required.
+
+
+Step 1: Ensure environment variables are safe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Python programs are sensitive to the contents of ``PATH`` and
+``PYTHONPATH`` environment variables. It is important to ensure these
+environment variables do not hold any references to any previous versions
+of the KSP and its dependencies.
+
+.. note::
+
+ In most cases, ``PYTHONPATH`` variable should be empty if it exists.
+ However, if it is holding any path to a python module, make sure it is
+ needed before proceeding to the next step.
+
+
+Step 2: Create a Python virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Python applications come with different requirements and in some cases
+libraries may conflict when they are installed in the same Python
+environment.
+
+To minimize installation problems, create a separate virtual environment
+for the KSP. See the ``virtualenv`` `online documentation`_ for more
+information.
+
+.. _online documentation: https://pypi.org/project/virtualenv/
+
+At the command prompt, change to a directory which becomes the working
+directory for this KSP installation, then create a virtual environment
+(called ``ksp_env`` in this example) using the following command:
+
+::
+
+ C:\<CURRENT PATH>\ <path_to_pathon>\python.exe -m venv ksp_env
+
+After the virtual environment is created, activate it using the following
+command:
+
+::
+
+ ksp_env\Scripts\activate
+
+The command prompt should look like:
+
+::
+
+ (ksp_env) <CURRENT PATH>>
+
+The virtual environment name before the command prompt shows that the
+activation was successful.
+
+
+Step 3: Install the KSP from a wheel package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download the KSP wheel package, its dependencies and use pip to install the
+package, for example:
+
+
+::
+
+     python -m pip install KSP-x.y.z-py3-none-any.whl
+
+.. note::
+  KSP depends on ``pydbg-default`` and ``trbtrans`` packages. Above command only
+  works successfully if these wheels are available in the same folder as KSP
+  wheel.
+
+
+
+This installs KSP in the activated python virtual environment.
+
+
+.. _access-ksp-in-an-adk-installation:
+
+Access KSP in an ADK Installation
+---------------------------------
+From the ADK 20.2, KSP package is available to users. To access the
+correct ``ksp`` executable, the User must activate the appropriate Python
+Virtual Environment. This environment has a mix-match libraries of the
+Toolkit and the ADK. For the convenience assume the following locations
+for the ADK and Toolkit folders. The names will be different in actual
+installations.
+
+ - ADK: ``C:\qtil\QCC_ADK\``, where the folder ``audio`` is available.
+ - Toolkit: ``C:\qtil\ADK_Toolkit\``, where the ``activate.bat`` script is
+   available.
+
+From the command line, activate the virtual environment in the Toolkit
+*from* the ADK location. It must activate the right workspace. The output
+is similar to:
+
+::
+
+  C:\qtil\QCC_ADK>C:\qtil\ADK_Toolkit\activate.bat
+  Activating workspace..
+  INFO:workspace:Installing...
+  INFO:workspace:PIP log:
+  Looking in links: c:\qtil\ADK_Toolkit\tools\python\wheels, c:\qtil\QCC_ADK\audio\.
+  Processing c:\qtil\QCC_ADK\audio\acat-1.9.5-py2.py3-none-any.whl
+  Processing c:\qtil\QCC_ADK\audio\kse-0.11.0-py2.py3-none-any.whl
+  Processing c:\qtil\ADK_TOOLKIT\tools\python\wheels\kal_python_tools-1.1.8-py2.py3-none-win_amd64.whl
+  Processing c:\qtil\QCC_ADK\audio\ksp-0.4.2-py2.py3-none-any.whl
+  Collecting ipython<8,>=5.2.2; python_version >= "3"
+    Using cached ipython-7.18.1-py3-none-any.whl (786 kB)
+  Collecting six<2,>=1.10.0
+    Using cached six-1.15.0-py2.py3-none-any.whl (10 kB)
+  Collecting jsonschema<4,>=2.6.0
+    Using cached jsonschema-3.2.0-py2.py3-none-any.whl (56 kB)
+
+    --- <snip> ---
+
+  Successfully installed ACAT-1.9.5 KSP-0.4.2 attrs-20.2.0 backcall-0.2.0 colorama-0.4.4 customer-pydbg-base-0.7.1 customer-pydbg-qcc514x-qcc304x-0.7.1 decorator-4.4.2 importlib-metadata-2.0.0 ipython-7.18.1 ipython-genutils-0.2.0 jedi-0.17.2 jsonschema-3.2.0 kal-python-tools-1.1.8 kalcmd2-2.8.2 kse-0.11.0 numpy-1.19.2 parso-0.7.1 pickleshare-0.7.5 prompt-toolkit-3.0.8 pydbg-default-1.0 pygments-2.7.1 pyreadline-2.1 pyrsistent-0.17.3 setuptools-50.3.2 six-1.15.0 traitlets-5.0.5 trbtrans-2.9.0 wcwidth-0.2.5 wrapt-1.12.1 zipp-3.3.1
+  
+
+To test whether the ``ksp`` script is accessible, run:
+  
+:: 
+
+  ATK (C:\qtil\ADK_Toolkit\) C:\qtil\QCC_ADK>ksp --version
+  Kymera Stream Probe Tool, v0.4.2
+
+.. note:: Make sure the ``ATK (C:\qtil\ADK_Toolkit\)`` text appears next
+          to the command line prompt. The output version maybe different
+          depending on the version of the KSP available in that ADK.

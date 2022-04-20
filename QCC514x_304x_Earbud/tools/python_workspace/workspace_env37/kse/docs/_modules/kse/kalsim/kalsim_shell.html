@@ -1,0 +1,837 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.kalsim_shell &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.kalsim_shell</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.kalsim_shell</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Kalsim shell&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.collection</span> <span class="k">import</span> <span class="n">json_substitute_env</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.config</span> <span class="k">import</span> <span class="n">set_config_param</span><span class="p">,</span> <span class="n">DEBUG_SESSION</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.constant</span> <span class="k">import</span> <span class="n">WORKSPACE_ENV</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.file_util</span> <span class="k">import</span> <span class="n">get_config_filename</span><span class="p">,</span> <span class="n">load</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">setup_logging</span><span class="p">,</span> <span class="n">log_input</span><span class="p">,</span> <span class="n">log_level_to_int</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.repl</span> <span class="k">import</span> <span class="n">launch_repl</span>
+<span class="kn">from</span> <span class="nn">kats.instrument.kalcmd.kalcmd</span> <span class="k">import</span> <span class="n">Kalcmd</span>
+<span class="kn">from</span> <span class="nn">kats.instrument.kalsim.kalsim</span> <span class="k">import</span> <span class="n">Kalsim</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.capability.capability_factory</span> <span class="k">import</span> <span class="n">CapabilityFactory</span> <span class="k">as</span> <span class="n">KCapFactory</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.graph.graph</span> <span class="k">import</span> <span class="n">Graph</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.kalcmd_stream</span> <span class="k">import</span> <span class="n">KalcmdStream</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.stream_factory</span> <span class="k">import</span> <span class="n">StreamFactory</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.uut.uut</span> <span class="k">import</span> <span class="n">uut_get_instance</span>
+<span class="kn">from</span> <span class="nn">kats.kymera.capability.capability_factory</span> <span class="k">import</span> <span class="n">CapabilityFactory</span>
+<span class="kn">from</span> <span class="nn">kats.kymera.endpoint.endpoint_factory</span> <span class="k">import</span> <span class="n">EndpointFactory</span>
+<span class="kn">from</span> <span class="nn">kats.kymera.kymera.kymera</span> <span class="k">import</span> <span class="n">kymera_get_instance</span>
+<span class="kn">from</span> <span class="nn">kats.library.capability</span> <span class="k">import</span> <span class="n">load_capability_file</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">register_instance</span>
+
+<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Kalsim Shell.</span>
+<span class="s2">This in an utility to debug, prototype and test interactively kalimba code running in</span>
+<span class="s2">kalsim.</span>
+<span class="s2">It does coordinate three different pieces of software, kalcmd2, kalsim and kalaccess</span>
+<span class="s2">placing a nice REPL on top of it</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">LOG_FILE_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;config/log.shell.cfg.json&#39;</span>
+<span class="n">LOG_LEVEL_DEFAULT</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARN</span>
+
+<span class="n">PLATFORM</span> <span class="o">=</span> <span class="s1">&#39;platform&#39;</span>
+<span class="n">PLATFORM_CRESCENDO</span> <span class="o">=</span> <span class="s1">&#39;crescendo&#39;</span>
+<span class="n">PLATFORM_STRE</span> <span class="o">=</span> <span class="s1">&#39;stre&#39;</span>
+<span class="n">PLATFORM_STREPLUS</span> <span class="o">=</span> <span class="s1">&#39;streplus&#39;</span>
+<span class="n">PLATFORM_MAORGEN1</span> <span class="o">=</span> <span class="s1">&#39;maorgen1&#39;</span>
+<span class="n">PLATFORM_MAOR</span> <span class="o">=</span> <span class="s1">&#39;maor&#39;</span>
+<span class="n">PLATFORM_DEFAULT</span> <span class="o">=</span> <span class="n">PLATFORM_CRESCENDO</span>
+
+<span class="n">CAPABILITY_DESCRIPTION</span> <span class="o">=</span> <span class="s1">&#39;capability_description&#39;</span>
+<span class="n">CAPABILITY_DESCRIPTION_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;config/capability.cfg.json&#39;</span>
+
+<span class="n">REPL</span> <span class="o">=</span> <span class="s1">&#39;repl&#39;</span>
+<span class="n">REPL_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;ipython&#39;</span>
+
+<span class="n">SCRIPT</span> <span class="o">=</span> <span class="s1">&#39;script&#39;</span>
+<span class="n">SCRIPT_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="n">EXIT</span> <span class="o">=</span> <span class="s1">&#39;exit&#39;</span>
+<span class="n">EXIT_DEFAULT</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">KALCMD</span> <span class="o">=</span> <span class="s1">&#39;kc&#39;</span>
+<span class="n">KALCMD_CLIENT</span> <span class="o">=</span> <span class="n">KALCMD</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;client&#39;</span>
+<span class="n">KALCMD_PORT</span> <span class="o">=</span> <span class="n">KALCMD</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;port&#39;</span>
+
+<span class="n">KALACCESS</span> <span class="o">=</span> <span class="s1">&#39;ka&#39;</span>
+<span class="n">KALACCESS_PATH</span> <span class="o">=</span> <span class="n">KALACCESS</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;path&#39;</span>
+<span class="n">KALACCESS_SKIP</span> <span class="o">=</span> <span class="n">KALACCESS</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;skip&#39;</span>
+<span class="n">KALACCESS_SUBSYSTEM</span> <span class="o">=</span> <span class="n">KALACCESS</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;subsystem&#39;</span>
+
+<span class="n">DEFAULT_KALACCESS_TRANSPORT</span> <span class="o">=</span> <span class="s1">&#39;kalsim&#39;</span>
+
+<span class="n">KALSIM</span> <span class="o">=</span> <span class="s1">&#39;ks&#39;</span>
+<span class="n">KALSIM_SKIP</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;skip&#39;</span>
+<span class="n">KALSIM_PATH</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;path&#39;</span>
+<span class="n">KALSIM_PATH_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;kalsim_crescendo_audio&#39;</span>
+<span class="n">KALSIM_FIRMWARE</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;firmware&#39;</span>
+<span class="n">KALSIM_PORT</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;port&#39;</span>
+<span class="n">KALSIM_CLIENT</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;client&#39;</span>
+<span class="n">KALSIM_VERBOSE</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;verbose&#39;</span>
+<span class="n">KALSIM_QUIET</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;quiet&#39;</span>
+<span class="n">KALSIM_DEBUG</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;debug&#39;</span>
+<span class="n">KALSIM_DEBUG_PORT</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;debug_port&#39;</span>
+<span class="n">KALSIM_TIMER_UPDATE_PERIOD</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;timer_update_period&#39;</span>
+<span class="n">KALSIM_CMDLINE_ARGS</span> <span class="o">=</span> <span class="n">KALSIM</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;cmdline_args&#39;</span>
+
+<span class="n">DEFAULT_KALSIM_DEBUG_PORT</span> <span class="o">=</span> <span class="mi">31400</span>
+
+<span class="n">ACAT</span> <span class="o">=</span> <span class="s1">&#39;acat&#39;</span>
+<span class="n">ACAT_PATH</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;path&#39;</span>
+<span class="n">ACAT_USE</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;use&#39;</span>
+<span class="n">ACAT_BUNDLE</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;bundle&#39;</span>
+<span class="n">ACAT_FIRMWARE_LOG_ENABLE</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;firmware_log_enable&#39;</span>
+<span class="n">ACAT_FIRMWARE_LOG_LEVEL</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;firmware_log_level&#39;</span>
+<span class="n">ACAT_FIRMWARE_LOG_TIMER_UPDATE_PERIOD</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;firmware_log_timer_update_period&#39;</span>
+<span class="n">ACAT_ANALYSES</span> <span class="o">=</span> <span class="n">ACAT</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;analyses&#39;</span>
+<span class="c1"># ACAT_DUAL_CORE = ACAT + &#39;_&#39; + &#39;dual_core&#39;</span>
+
+<span class="n">HYDRA_FTP_SERVER</span> <span class="o">=</span> <span class="s1">&#39;hydra_ftp_server&#39;</span>
+<span class="n">HYDRA_FTP_SERVER_SKIP</span> <span class="o">=</span> <span class="n">HYDRA_FTP_SERVER</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;skip&#39;</span>
+<span class="n">HYDRA_FTP_SERVER_DIRECTORY</span> <span class="o">=</span> <span class="n">HYDRA_FTP_SERVER</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;directory&#39;</span>
+<span class="n">HYDRA_FTP_SERVER_PREFIX</span> <span class="o">=</span> <span class="n">HYDRA_FTP_SERVER</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;prefix&#39;</span>
+
+<span class="n">PSTORE</span> <span class="o">=</span> <span class="s1">&#39;pstore&#39;</span>
+<span class="n">PSTORE_USE</span> <span class="o">=</span> <span class="n">PSTORE</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;use&#39;</span>
+<span class="n">PSTORE_FILENAME</span> <span class="o">=</span> <span class="n">PSTORE</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;filename&#39;</span>
+
+<span class="n">LICENSE_MANAGER</span> <span class="o">=</span> <span class="s1">&#39;license_manager&#39;</span>
+<span class="n">LICENSE_MANAGER_USE</span> <span class="o">=</span> <span class="n">LICENSE_MANAGER</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;use&#39;</span>
+<span class="n">LICENSE_MANAGER_FILENAME</span> <span class="o">=</span> <span class="n">LICENSE_MANAGER</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="s1">&#39;filename&#39;</span>
+
+<span class="n">CONFIG_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="n">OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># type, default value, argparse action, multiple parameters description</span>
+    <span class="n">KALCMD_CLIENT</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="sd">&quot;&quot;&quot;if set kalcmd acts as client in reference to kalsim,</span>
+<span class="sd">                    the parameter %s should be set to non priviledged port (above 1023)</span>
+<span class="sd">                    otherwise kalcmd is a server&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD_PORT</span><span class="p">)),</span>
+    <span class="n">KALCMD_PORT</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                  <span class="sd">&quot;&quot;&quot;kalcmd port for kalsim connections,</span>
+<span class="sd">                  if %s is not set, 0 is a valid value which means any free port,</span>
+<span class="sd">                  if kc_client is set then an available port should be set&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">KALCMD_CLIENT</span><span class="p">)),</span>
+
+    <span class="n">KALACCESS_PATH</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                     <span class="sd">&quot;&quot;&quot;if set kalaccess will be used from here, if not it should be installed as a</span>
+<span class="sd">                     package&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">KALACCESS_SKIP</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                     <span class="sd">&quot;&quot;&quot;for kalaccess to be connected, kalsim has to be started in debug mode</span>
+<span class="sd">                     (see below) and this flag should not be set,</span>
+<span class="sd">                     if kalsim is started in debug mode and kalaccess is skipped then an external</span>
+<span class="sd">                     kalaccess should be connected and a run issued for the initialisation phase</span>
+<span class="sd">                     to complete&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">KALACCESS_SUBSYSTEM</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;kalaccess subsystem for connect&#39;</span><span class="p">),</span>
+
+    <span class="n">KALSIM_SKIP</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                  <span class="sd">&quot;&quot;&quot;if set kalsim binary will not be started and no other kalsim parameter</span>
+<span class="sd">                    will be used, kalcmd will try to connect to an existing kalsim process,</span>
+<span class="sd">                    for this to work %s should not be 0</span>
+<span class="sd">                    otherwise kalsim will be executed&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">KALSIM_PATH</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">KALSIM_PATH_DEFAULT</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                  <span class="s1">&#39;kalsim binary path&#39;</span><span class="p">),</span>
+    <span class="n">KALSIM_FIRMWARE</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;firmware/kalsim/crescendo/kymera_crescendo_audio&#39;</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                      <span class="s1">&#39;kymera binary path without extension, it is used in acat as well&#39;</span><span class="p">),</span>
+    <span class="n">KALSIM_VERBOSE</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;kalsim enable verbose mode&#39;</span><span class="p">),</span>
+    <span class="n">KALSIM_QUIET</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;kalsim enable quiet mode&#39;</span><span class="p">),</span>
+    <span class="n">KALSIM_DEBUG</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="s1">&#39;kalsim enable debug, valid kalaccess parameters should be provided&#39;</span><span class="p">),</span>
+    <span class="n">KALSIM_DEBUG_PORT</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">DEFAULT_KALSIM_DEBUG_PORT</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="sd">&quot;&quot;&quot;kalsim will open debugger using this port, valid port and valid kalaccess</span>
+<span class="sd">                        parameters must be provided&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">KALSIM_TIMER_UPDATE_PERIOD</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;kalsim timer simulation accuracy&#39;</span><span class="p">),</span>
+    <span class="n">KALSIM_CMDLINE_ARGS</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;--disable-dots&#39;</span><span class="p">],</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span>
+                          <span class="sd">&quot;&quot;&quot;kalsim extra command line arguments,</span>
+<span class="sd">                          please surround every parameter with &#39;&#39; and add a leading space</span>
+<span class="sd">                          as in &#39; --param&#39;&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ACAT_PATH</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="sd">&quot;&quot;&quot;if set ACAT will be used from here, if not it should be installed as a</span>
+<span class="sd">                package&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ACAT_USE</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+               <span class="sd">&quot;&quot;&quot;if set ACAT will be started, for this to work %s should be set&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                   <span class="n">KALSIM_DEBUG</span><span class="p">)),</span>
+    <span class="n">ACAT_BUNDLE</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[],</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span>
+                  <span class="sd">&quot;&quot;&quot;ACAT bundle file/s, additional firmware files to be loaded besides main</span>
+<span class="sd">                  firmware&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ACAT_FIRMWARE_LOG_ENABLE</span><span class="p">:</span> <span class="p">(</span>
+        <span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;if set ACAT firmware log is enabled&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ACAT_FIRMWARE_LOG_LEVEL</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;firmware log level&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ACAT_FIRMWARE_LOG_TIMER_UPDATE_PERIOD</span><span class="p">:</span> <span class="p">(</span>
+        <span class="nb">float</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;firmware log polling time in seconds&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">ACAT_ANALYSES</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[],</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="sd">&quot;&quot;&quot;ACAT analyses to load, empty for all&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="c1"># ACAT_DUAL_CORE: (</span>
+    <span class="c1">#    bool, False, &#39;store_true&#39;, False, &quot;&quot;&quot;if set ACAT dual core is enabled&quot;&quot;&quot;),</span>
+    <span class="n">HYDRA_FTP_SERVER_SKIP</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                            <span class="sd">&quot;&quot;&quot;if set Hydra FTP server will not be started.&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">HYDRA_FTP_SERVER_DIRECTORY</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;firmware/kalsim/crescendo&#39;</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                                 <span class="sd">&quot;&quot;&quot;hydra ftp server directory.&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">HYDRA_FTP_SERVER_PREFIX</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                              <span class="sd">&quot;&quot;&quot;hydra ftp server filename prefix.&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">PSTORE_USE</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="sd">&quot;&quot;&quot;if set PStore will be started.&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">PSTORE_FILENAME</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;config/pstore.cfg.json&#39;</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                      <span class="sd">&quot;&quot;&quot;PStore filename.&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">LICENSE_MANAGER_USE</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                          <span class="sd">&quot;&quot;&quot;if set License Manager will be started.&quot;&quot;&quot;</span><span class="p">),</span>
+    <span class="n">LICENSE_MANAGER_FILENAME</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;config/license.cfg.json&#39;</span><span class="p">,</span> <span class="s1">&#39;store&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="sd">&quot;&quot;&quot;License Manager config filename.&quot;&quot;&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">KALCMD_LOCK_TIMEOUT_DEBUG</span> <span class="o">=</span> <span class="mi">3600</span>
+<span class="n">UUT_MESSAGE_RECEIVE_TIMEOUT_DEBUG</span> <span class="o">=</span> <span class="mi">3600</span>
+<span class="n">ENDPOINT_PATH</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;kats.kalsim.endpoint&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="KalsimShell"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.KalsimShell">[docs]</a><span class="k">class</span> <span class="nc">KalsimShell</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Kalsim shell</span>
+
+<span class="sd">    This basically initialises a kalsim/kalcmd/kalaccess environment with multiple options,</span>
+<span class="sd">    then instantiates some middleware libraries and invokes a repl to let the user</span>
+<span class="sd">    send commands interactively</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        repl (str): Read Evaluate Print Loop tool</span>
+<span class="sd">        platform (str): Chip platform</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">repl</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">REPL</span><span class="p">,</span> <span class="n">REPL_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">PLATFORM</span><span class="p">,</span> <span class="n">PLATFORM_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">capability_description</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CAPABILITY_DESCRIPTION</span><span class="p">,</span>
+                                                        <span class="n">CAPABILITY_DESCRIPTION_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_DEBUG</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_DEBUG</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug_port</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_DEBUG_PORT</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_DEBUG_PORT</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALCMD_CLIENT</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALCMD_CLIENT</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALCMD_PORT</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALCMD_PORT</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALACCESS_PATH</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALACCESS_PATH</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_skip</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALACCESS_SKIP</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALACCESS_SKIP</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalsim_skip</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_SKIP</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_SKIP</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_PATH</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_PATH</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_use</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_USE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_USE</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_bundle</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_BUNDLE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_BUNDLE</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_enable</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_FIRMWARE_LOG_ENABLE</span><span class="p">,</span>
+                                                          <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_FIRMWARE_LOG_ENABLE</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_level</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_FIRMWARE_LOG_LEVEL</span><span class="p">,</span>
+                                                         <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_FIRMWARE_LOG_LEVEL</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_timer_update_period</span> <span class="o">=</span> \
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_FIRMWARE_LOG_TIMER_UPDATE_PERIOD</span><span class="p">,</span>
+                       <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_FIRMWARE_LOG_TIMER_UPDATE_PERIOD</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_analyses</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ACAT_ANALYSES</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">ACAT_ANALYSES</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># self._param.acat_dual_core = kwargs.pop(ACAT_DUAL_CORE, OPTIONS[ACAT_DUAL_CORE][1])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">script</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SCRIPT</span><span class="p">,</span> <span class="n">SCRIPT_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">exit</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">EXIT</span><span class="p">,</span> <span class="n">EXIT_DEFAULT</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">hydra_ftp_server_skip</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">HYDRA_FTP_SERVER_SKIP</span><span class="p">,</span>
+                                                       <span class="n">OPTIONS</span><span class="p">[</span><span class="n">HYDRA_FTP_SERVER_SKIP</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">hydra_ftp_server_directory</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">HYDRA_FTP_SERVER_DIRECTORY</span><span class="p">,</span>
+                                                            <span class="n">OPTIONS</span><span class="p">[</span><span class="n">HYDRA_FTP_SERVER_DIRECTORY</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">hydra_ftp_server_prefix</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">HYDRA_FTP_SERVER_PREFIX</span><span class="p">,</span>
+                                                         <span class="n">OPTIONS</span><span class="p">[</span><span class="n">HYDRA_FTP_SERVER_PREFIX</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">pstore_use</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">PSTORE_USE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">PSTORE_USE</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">pstore_filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">PSTORE_FILENAME</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">PSTORE_FILENAME</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">license_manager_use</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+            <span class="n">LICENSE_MANAGER_USE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">LICENSE_MANAGER_USE</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">license_manager_filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+            <span class="n">LICENSE_MANAGER_FILENAME</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">LICENSE_MANAGER_FILENAME</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+
+        <span class="c1"># initialise kalcmd instrument parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalcmd</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;server&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">server</span><span class="p">,</span>
+            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># initialise kalaccess instrument parameters (if it is enabled)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_skip</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;transport&#39;</span><span class="p">:</span> <span class="n">DEFAULT_KALACCESS_TRANSPORT</span><span class="p">,</span>
+                <span class="s1">&#39;subsystem&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALACCESS_SUBSYSTEM</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALACCESS_SUBSYSTEM</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug_port</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_path</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_path</span>
+
+        <span class="c1"># initialise kalsim instrument parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalsim_skip</span><span class="p">:</span>
+            <span class="n">cmd_args</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_CMDLINE_ARGS</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_CMDLINE_ARGS</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">timer_update_period</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_TIMER_UPDATE_PERIOD</span><span class="p">,</span>
+                                             <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_TIMER_UPDATE_PERIOD</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">timer_update_period</span><span class="p">:</span>
+                <span class="n">cmd_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--timer-update-period&#39;</span><span class="p">)</span>
+                <span class="n">cmd_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">timer_update_period</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_PATH</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_PATH</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;firmware&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">KALSIM_FIRMWARE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_FIRMWARE</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                <span class="s1">&#39;client&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">server</span><span class="p">,</span>
+                <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_VERBOSE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_VERBOSE</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;quiet&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">KALSIM_QUIET</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_QUIET</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;debug&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
+                <span class="s1">&#39;debug_port&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug_port</span><span class="p">,</span>
+                <span class="s1">&#39;cmdline_args&#39;</span><span class="p">:</span> <span class="n">cmd_args</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="c1"># initialise acat instrument parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_use</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;transport&#39;</span><span class="p">:</span> <span class="n">DEFAULT_KALACCESS_TRANSPORT</span><span class="p">,</span>
+                <span class="s1">&#39;firmware&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">KALSIM_FIRMWARE</span><span class="p">,</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">KALSIM_FIRMWARE</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;interactive&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_path</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_path</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_path</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;kal_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_path</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_bundle</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;bundle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_bundle</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_enable</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;firmware_log_enable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_enable</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_enable</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;firmware_log_level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_level</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;firmware_log_timer_update_period&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_firmware_log_timer_update_period</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_analyses</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">[</span><span class="s1">&#39;analyses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">acat_analyses</span>
+            <span class="c1"># if self._param.acat_dual_core:</span>
+            <span class="c1">#    self._config.acat[&#39;dual_core&#39;] = self._param.acat_dual_core</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">capability</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kcapability</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="KalsimShell.initialise"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.KalsimShell.initialise">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">initialise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialise kalsim shell environment</span>
+
+<span class="sd">        This includes launching the selected combination of kalcmd, kalsim and kalaccess</span>
+<span class="sd">        components and starting several middleware components as uut, stream, kymera, endpoint</span>
+<span class="sd">        and capability handlers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initialising&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="n">set_config_param</span><span class="p">(</span><span class="s1">&#39;KALCMD_LOCK_TIMEOUT&#39;</span><span class="p">,</span> <span class="n">KALCMD_LOCK_TIMEOUT_DEBUG</span><span class="p">)</span>
+            <span class="n">set_config_param</span><span class="p">(</span><span class="s1">&#39;UUT_MESSAGE_RECEIVE_TIMEOUT&#39;</span><span class="p">,</span> <span class="n">UUT_MESSAGE_RECEIVE_TIMEOUT_DEBUG</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">DEBUG_SESSION</span><span class="p">:</span>
+            <span class="n">set_config_param</span><span class="p">(</span><span class="s1">&#39;UUT_MESSAGE_RECEIVE_TIMEOUT&#39;</span><span class="p">,</span> <span class="n">UUT_MESSAGE_RECEIVE_TIMEOUT_DEBUG</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalsim</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span> <span class="o">=</span> <span class="n">Kalsim</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalsim</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">kats.instrument.kalaccess.kalaccess</span> <span class="k">import</span> <span class="n">Kalaccess</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span> <span class="o">=</span> <span class="n">Kalaccess</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span> <span class="o">=</span> <span class="n">Kalcmd</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;kalcmd&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">kalaccess_skip</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initialisation will not be completed until an external kalaccess session is &#39;</span>
+                  <span class="s1">&#39;connected and run issued&#39;</span><span class="p">)</span>
+
+        <span class="c1"># kalcmd is smart enough to spawn kalsim and kalaccess in its connect method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Kalcmd connected to a </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="o">.</span><span class="n">get_kalimba_name</span><span class="p">()))</span>
+
+        <span class="n">cap</span> <span class="o">=</span> <span class="n">load_capability_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">capability_description</span><span class="p">)</span>
+        <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;capability_description&#39;</span><span class="p">,</span> <span class="n">cap</span><span class="p">)</span>
+
+        <span class="c1"># load all the middleware that will be available in the repl</span>
+        <span class="n">platforms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">,</span> <span class="s1">&#39;kalsim&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">platform</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="n">uut_get_instance</span><span class="p">(</span><span class="n">platforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;uut&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">uut</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kalcmd_stream</span> <span class="o">=</span> <span class="n">KalcmdStream</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;kalcmd_stream&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kalcmd_stream</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">StreamFactory</span><span class="p">(</span><span class="n">platforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">)</span>
+        <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span> <span class="o">=</span> <span class="n">kymera_get_instance</span><span class="p">(</span><span class="n">platforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">uut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="n">EndpointFactory</span><span class="p">(</span><span class="n">platforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span><span class="p">,</span> <span class="n">ENDPOINT_PATH</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">capability</span> <span class="o">=</span> <span class="n">CapabilityFactory</span><span class="p">(</span><span class="n">platforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kcapability</span> <span class="o">=</span> <span class="n">KCapFactory</span><span class="p">(</span><span class="n">platforms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">capability</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kcapability</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span><span class="p">,</span>
+                                  <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">platform</span> <span class="ow">in</span> <span class="p">[</span><span class="n">PLATFORM_CRESCENDO</span><span class="p">,</span> <span class="n">PLATFORM_STRE</span><span class="p">,</span> <span class="n">PLATFORM_STREPLUS</span><span class="p">,</span>
+                                    <span class="n">PLATFORM_MAORGEN1</span><span class="p">,</span> <span class="n">PLATFORM_MAOR</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">accmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span><span class="o">.</span><span class="n">_accmd</span>  <span class="c1"># pylint: disable = protected-access</span>
+            <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;accmd&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">accmd</span><span class="p">)</span>
+
+            <span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.protocol</span> <span class="k">import</span> <span class="n">HydraProtocol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_protocol</span> <span class="o">=</span> <span class="n">HydraProtocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">uut</span><span class="p">)</span>
+            <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="p">)</span>
+
+            <span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.download_service</span> <span class="k">import</span> <span class="n">HydraCapabilityDownloadService</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_cap_download</span> <span class="o">=</span> <span class="n">HydraCapabilityDownloadService</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">accmd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="p">,</span>
+                <span class="n">service_tag</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+            <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;hydra_cap_download&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_cap_download</span><span class="p">)</span>
+
+            <span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.file_manager_service</span> <span class="k">import</span> <span class="n">HydraFileManagerService</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_file_manager</span> <span class="o">=</span> <span class="n">HydraFileManagerService</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">accmd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="p">,</span>
+                <span class="n">service_tag</span><span class="o">=</span><span class="mi">1001</span><span class="p">)</span>
+            <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;hydra_file_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_file_manager</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">license_manager_use</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">kats.kalsim.component.license_manager</span> <span class="k">import</span> <span class="n">LicenseManager</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">license_manager_filename</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">license_manager</span> <span class="o">=</span> <span class="n">LicenseManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;license_manager&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">license_manager</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">hydra_ftp_server_skip</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">kats.kalsim.component.hydra_ftp_server</span> <span class="k">import</span> <span class="n">HydraFtpServer</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;directory&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">hydra_ftp_server_directory</span><span class="p">,</span>
+                    <span class="s1">&#39;prefix&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">hydra_ftp_server_prefix</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_ftp_server</span> <span class="o">=</span> <span class="n">HydraFtpServer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_protocol</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;hydra_ftp_server&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">hydra_ftp_server</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">pstore_use</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">kats.kalsim.component.pstore</span> <span class="k">import</span> <span class="n">PStore</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">pstore_filename</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">ps_store</span> <span class="o">=</span> <span class="n">PStore</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">register_instance</span><span class="p">(</span><span class="s1">&#39;pstore&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">ps_store</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">kats.instrument.acat.acat</span> <span class="k">import</span> <span class="n">Acat</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span> <span class="o">=</span> <span class="n">Acat</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;uut&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">uut</span><span class="p">,</span>
+            <span class="s1">&#39;kymera&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kymera</span><span class="p">,</span>
+            <span class="s1">&#39;endpoint&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span>
+            <span class="s1">&#39;capability&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">capability</span><span class="p">,</span>
+            <span class="s1">&#39;kcapability&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">kcapability</span><span class="p">,</span>
+            <span class="s1">&#39;stream&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">stream</span><span class="p">,</span>
+            <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span>
+            <span class="s1">&#39;kalcmd&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">,</span>
+            <span class="s1">&#39;reset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">,</span>
+            <span class="s1">&#39;khelp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">help</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">[</span><span class="s1">&#39;kal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="o">.</span><span class="n">get_kal_access</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">[</span><span class="s1">&#39;acat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span><span class="o">.</span><span class="n">get_session</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">[</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="p">)[</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hydra_cap_download&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">[</span><span class="s1">&#39;hydra_cap_download&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="p">)[</span><span class="s1">&#39;hydra_cap_download&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hydra_file_manager&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">[</span><span class="s1">&#39;hydra_file_manager&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="p">)[</span><span class="s1">&#39;hydra_file_manager&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="KalsimShell.run"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.KalsimShell.run">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Executing shell&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">script</span><span class="p">:</span>
+            <span class="n">old</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+            <span class="k">for</span> <span class="n">script</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">script</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Executing </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span>
+                <span class="n">nspace</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">)</span>
+                <span class="n">nspace</span><span class="p">[</span><span class="s1">&#39;__name__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;__main__&#39;</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">params</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+                    <span class="n">exec</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">nspace</span><span class="p">)</span>  <span class="c1"># pylint: disable=exec-used</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">old</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">exit</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exit requested&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;khelp() to obtain help&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Launching repl </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">repl</span><span class="p">))</span>
+            <span class="n">launch_repl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_param</span><span class="o">.</span><span class="n">repl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">)</span>  <span class="c1"># , show_prompt=False)</span></div>
+
+<div class="viewcode-block" id="KalsimShell.help"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.KalsimShell.help">[docs]</a>    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display a help screen&quot;&quot;&quot;</span>
+        <span class="n">instance_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;uut&#39;</span><span class="p">,</span> <span class="s1">&#39;unit under test abstraction&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;kymera&#39;</span><span class="p">,</span> <span class="s1">&#39;kymera internal api&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;endpoint&#39;</span><span class="p">,</span> <span class="s1">&#39;endpoint factory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;capability&#39;</span><span class="p">,</span> <span class="s1">&#39;capability factory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;kcapability&#39;</span><span class="p">,</span> <span class="s1">&#39;kcapability factory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="s1">&#39;stream factory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span> <span class="s1">&#39;graph helper&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;kalcmd&#39;</span><span class="p">,</span> <span class="s1">&#39;kalcmd interface to kalcmd2/kalsim&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;kal&#39;</span><span class="p">,</span> <span class="s1">&#39;kalimba access python tools&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;acat&#39;</span><span class="p">,</span> <span class="s1">&#39;Audio Coredump Analysis Tool&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">,</span> <span class="s1">&#39;hydra protocol&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;hydra_cap_download&#39;</span><span class="p">,</span> <span class="s1">&#39;hydra capability download&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;hydra_file_manager&#39;</span><span class="p">,</span> <span class="s1">&#39;hydra file manager&#39;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This is in interactive session in a REPL&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Instances added to the execution environment are:&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">instance_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">%-20s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Commands added to the execution environment are:&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  reset() to restart the session&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KalsimShell.reset"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.KalsimShell.reset">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disconnect kalsim, kalcmd and kalaccess and recrete the connetions&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resetting&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clean_up</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalsim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalaccess</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">acat</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KalsimShell.clean_up"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.KalsimShell.clean_up">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disconnect kalsim, kalcmd and kalaccess&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">acat</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_instr</span><span class="o">.</span><span class="n">kalcmd</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint:disable=broad-except</span>
+                <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="create_argparser"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.create_argparser">[docs]</a><span class="k">def</span> <span class="nf">create_argparser</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse command line arguments</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        description (str): Parser description</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        argparse.ArgumentParser: Argument parser</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+                                     <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">CONFIG_DEFAULT</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Configuration file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="s1">&#39;--log&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">LOG_FILE_DEFAULT</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Log configuration file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--log_level&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;LEVEL&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">LOG_LEVEL_DEFAULT</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Log level&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--repl&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">REPL_DEFAULT</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Read Eval Print Loop tool&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--hide_prompt&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Do not display prompt&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--platform&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">PLATFORM_DEFAULT</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Chip platform&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--capability_description&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">CAPABILITY_DESCRIPTION_DEFAULT</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Configuration file with description of capabilities&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--script&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Script to execute after kalsim connect. For script arguments enclose</span>
+<span class="s2">                         it with &quot;&quot; as --script &quot;script1.py arg1&quot; &quot;script2.py arg1 arg2</span><span class="se">\&quot;</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--exit&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Exit after connection&#39;</span><span class="p">)</span>
+
+    <span class="c1"># command line arguments are described in the OPTIONS dict</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">OPTIONS</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">entry</span><span class="p">]</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">4</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;store_true&#39;</span> <span class="ow">and</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;store_false&#39;</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;store&#39;</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;metavar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;VAL&#39;</span>
+
+        <span class="k">if</span> <span class="n">OPTIONS</span><span class="p">[</span><span class="n">entry</span><span class="p">][</span><span class="mi">3</span><span class="p">]:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nargs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;+&#39;</span>
+
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># inject config file defaults if defined</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">get_config_filename</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../kse.kalsim.html#kse.kalsim.kalsim_shell.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Script entry point&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">create_argparser</span><span class="p">(</span><span class="n">DESCRIPTION</span><span class="p">)</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="n">log_level_to_int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">ks_cmdline_args</span><span class="p">):</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">ks_cmdline_args</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39; &quot;</span><span class="p">)</span>
+
+    <span class="c1"># if KATS_WORKSPACE is defined then we change our current directory to point there</span>
+    <span class="n">workspace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">WORKSPACE_ENV</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">workspace</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> environmental variable not defined running from local directory&#39;</span> <span class="o">%</span>
+              <span class="p">(</span><span class="n">WORKSPACE_ENV</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;workspace set to </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">workspace</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">workspace</span><span class="p">)</span>
+
+    <span class="c1"># load log configuration file</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json_substitute_env</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">setup_logging</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">)</span>
+
+    <span class="c1"># proceed with the shell</span>
+    <span class="n">shell</span> <span class="o">=</span> <span class="n">KalsimShell</span><span class="p">(</span><span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">shell</span><span class="o">.</span><span class="n">initialise</span><span class="p">()</span>
+        <span class="n">shell</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">shell</span><span class="o">.</span><span class="n">clean_up</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

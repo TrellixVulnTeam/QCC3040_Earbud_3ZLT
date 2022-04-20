@@ -1,0 +1,369 @@
+"""
+Copyright (c) 2019 - 2021 Qualcomm Technologies International, Ltd.
+
+Core build script
+"""
+
+from __future__ import print_function
+import os
+import re
+import sys
+import fnmatch
+import logging
+import subprocess
+
+# External package imports
+from SConsVariants import basic_config, get_variants
+
+# Uncomment the following to get debug info printed from basic_config
+#logging.getLogger().setLevel(logging.DEBUG)
+
+# Dedicated command spawning process to avoid passing long command lines to
+# Windows shell
+def spawn(shell, escape, cmd, args, env):
+    # Handle output redirection
+    if '>' in args:
+        index = args.index('>')
+        if len(args) < index + 1:
+            print('Redirection target missing in {}'.format(' '.join(args)))
+            Exit(1)
+        outfile = args[index + 1].strip('"')
+        args[index] = ''
+        args[index+1] = ''
+    else:
+        outfile = None
+
+    # Reconstruct the command line from args list
+    process = subprocess.Popen(' '.join(args),
+                               stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               env = env)
+    stdout, stderr = process.communicate()
+    status = process.returncode
+    if outfile:
+        with open(outfile, 'wb') as output:
+            output.write(stdout)
+    else:
+        sys.stdout.buffer.write(stdout)
+    if status:
+        sys.stdout.buffer.write(b"=====\n" + stderr + b"=====\n")
+
+    return status
+
+def dos2unix(src):
+    """ Convert DOS style pathnames to the Unix style preferred by Make """
+    dst = src.split()
+    dst = [os.path.expandvars(f) for f in dst]
+    dst = [os.path.normpath(f) for f in dst]
+    dst = [os.path.splitdrive(f)[1] for f in dst]
+    dst = ' '.join(dst).replace('\\', '/')
+
+    return dst
+
+def translate(target_dir, source_dir, filename):
+    """ Return the filename translated from the source folder to the target
+        folder. Useful to convert source files according to VariantDir().
+        Requires that the target and source folder names have already been
+        passed through dos2unix()
+    """
+    return dos2unix(os.path.abspath(filename)).replace(source_dir, target_dir, 1)
+
+def load_project(filename):
+    """ Load in a project file and extract the configuration variables """
+
+    # Import project file parser
+    import maker.parse_proj_file as pproj
+
+    # Setup return variable
+    project = {'PROJECT': filename}
+    project['PROJECT_DIR'] = os.path.dirname(filename)
+
+    # Change to the project folder (project source files are listed relative
+    # to this in the project file)
+    os.chdir(project['PROJECT_DIR'])
+
+    # Read in the project file
+    print('Loading project file {}'.format(filename))
+    proj = pproj.Project(filename, env['TOOLS_ROOT'], env['WORKSPACE'])
+
+    # Store the project name
+    project['PROJECT_NAME'] = proj.proj_projname
+
+    # Find which configuration to use. Use the value supplied on the command
+    # line if present, otherwise pick the configuration marked as 'default'
+    # in the project file, failing that use the first configuration listed.
+    project['CONFIG'] = env.get('CONFIG')
+    if not project['CONFIG']:
+        for c in proj.get_configurations():
+            options = proj.get_attributes_from_config(c).get('options')
+            if options and 'default' in options:
+                project['CONFIG'] = c
+                break
+        else:
+            project['CONFIG'] = proj.get_configurations()[0]
+
+    # Store project configuration options
+    tgt_config = project['CONFIG']
+    project['config_options'] = proj.get_attributes_from_config(tgt_config).get('options')
+
+    # Extract properties from the project file
+    project['source_files'] = proj.get_source_files()
+    make_vars = proj.get_make_vars(tgt_config)
+
+    # Prepare Makefile variables
+    # Catch OUTDIR not defined *or* empty string
+    if not make_vars.get('OUTDIR'):
+        make_vars['OUTDIR'] = proj.proj_dirname
+
+    # Catch OUTPUT not defined *or* empty string
+    if not make_vars.get('OUTPUT'):
+        make_vars['OUTPUT'] = proj.proj_projname
+
+    # Store project configuration folder
+    project['per_config_depend'] = 'depend_%s_%s' % (tgt_config, make_vars.get('CHIP_TYPE', 'none'))
+
+    # Update BUILDOUTPUT_PATH with project specific details if required
+    make_vars['BUILDOUTPUT_PATH'] = env['BUILDOUTPUT_PATH']
+    if make_vars['BUILDOUTPUT_PATH']:
+        if make_vars.get('SUBSYSTEM_NAME', '') != 'audio':
+            make_vars['BUILDOUTPUT_PATH'] += '/' + proj.proj_projname
+        make_vars['BUILDOUTPUT_PATH'] = os.path.abspath(make_vars['BUILDOUTPUT_PATH'])
+
+    # Convert filenames to Unix style for consistency (and some build
+    # tools do not accept Windows-style pathnames)
+    for var in ['BUILDOUTPUT_PATH', 'BUILD_ID', 'FLASH_CONFIG', 'INCPATHS',
+                'LIBPATHS', 'LIBS', 'OUTDIR', 'PRESERVED_LIBS']:
+        make_vars[var] = dos2unix(make_vars[var])
+
+    for var in sorted(make_vars.keys()):
+        val = make_vars[var].strip()
+        if val:
+            project[var] = val
+
+    return project
+
+def get_make_jobs():
+    """ Get number of make jobs to use for the build
+
+        Some older laptops with just 2 real cores can literally freeze when make uses too many jobs.
+        Empirical testing shows that using half of the "cpu_count" (which includes virtual cores)
+        keeps the older laptops usable while building without adding significant time to the build
+        On newer faster laptops "cpu_count - 1" keeps the builds faster and the laptop responsive
+    """
+    import multiprocessing
+    cpu_count = multiprocessing.cpu_count()
+    if cpu_count == 1:
+        return 1
+    elif cpu_count <= 4:
+        return cpu_count // 2
+    else:
+        return cpu_count - 1
+
+def get_crypto_key(project):
+    """
+    Search all HTF files in a project for a crypto key.
+    :param project: Project environment
+    :return: the crypto key needed to encrypt the PS storage, or None
+    """
+
+    try:
+        filesystem_type = project['TYPE']
+    except KeyError as excep:
+        print("ERROR! Build Setting %s missing." % excep)
+        return None
+
+    if filesystem_type in ("firmware_config", "curator_config",
+                           "device_config", "user_ps"):
+        htf_files = fnmatch.filter(project['source_files'], '*.htf')
+        for file in htf_files:
+            with open(file, 'r') as htf_file:
+                for line in htf_file:
+                    # Do not consider the key or anything else which is
+                    # commented out
+                    line = re.sub("#.*$", "", line)
+                    if "PsAesKey" in line:
+                        # PsAesKey = [ 00 2f 00 80 00 00 00 00 00 00 00 00 00 00 00 10]
+                        # after splitting ['PsAesKey ', ' [ 00 2f 00 80 00 00 00 00 00 00 00 00 00 00 00 10]']
+                        crypto_key = line.split("=")[-1:]
+
+                        # removing  "[ ]" and extra spaces
+                        crypto_key = crypto_key[0].replace("[","").replace("]","").replace(" ","")
+
+                        # creating 16 elements, each octet long this is what P0 expects
+                        # e.g. [0, 47, 0, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16]
+                        crypto_key = [int(crypto_key[i:i+2],16) for i in range(0,len(crypto_key),2)]
+
+                        return crypto_key
+
+    return None
+
+
+def get_flash_config(project):
+    """
+    Search all a project for a flash configuration file.
+    :param project: Project environment
+    :return: the flash configuration file, or None
+    """
+
+    # List the configs that _search_project_for_flash_config_file is not interested in
+    _excludedConfigs=["prebuilt_image", "filesystem", "makefile_project"]
+
+    if project['CONFIG'] not in _excludedConfigs:
+        if project.get('DBG_CORE') == 'app/p1':
+            flash_config = project.get('FLASH_CONFIG')
+            if flash_config:
+                return dos2unix(project['PROJECT_DIR'] + '/' + flash_config)
+
+    return None
+
+
+# Extract command line options
+AddOption('--verbose', action='store_true',
+          help='Provide more verbose output')
+AddOption('--trace_enabled', action='store_true', default=False,
+          help='Enable debug trace')
+AddOption('--xml_output', action='store_true', default=False,
+          help='Wrap output in XML tags')
+verbose = GetOption('verbose')
+
+vars = Variables(None, ARGUMENTS)
+
+# Check for the --file option and recommend --directory instead. The build
+# system expects to be run from the same folder as this file, so if we're
+# explicitly referencing this file it's probably a mistake since it implies
+# we've run SCons from another folder, unless the current directory is also
+# explicitly set.
+if GetOption('file') and not GetOption('directory'):
+    print('--file (-f) option detected, did you mean --directory (-C)?')
+
+# Define configuration variables
+default_KEY_FILE = os.environ.get('QCC3042_KEY_FILE')
+default_TOOLS_ROOT = os.path.dirname(os.path.dirname(sys.prefix))
+default_ADK_ROOT = os.path.dirname(os.getcwd())
+vars.AddVariables(
+    ('CONFIG', 'Project configuration to build', None),
+    ('FLASH', 'Tool used to deploy', 'nvscmd'),
+    ('KEY_FILE', 'Key for image signing', default_KEY_FILE),
+    PathVariable('TOOLS_ROOT', 'Root directory of the tool kit',
+                      default_TOOLS_ROOT, PathVariable.PathIsDir),
+    PathVariable('ADK_ROOT', 'ADK root folder',
+                      default_ADK_ROOT, PathVariable.PathIsDir),
+    # Not currently implemented:
+    #PathVariable('PROJECT', 'Specifies the project file', '',
+    #                  PathVariable.PathAccept),
+    PathVariable('WORKSPACE', 'Specifies the workspace file', '',
+                      PathVariable.PathAccept),
+    PathVariable('BUILDOUTPUT_PATH', 'Specify location for object files and other build artefacts', '',
+                      PathVariable.PathAccept),
+)
+
+# Initialise TOOLS_ROOT to pass to SConsVariants
+try:
+    TOOLS_ROOT = ARGUMENTS['TOOLS_ROOT']
+except KeyError:
+    TOOLS_ROOT = default_TOOLS_ROOT
+scons_tools = os.path.join(TOOLS_ROOT, 'tools', 'site_scons')
+
+# The basic_config function hides a lot of the boiler plate of what is needed to support:
+# - variants.
+# - minimum invasion of the environment from the system environment.
+env = basic_config(tools=['textfile'],
+                   variables=vars,
+                   variants=dict(style=('dbg', 'rel'),
+                                 ctoolchain=('kcc',)),
+                   scons_sites=[scons_tools])
+
+# Generate help text
+Help(vars.GenerateHelpText(env))
+
+# Handle long command lines on Win32
+env['SPAWN'] = spawn
+
+# Let's confirm what our variants are:
+for variant_name, variant_value in get_variants().items():
+    logging.debug("Variant %s = %s", variant_name, variant_value)
+
+# Set up standard folder locations
+env.Replace(ADK_TOOLS = env['ADK_ROOT'] + '/tools')
+
+# Update ADK_ROOT in the environment (required by aliases.py)
+os.environ['ADK_ROOT'] = env['TOOLS_ROOT']
+
+# Path to dev kit tools root
+ubuild_dir = os.path.join(env['TOOLS_ROOT'], 'tools', 'ubuild')
+sys.path.insert(0, ubuild_dir)
+
+# Path to ADK tools
+adk_tools = os.path.abspath('../tools/packages')
+sys.path.insert(0, adk_tools)
+
+# Set default options
+env.SetOption('num_jobs', get_make_jobs())
+logging.debug("running with -j %s", env.GetOption('num_jobs'))
+env.SetOption('implicit_cache', True)
+logging.debug("running with %simplicit cache", 'no ' if not env.GetOption('implicit_cache') else '')
+
+# Set the Decider to MD5, but only update MD5 if the timestamp has changed
+# (may break automated builds if they're changing source files then
+# rebuilding, but currently that is not perceived to be an issue)
+env.Decider('MD5-timestamp')
+
+# Import exception handler
+import maker.exceptions as bdex
+if not bdex.LOGGER_INSTANCE:
+    import collections
+    script_args = collections.namedtuple('script_args',
+                                         ['trace_enabled', 'xml_output'])
+    script_args.trace_enabled = GetOption('trace_enabled')
+    script_args.xml_output = GetOption('xml_output')
+    bdex.Logger(script_args)
+
+# Import workspace file parser
+import maker.parse_ws_file as pws
+
+# Read the workspace into a dictionary of projects
+env['ws'] = dict()
+if env['WORKSPACE']:
+    projects = pws.Workspace(env['TOOLS_ROOT'], env['WORKSPACE']).get_projects()
+    for name, path in projects.items():
+        env['ws'][name] = load_project(path)
+
+# Initialise cryptographic key
+crypto_key = None
+
+# Initialise flash configuration
+flash_config = None
+
+# Create a construction environment for each project to be built
+project_paths = []
+project_env = dict()
+for project in env['ws'].values():
+    # Verify that the project is to be built
+    path = project['PROJECT']
+    if 'build' in project['config_options']:
+        # Add to list of projects to build
+        project_paths.append(path)
+
+        # Create project specific environment
+        project_env[path] = env.Clone()
+        project_env[path].Replace(**project)
+        if project_env[path]['CONFIG'] == 'filesystem':
+            if not crypto_key:
+                crypto_key = get_crypto_key(project_env[path])
+        if not flash_config:
+            flash_config = get_flash_config(project_env[path])
+
+# Assign default crypto_key value if not supplied
+if not crypto_key:
+    crypto_key = [0] * 16
+
+# Load in the project SConscript files
+for path in project_paths:
+    if project_env[path]['CONFIG'] == 'filesystem':
+        # Update crypto_key
+        project_env[path]['CRYPTO_KEY'] = crypto_key
+    # Update flash configuration
+    project_env[path]['FLASH_CONFIG'] = flash_config
+    p_env = project_env[path]
+    env.SConscript(dirs=p_env['PROJECT_DIR'], exports='p_env', must_exist=True)

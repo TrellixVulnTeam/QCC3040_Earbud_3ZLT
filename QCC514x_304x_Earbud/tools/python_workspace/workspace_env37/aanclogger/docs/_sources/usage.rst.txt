@@ -1,0 +1,213 @@
+.. _usage_aanclogger:
+
+Usage
++++++
+
+The following steps are required to launch the ``aanclogger`` tool:
+
+#. Activate the environment (see :ref:`usage_environment`)
+#. Launch the tool, for example ``aanclogger -c connection.json -p aanc_mono.json`` (see
+   :ref:`usage_arguments`, :ref:`usage_configuration` and :ref:`usage_graphical` for more details)
+
+The primary usage of ``aanclogger`` is as a graphical tool where it provides a GUI with live-plot
+data that can be saved to ``csv``. There is also a 'standalone' mode that will use the connection
+details to launch an interactive ACAT session.
+
+
+Setup
+=====
+
+The ``aanclogger`` tool is installed in the audio tools python virtual environment and comes with
+a sample ``connection.json`` file for the connection details along with a number of plot
+configurations for tuning different features of the adaptive ANC (AANC) or earbud fit test (EFT)
+capabilities.
+
+.. _usage_environment:
+
+Activate Environment
+--------------------
+
+.. note:: Replace the paths in the following examples with the source code and ADK Toolkit
+          directories for your release. This example is using a QCC514x release with ADK Toolkit
+          1.1.37.
+
+#. Open a command prompt and ``cd`` to the source code directory, e.g.
+   ``C:\qtil\QCC514x_QCC304x.SRC.1.0``.
+#. From here run the activate script from the ADK toolkit, e.g.
+   ``> C:\qtil\ADK_Toolkit_1.1.37_x64\activate.bat``.
+#. The audio virtual environment should be activated with a prompt, e.g.
+   ``ATK (C:\qtil\ADK_Toolkit_1.1.37_x64\) C:\qtil\QCC514x_QCC304x.SRC.1.0>``.
+#. From here you should be able to run ``pip show aanclogger`` and see, for example::
+
+      Name: aanclogger
+      Version: 0.2.1
+      Summary: A wrapper around ACAT to log AANC data
+      Home-page: http://www.qualcomm.com/
+      Author: Qualcomm
+      Author-email:
+      License: Other/Proprietary License
+      Location: c:\qtil\QCC514x_QCC304x.SRC.1.0\tools\python_workspace\workspace_env37
+      Requires: ipython, matplotlib, ACAT, jsonschema
+      Required-by:
+
+.. _usage_example_files:
+
+Example Files
+-------------
+
+The example files are located within the ``resources`` folder of the ``aanclogger`` package. The
+location for the example files can be determined from the ``Location`` field in the output of
+``pip show aanclogger`` (see the example in :ref:`usage_environment`), for example::
+
+   c:\qtil\QCC514x_QCC304x.SRC.1.0\tools\python_workspace\workspace_env37\aanclogger\resources
+
+.. _usage_arguments:
+
+Command-line Arguments
+======================
+
+Command-line arguments are as follows::
+
+   --connection, -c: Path to the connection JSON configuration file
+   --plot, -p: Path to the JSON plot configuration file
+
+.. note:: The path to these files can all be either absolute or local to the
+          python package resource folder.
+
+An example to launch a single earbud AANC session::
+
+   aanclogger -c connection.json -p aanc_mono.json
+
+This will use the JSON configuration files in the package resource folder (see
+:ref:`usage_example_files`)
+
+
+.. _usage_configuration:
+
+Connection Configuration
+========================
+
+The connection configuration JSON file contains two top-level attributes:
+
+* ``images``: describes the path to the audio images for launching ACAT
+* ``transports``: describes the transport configuration for connecting to the device(s)
+
+Images
+------
+
+The images attribute has the following properties:
+
+* ``audio_path``: filesystem path to the `audio` folder for the source project
+* ``chip``: name of the chip folder for the device
+* ``kymera_audio``: name (or absolute path) to the ROM ELF file
+* ``downloadables``: list of names (or absolute paths) to any downloadable ELF files to launch
+  ACAT with
+
+``aanclogger`` will try to use the ``audio_path`` and ``chip`` values to automatically locate
+the full filepath for the ``kymera_audio`` and ``downloadables`` ELF files. Alternatively the ELF
+files can be specified as absolute paths.
+
+Transports
+----------
+
+The transports attribute has the following properties:
+
+* ``left``: string that represents the transport to the left device to attach to, for example:
+
+  * ``tc/usb2tc/100`` for a usbdbg connection on device 100
+  * ``trb/usb2trb/156200`` for a TRB connection on device 156200
+  * ``kalsim`` for a connection to kalsim
+* ``right``: String that represents the transport to the right device to attach to. This can be left
+  empty when connecting to a single device.
+
+  .. _usage_graphical:
+
+Graphical
+=========
+
+The graphical mode is invoked via the command-line option ``-p`` which is followed by a JSON file
+that describes the configuration for the tool to plot.
+
+Five configurations are provided with the ``aanclogger`` package and should be sufficient for most
+uses. These can be modified or replaced as required; more information can be found in
+:ref:`configuration_qcomaanc`.
+
+The configurations provided are:
+
+#. ``aanc_mono.json``: plot a sample graph showing the operation of AANC on a single device.
+#. ``aanc_stereo.json``: plot a sample graph showing the operation of AANC on two devices.
+#. ``aanc_ed_tuning.json``: plot variables that are useful for tuning the EDs (see the ANC tuning
+   guide for more information).
+#. ``aanc_self_speech_tuning.json``: plot variables that are useful for tuning the self speech
+   detector (see the ANC tuning guide for more information).
+#. ``earbud_fit_test.json``: plot variables that are useful for tuning an EFT graph (see the ANC
+   tuning guide for more information).
+
+.. note:: The tool assumes that you have AANC running on the chip. The output should look something
+    like what is shown above. If there are ``KalAccess`` Errors or notifications about the chip not
+    being powered, that generally indicates that the chip is not running or is not running AANC.
+
+Examples
+--------
+
+* Plot gain, flags, and SPL levels: ``aanclogger -c connection.json -p aanc_mono.json``
+* Stereo connection: ``aanclogger -c connection_stereo.json -p aanc_stereo.json``
+* Tuning the EDs: ``aanclogger -c connection.json -p aanc_ed_tuning.json``
+* Tuning self-speech: ``aanclogger -c connection.json -p aanc_self_speech_tuning.json``
+* Tuning earbud fit test: ``aanclogger -c connection_eft.json -p earbud_fit_test.json``
+
+Controls
+--------
+
+There are four buttons at the top of the figure that are useful for controlling the plot:
+
+.. figure:: graph_buttons.png
+    :alt: Graph controls
+
+* Save figure (black save icon): save the capture as a PNG
+* Pause (blue pause icon): Pause the capture
+* Play (blue play icon): Resume the capture (after pause or a reset connection)
+* Save data (blue save icon): save the capture data as CSV
+
+Tips
+----
+
+* The legend lines are clickable to show/hide the line in the plot.
+* It's quickest to pause the capture before moving/resizing the figure.
+* If the tool is started without a connected device or if the connection is lost while running the
+  graph will pause. If the connection is valid it can be restarted by clicking play.
+
+.. figure:: graph_sample.png
+    :alt: Sample graph image
+
+    Sample graph
+
+
+Standalone
+==========
+
+The *standalone* option is provided to launch straight into an ACAT session. This can be useful
+to debug issues without launching the graphical tool.
+
+Launch the session with:
+
+``aanclogger -c connection.json``
+
+Troubleshooting
+===============
+
+No operators found
+------------------
+
+This either means there are no operators running or the downloadable bundle
+passed to ``aanclogger`` was not correct. From the standalone tool or ACAT tab in the ADK
+run ``opmgr.analyse_all_operators()``. This should report the operators running and indicate
+whether or not the correct downloadable was passed to ``aanclogger``.
+
+Import Error when launching the tool
+--------------------------------------------------------------------------
+
+The error is ``ImportError: DLL load failed: The specified module could not be found.`` and includes
+``matplotlib`` in the backtrace. This is likely due to the local python installation missing a C++
+runtime. There is a workaround for this by installing an additional package into the virtual
+environment: ``pip install msvc-runtime``.

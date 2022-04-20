@@ -1,0 +1,22 @@
+kse.kymera.capability.generic package
+=====================================
+
+Submodules
+----------
+
+kse.kymera.capability.generic.capability\_generic module
+--------------------------------------------------------
+
+.. automodule:: kse.kymera.capability.generic.capability_generic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.kymera.capability.generic
+   :members:
+   :undoc-members:
+   :show-inheritance:

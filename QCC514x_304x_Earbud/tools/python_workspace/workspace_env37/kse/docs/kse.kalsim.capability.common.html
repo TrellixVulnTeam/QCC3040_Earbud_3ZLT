@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.capability.common package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim.capability package" href="kse.kalsim.capability.html"/>
+        <link rel="next" title="kse.kalsim.component package" href="kse.kalsim.component.html"/>
+        <link rel="prev" title="kse.kalsim.capability package" href="kse.kalsim.capability.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.capability.html">kse.kalsim.capability package</a> &raquo;</li>
+      
+    <li>kse.kalsim.capability.common package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.capability.common.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-capability-common-package">
+<h1>kse.kalsim.capability.common package<a class="headerlink" href="#kse-kalsim-capability-common-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.capability.common.delay">
+<span id="kse-kalsim-capability-common-delay-module"></span><h2>kse.kalsim.capability.common.delay module<a class="headerlink" href="#module-kse.kalsim.capability.common.delay" title="Permalink to this headline">¶</a></h2>
+<p>Delay kats operator</p>
+<dl class="class">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.delay.</code><code class="sig-name descname">DelayCapability</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/delay.html#DelayCapability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.capability.capability_base.CapabilityBase</span></code></p>
+<p>Delay capability</p>
+<p>This capability has one input and one output
+It waits for data to be present in its input (call to consume) and then presents it in its
+output with the selected delay</p>
+<ul class="simple">
+<li><p><em>delay</em> indicates the delay in seconds between consume and produce,
+(optional default=0.050)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>delay</strong> (<em>float</em>) – Delay in seconds from consume to produce</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/delay.html#DelayCapability.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability.consume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data received on operator</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+doing some processing and forwarding it to some output through rhe produce method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_num</strong> (<em>int</em>) – Input data arrives in</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data received</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/delay.html#DelayCapability.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on input terminal</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+forwarding the eof to the applicable outputs through the dispatch_eof method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_num</strong> (<em>int</em>) – Input eof has been detected in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability.input_num">
+<code class="sig-name descname">input_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability.input_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'delay'</em><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability.output_num">
+<code class="sig-name descname">output_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability.output_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.delay.DelayCapability.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'common'</em><a class="headerlink" href="#kse.kalsim.capability.common.delay.DelayCapability.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kse-kalsim-capability-common-fir-filter-module">
+<h2>kse.kalsim.capability.common.fir_filter module<a class="headerlink" href="#kse-kalsim-capability-common-fir-filter-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.capability.common.multi_sink_file">
+<span id="kse-kalsim-capability-common-multi-sink-file-module"></span><h2>kse.kalsim.capability.common.multi_sink_file module<a class="headerlink" href="#module-kse.kalsim.capability.common.multi_sink_file" title="Permalink to this headline">¶</a></h2>
+<p>Multiple sink file kats operator</p>
+<dl class="class">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.multi_sink_file.</code><code class="sig-name descname">MultiSinkFileCapability</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_sink_file.html#MultiSinkFileCapability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.capability.capability_base.CapabilityBase</span></code></p>
+<p>Multiple file source capability</p>
+<p>This capability will generate multiple output files ou of the same stream.
+The decision to close a file and open another one is based on the companion multi_source_file
+capability.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><em>filename</em> is the file to back the stream (mandatory).</dt><dd><ul>
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overriden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format, optional
+metadata and optional packet based information</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><em>sample_rate</em> is the sampling frequency in hertzs,
+for raw source files (mandatory), wav source files (optional) and all sink files (mandatory).</p></li>
+<li><p><em>sample_width</em> is the number of bits per sample,
+for raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p><em>source</em> is the index to the multi source file kats operator (mandatory).</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename to back the stream</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Sample rate</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Number of bit per sample</p></li>
+<li><p><strong>source</strong> (<em>int</em>) – Index to multi_source_file operator</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_sink_file.html#MultiSinkFileCapability.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.consume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data received on operator</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+doing some processing and forwarding it to some output through rhe produce method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_num</strong> (<em>int</em>) – Input data arrives in</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data received</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_sink_file.html#MultiSinkFileCapability.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_sink_file.html#MultiSinkFileCapability.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on input terminal</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+forwarding the eof to the applicable outputs through the dispatch_eof method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_num</strong> (<em>int</em>) – Input eof has been detected in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.input_num">
+<code class="sig-name descname">input_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.input_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'multi_sink_file'</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.output_num">
+<code class="sig-name descname">output_num</code><em class="property"> = 0</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.output_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'common'</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_sink_file.html#MultiSinkFileCapability.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_sink_file.MultiSinkFileCapability.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.capability.common.multi_source_file">
+<span id="kse-kalsim-capability-common-multi-source-file-module"></span><h2>kse.kalsim.capability.common.multi_source_file module<a class="headerlink" href="#module-kse.kalsim.capability.common.multi_source_file" title="Permalink to this headline">¶</a></h2>
+<p>Multiple source file kats operator</p>
+<dl class="class">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.multi_source_file.</code><code class="sig-name descname">MultiSourceFileCapability</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.capability.capability_base.CapabilityBase</span></code></p>
+<p>Multiple file source capability</p>
+<ul>
+<li><p><em>file</em> is a list of files (mandatory)</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><em>filename</em> is the file to back the stream (mandatory).</dt><dd><ul>
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overriden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format, optional
+metadata and optional packet based information</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><em>channels</em> is the number of channels/streams in the audio file,
+(optional default=1).</p></li>
+<li><p><em>channel</em> is the channel index in the audio file,
+(optional default=0).</p></li>
+<li><p><em>sample_rate</em> is the sampling frequency in hertzs,
+for raw source files (mandatory), wav source files (optional).</p></li>
+<li><p><em>sample_width</em> is the number of bits per sample
+for raw source files (mandatory).</p></li>
+<li><p><em>frame_size</em> is the number of samples per transaction,
+(optional, default=1).</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List of files ot stream</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.consume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data received on operator</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+doing some processing and forwarding it to some output through rhe produce method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_num</strong> (<em>int</em>) – Input data arrives in</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data received</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on input terminal</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+forwarding the eof to the applicable outputs through the dispatch_eof method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_num</strong> (<em>int</em>) – Input eof has been detected in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.input_num">
+<code class="sig-name descname">input_num</code><em class="property"> = 0</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.input_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.install_callback">
+<code class="sig-name descname">install_callback</code><span class="sig-paren">(</span><em class="sig-param">callback</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability.install_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.install_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'multi_source_file'</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.output_num">
+<code class="sig-name descname">output_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.output_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'common'</em><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.stream_eof">
+<code class="sig-name descname">stream_eof</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#MultiSourceFileCapability.stream_eof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.stream_eof" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kse.kalsim.capability.common.multi_source_file.StreamFake">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.multi_source_file.</code><code class="sig-name descname">StreamFake</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#StreamFake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.StreamFake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Pseudo stream that always returns id 0</p>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.StreamFake.eof">
+<code class="sig-name descname">eof</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#StreamFake.eof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.StreamFake.eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal End of File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.StreamFake.get_id">
+<em class="property">static </em><code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#StreamFake.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.StreamFake.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>int: Stream id (always o)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.multi_source_file.StreamFake.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/multi_source_file.html#StreamFake.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.multi_source_file.StreamFake.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data to insert</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.capability.common.pass_through">
+<span id="kse-kalsim-capability-common-pass-through-module"></span><h2>kse.kalsim.capability.common.pass_through module<a class="headerlink" href="#module-kse.kalsim.capability.common.pass_through" title="Permalink to this headline">¶</a></h2>
+<p>Pass through kats operator</p>
+<dl class="class">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.pass_through.</code><code class="sig-name descname">PassThroughCapability</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/pass_through.html#PassThroughCapability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.capability.capability_base.CapabilityBase</span></code></p>
+<p>Pass through kats operator</p>
+<p>This capability has one input and one output.
+It waits for data to be present in its input (call to consume) and then forwards it
+immediately to its output. It does not do any rate matching or packing or anything</p>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/pass_through.html#PassThroughCapability.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability.consume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data received on operator</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+doing some processing and forwarding it to some output through rhe produce method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_num</strong> (<em>int</em>) – Input data arrives in</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data received</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/pass_through.html#PassThroughCapability.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on input terminal</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+forwarding the eof to the applicable outputs through the dispatch_eof method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_num</strong> (<em>int</em>) – Input eof has been detected in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability.input_num">
+<code class="sig-name descname">input_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability.input_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'pass_through'</em><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability.output_num">
+<code class="sig-name descname">output_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability.output_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.pass_through.PassThroughCapability.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'common'</em><a class="headerlink" href="#kse.kalsim.capability.common.pass_through.PassThroughCapability.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.capability.common.splitter">
+<span id="kse-kalsim-capability-common-splitter-module"></span><h2>kse.kalsim.capability.common.splitter module<a class="headerlink" href="#module-kse.kalsim.capability.common.splitter" title="Permalink to this headline">¶</a></h2>
+<p>Splitter kats operator</p>
+<dl class="class">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.splitter.</code><code class="sig-name descname">SplitterCapability</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/splitter.html#SplitterCapability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.capability.capability_base.CapabilityBase</span></code></p>
+<p>Splitter kats operator</p>
+<p>This capability has one input and four outputs
+It waits for data to be present in its input (call to consume) and then forwards it
+immediately to all of its outputs</p>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/splitter.html#SplitterCapability.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability.consume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data received on operator</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+doing some processing and forwarding it to some output through rhe produce method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_num</strong> (<em>int</em>) – Input data arrives in</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data received</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/splitter.html#SplitterCapability.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on input terminal</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+forwarding the eof to the applicable outputs through the dispatch_eof method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_num</strong> (<em>int</em>) – Input eof has been detected in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability.input_num">
+<code class="sig-name descname">input_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability.input_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'splitter'</em><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability.output_num">
+<code class="sig-name descname">output_num</code><em class="property"> = 4</em><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability.output_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.splitter.SplitterCapability.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'common'</em><a class="headerlink" href="#kse.kalsim.capability.common.splitter.SplitterCapability.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.capability.common.sum">
+<span id="kse-kalsim-capability-common-sum-module"></span><h2>kse.kalsim.capability.common.sum module<a class="headerlink" href="#module-kse.kalsim.capability.common.sum" title="Permalink to this headline">¶</a></h2>
+<p>Sum KATS operator</p>
+<dl class="class">
+<dt id="kse.kalsim.capability.common.sum.SumCapability">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.capability.common.sum.</code><code class="sig-name descname">SumCapability</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/sum.html#SumCapability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.capability.capability_base.CapabilityBase</span></code></p>
+<p>Sum KATS operator</p>
+<p>This capability has two inputs and one output.
+It expects data to be received first in the first channel and then in the second channel.
+As soon as data is received on second channel, it sums the input data and produces output data.
+The size of input data for both channels has to be the same across the whole session.</p>
+<dl class="method">
+<dt id="kse.kalsim.capability.common.sum.SumCapability.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/sum.html#SumCapability.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability.consume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data received on operator</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+doing some processing and forwarding it to some output through rhe produce method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_num</strong> (<em>int</em>) – Input data arrives in</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data received</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.capability.common.sum.SumCapability.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/capability/common/sum.html#SumCapability.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on input terminal</p>
+<p>This method has to be subclassed by derived classes and work appropriately, probably
+forwarding the eof to the applicable outputs through the dispatch_eof method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_num</strong> (<em>int</em>) – Input eof has been detected in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.sum.SumCapability.input_num">
+<code class="sig-name descname">input_num</code><em class="property"> = 2</em><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability.input_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.sum.SumCapability.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'sum'</em><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.sum.SumCapability.output_num">
+<code class="sig-name descname">output_num</code><em class="property"> = 1</em><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability.output_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.capability.common.sum.SumCapability.platform">
+<code class="sig-name descname">platform</code><em class="property"> = 'common'</em><a class="headerlink" href="#kse.kalsim.capability.common.sum.SumCapability.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.capability.common">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.capability.common" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.component.html" class="btn btn-neutral float-right" title="kse.kalsim.component package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.capability.html" class="btn btn-neutral" title="kse.kalsim.capability package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+{
+    "operators": {
+        "left": [
+            {
+                "name": "a0i",
+                "cap_id": 16543,
+                "cap_idx": 0
+            },
+            {
+                "name": "eft",
+                "cap_id": 16546,
+                "cap_idx": 0
+            }
+        ],
+        "right": []
+    },
+    "handles": [
+        {
+            "name": "clip_flag_ext",
+            "operator": "a0i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000200",
+                "scale": "2**-9"
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "clip_flag_int",
+            "operator": "a0i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000100",
+                "scale": "2**-8"
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "ed_flag",
+            "operator": "a0i",
+            "attr": "extra_op_data.flags",
+            "conversion": {
+                "bitmask": "0x00000020",
+                "scale": "2**-5",
+				"offset": 1.1
+            },
+            "log_fmt": "%d"
+        },
+        {
+            "name": "spl_threshold",
+            "operator": "(constant)",
+            "attr": -70,
+            "conversion": {
+                "qfmt": "12.20"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "spl",
+            "operator": "a0i",
+            "attr": "extra_op_data.ag.deref.p_ed_ext.deref.spl",
+            "conversion": {
+                "qfmt": "12.20"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "clip_count",
+            "operator": "a0i",
+            "attr": "extra_op_data.clip_event.frame_counter",
+            "conversion": {},
+            "log_fmt": "%d"
+        },
+        {
+            "name": "ed_count",
+            "operator": "a0i",
+            "attr": "extra_op_data.ed_event.frame_counter",
+            "conversion": {},
+            "log_fmt": "%d"
+        },
+        {
+            "name": "spl_count",
+            "operator": "a0i",
+            "attr": "extra_op_data.spl_event.frame_counter",
+            "conversion": {},
+            "log_fmt": "%d"
+        },
+        {
+            "name": "eft_ref_spl",
+            "operator": "eft",
+            "attr": "extra_op_data.p_fit.deref.pwr_reference",
+            "conversion": {
+                "qfmt": "8.24"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "eft_int_spl",
+            "operator": "eft",
+            "attr": "extra_op_data.p_fit.deref.pwr_internal",
+            "conversion": {
+                "qfmt": "8.24"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "eft_ratio",
+            "operator": "eft",
+            "attr": "extra_op_data.p_fit.deref.pwr_ratio",
+            "conversion": {
+                "qfmt": "8.24"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "eft_threshold",
+            "operator": "(constant)",
+            "attr": 5,
+            "conversion": {
+                "qfmt": "8.24"
+            },
+            "log_fmt": "%.2f",
+            "missing": -200
+        },
+        {
+            "name": "eft_counter",
+            "operator": "eft",
+            "attr": "extra_op_data.fit_event_detect.frame_counter",
+            "conversion": {},
+            "log_fmt": "%d"
+        }
+    ],
+    "properties": {
+        "nplt": 250,
+        "nsave": 15000,
+        "refresh_rate": 50,
+        "title": "Earbud Fit Test Tuning",
+        "fig_x": 500,
+        "fig_y": 50
+    },
+    "defaults": {
+        "grid": "both",
+        "legend_location": "upper left",
+        "marker": ""
+    },
+    "graphs":
+    [
+        {
+            "title": "Environment: Flags",
+            "subplot": [3, 2, 1],
+            "ylim": [-0.1, 2.3],
+            "ylabel": "Flag State",
+            "lines": [
+                {
+                    "attr": "clip_flag_ext",
+                    "label": "Clip Flag Ext",
+                    "color": "green"
+                },
+                {
+                    "attr": "clip_flag_int",
+                    "label": "Clip Flag Int",
+                    "color": "limegreen"
+                },
+                {
+                    "attr": "ed_flag",
+                    "label": "ED Flag",
+                    "color": "firebrick"
+                }
+            ]
+        },
+        {
+            "title": "Environment: SPL",
+            "subplot": [3, 2, 3],
+            "ylim": [-100, -40],
+            "ylabel": "Level (dB)",
+            "lines": [
+                {
+                    "attr": "spl_threshold",
+                    "label": "Threshold",
+                    "color": "red"
+                },
+                {
+                    "attr": "spl",
+                    "label": "SPL",
+                    "color": "mediumblue"
+                }
+            ]
+        },
+        {
+            "title": "Event Counters",
+            "subplot": [3, 2, 5],
+            "ylim": [-0.1, 200],
+            "ylabel": "Count Value",
+            "lines": [
+                {
+                    "attr": "clip_count",
+                    "label": "Clip Count",
+                    "color": "green"
+                },
+                {
+                    "attr": "ed_count",
+                    "label": "ED Count",
+                    "color": "firebrick"
+                },
+                {
+                    "attr": "spl_count",
+                    "label": "SPL Count",
+                    "color": "mediumblue"
+                }
+            ]
+        },
+        {
+            "title": "EFT Signal Levels",
+            "subplot": [3, 2, 2],
+            "ylim": [-110, -20],
+            "ylabel": "Average Amplitude (dBFS)",
+            "lines": [
+                {
+                    "attr": "eft_ref_spl",
+                    "label": "Reference SPL",
+                    "color": "firebrick",
+                    "marker": "."
+                },
+                {
+                    "attr": "eft_int_spl",
+                    "label": "Int SPL",
+                    "color": "royalblue",
+                    "marker": "."
+                }
+            ]
+        },
+        {
+            "title": "EFT Ratio",
+            "subplot": [3, 2, 4],
+            "ylim": [-15, 25],
+            "ylabel": "Average Amplitude (dBFS)",
+            "lines": [
+                {
+                    "attr": "eft_threshold",
+                    "label": "Threshold",
+                    "color": "red"
+                },
+                {
+                    "attr": "eft_ratio",
+                    "label": "Ratio",
+                    "color": "green",
+                    "marker": "."
+                }
+            ]
+        },
+        {
+            "title": "Event Counters",
+            "subplot": [3, 2, 6],
+            "ylim": [-0.1, 800],
+            "ylabel": "Count Value",
+            "lines": [
+                {
+                    "attr": "eft_counter",
+                    "label": "EFT Count",
+                    "color": "green"
+                }
+            ]
+        }
+    ]
+}

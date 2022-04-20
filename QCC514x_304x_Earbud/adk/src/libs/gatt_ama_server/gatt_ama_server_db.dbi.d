@@ -1,0 +1,1 @@
+gatt_ama_server/gatt_ama_server_db.dbi_: gatt_ama_server/gatt_ama_server_db.dbi gatt_ama_server/gatt_ama_server_uuids.h

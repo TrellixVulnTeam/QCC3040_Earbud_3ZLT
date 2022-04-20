@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.capability.common.multi_source_file &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.capability.common.multi_source_file</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.capability.common.multi_source_file</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Multiple source file kats operator&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">kats.core.stream_base</span> <span class="k">import</span> <span class="n">STREAM_NAME</span><span class="p">,</span> <span class="n">STREAM_RATE</span><span class="p">,</span> <span class="n">STREAM_DATA_WIDTH</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.schema</span> <span class="k">import</span> <span class="n">DefaultValidatingDraft4Validator</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.capability.capability_base</span> <span class="k">import</span> <span class="n">CapabilityBase</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.kalsim_helper</span> <span class="k">import</span> <span class="n">get_user_stream_config</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.stream.packet.packetiser</span> <span class="k">import</span> <span class="n">Packetiser</span>
+<span class="kn">from</span> <span class="nn">kats.library.audio_file.audio</span> <span class="k">import</span> <span class="n">audio_get_instance</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">get_instance</span>
+
+<span class="n">FILE</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span>
+<span class="n">FILENAME</span> <span class="o">=</span> <span class="s1">&#39;filename&#39;</span>
+<span class="n">CHANNELS</span> <span class="o">=</span> <span class="s1">&#39;channels&#39;</span>
+<span class="n">CHANNELS_DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CHANNEL</span> <span class="o">=</span> <span class="s1">&#39;channel&#39;</span>
+<span class="n">CHANNEL_DEFAULT</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">SAMPLE_RATE</span> <span class="o">=</span> <span class="s1">&#39;sample_rate&#39;</span>
+<span class="n">SAMPLE_WIDTH</span> <span class="o">=</span> <span class="s1">&#39;sample_width&#39;</span>
+<span class="n">FRAME_SIZE</span> <span class="o">=</span> <span class="s1">&#39;frame_size&#39;</span>
+<span class="n">FRAME_SIZE_DEFAULT</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">DELAY</span> <span class="o">=</span> <span class="s1">&#39;delay&#39;</span>
+<span class="n">DELAY_DEFAULT</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">CALLBACK_DATA_RECEIVED</span> <span class="o">=</span> <span class="s1">&#39;callback_data_received&#39;</span>
+
+<span class="n">PARAM_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">FILE</span><span class="p">],</span>
+    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">FILE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;minItems&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">FILENAME</span><span class="p">],</span>
+                <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="n">FILENAME</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">},</span>
+                    <span class="n">CHANNELS</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                    <span class="n">CHANNEL</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                    <span class="n">SAMPLE_RATE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;exclusiveMinimum&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">},</span>
+                    <span class="n">SAMPLE_WIDTH</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">32</span><span class="p">]},</span>
+                    <span class="n">FRAME_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="n">DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">DELAY_DEFAULT</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="StreamFake"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.StreamFake">[docs]</a><span class="k">class</span> <span class="nc">StreamFake</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Pseudo stream that always returns id 0&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+<div class="viewcode-block" id="StreamFake.get_id"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.StreamFake.get_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_id</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;int: Stream id (always o)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="StreamFake.insert"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.StreamFake.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert data</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (list[int]): Data to insert</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamFake.eof"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.StreamFake.eof">[docs]</a>    <span class="k">def</span> <span class="nf">eof</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Signal End of File&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">stream_eof</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="MultiSourceFileCapability"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability">[docs]</a><span class="k">class</span> <span class="nc">MultiSourceFileCapability</span><span class="p">(</span><span class="n">CapabilityBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Multiple file source capability</span>
+
+<span class="sd">    - *file* is a list of files (mandatory)</span>
+
+<span class="sd">        - *filename* is the file to back the stream (mandatory).</span>
+<span class="sd">            - raw files only store audio data but no information about number of channels,</span>
+<span class="sd">              sampling frequency or data format.</span>
+<span class="sd">              This information (*channels*, *sample_rate*, *sample_width*) has to be supplied</span>
+<span class="sd">            - wav files store number of channels, sampling frequency and sample data format.</span>
+<span class="sd">              Note that if *sample_rate* is provided then information in the file is overriden</span>
+<span class="sd">            - qwav files store number of channels, sampling frequency, sample data format, optional</span>
+<span class="sd">              metadata and optional packet based information</span>
+<span class="sd">        - *channels* is the number of channels/streams in the audio file,</span>
+<span class="sd">          (optional default=1).</span>
+<span class="sd">        - *channel* is the channel index in the audio file,</span>
+<span class="sd">          (optional default=0).</span>
+<span class="sd">        - *sample_rate* is the sampling frequency in hertzs,</span>
+<span class="sd">          for raw source files (mandatory), wav source files (optional).</span>
+<span class="sd">        - *sample_width* is the number of bits per sample</span>
+<span class="sd">          for raw source files (mandatory).</span>
+<span class="sd">        - *frame_size* is the number of samples per transaction,</span>
+<span class="sd">          (optional, default=1).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file (list[dict]): List of files ot stream</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">platform</span> <span class="o">=</span> <span class="s1">&#39;common&#39;</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="s1">&#39;multi_source_file&#39;</span>
+    <span class="n">input_num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">output_num</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="n">DefaultValidatingDraft4Validator</span><span class="p">(</span><span class="n">PARAM_SCHEMA</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># helper modules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;uut&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># configuration values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">DELAY</span><span class="p">,</span> <span class="n">DELAY_DEFAULT</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># data values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream_fake</span> <span class="o">=</span> <span class="n">StreamFake</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># current file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">callable</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># external entities interested in our events</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># source with packet based streaming</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_default_packet_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">,</span> <span class="n">frame_size</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">):</span>
+        <span class="c1"># FIXME be careful with loop as all loops but first should not zero first packet</span>
+        <span class="n">period_usec</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1000000.0</span> <span class="o">*</span> <span class="n">frame_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+        <span class="n">packet_info</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">ind</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">period_usec</span> <span class="o">*</span> <span class="n">ind</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">period_usec</span> <span class="o">*</span> <span class="p">(</span><span class="n">ind</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))),</span>  <span class="c1"># timestamp</span>
+             <span class="n">ind</span> <span class="o">*</span> <span class="n">frame_size</span><span class="p">,</span>  <span class="c1"># offset</span>
+             <span class="n">frame_size</span><span class="p">]</span>  <span class="c1"># length</span>
+            <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">/</span> <span class="n">frame_size</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">%</span> <span class="n">frame_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;excluding </span><span class="si">%s</span><span class="s1"> bytes as it is not a multiple of frame_size&#39;</span><span class="p">,</span>
+                              <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">%</span> <span class="n">frame_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">packet_info</span>
+
+    <span class="k">def</span> <span class="nf">_init_source_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CHANNELS</span><span class="p">,</span> <span class="n">CHANNELS_DEFAULT</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CHANNEL</span><span class="p">,</span> <span class="n">CHANNEL_DEFAULT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_RATE</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SAMPLE_WIDTH</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FRAME_SIZE</span><span class="p">,</span> <span class="n">FRAME_SIZE_DEFAULT</span><span class="p">)</span>
+
+        <span class="n">audio_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;channels&#39;</span><span class="p">:</span> <span class="n">channels</span><span class="p">,</span>  <span class="c1"># some formats do not require</span>
+            <span class="s1">&#39;sample_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>  <span class="c1"># some formats do not require</span>
+            <span class="s1">&#39;sample_width&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">,</span>  <span class="c1"># some formats do not require</span>
+            <span class="s1">&#39;allow_encoded&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">audio_instance</span> <span class="o">=</span> <span class="n">audio_get_instance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">audio_kwargs</span><span class="p">)</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_num</span><span class="p">()</span>
+        <span class="c1"># we allow overriding sample_rate from what is in the file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_sample_width</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">channel</span> <span class="o">&gt;=</span> <span class="n">channels</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;channels:</span><span class="si">%s</span><span class="s1"> channel:</span><span class="si">%s</span><span class="s1"> inconsistency&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">channels</span><span class="p">,</span> <span class="n">channel</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_sample_rate</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stream filename:</span><span class="si">%s</span><span class="s1"> sample_rate not set&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stream filename:</span><span class="si">%s</span><span class="s1"> sample_width not set&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+
+        <span class="c1"># kalsim supports raw and wav files with only 1 stream in the file at the file designated</span>
+        <span class="c1"># sample_rate</span>
+        <span class="n">file_sample_rate</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_sample_rate</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+
+        <span class="n">audio_data</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_audio_stream_data</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">file_sample_rate</span>
+
+        <span class="c1"># check if the format supports packet_info and that packet_info actually is there</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">audio_instance</span><span class="p">,</span> <span class="s1">&#39;get_packet_data_size&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_packet_data_size</span><span class="p">(</span><span class="s1">&#39;audio&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="p">)):</span>
+            <span class="n">packet_info</span> <span class="o">=</span> <span class="n">audio_instance</span><span class="o">.</span><span class="n">get_packet_data</span><span class="p">(</span><span class="s1">&#39;audio&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># if packet_info is not available or empty then build default</span>
+            <span class="c1"># packet based information</span>
+            <span class="n">packet_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_default_packet_info</span><span class="p">(</span><span class="n">audio_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">frame_size</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span> <span class="o">=</span> <span class="n">Packetiser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">stream_fake</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">,</span> <span class="n">packet_info</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_user_stream_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_width</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="n">STREAM_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">filename</span>
+        <span class="n">params</span><span class="p">[</span><span class="n">STREAM_RATE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_rate</span>  <span class="c1"># pointless in qwav with packet_info</span>
+        <span class="n">params</span><span class="p">[</span><span class="n">STREAM_DATA_WIDTH</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">sample_width</span>
+
+        <span class="k">del</span> <span class="n">audio_instance</span>
+        <span class="k">return</span> <span class="n">params</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback to be invoked when the source stream start delay has elapsed to actually start</span>
+<span class="sd">        the stream.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timer_id (int): Timer id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_eof</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MultiSourceFileCapability.start"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.start">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start stream&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">delay</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;delaying start for </span><span class="si">%s</span><span class="s1"> seconds&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">delay</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">loop_timer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">delay</span><span class="p">,</span>
+                                                                             <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultiSourceFileCapability.stop"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.stop">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop stream&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MultiSourceFileCapability.consume"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.consume">[docs]</a>    <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_num</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># we never receive data from other entities as we have no inputs</span></div>
+
+<div class="viewcode-block" id="MultiSourceFileCapability.eof_detected"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.eof_detected">[docs]</a>    <span class="k">def</span> <span class="nf">eof_detected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_num</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># we never receive eof from other entities as we have no inputs</span></div>
+
+<div class="viewcode-block" id="MultiSourceFileCapability.stream_eof"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.stream_eof">[docs]</a>    <span class="k">def</span> <span class="nf">stream_eof</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pos</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">file</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pos</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">callable</span><span class="p">:</span>
+                    <span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_source_file</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">source_packetiser</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_eof</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultiSourceFileCapability.install_callback"><a class="viewcode-back" href="../../../../../kse.kalsim.capability.common.html#kse.kalsim.capability.common.multi_source_file.MultiSourceFileCapability.install_callback">[docs]</a>    <span class="k">def</span> <span class="nf">install_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">callable</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

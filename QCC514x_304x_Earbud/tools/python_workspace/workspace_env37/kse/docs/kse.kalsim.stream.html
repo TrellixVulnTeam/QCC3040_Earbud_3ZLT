@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.stream package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim package" href="kse.kalsim.html"/>
+        <link rel="next" title="kse.kalsim.stream.hydra package" href="kse.kalsim.stream.hydra.html"/>
+        <link rel="prev" title="kse.kalsim.library package" href="kse.kalsim.library.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+    <li>kse.kalsim.stream package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.stream.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-stream-package">
+<h1>kse.kalsim.stream package<a class="headerlink" href="#kse-kalsim-stream-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.stream.hydra.html">kse.kalsim.stream.hydra package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.a2dp">kse.kalsim.stream.hydra.a2dp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.audio_data">kse.kalsim.stream.hydra.audio_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.file">kse.kalsim.stream.hydra.file module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.hw">kse.kalsim.stream.hydra.hw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.hydra">kse.kalsim.stream.hydra.hydra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.i2s">kse.kalsim.stream.hydra.i2s module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.iso">kse.kalsim.stream.hydra.iso module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.l2cap">kse.kalsim.stream.hydra.l2cap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.pcm">kse.kalsim.stream.hydra.pcm module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.sco">kse.kalsim.stream.hydra.sco module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.sco_error">kse.kalsim.stream.hydra.sco_error module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.tester">kse.kalsim.stream.hydra.tester module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.timestamped">kse.kalsim.stream.hydra.timestamped module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.stream.packet.html">kse.kalsim.stream.packet package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.packet.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.packet.html#module-kse.kalsim.stream.packet.packetiser">kse.kalsim.stream.packet.packetiser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.packet.html#module-kse.kalsim.stream.packet">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.stream.kalcmd_stream">
+<span id="kse-kalsim-stream-kalcmd-stream-module"></span><h2>kse.kalsim.stream.kalcmd_stream module<a class="headerlink" href="#module-kse.kalsim.stream.kalcmd_stream" title="Permalink to this headline">¶</a></h2>
+<p>Kalcmd Stream class</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.kalcmd_stream.KalcmdStream">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.kalcmd_stream.</code><code class="sig-name descname">KalcmdStream</code><span class="sig-paren">(</span><em class="sig-param">kalcmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalcmd_stream.html#KalcmdStream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalcmd_stream.KalcmdStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class provides a one to many interface to kalcmd streams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kalcmd</strong> (<em>kats.instrument.kalcmd.kalcmd.Kalcmd</em>) – Instance of class Kalcmd</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.kalcmd_stream.KalcmdStream.install_data_handler">
+<code class="sig-name descname">install_data_handler</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalcmd_stream.html#KalcmdStream.install_data_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalcmd_stream.KalcmdStream.install_data_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when STREAM_DATA_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id to watch</p></li>
+<li><p><strong>handler</strong> (<em>func</em><em>(</em><em>samples</em><em>)</em>) – Handler to install, None to uninstall</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalcmd_stream.KalcmdStream.install_eof_handler">
+<code class="sig-name descname">install_eof_handler</code><span class="sig-paren">(</span><em class="sig-param">stream_id</em>, <em class="sig-param">handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalcmd_stream.html#KalcmdStream.install_eof_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalcmd_stream.KalcmdStream.install_eof_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install handler to be invoked when STREAM_EOF_EVENT is received from kalcmd2</p>
+<p>This handler will be invoked when the event is received as</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_id</strong> (<em>int</em>) – Stream id to watch</p></li>
+<li><p><strong>handler</strong> (<em>func</em><em>(</em><em>)</em>) – Handler to install, None to uninstall</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.kalsim_helper">
+<span id="kse-kalsim-stream-kalsim-helper-module"></span><h2>kse.kalsim.stream.kalsim_helper module<a class="headerlink" href="#module-kse.kalsim.stream.kalsim_helper" title="Permalink to this headline">¶</a></h2>
+<p>kalsim stream helper</p>
+<dl class="function">
+<dt id="kse.kalsim.stream.kalsim_helper.get_file_kalsim_stream_config">
+<code class="sig-prename descclassname">kse.kalsim.stream.kalsim_helper.</code><code class="sig-name descname">get_file_kalsim_stream_config</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">frame_size</em>, <em class="sig-param">sample_rate</em>, <em class="sig-param">sample_width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_helper.html#get_file_kalsim_stream_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_helper.get_file_kalsim_stream_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalsim stream configuration for a file backed and kalsim controlled stream.</p>
+<p>This stream could be a source or sink stream and will be fully controlled by kalsim.
+The file should be supported by kalsim, currently it treats the file as a raw file.</p>
+<p>Source streams do not require attention to send data. EOF generated when appropriate.
+Sink streams do not require attention. No EOF is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – Number of samples per transaction</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Sampling frequency in hertzs</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Sample data width in bits</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Kalsim stream parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.kalsim.stream.kalsim_helper.get_file_user_stream_config">
+<code class="sig-prename descclassname">kse.kalsim.stream.kalsim_helper.</code><code class="sig-name descname">get_file_user_stream_config</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">sample_rate</em>, <em class="sig-param">sample_width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_helper.html#get_file_user_stream_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_helper.get_file_user_stream_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalsim stream configuration for a file backed and user controlled stream.</p>
+<p>This stream could be a source or sink stream and will require calls to stream_induce to
+actually read or write data. The user is responsible to generate the appropriate timings
+to time stream_induce calls.
+Tbe file should be supported by kalsim, currently it treats the file as a raw file.</p>
+<p>Source streams require stream_induce calls to send data. EOF generated when appropriate.
+Sinks streams require stream_induce calls to receive data. No EOF is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Sampling frequency in hertzs, only used in wav sink streams</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Sample data width in bits</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Kalsim stream parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.kalsim.stream.kalsim_helper.get_user_stream_config">
+<code class="sig-prename descclassname">kse.kalsim.stream.kalsim_helper.</code><code class="sig-name descname">get_user_stream_config</code><span class="sig-paren">(</span><em class="sig-param">sample_width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_helper.html#get_user_stream_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_helper.get_user_stream_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalsim stream configuration for a fully user controlled stream.</p>
+<p>This stream could be a source or sink stream and will require calls to stream_insert or
+stream_extract to actually read or write data.
+The user is responsible to generate the appropriate timings to time
+stream_insert/stream_extract calls.</p>
+<p>Source streams require stream_insert calls to send data. No EOF is generated.
+Sinks streams require stream_extract calls to receive data. No EOF is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Filename</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – Sample data width in bits</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Kalsim stream parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.kalsim_stream">
+<span id="kse-kalsim-stream-kalsim-stream-module"></span><h2>kse.kalsim.stream.kalsim_stream module<a class="headerlink" href="#module-kse.kalsim.stream.kalsim_stream" title="Permalink to this headline">¶</a></h2>
+<p>Stream Base class</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.kalsim_stream.</code><code class="sig-name descname">KalsimStream</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">*_</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.stream_base.StreamBase</span></code></p>
+<p>Basic kalsim stream handler class</p>
+<p>Modes supported</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># kalsim will automatically stream a file</span>
+<span class="n">stream_type</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="o">/</span><span class="s1">&#39;sink&#39;</span>
+<span class="n">stream_backing</span><span class="o">=</span><span class="s1">&#39;file&#39;</span>
+<span class="n">stream_flow_control_drive</span><span class="o">=</span><span class="s1">&#39;kalsim&#39;</span>
+<span class="n">stream_filename</span><span class="o">=</span><span class="s1">&#39;pathtorawfile&#39;</span>
+<span class="n">stream_format</span><span class="o">=</span><span class="n">bits_per_sample</span>
+<span class="n">stream_flow_control_rate</span><span class="o">=</span><span class="n">freq</span>
+<span class="n">stream_flow_control_block_size</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="c1"># kalsim will stream a file that is controlled by the application, with calls to induce</span>
+<span class="n">stream_type</span><span class="o">=</span><span class="s1">&#39;source&#39;</span>
+<span class="n">stream_backing</span><span class="o">=</span><span class="s1">&#39;file&#39;</span>
+<span class="n">stream_flow_control_drive</span><span class="o">=</span><span class="s1">&#39;kalcmd&#39;</span>
+<span class="n">stream_filename</span><span class="o">=</span><span class="s1">&#39;pathtorawfile&#39;</span>
+<span class="n">stream_format</span><span class="o">=</span><span class="n">bits_per_sample</span>
+<span class="n">stream_flow_control_rate</span><span class="o">=</span><span class="n">freq</span>
+<span class="n">stream_flow_control_block_size</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="c1"># the application will stream data with calls to insert</span>
+<span class="n">stream_type</span><span class="o">=</span><span class="s1">&#39;source&#39;</span>
+<span class="n">stream_backing</span><span class="o">=</span><span class="s1">&#39;kalcmd&#39;</span>
+<span class="n">stream_flow_control_drive</span><span class="o">=</span><span class="s1">&#39;kalcmd&#39;</span>
+<span class="n">stream_format</span><span class="o">=</span><span class="n">bits_per_sample</span>
+<span class="n">stream_flow_control_block_size</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Type of stream ‘source’ or ‘sink’</p></li>
+<li><p><strong>callback_data_event</strong> (<em>func</em><em>(</em><em>samples</em><em>)</em>) – Callback for attention required</p></li>
+<li><p><strong>stream_backing</strong> (<em>str</em>) – Who is streaming the data
+- file, kalsim, stream_filename should be provided (raw data file)
+- kalcmd, the application with insert and extract</p></li>
+<li><p><strong>stream_flow_control_drive</strong> (<em>str</em>) – induced
+- kalsim
+- kalcmd
+- kalsim_level</p></li>
+<li><p><strong>stream_filename</strong> (<em>str</em>) – Should be a raw mono file and has to be present when stream_backing is file</p></li>
+<li><p><strong>stream_format</strong> (<em>int</em>) – Number of bits in a sample</p></li>
+<li><p><strong>stream_flow_control_rate</strong> (<em>int</em>) – Rate in samples per second</p></li>
+<li><p><strong>stream_flow_control_block_size</strong> (<em>int</em>) – Minimum size of block to stream</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.data_event">
+<code class="sig-name descname">data_event</code><span class="sig-paren">(</span><em class="sig-param">samples</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.data_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.data_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data event received on stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>samples</strong> (<em>int</em>) – Number of samples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.eof">
+<code class="sig-name descname">eof</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.eof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of File event received on stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.extract">
+<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param">samples</em>, <em class="sig-param">sign_extend=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts data from the stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samples</strong> (<em>int</em>) – Number of samples to extract</p></li>
+<li><p><strong>sign_extend</strong> (<em>bool</em>) – Do we want to sign extend the data elements, None for autodetect</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Data extracted</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>data (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stream id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.induce">
+<code class="sig-name descname">induce</code><span class="sig-paren">(</span><em class="sig-param">samples</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.induce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.induce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Induce stream, force some data to be sent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>samples</strong> (<em>int</em>) – Number of sampes to induce</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of samples actually induced</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts data with the size specified in stream_format property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data to insert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.query">
+<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query stream property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Property</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Property value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.kalsim_stream.KalsimStream.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/kalsim_stream.html#KalsimStream.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.kalsim_stream.KalsimStream.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.stream_factory">
+<span id="kse-kalsim-stream-stream-factory-module"></span><h2>kse.kalsim.stream.stream_factory module<a class="headerlink" href="#module-kse.kalsim.stream.stream_factory" title="Permalink to this headline">¶</a></h2>
+<p>Stream factory class</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.stream_factory.StreamFactory">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.stream_factory.</code><code class="sig-name descname">StreamFactory</code><span class="sig-paren">(</span><em class="sig-param">platform</em>, <em class="sig-param">kalcmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/stream_factory.html#StreamFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.stream_factory.StreamFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Stream factory</p>
+<p>This class handles streams.
+It supports a factory interface, where stream are classified in platforms
+and there could be multiple streams for each platform and one stream could support multiple
+platforms.
+When this class starts it autodiscovers all the stream types available for
+a set of platforms.
+Discovered streams should subclass StreamBase in a subpackage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/Female_1c_8000_16b.raw&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+    <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+<span class="p">}</span>
+
+<span class="n">st</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;pcm&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">st</span><span class="o">.</span><span class="n">create</span><span class="p">()</span> <span class="c1"># create stream</span>
+<span class="n">st</span><span class="o">.</span><span class="n">config</span><span class="p">()</span> <span class="c1"># send all configuration messages</span>
+<span class="n">st</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">st</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">st</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">put_instance</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>platform</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Platform</p></li>
+<li><p><strong>kalcmd</strong> (<em>kats.instrument.kalcmd.kalcmd.Kalcmd</em>) – Instance of class Kalcmd</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.stream_factory.StreamFactory.enum_interface">
+<code class="sig-name descname">enum_interface</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/stream_factory.html#StreamFactory.enum_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.stream_factory.StreamFactory.enum_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of registered streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stream id and names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.stream_factory.StreamFactory.get_class">
+<code class="sig-name descname">get_class</code><span class="sig-paren">(</span><em class="sig-param">interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/stream_factory.html#StreamFactory.get_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.stream_factory.StreamFactory.get_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search in the discovered plugins for a stream interface and return its class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interface</strong> (<em>str</em>) – Stream interface</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stream class</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unable to find stream interface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.stream_factory.StreamFactory.get_instance">
+<code class="sig-name descname">get_instance</code><span class="sig-paren">(</span><em class="sig-param">interface</em>, <em class="sig-param">stream_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/stream_factory.html#StreamFactory.get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.stream_factory.StreamFactory.get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search in the discovered plugins for an stream interface and return an instance of it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interface</strong> (<em>str</em>) – Stream interface</p></li>
+<li><p><strong>stream_type</strong> (<em>str</em>) – Stream type name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Stream instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unable to find stream interface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.stream_factory.StreamFactory.put_instance">
+<code class="sig-name descname">put_instance</code><span class="sig-paren">(</span><em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/stream_factory.html#StreamFactory.put_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.stream_factory.StreamFactory.put_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy a stream instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stream</strong> (<em>any</em>) – Stream instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.stream" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.stream.hydra.html" class="btn btn-neutral float-right" title="kse.kalsim.stream.hydra package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.library.html" class="btn btn-neutral" title="kse.kalsim.library package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+file=app4
+
+# Route I2C (SCL, SDA) to PIOs
+I2CPios = [ 14 15 ]
+
+# PIO connected to USB-C CC line for detecting USB-C-1.5 and USB-C-3.0 chargers or
+# [FF] to disable detecting these charger types.
+UsbTypeCCCSource = [ff]

@@ -1,0 +1,567 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CoreTypes &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="CoreUtils" href="acat.Core.CoreUtils.html"/>
+        <link rel="prev" title="ChipData" href="acat.Core.ChipData.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>CoreTypes</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.CoreTypes.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="coretypes">
+<h1>CoreTypes<a class="headerlink" href="#coretypes" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.CoreTypes</span></code>.</p>
+<span class="target" id="module-ACAT.Core.CoreTypes"></span><p>Global Types.</p>
+<p>This module is used to hold all the global types in ACAT.</p>
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">ChipVarHelper</code><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class which contains helper functions for formatting ChipVariable
+objects.</p>
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper.deref">
+<em class="property">static </em><code class="sig-name descname">deref</code><span class="sig-paren">(</span><em class="sig-param">var</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper.deref"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper.deref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide a simplified deref.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper.deref_with_formatter_dict">
+<em class="property">static </em><code class="sig-name descname">deref_with_formatter_dict</code><span class="sig-paren">(</span><em class="sig-param">formatter_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper.deref_with_formatter_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper.deref_with_formatter_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps the variable dereference variable functionality with a given
+formatter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>formatter_dict</strong> (<em>dict</em>) – Formatter dictionary.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Variable formatter which dereferences a variable and</dt><dd><p>applies the formatter dict to it.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper.linked_list">
+<em class="property">static </em><code class="sig-name descname">linked_list</code><span class="sig-paren">(</span><em class="sig-param">next_name='next'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper.linked_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper.linked_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide a simplified linked_list_with_formatter_dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper.linked_list_with_formatter_dict">
+<em class="property">static </em><code class="sig-name descname">linked_list_with_formatter_dict</code><span class="sig-paren">(</span><em class="sig-param">next_name</em>, <em class="sig-param">formatter_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper.linked_list_with_formatter_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper.linked_list_with_formatter_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps the variable parse_linked_list iteratior with a given
+formatter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formatter_dict</strong> (<em>dict</em>) – Formatter dictionary.</p></li>
+<li><p><strong>next_field_name</strong> (<em>str</em>) – next field name in the structure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Variable formatter which prases a linked_list from the</dt><dd><p>variable and applies the formatter dict to all elements.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper.parse_linked_list">
+<em class="property">static </em><code class="sig-name descname">parse_linked_list</code><span class="sig-paren">(</span><em class="sig-param">list_ptr</em>, <em class="sig-param">next_field_name='next'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper.parse_linked_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper.parse_linked_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates a linked list iterator from a ChipdataVariable
+and the next filed name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list_ptr</strong> (<a class="reference internal" href="#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ChipdataVariable</em></a>) – Pointer or normal ChipdataVariable
+variable</p></li>
+<li><p><strong>next_field_name</strong> (<em>str</em>) – next field name in the structure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An iterator which goes trough the element of the list.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipVarHelper.value_format">
+<em class="property">static </em><code class="sig-name descname">value_format</code><span class="sig-paren">(</span><em class="sig-param">formatter_function</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipVarHelper.value_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipVarHelper.value_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps a function which can transform the value of a variable to
+something new.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>formatter_function</strong> (<em>function</em>) – The value of the variable will be
+formatted with this function.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Variable formatter which converts the values ot str.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">ChipdataVariable</code><span class="sig-paren">(</span><em class="sig-param">debuginfo_var</em>, <em class="sig-param">chipdata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipdataVariable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A chipdata variable.</p>
+<p>Variables are more complicated than a standard data symbol, since they
+have a size and can be structures.</p>
+<p>‘value’ can be a single integer or (more likely) a list/tuple.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>- Debuginfo variable</strong> (<em>debuginfo_var</em>) – </p></li>
+<li><p><strong>- chipdata</strong> (<em>chipdata</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable.address">
+<em class="property">property </em><code class="sig-name descname">address</code><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns start address of the variable in the chip memory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable.deref">
+<em class="property">property </em><code class="sig-name descname">deref</code><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable.deref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the de-referenced pointer to the variable.</p>
+<p>If the ChipdataVariable is a pointer it returns the dereferenced
+pointer to variable. Otherwise it raises VariableNotPointerError
+error.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable.get_member">
+<code class="sig-name descname">get_member</code><span class="sig-paren">(</span><em class="sig-param">member</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipdataVariable.get_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable.get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated method will be removed in future!
+Gets a variable member by name.</p>
+<p>Only valid if the variable is a struct or union.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Could have overridden the dot operator here, but wary of a
+clash with actual Variable members.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable.set_formatter_dict">
+<code class="sig-name descname">set_formatter_dict</code><span class="sig-paren">(</span><em class="sig-param">formatter_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ChipdataVariable.set_formatter_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable.set_formatter_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the formatter dictionary for the chipdata variable which will
+be uset to format the variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>formatter_dict</strong> (<em>dict</em>) – a dictionary of fuction which will be used
+to display the variable’s members.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable.size">
+<em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns size of the variable in memory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.ChipdataVariable.value">
+<em class="property">property </em><code class="sig-name descname">value</code><a class="headerlink" href="#ACAT.Core.CoreTypes.ChipdataVariable.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns value of the variable in the chip memory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.CodeLabel">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">CodeLabel</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#CodeLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.CodeLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information about a code label.</p>
+<dl class="simple">
+<dt>Args</dt><dd><p>name: Code label name.
+address: Code label address.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.ConstSym">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">ConstSym</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#ConstSym"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.ConstSym" title="Permalink to this definition">¶</a></dt>
+<dd><p>A symbolic constant.</p>
+<p>e.g. $sbc.mem.ENC_SETTING_BITPOOL_FIELD or $_REGFILE_PC.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>That register names are constants, and their values are the
+address of the register. (If the contents of register is also
+known then it should be wrapped as a DataSym instead.)</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>value</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.DataSym">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">DataSym</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">address</em>, <em class="sig-param">value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#DataSym"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.DataSym" title="Permalink to this definition">¶</a></dt>
+<dd><p>A data symbol (register, dm_const entry, variable).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>value</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.SourceInfo">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">SourceInfo</code><span class="sig-paren">(</span><em class="sig-param">address</em>, <em class="sig-param">module_name</em>, <em class="sig-param">src_file</em>, <em class="sig-param">line_number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#SourceInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.SourceInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>A bunch of information about a particular address in PM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>module_name</strong> – </p></li>
+<li><p><strong>src_file</strong> – </p></li>
+<li><p><strong>line_number</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.CoreTypes.Variable">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">Variable</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">address</em>, <em class="sig-param">size</em>, <em class="sig-param">value=None</em>, <em class="sig-param">var_type=None</em>, <em class="sig-param">debuginfo=None</em>, <em class="sig-param">members=None</em>, <em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#Variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.Variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A debuginfo variable.</p>
+<p>Variables are more complicated than a standard data symbol, since they
+have a size and can be structures.</p>
+<p>‘value’ can be a single integer or (more likely) a list/tuple. For
+debuginfo variables the value represents the initial value which
+could be uninitialised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>address</strong> – </p></li>
+<li><p><strong>size</strong> – </p></li>
+<li><p><strong>value</strong> – </p></li>
+<li><p><strong>var_type</strong> – </p></li>
+<li><p><strong>debuginfo</strong> – </p></li>
+<li><p><strong>members</strong> – </p></li>
+<li><p><strong>parent</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.Variable.get_member">
+<code class="sig-name descname">get_member</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#Variable.get_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.Variable.get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a variable member by name.</p>
+<p>Only valid if the variable is a struct or union.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Could have overridden the dot operator here, but wary of a
+clash with actual Variable members.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the variable we want.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.Variable.set_debuginfo">
+<code class="sig-name descname">set_debuginfo</code><span class="sig-paren">(</span><em class="sig-param">debuginfo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#Variable.set_debuginfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.Variable.set_debuginfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the debug information for the variable.</p>
+<p>The debuginfo set will be used to better display the variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>debuginfo</strong> – Debug information which will be used to get type
+and enum information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.CoreTypes.Variable.var_to_str">
+<code class="sig-name descname">var_to_str</code><span class="sig-paren">(</span><em class="sig-param">depth=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#Variable.var_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.Variable.var_to_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a structure to a base_name: value string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>depth</strong> (<em>int</em><em>, </em><em>optional</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Core.CoreTypes.insert_spaces">
+<code class="sig-prename descclassname">ACAT.Core.CoreTypes.</code><code class="sig-name descname">insert_spaces</code><span class="sig-paren">(</span><em class="sig-param">input_string</em>, <em class="sig-param">depth_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/CoreTypes.html#insert_spaces"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.CoreTypes.insert_spaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts spaces before each line for a given string.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.CoreUtils.html" class="btn btn-neutral float-right" title="CoreUtils" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.ChipData.html" class="btn btn-neutral" title="ChipData" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

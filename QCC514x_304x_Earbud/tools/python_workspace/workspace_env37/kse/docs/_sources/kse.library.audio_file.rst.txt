@@ -1,0 +1,46 @@
+kse.library.audio\_file package
+===============================
+
+Submodules
+----------
+
+kse.library.audio\_file.audio module
+------------------------------------
+
+.. automodule:: kse.library.audio_file.audio
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.audio\_file.audio\_base module
+------------------------------------------
+
+.. automodule:: kse.library.audio_file.audio_base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.audio\_file.audio\_raw module
+-----------------------------------------
+
+.. automodule:: kse.library.audio_file.audio_raw
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+kse.library.audio\_file.audio\_wav module
+-----------------------------------------
+
+.. automodule:: kse.library.audio_file.audio_wav
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.library.audio_file
+   :members:
+   :undoc-members:
+   :show-inheritance:

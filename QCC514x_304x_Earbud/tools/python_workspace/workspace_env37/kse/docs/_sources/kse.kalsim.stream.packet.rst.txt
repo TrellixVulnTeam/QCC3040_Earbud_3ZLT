@@ -1,0 +1,22 @@
+kse.kalsim.stream.packet package
+================================
+
+Submodules
+----------
+
+kse.kalsim.stream.packet.packetiser module
+------------------------------------------
+
+.. automodule:: kse.kalsim.stream.packet.packetiser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.kalsim.stream.packet
+   :members:
+   :undoc-members:
+   :show-inheritance:

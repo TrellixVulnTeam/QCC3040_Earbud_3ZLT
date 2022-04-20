@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.hydra_service.iso_processing_service &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.hydra_service.iso_processing_service</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.hydra_service.iso_processing_service</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Hydra ISO Processing Services&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">kalcmd2</span> <span class="k">import</span> <span class="n">kalmem_spaces</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.schema</span> <span class="k">import</span> <span class="n">DefaultValidatingDraft4Validator</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.hydra_service.constants</span> <span class="k">import</span> <span class="n">SERVICE_TYPE_SCO_PROCESSING</span><span class="p">,</span> \
+    <span class="n">TIMER_TIME</span><span class="p">,</span> <span class="n">SCO_PROC_SERV_RUN_STATE_MSG</span><span class="p">,</span> <span class="n">SCO_DIR_TO_AIR</span><span class="p">,</span> <span class="n">SCO_DIR_FROM_AIR</span><span class="p">,</span> <span class="n">ENDPOINT_TYPE_ISO</span>
+<span class="kn">from</span> <span class="nn">kats.kalsim.library.period</span> <span class="k">import</span> <span class="n">compute_period</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">get_instance</span>
+
+<span class="n">TIMESLOT_DURATION</span> <span class="o">=</span> <span class="mf">0.000625</span>
+<span class="n">TIMESLOT_DURATION_2</span> <span class="o">=</span> <span class="mf">0.0003125</span>
+<span class="n">TIMESLOT_DURATION_US</span> <span class="o">=</span> <span class="mi">625</span>
+<span class="n">TIMESLOT_FRACTION</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">WALLCLOCK_UPDATE_PERIOD</span> <span class="o">=</span> <span class="mf">0.250</span>
+<span class="n">DUMMY_ANTI_TEAR_COUNTER</span> <span class="o">=</span> <span class="mh">0x4B0</span>
+<span class="n">BT_CLOCK_MAX</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">ISO_INTERVAL_DURATION</span> <span class="o">=</span> <span class="mf">0.00125</span>
+
+<span class="n">SERVICE_TAG</span> <span class="o">=</span> <span class="s1">&#39;service_tag&#39;</span>
+<span class="n">HCI_HANDLE</span> <span class="o">=</span> <span class="s1">&#39;hci_handle&#39;</span>
+<span class="n">FROM_AIR_BUFFER_SIZE</span> <span class="o">=</span> <span class="s1">&#39;from_air_buffer_size&#39;</span>
+<span class="n">WALLCLOCK_ACCURACY</span> <span class="o">=</span> <span class="s1">&#39;wallclock_accuracy&#39;</span>
+<span class="n">WALLCLOCK_HANDLE</span> <span class="o">=</span> <span class="s1">&#39;wallclock_handle&#39;</span>
+<span class="n">WALLCLOCK_OFFSET</span> <span class="o">=</span> <span class="s1">&#39;wallclock_offset&#39;</span>
+<span class="n">BT_CLOCK_VALUE</span> <span class="o">=</span> <span class="s1">&#39;bt_clock_value&#39;</span>
+<span class="n">ENDPOINT_TYPE</span> <span class="o">=</span> <span class="s1">&#39;endpoint_type&#39;</span>
+<span class="n">TO_AIR_BUFFER_SIZE</span> <span class="o">=</span> <span class="s1">&#39;to_air_buffer_size&#39;</span>
+<span class="n">ISO_STREAM_TYPE</span> <span class="o">=</span> <span class="s1">&#39;iso_stream_type&#39;</span>
+<span class="n">ISO_STREAM_TYPE_CIS</span> <span class="o">=</span> <span class="s1">&#39;cis&#39;</span>
+<span class="n">ISO_STREAM_TYPE_BIS</span> <span class="o">=</span> <span class="s1">&#39;bis&#39;</span>
+<span class="n">ISO_STREAM_TYPE_VALUES</span> <span class="o">=</span> <span class="p">{</span><span class="n">ISO_STREAM_TYPE_CIS</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ISO_STREAM_TYPE_BIS</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">ISOAL_FRAMING</span> <span class="o">=</span> <span class="s1">&#39;isoal_framing&#39;</span>
+<span class="n">ISOAL_FRAMING_UNFRAMED</span> <span class="o">=</span> <span class="s1">&#39;unframed&#39;</span>
+<span class="n">ISOAL_FRAMING_FRAMED</span> <span class="o">=</span> <span class="s1">&#39;framed&#39;</span>
+<span class="n">ISOAL_FRAMING_VALUES</span> <span class="o">=</span> <span class="p">{</span><span class="n">ISOAL_FRAMING_UNFRAMED</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ISOAL_FRAMING_FRAMED</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">ISO_INTERVAL</span> <span class="o">=</span> <span class="s1">&#39;iso_interval&#39;</span>
+<span class="n">SDU_INTERVAL_TO_AIR</span> <span class="o">=</span> <span class="s1">&#39;sdu_interval_to_air&#39;</span>
+<span class="n">SDU_INTERVAL_FROM_AIR</span> <span class="o">=</span> <span class="s1">&#39;sdu_interval_from_air&#39;</span>
+<span class="n">MAX_SDU_TO_AIR</span> <span class="o">=</span> <span class="s1">&#39;max_sdu_to_air&#39;</span>
+<span class="n">MAX_SDU_FROM_AIR</span> <span class="o">=</span> <span class="s1">&#39;max_sdu_from_air&#39;</span>
+<span class="n">NEXT_SLOT_TIME</span> <span class="o">=</span> <span class="s1">&#39;next_slot_time&#39;</span>
+<span class="n">CIS_SYNC_DELAY</span> <span class="o">=</span> <span class="s1">&#39;cis_sync_delay&#39;</span>
+<span class="n">STREAM_SYNC_DELAY</span> <span class="o">=</span> <span class="s1">&#39;stream_sync_delay&#39;</span>
+<span class="n">CIG_SYNC_DELAY</span> <span class="o">=</span> <span class="s1">&#39;cig_sync_delay&#39;</span>
+<span class="n">GROUP_SYNC_DELAY</span> <span class="o">=</span> <span class="s1">&#39;group_sync_delay&#39;</span>
+<span class="n">FLUSH_TIMEOUT_TO_AIR</span> <span class="o">=</span> <span class="s1">&#39;flush_timeout_to_air&#39;</span>
+<span class="n">FLUSH_TIMEOUT_FROM_AIR</span> <span class="o">=</span> <span class="s1">&#39;flush_timeout_from_air&#39;</span>
+<span class="n">TO_AIR_LATENCY</span> <span class="o">=</span> <span class="s1">&#39;to_air_latency&#39;</span>
+<span class="n">FROM_AIR_LATENCY</span> <span class="o">=</span> <span class="s1">&#39;from_air_latency&#39;</span>
+<span class="n">SDU_NUMBER</span> <span class="o">=</span> <span class="s1">&#39;sdu_number&#39;</span>
+<span class="n">SDU_NUMBER_TO_AIR</span> <span class="o">=</span> <span class="s1">&#39;sdu_number_to_air&#39;</span>
+<span class="n">SDU_NUMBER_FROM_AIR</span> <span class="o">=</span> <span class="s1">&#39;sdu_number_from_air&#39;</span>
+
+<span class="n">PARAM_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">SERVICE_TAG</span><span class="p">,</span> <span class="n">ISO_INTERVAL</span><span class="p">,</span> <span class="n">CIS_SYNC_DELAY</span><span class="p">,</span> <span class="n">CIG_SYNC_DELAY</span><span class="p">],</span>
+    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1"># create service</span>
+        <span class="n">SERVICE_TAG</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+        <span class="n">HCI_HANDLE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">FROM_AIR_BUFFER_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">WALLCLOCK_ACCURACY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">WALLCLOCK_HANDLE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mh">0x254</span><span class="p">},</span>
+        <span class="n">WALLCLOCK_OFFSET</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">BT_CLOCK_VALUE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;maximum&#39;</span><span class="p">:</span> <span class="n">BT_CLOCK_MAX</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">ENDPOINT_TYPE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">ENDPOINT_TYPE_ISO</span><span class="p">},</span>
+        <span class="n">TO_AIR_BUFFER_SIZE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">ISO_STREAM_TYPE</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">ISO_STREAM_TYPE_CIS</span><span class="p">,</span>
+                          <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ISO_STREAM_TYPE_CIS</span><span class="p">,</span> <span class="n">ISO_STREAM_TYPE_BIS</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+        <span class="n">ISOAL_FRAMING</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">],</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">ISOAL_FRAMING_UNFRAMED</span><span class="p">,</span>
+                        <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ISOAL_FRAMING_UNFRAMED</span><span class="p">,</span> <span class="n">ISOAL_FRAMING_FRAMED</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+        <span class="c1"># set_iso_params</span>
+        <span class="n">ISO_INTERVAL</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;maximum&#39;</span><span class="p">:</span> <span class="mi">3200</span><span class="p">},</span>
+        <span class="n">SDU_INTERVAL_TO_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">SDU_INTERVAL_FROM_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">MAX_SDU_TO_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">MAX_SDU_FROM_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">NEXT_SLOT_TIME</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">CIS_SYNC_DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;exclusiveMinimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="p">},</span>  <span class="c1"># kept for backwards compat</span>
+        <span class="n">STREAM_SYNC_DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;exclusiveMinimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="p">},</span>
+        <span class="n">CIG_SYNC_DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;exclusiveMinimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="p">},</span>  <span class="c1"># kept for backwards compat</span>
+        <span class="n">GROUP_SYNC_DELAY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;exclusiveMinimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="p">},</span>
+        <span class="n">FLUSH_TIMEOUT_TO_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+        <span class="n">FLUSH_TIMEOUT_FROM_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+        <span class="c1"># TODO give possibility of optional and precomputed</span>
+        <span class="n">TO_AIR_LATENCY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">FROM_AIR_LATENCY</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">SDU_NUMBER</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>  <span class="c1"># kept for backwards compat</span>
+        <span class="n">SDU_NUMBER_TO_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">SDU_NUMBER_FROM_AIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;minimum&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1"># pylint: disable=too-many-public-methods</span>
+<div class="viewcode-block" id="HydraIsoProcessingService"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService">[docs]</a><span class="k">class</span> <span class="nc">HydraIsoProcessingService</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Hydra ISO Processing Service</span>
+
+<span class="sd">    This is a hydra service</span>
+<span class="sd">    It supports one bidirectional connection, with from air and to air streams.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        service_tag (int): Hydra service tag. Every service including non iso processing services</span>
+<span class="sd">            should have a unique tag</span>
+<span class="sd">        hci_handle (int): Host Controller Interface handle. This should be a unique number among all</span>
+<span class="sd">            sco/iso processing services. This number is used to create sco endpoints, if not</span>
+<span class="sd">            provided then service_tag value will be used</span>
+<span class="sd">        from_air_buffer_size (int): from-air buffer size in octets, 0 for from air direction unused</span>
+<span class="sd">        wallclock_accuracy (float): Wallclock simulation accuracy in parts per million.</span>
+<span class="sd">        wallclock_handle (int): Wallclock MMU handle, dummy handle, any non zero value is valid</span>
+<span class="sd">        wallclock_offset (int): Wallclock offset in bytes</span>
+<span class="sd">        bt_clock_value (int): Initial bt clock value (2*slots)</span>
+<span class="sd">        endpoint_type (int): Type of endpoint, 0 for sco, 1 for iso</span>
+<span class="sd">        to_air_buffer_size (int): to air buffer size in octets, 0 for to air direction unused</span>
+<span class="sd">        iso_stream_type (str/int): Type of iso stream, 0/&quot;cis&quot; for connected, 1/&quot;bis&quot; for broadcast</span>
+<span class="sd">        isoal_framing (str/int): Type of framing, 0/&quot;unframed&quot; for unframed, 1/&quot;framed&quot; for framed</span>
+<span class="sd">        iso_interval (int): ISO interval in 1.25 msec units, valid values 4 to 3200</span>
+<span class="sd">        sdu_interval_to_air (int): sdu interval for data being transmitted in microseconds</span>
+<span class="sd">        sdu_interval_from_air (int): sdu interval for data being received in microseconds</span>
+<span class="sd">        max_sdu_to_air (int): to-air maximum sdu length in octets</span>
+<span class="sd">        max_sdu_from_air (int): from-air maximum sdu length in octets</span>
+<span class="sd">        next_slot_time (int): Next reserved slot time in bt ticks (2*slots)</span>
+<span class="sd">        cis_sync_delay/stream_sync_delay (int): CIS/BIS synchronization delay in microseconds</span>
+<span class="sd">        cig_sync_delay/group_sync_delay (int): CIG/BIG synchronization delay in microseconds</span>
+<span class="sd">        flush_timeout_to_air (int): Flush timeout for data being transmitted in ISO intervals</span>
+<span class="sd">        flush_timeout_from_air (int): Flush timeout for data being received in ISO intervals</span>
+<span class="sd">        to_air_latency (int): Latency in the to-air direction in microseconds</span>
+<span class="sd">        from_air_latency (int): Latency in the from-air direction in microseconds</span>
+<span class="sd">        sdu_number (int): Initial sequence number (both to air and from air)</span>
+<span class="sd">        sdu_number_to_air (int): Initial to air sequence number, if not supplied use sdu_number</span>
+<span class="sd">        sdu_number_from_air (int): Initial from air sequence number, if not supplied use sdu_number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="n">DefaultValidatingDraft4Validator</span><span class="p">(</span><span class="n">PARAM_SCHEMA</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># helper modules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;uut&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;hydra_protocol&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># configuration values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SERVICE_TAG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hci_handle</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">HCI_HANDLE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_buffer_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FROM_AIR_BUFFER_SIZE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_accuracy</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">WALLCLOCK_ACCURACY</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_handle</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">WALLCLOCK_HANDLE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">WALLCLOCK_OFFSET</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">bt_clock_value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">BT_CLOCK_VALUE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">endpoint_type</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ENDPOINT_TYPE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">to_air_buffer_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">TO_AIR_BUFFER_SIZE</span><span class="p">)</span>
+        <span class="n">iso_stream_type</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ISO_STREAM_TYPE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_stream_type</span> <span class="o">=</span> <span class="n">ISO_STREAM_TYPE_VALUES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iso_stream_type</span><span class="p">,</span> <span class="n">iso_stream_type</span><span class="p">)</span>
+        <span class="n">isoal_framing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ISOAL_FRAMING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">isoal_framing</span> <span class="o">=</span> <span class="n">ISOAL_FRAMING_VALUES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">isoal_framing</span><span class="p">,</span> <span class="n">isoal_framing</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ISO_INTERVAL</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_to_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SDU_INTERVAL_TO_AIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_from_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SDU_INTERVAL_FROM_AIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">max_sdu_to_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MAX_SDU_TO_AIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">max_sdu_from_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MAX_SDU_FROM_AIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">NEXT_SLOT_TIME</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">STREAM_SYNC_DELAY</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">stream_sync_delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">STREAM_SYNC_DELAY</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">stream_sync_delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CIS_SYNC_DELAY</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">GROUP_SYNC_DELAY</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">group_sync_delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">GROUP_SYNC_DELAY</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">group_sync_delay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">CIG_SYNC_DELAY</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">flush_timeout_to_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FLUSH_TIMEOUT_TO_AIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">flush_timeout_from_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FLUSH_TIMEOUT_FROM_AIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">to_air_latency</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">TO_AIR_LATENCY</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_latency</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">FROM_AIR_LATENCY</span><span class="p">)</span>
+        <span class="n">sdu_number</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SDU_NUMBER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_to_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SDU_NUMBER_TO_AIR</span><span class="p">,</span> <span class="n">sdu_number</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_from_air</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">SDU_NUMBER_FROM_AIR</span><span class="p">,</span> <span class="n">sdu_number</span><span class="p">)</span>
+
+        <span class="c1"># calculate/update other parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_period</span> <span class="o">=</span> \
+            <span class="n">WALLCLOCK_UPDATE_PERIOD</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_accuracy</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>  <span class="c1"># data values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># service has not been started</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">channel_ready</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>  <span class="c1"># none of the possible channels are ready yet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># bluetooth wallclock (2*slot)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock_timestamp</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># timer time when bt_clock has last been updated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># timer time when we expect to start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_remain</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># remainder for bluetooth clock (usec units)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_read_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_write_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_aux_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_read_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_write_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_aux_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">msg_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="o">.</span><span class="n">install_message_handler</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_message_received</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;unknown kwargs:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">_message_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hydra message sniffer. Waits for SCO_PROC_SERV_RUN_STATE_MSG messages to detect when</span>
+<span class="sd">        streams are ready</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (list[int]): Message received</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> \
+                <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">SCO_PROC_SERV_RUN_STATE_MSG</span> <span class="ow">and</span> \
+                <span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span><span class="p">:</span>
+
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">SCO_DIR_TO_AIR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">channel_ready</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">frame_length</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;iso service to air ready frame_length:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">frame_length</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">SCO_DIR_FROM_AIR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">channel_ready</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">frame_length</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;iso service from air ready frame_length:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">frame_length</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_wallclock_update_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">TIMESLOT_FRACTION</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span> <span class="o">%=</span> <span class="n">BT_CLOCK_MAX</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_wallclock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span><span class="p">)</span>
+
+        <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_remain</span> <span class="o">=</span> <span class="n">compute_period</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_remain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span>
+            <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wallclock_update_callback</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_wallclock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bt_clock</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update wall clock</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            bt_clock (int): Bluetooth clock value, this clock is half a slot 312.5 usec</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;_update_wallclock bt_clock:</span><span class="si">%s</span><span class="s1"> time:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                       <span class="n">bt_clock</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock_timestamp</span><span class="p">)</span>
+        <span class="n">time_stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">mem_peek</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TIMER_TIME</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">mem_space</span> <span class="o">=</span> <span class="n">kalmem_spaces</span><span class="o">.</span><span class="n">BAC_WINDOW_2</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_offset</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="n">mem_space</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mh">0x0000</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">DUMMY_ANTI_TEAR_COUNTER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="n">mem_space</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mh">0x0002</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">bt_clock</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="n">mem_space</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mh">0x0004</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">bt_clock</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="n">mem_space</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mh">0x0006</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">time_stamp</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="n">mem_space</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mh">0x0008</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">time_stamp</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_start_channel_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">timer_id</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">timer_id</span>
+        <span class="n">callback</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">service_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: ISO service tag&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hci_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: HCI handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hci_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">from_air_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: From air buffer size in octets&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_buffer_size</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wallclock_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;float: Wallclock accuracy in ppm&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_accuracy</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wallclock_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Wallclock handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wallclock_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Wallclock offset&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_offset</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bt_clock_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: BT clock initial value&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">bt_clock_value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">endpoint_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Endpoint type&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">endpoint_type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">to_air_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: To air buffer size in octets&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">to_air_buffer_size</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">iso_stream_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: ISO stream type&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_stream_type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">isoal_framing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: isoal framing stream type&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">isoal_framing</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">iso_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: ISO interval in 1.25 msec units&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">iso_interval_sec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;float: iso interval in seconds&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sdu_interval_to_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: SDU interval to air in usecs&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_to_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sdu_interval_to_air_sec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;float: Get sdu interval to air parameter in seconds&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_to_air</span> <span class="o">/</span> <span class="mf">1e6</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sdu_interval_from_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: SDU interval from air in usecs&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_from_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sdu_interval_from_air_sec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;float: Get sdu interval from air parameter in seconds&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_from_air</span> <span class="o">/</span> <span class="mf">1e6</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_sdu_to_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Max SDU to air in octets&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">max_sdu_to_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_sdu_from_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Max SDU from air in octets&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">max_sdu_from_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">next_slot_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Next slot time in bt ticks&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stream_sync_delay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: CIS/BIS synchronisation delay in usec&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">stream_sync_delay</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">group_sync_delay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: CIG/BIG synchronisation delay in usec&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">group_sync_delay</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flush_timeout_to_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Flush timeout to air in iso interval units&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">flush_timeout_to_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flush_timeout_from_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Flush timeout from air in iso interval units&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">flush_timeout_from_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">to_air_latency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: To air latency in usecs&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">to_air_latency</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">from_air_latency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: From air latency in usecs&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_latency</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sdu_number_to_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Initial to air sdu number&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_to_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sdu_number_from_air</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Initial from air sdu number&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_from_air</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">from_air_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Get ISO processing service from air bac handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_aux_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">from_air_read_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Get ISO processing service from air read bac handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_read_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">from_air_write_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Get ISO processing service from air write bac handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_write_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">to_air_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Get ISO processing service to air bac handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_aux_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">to_air_read_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Get ISO processing service to air read bac handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_read_handle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">to_air_write_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: Get ISO processing service to air read bac handle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_write_handle</span>
+
+<div class="viewcode-block" id="HydraIsoProcessingService.start"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start ISO processing service</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: - If the service has already been started</span>
+<span class="sd">                          - The response payload length is incorrect</span>
+<span class="sd">                          - The response service tag doesn&#39;t match expected value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;service already started&#39;</span><span class="p">)</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">hci_handle</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_buffer_size</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>  <span class="c1"># air_compression_factor is not used in iso</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_handle</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_offset</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">endpoint_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">to_air_buffer_size</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_stream_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">isoal_framing</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="n">service_tag</span><span class="p">,</span> <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="o">.</span><span class="n">start_service</span><span class="p">(</span>
+            <span class="n">SERVICE_TYPE_SCO_PROCESSING</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start response length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">service_tag</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start response service tag:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">service_tag</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_read_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_write_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">to_air_aux_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_read_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_write_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">from_air_aux_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+        <span class="c1"># start wall clock simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">bt_clock_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_wallclock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_remain</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_remain</span> <span class="o">=</span> <span class="n">compute_period</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_remain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span>
+            <span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wallclock_update_callback</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraIsoProcessingService.config"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.config">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Configure ISO processing service&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_iso_parameters iso service not started&#39;</span><span class="p">)</span>
+
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span>
+        <span class="n">timestamp_clock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock_timestamp</span>
+        <span class="n">bt_clock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">bt_clock</span> <span class="o">+</span> <span class="p">(</span><span class="n">timestamp</span> <span class="o">-</span> <span class="n">timestamp_clock</span><span class="p">)</span> <span class="o">/</span> <span class="n">TIMESLOT_DURATION_2</span>
+
+        <span class="c1"># timestamp when we expect to start streaming (if possible)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span> <span class="o">=</span> <span class="n">timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_latency</span> <span class="o">*</span> <span class="mf">1e-6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span> <span class="o">/</span> <span class="n">TIMESLOT_DURATION_2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">1e6</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_accuracy</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e6</span>
+
+        <span class="c1"># next_slot_time is the bt clock when we expect to start streaming (if possible)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span>
+            <span class="n">bt_clock</span> <span class="o">+</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_latency</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">/</span> <span class="n">TIMESLOT_DURATION_2</span> <span class="o">+</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;iso service set iso params tstamp:</span><span class="si">%f</span><span class="s1"> bt_clock:</span><span class="si">%d</span><span class="s1"> desired next_slot_time:</span><span class="si">%s</span><span class="s1"> tstamp:</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="p">,</span> <span class="n">bt_clock</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span><span class="p">)</span>
+
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;iso_interval&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span><span class="p">,</span>
+            <span class="s1">&#39;sdu_interval_to_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_to_air</span><span class="p">,</span>
+            <span class="s1">&#39;sdu_interval_from_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_from_air</span><span class="p">,</span>
+            <span class="s1">&#39;max_sdu_to_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">max_sdu_to_air</span><span class="p">,</span>
+            <span class="s1">&#39;max_sdu_from_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">max_sdu_from_air</span><span class="p">,</span>
+            <span class="s1">&#39;next_slot_time&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">next_slot_time</span><span class="p">,</span>
+            <span class="s1">&#39;stream_sync_delay&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">stream_sync_delay</span><span class="p">,</span>
+            <span class="s1">&#39;group_sync_delay&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">group_sync_delay</span><span class="p">,</span>
+            <span class="s1">&#39;flush_timeout_to_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">flush_timeout_to_air</span><span class="p">,</span>
+            <span class="s1">&#39;flush_timeout_from_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">flush_timeout_from_air</span><span class="p">,</span>
+            <span class="s1">&#39;to_air_latency&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">to_air_latency</span><span class="p">,</span>
+            <span class="s1">&#39;from_air_latency&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">from_air_latency</span><span class="p">,</span>
+            <span class="s1">&#39;sdu_number_to_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_to_air</span><span class="p">,</span>
+            <span class="s1">&#39;sdu_number_from_air&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_from_air</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="o">.</span><span class="n">set_iso_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraIsoProcessingService.stop"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop ISO processing service</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If the service as not been previously started</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stop iso service not started&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_cancel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">wallclock_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="o">.</span><span class="n">stop_service</span><span class="p">(</span><span class="n">SERVICE_TYPE_SCO_PROCESSING</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_tag</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="HydraIsoProcessingService.check_started"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.check_started">[docs]</a>    <span class="k">def</span> <span class="nf">check_started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if the ISO processing service is started</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Service already started</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">started</span></div>
+
+<div class="viewcode-block" id="HydraIsoProcessingService.get_buffer_stats"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.get_buffer_stats">[docs]</a>    <span class="k">def</span> <span class="nf">get_buffer_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get buffer statistics</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                int: Used bytes</span>
+<span class="sd">                int: Free bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">hydra_prot</span><span class="o">.</span><span class="n">get_buffer_stats</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="HydraIsoProcessingService.start_channel"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.start_channel">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Request callback to be invoked when a given channel is ready to start streaming</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            channel (int): 0 for to air, 1 for from air</span>
+<span class="sd">            callback (func): Callback to be called when the service is ready to start streaming</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># verify channel is ready to start</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">channel_ready</span><span class="p">[</span><span class="n">channel</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start channel:</span><span class="si">%s</span><span class="s1"> channel not ready&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+
+        <span class="c1"># get timestamp</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_get_time</span><span class="p">()</span>
+        <span class="n">timestamp_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">timestamp_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;iso service start_channel timestamp:</span><span class="si">%f</span><span class="s1"> timestamp_start:</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span>
+                       <span class="n">timestamp</span><span class="p">,</span> <span class="n">timestamp_start</span><span class="p">)</span>
+
+        <span class="n">timestamp_delta</span> <span class="o">=</span> <span class="n">timestamp</span> <span class="o">-</span> <span class="n">timestamp_start</span>
+        <span class="k">if</span> <span class="n">timestamp_delta</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">interval</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp_delta</span> <span class="o">/</span>
+                               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span> <span class="o">*</span> <span class="n">ISO_INTERVAL_DURATION</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s1">&#39;iso service start_channel timestamp:</span><span class="si">%f</span><span class="s1"> already passed, adding iso intervals:</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">timestamp_start</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span> <span class="o">*</span> <span class="n">ISO_INTERVAL_DURATION</span><span class="p">)</span>
+            <span class="n">delta</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">1e6</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">wallclock_accuracy</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e6</span>
+            <span class="n">timestamp_start</span> <span class="o">+=</span> <span class="n">delta</span>
+
+            <span class="c1"># update sdu to air initial value accounting for the delay</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_to_air</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_to_air</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span>
+                    <span class="n">interval</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span> <span class="o">*</span> <span class="n">ISO_INTERVAL_DURATION</span> <span class="o">/</span> <span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_to_air</span> <span class="o">*</span> <span class="mf">1e-6</span><span class="p">))</span>
+
+            <span class="c1"># update sdu from air initial value accounting for the delay</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_from_air</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_number_from_air</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span>
+                    <span class="n">interval</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">iso_interval</span> <span class="o">*</span> <span class="n">ISO_INTERVAL_DURATION</span> <span class="o">/</span> <span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">sdu_interval_from_air</span> <span class="o">*</span> <span class="mf">1e-6</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;iso service start_channel start timestamp:</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">timestamp_start</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helper</span><span class="o">.</span><span class="n">uut</span><span class="o">.</span><span class="n">timer_add_absolute</span><span class="p">(</span>
+            <span class="n">timestamp_start</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_start_channel_callback</span><span class="p">,</span> <span class="n">callback</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

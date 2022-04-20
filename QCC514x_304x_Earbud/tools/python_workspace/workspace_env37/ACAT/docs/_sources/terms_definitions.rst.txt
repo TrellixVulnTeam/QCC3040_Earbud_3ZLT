@@ -1,0 +1,40 @@
+Terms and Definitions
+=====================
+
+
+.. list-table::
+    :widths: 20 70
+    :header-rows: 1
+
+    * - Term
+      - Definition
+    * - ACAT
+      - Audio Coredump Analysis Tool
+    * - CBOP
+      - Circular Buffer Operator
+    * - Cbuffer
+      - Circular Buffer
+    * - DM
+      - Data Memory
+    * - DSP
+      - Digital Signal Processor
+    * - FP
+      - Frame Pointer
+    * - HTML
+      - Hyper Text Mark-up Language
+    * - MIPS
+      - Mega Instructions per Second
+    * - NVMEM
+      - Non-Volatile Memory
+    * - PC
+      - Program Counter
+    * - PCM
+      - Pulse-Code Modulation
+    * - PM
+      - Program Memory
+    * - RAM
+      - Random-Access Memory
+    * - SCO
+      - Synchronous Connection-Oriented
+    * - SP
+      - Stack Pointer

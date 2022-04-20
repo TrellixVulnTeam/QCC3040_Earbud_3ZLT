@@ -1,0 +1,8 @@
+
+IPC
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.IPC``.
+
+.. automodule:: ACAT.Analysis.IPC
+   :members:

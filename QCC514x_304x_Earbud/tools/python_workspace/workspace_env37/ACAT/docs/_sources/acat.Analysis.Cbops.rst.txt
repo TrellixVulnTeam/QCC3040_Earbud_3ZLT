@@ -1,0 +1,8 @@
+
+Cbops
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Cbops``.
+
+.. automodule:: ACAT.Analysis.Cbops
+   :members:

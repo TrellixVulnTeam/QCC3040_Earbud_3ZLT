@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PCM streams and BASIC_PASS operator &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="Graph examples" href="examples.html"/>
+        <link rel="next" title="L2CAP stream and RTP_DECODE and SBC_DECODER operator" href="example_rtp.html"/>
+        <link rel="prev" title="ADK" href="example_adk.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Shell</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="examples.html">Graph examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="example_adk.html">ADK</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PCM streams and BASIC_PASS operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_rtp.html">L2CAP stream and RTP_DECODE and SBC_DECODER operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_sbc.html">FILE stream and SBC_DECODER operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_htbp.html">TESTER stream and BASIC_PASS operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_rg.html">Unsolicited accmd messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_acat_profiler.html">Getting profiler information with ACAT</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">Command-line tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+        <li><a href="examples.html">Graph examples</a> &raquo;</li>
+      
+    <li>PCM streams and BASIC_PASS operator</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/example_bp.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pcm-streams-and-basic-pass-operator">
+<span id="graph-bp"></span><h1>PCM streams and BASIC_PASS operator<a class="headerlink" href="#pcm-streams-and-basic-pass-operator" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/pt.svg" src="_images/pt.svg" /><p>This example uses the config file <code class="docutils literal notranslate"><span class="pre">pt.cfg.json</span></code> which is located in the
+<code class="docutils literal notranslate"><span class="pre">config</span></code> directory in your project workspace.
+The config file holds the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;tmp/pt_0.wav&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;endpoint&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sync_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_rising_edge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_mode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_slot_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_format&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_clock_rate&quot;</span><span class="p">:</span> <span class="mi">512000</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sync_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_rising_edge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_mode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_slot_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_format&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_clock_rate&quot;</span><span class="p">:</span> <span class="mi">512000</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;BASIC_PASS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;CHANGE_INPUT_DATA_TYPE&quot;</span><span class="p">,</span>
+                    <span class="p">[</span>
+                        <span class="mi">1</span>
+                    <span class="p">]</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;CHANGE_OUTPUT_DATA_TYPE&quot;</span><span class="p">,</span>
+                    <span class="p">[</span>
+                        <span class="mi">1</span>
+                    <span class="p">]</span>
+                <span class="p">]</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;graph&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;stream0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;endpoint0&quot;</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;endpoint0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;operator0i0&quot;</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;operator0o0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;endpoint1&quot;</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;endpoint1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;stream1&quot;</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In KSE shell, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kse.framework.library.file_util</span> <span class="k">import</span> <span class="n">load</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s1">&#39;config/pt.cfg.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting file named <code class="docutils literal notranslate"><span class="pre">pt_0.wav</span></code> is located in the <code class="docutils literal notranslate"><span class="pre">tmp</span></code> directory.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="example_rtp.html" class="btn btn-neutral float-right" title="L2CAP stream and RTP_DECODE and SBC_DECODER operator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="example_adk.html" class="btn btn-neutral" title="ADK" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

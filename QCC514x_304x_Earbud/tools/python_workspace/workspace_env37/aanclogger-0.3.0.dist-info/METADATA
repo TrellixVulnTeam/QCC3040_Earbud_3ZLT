@@ -1,0 +1,55 @@
+Metadata-Version: 2.1
+Name: aanclogger
+Version: 0.3.0
+Summary: A wrapper around ACAT to log AANC data
+Home-page: http://www.qualcomm.com/
+Author: Qualcomm
+Author-email: 
+Maintainer: 
+Maintainer-email: 
+License: Other/Proprietary License
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Customer Service
+Classifier: Intended Audience :: DevelopersIntended Audience :: Information Technology
+Classifier: Intended Audience :: Manufacturing
+Classifier: Intended Audience :: Telecommunications Industry
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.7
+Requires-Python: >=3.7, <3.8
+Requires-Dist: jsonschema (<4,>=2.6.0)
+Requires-Dist: matplotlib (<3.4,>=3.2.1)
+Requires-Dist: ACAT (<2,>=1.9.5)
+
+AANC ACAT Logging Tool
+===============================
+
++-----------------+------------------------------+
+| Version number: | 0.3.0   |
++-----------------+------------------------------+
+| Author:         | Qualcomm |
++-----------------+------------------------------+
+
+Overview
+--------
+
+A wrapper around ACAT to log AANC data
+
+Installation / Usage
+--------------------
+
+To install clone the repo::
+
+    $ git clone https://github.qualcomm.com/ltunmer/aanclogger.git
+
+and run the ``setup.py``::
+
+    $ cd aanclogger
+    $ python setup.py install
+
+
+
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="bt_device_handover">
+    <include_header name="csrtypes.h"/>
+    <include_header name="marshal_common.h"/>
+    <include_header name="bt_device_typedef.h"/>
+    <include_header name="domain_marshal_types.h"/>
+
+    <source>
+    </source>
+
+    <typedef_header_source>
+<!-- Alias audio/voice types to uint8 type -->
+#define MARSHAL_TYPE_audio_source_t MARSHAL_TYPE_uint8
+#define MARSHAL_TYPE_voice_source_t MARSHAL_TYPE_uint8
+    </typedef_header_source>
+    <source>
+#ifndef HOSTED_TEST_ENVIRONMENT
+COMPILE_TIME_ASSERT(sizeof(audio_source_t) == sizeof(uint8), audio_source_t_is_not_the_same_size_as_uint8);
+COMPILE_TIME_ASSERT(sizeof(voice_source_t) == sizeof(uint8), voice_source_t_is_not_the_same_size_as_uint8);
+#endif
+    </source>
+
+    <typedef_struct name="bt_device_handover_t" doc="Device data to marshal during handover">
+
+        <member marshal="true" doc="Persistent device data">bt_device_pdd_t pdd</member>
+        <member marshal="true" doc="Bitmap of currently connected profiles">uint32 connected_profiles</member>
+        <member marshal="true" doc="Audio source associated with the device">audio_source_t audio_source</member>
+        <member marshal="true" doc="Voice source associated with the device">voice_source_t voice_source</member>
+    </typedef_struct>
+
+</types>

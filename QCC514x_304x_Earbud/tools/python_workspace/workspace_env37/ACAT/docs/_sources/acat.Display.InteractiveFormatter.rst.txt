@@ -1,0 +1,8 @@
+
+InteractiveFormatter
+==========================================================================
+
+This module can be imported from ``ACAT.Display.InteractiveFormatter``.
+
+.. automodule:: ACAT.Display.InteractiveFormatter
+   :members:

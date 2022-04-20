@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.hydra_service.protocol &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.hydra_service.protocol</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.hydra_service.protocol</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Hydra Control and Configuration protocol for kalsim firmware&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span><span class="p">,</span> <span class="n">log_output</span><span class="p">,</span> <span class="n">log_input_output</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="k">import</span> <span class="n">SYSTEM_BUS_APPS_SYS</span><span class="p">,</span> <span class="n">START_SERVICE_REQ</span><span class="p">,</span> <span class="n">START_SERVICE_RESP</span><span class="p">,</span> \
+    <span class="n">STATUS_OK</span><span class="p">,</span> <span class="n">STOP_SERVICE_REQ</span><span class="p">,</span> <span class="n">STOP_SERVICE_RESP</span><span class="p">,</span> <span class="n">PANIC_REPORT</span><span class="p">,</span> <span class="n">FAULT_REPORT</span><span class="p">,</span> \
+    <span class="n">SET_SCO_PARAMS_REQ</span><span class="p">,</span> <span class="n">SET_SCO_PARAMS_RESP</span><span class="p">,</span> <span class="n">BUS_INT_STATUS</span><span class="p">,</span> <span class="n">INT_SOURCE_TBUS_MSG_ADPTR_EVENT</span><span class="p">,</span> \
+    <span class="n">SSSM_SERVICE_ADVICE_IND</span><span class="p">,</span> <span class="n">FTP_SERV_TO_FW_CTRL</span><span class="p">,</span> <span class="n">FTP_SERV_TO_FW_DATA</span><span class="p">,</span> <span class="n">LMGR_SERVICE_START_RESP</span><span class="p">,</span> \
+    <span class="n">LMGR_LICENSE_QUERY_RESP</span><span class="p">,</span> <span class="n">SET_ISO_PARAMS_REQ</span><span class="p">,</span> <span class="n">SET_ISO_PARAMS_RESP</span>
+
+<span class="n">TIMER_KICK_COMPLETED</span> <span class="o">=</span> <span class="mf">0.0005</span>
+
+
+<div class="viewcode-block" id="HydraProtocol"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol">[docs]</a><span class="k">class</span> <span class="nc">HydraProtocol</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Hydra Messaging Protocol handler</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uut (kats.core.uut_base.UutBase): Uut abstraction instance</span>
+<span class="sd">        subsystem (int): Subsystem ID</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uut</span><span class="p">,</span> <span class="n">subsystem</span><span class="o">=</span><span class="n">SYSTEM_BUS_APPS_SYS</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">uut</span> <span class="o">=</span> <span class="n">uut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span> <span class="o">=</span> <span class="n">uut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subsystem</span> <span class="o">=</span> <span class="n">subsystem</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kick_pending</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_register_handler</span><span class="p">([</span><span class="n">subsystem</span><span class="p">])</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_kick</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kick_pending</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kick</span><span class="p">()</span>
+
+    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_can_kick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="c1"># return self._uut.mem_peek(1, BUS_INT_STATUS, 4) == 0</span>
+
+    <span class="k">def</span> <span class="nf">_kick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">status_to_kick</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kick_pending</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">mem_poke</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">BUS_INT_STATUS</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">status_to_kick</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">interrupt</span><span class="p">(</span><span class="n">INT_SOURCE_TBUS_MSG_ADPTR_EVENT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="n">TIMER_KICK_COMPLETED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer_callback</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HydraProtocol.install_message_handler"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.install_message_handler">[docs]</a>    <span class="k">def</span> <span class="nf">install_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Install message handler for hydra services</span>
+
+<span class="sd">        If filter is provided then it will be evaluated and the handler only called if the</span>
+<span class="sd">        filter returns True</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (func(list[int])): Message reception callback</span>
+<span class="sd">            flt (func): Filtering function receiving one parameter being the message received and</span>
+<span class="sd">                returning True if the message is accepted in the filter, False otherwise</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Message handler</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_register_handler</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_subsystem</span><span class="p">],</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">flt</span><span class="o">=</span><span class="n">flt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.uninstall_message_handler"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.uninstall_message_handler">[docs]</a>    <span class="k">def</span> <span class="nf">uninstall_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unregister previously register accmd messsage handler</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (dict): Message handler</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_unregister_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.start_service"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.start_service">[docs]</a>    <span class="nd">@log_input_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                      <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;service_type&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">start_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_type</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start a hydra service</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            service_type (int): Service type</span>
+<span class="sd">            payload (list[int]): Specific service payload data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                int: Service tag</span>
+<span class="sd">                list[int]: Service payload</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">payload</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span><span class="n">START_SERVICE_REQ</span><span class="p">,</span> <span class="n">service_type</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)]</span> <span class="o">+</span> <span class="n">payload</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start_service response length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">START_SERVICE_RESP</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start_service response cmd_id:</span><span class="si">%04x</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">STATUS_OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start_service response status:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">4</span><span class="p">:]):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start_service response length:</span><span class="si">%s</span><span class="s1"> does not match message </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                               <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">4</span><span class="p">:]))</span>
+
+        <span class="n">service_tag</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">service_tag</span><span class="p">,</span> <span class="n">payload</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.stop_service"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.stop_service">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;service_type&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">stop_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_type</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop a hydra service</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            service_type (int): Service type</span>
+<span class="sd">            service_tag int): Service tag obtained in start_service</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError if the stop_service response is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span><span class="n">STOP_SERVICE_REQ</span><span class="p">,</span> <span class="n">service_type</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stop_service response length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">STOP_SERVICE_RESP</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stop_service response cmd_id:</span><span class="si">%04x</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">service_tag</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stop_service response service tag:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">STATUS_OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;stop_service response status:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.set_sco_params"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.set_sco_params">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_sco_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set SCO parameters for service instance identified by service_tag</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            service_tag (int): Service tag obtained in start_service</span>
+<span class="sd">            tesco (uint16): SPS BT link TeSCO, the interval between transmissions in slots</span>
+<span class="sd">            wesco (uint16): SPS BT link WeSCO, the retransmission window in slots</span>
+<span class="sd">            to_air_length (uint16): SPS to-air packet length in octets</span>
+<span class="sd">            from_air_length (uint16): SPS from-air packet length in octets</span>
+<span class="sd">            next_slot_time (uint32): BT clock of first packet to be received from-air</span>
+<span class="sd">                                     (this is received in a field of metadata)</span>
+<span class="sd">            to_air_latency (int): interval to/from the start of first reserved slot when the audio</span>
+<span class="sd">                                  graph should have data ready for transmission in microseconds</span>
+<span class="sd">            from_air_latency (int): interval to/from the start of first reserved slot when data</span>
+<span class="sd">                                    should be ready for the audio graph to process in microseconds</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError if the set_sco_params response is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">SET_SCO_PARAMS_REQ</span><span class="p">,</span>
+            <span class="n">service_tag</span><span class="p">,</span>
+            <span class="mi">8</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;tesco&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;wesco&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;to_air_length&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;from_air_length&#39;</span><span class="p">],</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;next_slot_time&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;next_slot_time&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;to_air_latency&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;from_air_latency&#39;</span><span class="p">],</span>
+        <span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_sco_params response length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">SET_SCO_PARAMS_RESP</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_sco_params response cmd_id:</span><span class="si">%04x</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">service_tag</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_sco_params response service tag:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">STATUS_OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_sco_params response status:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.set_iso_params"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.set_iso_params">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_iso_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set ISO parameters for service instance identified by service_tag</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            service_tag (int): Service tag obtained in start_service</span>
+<span class="sd">            iso_interval (uint16): Fundamental interval between air events, in BT slot-pairs</span>
+<span class="sd">                (units of 1.25ms). [valid values 4-3200]</span>
+<span class="sd">            sdu_interval_to_air (uint32): SDU interval for data being transmitted, in microseconds</span>
+<span class="sd">                [20 bits significant]</span>
+<span class="sd">            sdu_interval_from_air (uint32): SDU interval for data being received, in microseconds</span>
+<span class="sd">                [20 bits significant]</span>
+<span class="sd">            max_sdu_to_air (uint16): maximum SDU length, in octets [uint16, 12 bits significant]</span>
+<span class="sd">            max_sdu_from_air (uint16): maximum SDU length, in octets [uint16, 12 bits significant]</span>
+<span class="sd">            next_slot_time (uint32): next reserved slot time in BT ticks (312.5 us)</span>
+<span class="sd">            stream_sync_delay (uint32): CIS/BIS Synchronisation Delay in microseconds</span>
+<span class="sd">            group_sync_delay (uint32): CIG/BIG Synchronisation Delay in microseconds</span>
+<span class="sd">            flush_timeout_to_air (uint16): Flush timeout for data being tx, in ISO intervals</span>
+<span class="sd">            flush_timeout_from_air (uint16): Flush timeout for data being received, in ISO intervals</span>
+<span class="sd">            to_air_latency (uint32): latency in the to-air direction, in microseconds</span>
+<span class="sd">            from_air_latency (uint32): latency in the from-air direction, in microseconds</span>
+<span class="sd">            sdu_number_to_air (uint16): sequence number of first SDU, integer (unused for now,</span>
+<span class="sd">                leave 0)</span>
+<span class="sd">            sdu_number_from_air (uint16): sequence number of first SDU, integer (unused for now,</span>
+<span class="sd">                leave 0)</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError if the set_iso_params response is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">SET_ISO_PARAMS_REQ</span><span class="p">,</span>
+            <span class="n">service_tag</span><span class="p">,</span>
+            <span class="mi">21</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;iso_interval&#39;</span><span class="p">],</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sdu_interval_to_air&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sdu_interval_to_air&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sdu_interval_from_air&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sdu_interval_from_air&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;max_sdu_to_air&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;max_sdu_from_air&#39;</span><span class="p">],</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;next_slot_time&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;next_slot_time&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;stream_sync_delay&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;stream_sync_delay&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;group_sync_delay&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;group_sync_delay&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;flush_timeout_to_air&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;flush_timeout_from_air&#39;</span><span class="p">],</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;to_air_latency&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;to_air_latency&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;from_air_latency&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;from_air_latency&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sdu_number_to_air&#39;</span><span class="p">],</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sdu_number_from_air&#39;</span><span class="p">],</span>
+        <span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_iso_params response length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">SET_ISO_PARAMS_RESP</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_iso_params response cmd_id:</span><span class="si">%04x</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">service_tag</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_iso_params response service tag:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">STATUS_OK</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;set_iso_params response status:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send_service_advice_indication"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send_service_advice_indication">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">send_service_advice_indication</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send service advice indication&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="p">[</span><span class="n">SSSM_SERVICE_ADVICE_IND</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send_ftp_server_to_fw_control"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send_ftp_server_to_fw_control">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">send_ftp_server_to_fw_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send ftp server message control path</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message to send</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="p">[</span><span class="n">FTP_SERV_TO_FW_CTRL</span><span class="p">]</span> <span class="o">+</span> <span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send_ftp_server_to_fw_data"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send_ftp_server_to_fw_data">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">send_ftp_server_to_fw_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send ftp server message data path</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload (list[int]): Message to send</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="p">[</span><span class="n">FTP_SERV_TO_FW_DATA</span><span class="p">]</span> <span class="o">+</span> <span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send_license_start_response"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send_license_start_response">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+               <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ccp_header&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;service_tag&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">send_license_start_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ccp_header</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start response from license manager</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ccp_header (int): CCP Header</span>
+<span class="sd">            service_tag (int): Service tag</span>
+<span class="sd">            payload (list[int]): Message to send</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">payload</span> <span class="k">else</span> <span class="n">payload</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span>
+                               <span class="p">[</span><span class="n">LMGR_SERVICE_START_RESP</span><span class="p">,</span> <span class="n">ccp_header</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">]</span> <span class="o">+</span> <span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send_license_query_response"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send_license_query_response">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+               <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ccp_header&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;service_tag&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">send_license_query_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ccp_header</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Response to license query from license manager</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ccp_header (int): CCP Header</span>
+<span class="sd">            service_tag (int): Service tag</span>
+<span class="sd">            status (int): License status</span>
+<span class="sd">            payload (list[int]): Message to send</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span>
+                               <span class="p">[</span><span class="n">LMGR_LICENSE_QUERY_RESP</span><span class="p">,</span> <span class="n">ccp_header</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">,</span> <span class="n">status</span><span class="p">]</span> <span class="o">+</span> <span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.kick"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.kick">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">kick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_to_kick</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Kick firmware</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            status_to_kick (int): Buffer to kick</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">status_to_kick</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kick_pending</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kick_pending</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status_to_kick</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;trying to kick without previous acknowledgement&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_kick</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kick</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send">[docs]</a>    <span class="nd">@log_input_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a generic hydra service message</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (list[int]): Message payload</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.send_recv"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.send_recv">[docs]</a>    <span class="nd">@log_input_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">send_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send a generic hydra service message and get a response</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (list[int]): Message payload</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Message payload</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraProtocol.recv"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol.recv">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="s1">&#39;0x</span><span class="si">%04x</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">recv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receive a hydra service message</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[int]: Message payload</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uut</span><span class="o">.</span><span class="n">message_recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_header</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">PANIC_REPORT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;received firmware panic report id:0x</span><span class="si">%04x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">FAULT_REPORT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;received firmware fault report id:0x</span><span class="si">%04x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">response</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

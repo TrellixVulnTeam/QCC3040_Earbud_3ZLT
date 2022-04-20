@@ -1,0 +1,8 @@
+
+Graphviz
+==========================================================================
+
+This module can be imported from ``ACAT.Core.Graphviz``.
+
+.. automodule:: ACAT.Core.Graphviz
+   :members:

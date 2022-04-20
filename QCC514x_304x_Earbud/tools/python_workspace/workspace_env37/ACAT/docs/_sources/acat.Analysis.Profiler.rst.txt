@@ -1,0 +1,8 @@
+
+Profiler
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Profiler``.
+
+.. automodule:: ACAT.Analysis.Profiler
+   :members:

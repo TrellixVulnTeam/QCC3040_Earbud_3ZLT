@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid></uuid>
+        <devkit></devkit>
+        <checksum></checksum>
+        <version></version>
+        <build></build>
+        <target>amd64</target>
+    </ext_id>
+    <ext_info>
+        <name>Application Configuration</name>
+        <description>Configuration used by Sink and other Applications</description>
+    </ext_info>
+
+    <configurations type="move">
+        <!-- lists old configurations and their new name -->
+        <deprecated>
+            <configuration name="debug">application</configuration>
+            <configuration name="makefile">makefile_project</configuration>
+        </deprecated>
+        <!-- named configuration -->
+        <configuration name="application">
+            <!-- identify which properties are used by IDE -->
+            <mappings>
+                <mapping name="DEFINES">DEFS</mapping>
+                <mapping name="PATHS">INCPATHS</mapping>
+                <mapping name="PRIVATE_DEFINES">PRIVATE_DEFS</mapping>
+                <mapping name="PRIVATE_PATHS">PRIVATE_INCPATHS</mapping>
+                <mapping name="PRE_INC">PRE_INCLUDES</mapping>
+                <mapping name="DEBUGCORE">DBG_CORE</mapping>
+            </mappings>
+
+            <property name="DEFS">
+                <description>Define Macros</description>
+                <default>__KALIMBA__ HAVE_32BIT_DATA_WIDTH INSTALL_HYDRA_LOG BLUELAB HYDRACORE</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="INCPATHS">
+                <description>Include Paths</description>
+                <default></default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="PRE_INCLUDES">
+                <description>Include Paths</description>
+                <default>hydra_types.h hydra_macros.h hydra_dev.h</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="PRIVATE_INCPATHS">
+                <description>Include Paths (private)</description>
+                <default>sdk://tools/kcc/include sdk://tools/kcc/include/target32</default>
+                <permission>hidden</permission>
+            </property>
+
+            <property name="PRIVATE_DEFS">
+                <description>Define Macros (private)</description>
+                <default></default>
+                <permission>hidden</permission>
+            </property>
+
+            <property name="LIBPATHS">
+                <description>Libraries location paths</description>
+                <default></default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="DEFAULT_LIBS">
+                <description>Libraries to link by default</description>
+                <default>usb_early_init</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="BUILD_ID">
+                <description>Build id generation script</description>
+                <default>sdk://tools/ubuild/maker/buildid/examples/timestamp.py</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="CHIP_TYPE">
+                <description>Target part number</description>
+                <default></default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="PRESERVED_LIBS">
+                <description>Libraries to link in full</description>
+                <default></default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="STRIP_SYMBOLS">
+                <description>Strip symbols</description>
+                <default>FALSE</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="EXTRA_WARNINGS">
+                <description>Enable extra compiler warnings</description>
+                <default>FALSE</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="DBG_CORE">
+                <description>Core assigned to the application</description>
+                <default>app\p1</default>
+                <permission>read-only</permission>
+            </property>
+        </configuration>
+
+        <configuration name="prebuilt_image">
+            <!-- property example with simple argument -->
+            <property name="BUILD_TYPE">
+                <description>Build Type</description>
+                <default>DO_NOT_BUILD</default>
+                <permission>hidden</permission>
+            </property>
+
+            <property name="SUBSYSTEM_NAME">
+                <description>Name of subsystem this file is an image for</description>
+                <default/>
+                <permission>read-only</permission>
+            </property>
+
+            <property name="OUTPUT_TYPE">
+                <description>Output Type</description>
+                <default>NONE</default>
+                <permission>hidden</permission>
+            </property>
+        </configuration>
+
+        <configuration name="filesystem">
+            <property name="TYPE">
+                <description>Type of filesystem - "config_filesystem", "user_ps" or "customer_ro"</description>
+                <default>firmware_config</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="system_label">
+                <description>System label in SDB file</description>
+                <default/>
+                <permission>hidden</permission>
+            </property>
+        </configuration>
+
+        <configuration name="makefile_project">
+            <!-- identify which properties are used by IDE -->
+            <mappings>
+                <mapping name="DEFINES">DEFS</mapping>
+                <mapping name="PATHS">INCPATHS</mapping>
+                <mapping name="PRIVATE_DEFINES">PRIVATE_DEFS</mapping>
+                <mapping name="PRIVATE_PATHS">PRIVATE_INCPATHS</mapping>
+                <mapping name="PRE_INC">PRE_INCLUDES</mapping>
+                <mapping name="DEBUGCORE">DBG_CORE</mapping>
+            </mappings>
+
+            <!-- property example with simple argument -->
+            <property name="BUILD_TYPE">
+                <description>Build Type</description>
+                <default>DEBUG</default>
+                <permission>read-only</permission>
+            </property>
+
+            <property name="MAKEFILE_TO_CALL">
+                <description>Path to makefile to use (relative to project file)</description>
+                <default>Makefile</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="BUILD_ARGUMENTS">
+                <description>Additional info to pass to makefile for build</description>
+                <default></default>
+                <permission>read-write</permission>
+            </property>
+            
+            <property name="CLEAN_ARGUMENTS">
+                <description>Additional info to pass to makefile for clean</description>
+                <default></default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="PRE_INCLUDES">
+                <description>Include Paths</description>
+                <default>hydra_types.h hydra_macros.h hydra_dev.h</default>
+                <permission>read-write</permission>
+            </property>
+
+            <property name="PRIVATE_INCPATHS">
+                <description>Include Paths (private)</description>
+                <default>sdk://tools/kcc/include sdk://tools/kcc/include/target32</default>
+                <permission>hidden</permission>
+            </property>
+
+        </configuration>
+    </configurations>
+</root>

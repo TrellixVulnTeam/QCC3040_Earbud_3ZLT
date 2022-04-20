@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid>1D83B424-D84D-4B5D-97B3-72F58CEEF606</uuid>
+        <target>amd64</target>
+    </ext_id>
+    <ext_info>
+        <name>ACAT Tab</name>
+        <description>Adds an ACAT debug tab</description>
+        <build>64</build>
+    </ext_info>
+    <plugins type="move">
+        <tabs type="move">
+            <tab name="ACAT">
+                <type>commandline</type>
+                <prompt>> </prompt>
+                <!-- define a command completion block -->
+                <completer>
+                    <!-- text sent to initialize completer -->
+                    <init>
+                        <text>import rlcompleter</text>
+                        <text>MDEcompleter = rlcompleter.Completer(locals())</text>
+                        <text>MDEcompleter.complete('.',0)</text>
+                    </init>
+
+                    <!-- text sent based on what's typing to get matches.  * = any %1 = fragment of command user typed -->
+                    <matches>
+                        <match name=".">print(MDEcompleter.attr_matches('%1'))</match>
+                        <match name="*">print(MDEcompleter.global_matches('%1'))</match>
+                    </matches>
+
+                    <!-- text sent to gracefully close -->
+                    <finish>
+                        <text>quit()</text>
+                    </finish>
+
+                    <!-- special rules based on what's typed (currently just to ignore) -->
+                    <rules>
+                        <ignore>quit()</ignore>
+                        <ignore>exit()</ignore>
+                    </rules>
+                </completer>
+
+                <run>./tools/bin/run_py3.bat</run>
+                <path>%wsroot%</path>
+                <env>
+                    <add name="workspace">__WORKSPACE_PATH__=%1</add>
+                </env>
+                <options>
+                    <option>-u</option>
+                    <option>-i</option>
+                    <option name="wsroot">%1/audio/extensions/acat_tab/py/acat_tab.py</option>
+                    <option name="device">-d %1</option>
+                    <option name="workspace">-w %1</option>
+                </options>
+            </tab>
+        </tabs>
+    </plugins>
+</root>
+

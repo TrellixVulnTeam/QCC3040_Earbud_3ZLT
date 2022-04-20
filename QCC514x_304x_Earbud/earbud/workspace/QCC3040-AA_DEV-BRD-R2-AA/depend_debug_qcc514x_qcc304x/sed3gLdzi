@@ -1,0 +1,34 @@
+
+
+
+
+
+
+
+primary_service {
+    uuid : 0x0000FE0300001000800000805F9B34FB,
+    name : "AMA_ALEXA_SERVICE",
+
+    characteristic {
+        uuid : 0xF04EB177300543A7AC61A390DDF83076,
+        name :"AMA_ALEXA_TX_CHAR",
+        flags : [ FLAG_IRQ],
+        properties : [ write ],
+        value : 0x0
+    },
+ characteristic {
+        uuid : 0x2BEEA05B18794BB48A2F72641F82420B,
+        name : "AMA_ALEXA_RX_CHAR",
+        flags : [ FLAG_IRQ ],
+        properties : [ notify, read],
+        value : 0x0,
+
+  client_config {
+        flags : [FLAG_IRQ, FLAG_ENCR_W],
+            name : "AMA_ALEXA_RX_CLIENT_C_CFG"
+        }
+    }
+},
+
+
+

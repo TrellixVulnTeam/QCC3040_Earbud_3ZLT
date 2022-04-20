@@ -1,0 +1,4 @@
+--relax
+-EL
+--print-gc-sections
+--gc-sections

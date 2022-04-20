@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020-2021 Qualcomm Technologies International, Ltd.-->
+<!--VA Graph Manager Chain-->
+
+<chain name="CHAIN_VA_GRAPH_MANAGER" id="0" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_VA_GRAPH_MANAGER" id="CAP_ID_DOWNLOAD_VA_GRAPH_MANAGER">
+    </operator>
+
+</chain>

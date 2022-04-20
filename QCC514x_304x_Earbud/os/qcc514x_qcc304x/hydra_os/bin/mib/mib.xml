@@ -1,0 +1,1340 @@
+<metadata_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="HydraMeta.xsd">
+
+  
+  
+  <metadata build_date_time="2021-07-28 17:21" subsystem_alias="app" subsystem_id="7" subsystem_name="app" version="2805">
+
+   <config_element name="StubInt" psid="1">
+     <label>Dummy integer MIB entry</label>
+     <description_user>
+A MIB integer entry that can be harmlessly read or written, e.g.,
+for testing.
+     </description_user>
+     <type>int32</type>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="StubStr" psid="2">
+     <label>Dummy string MIB entry</label>
+     <description_user>
+A MIB string entry that can be harmlessly read or written, e.g.,
+for testing.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="USBManufString" psid="7">
+     <label>Manufacturer string descriptor</label>
+     <description_user>
+USB manufacturer string descriptor
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <format>unicode_string</format>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="USBProductString" psid="8">
+     <label>Device product string descriptor</label>
+     <description_user>
+USB product string descriptor for the generic device
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+    </config_element>
+
+   <config_element name="USBSerialNumberString" psid="9">
+     <label>Device serial number string descriptor</label>
+     <description_user>
+USB serial number string descriptor for the generic device
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+   </config_element>
+
+   <config_element name="USBConfigString" psid="10">
+     <label>Device configuration string descriptor</label>
+     <description_user>
+USB configuration string descriptor for the generic device
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+    </config_element>
+
+   <config_element name="USBVersion" psid="11">
+     <label>USB version number</label>
+     <description_user>
+USB version number to which the devices conform, in binary-coded decimal
+     </description_user>
+     <type>uint16</type>
+     
+     <default>0x200</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+   <config_element name="USBVendorID" psid="12">
+     <label>USB Vendor ID</label>
+     <description_user>
+USB Vendor ID, as assigned by the USB-IF
+     </description_user>
+     <type>uint16</type>
+     
+     <default>0x0a12</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+   <config_element name="USBProductID" psid="13">
+     <label>The PID of the generic device</label>
+     <description_user>
+Product ID of the generic device
+     </description_user>
+     <type>uint16</type>
+     <default>0x4007</default>
+     <is_internal>false</is_internal>
+    </config_element>
+
+   <config_element name="USBBCDDevice" psid="14">
+     <label>Binary-coded decimal device version number</label>
+     <description_user>
+This version number can be used to select a driver. If it is not set here, the
+firmware will insert its build ID. The value supplied should be in the form
+0xIJKL where I, J, K, L are in the range [0,9].
+     </description_user>
+     <type>uint16</type>
+     <is_internal>false</is_internal>
+   </config_element>
+
+      <config_element name="USBLangID" psid="15">
+     <label>The USB language ID for string descriptors</label>
+     <description_user>
+In principle a device can support an arbitrary number of languages, but our firmware
+only supports up to one. If this value is zero, string descriptors won't be returned
+even if they're set.  The values for English are the set {9 + n * 0x400 for n in [1,13]}.
+In particular, UK English is 0x0809 and US English is 0x0409. Since Microsoft
+Windows seems to ask for US English when reading serial number and product id,
+we are setting it to 0x0409 by default.
+     </description_user>
+     <type>uint16</type>
+     <default>0x0409</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="USBDeviceClassCodes" psid="16">
+     <label>Class, subclass and protocol codes for the device</label>
+     <description_user>
+Octet 1 is the class code, octet 2 is the subclass and octet 3
+is the protocol code.
+
+Note: the hub's class codes are fixed by the standard so they are
+hard-coded in the firmware.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>3</range_min>
+     <range_max>3</range_max>
+     <is_internal>false</is_internal>
+     <default>[ff 00 00]</default>
+    </config_element>
+
+    <config_element name="USBMaxPower" psid="17">
+        <label>Maximum power drawn by a bus-powered device</label>
+        <description_user>
+Specify the maximum power drawn by the device if it is bus-powered.
+Expressed in units of 2mA.
+(See USB2.0 standard, table 9-10.)
+If set to "0" device reports "Self-Powered" in the configuration descriptor
+regardless of USBSelfPowered MIB in Curator. This is recommended for compound
+devices by USB 2.0 standard: 11.13 Hub Configuration, the entire load is
+then reported in the hubs' configuration descriptor.
+        </description_user>
+        <range_min>0</range_min>
+        <range_max>255</range_max>
+        <type>uint16</type>
+        <default>0</default>
+        <is_internal>false</is_internal>
+    </config_element>
+
+    
+
+    <config_element name="USBRemoteWakeDisable" psid="19">
+      <label>Disables support for USB remote wake</label>
+      <description_user>
+If set the device will not advertize support for remote wake capability
+in its descriptors. By default remote wake is enabled.
+      </description_user>
+      <type>boolean</type>
+      <is_internal>false</is_internal>
+      <default>false</default>
+    </config_element>
+
+    <config_element name="SDHostSlot0" psid="20">
+      <label>Initialise SD Host slot 0</label>
+      <description_user>
+This flag indicates if the application wishes to initialise SD Host slot 0.
+If set TRUE the application will request the PIOs for the SD slot 0 from
+the Curator. If the PIOs can't be allocated the application firmware will
+panic with the PANIC_SD_HOST_SUBRES_FAILED. The PIOs are hardcoded in the
+Curator.
+      </description_user>
+      <is_internal>false</is_internal>
+      <type>boolean</type>
+      <default>false</default>
+    </config_element>
+
+    <config_element name="SDHostSlot1" psid="21">
+      <label>Initialise SD Host slot 1</label>
+      <description_user>
+This flag indicates if the application wishes to initialise SD Host slot 1.
+If set TRUE the application will request the PIOs for the SD slot 1 from
+the Curator. If the PIOs can't be allocated the application firmware will
+panic with ID PANIC_SD_HOST_SUBRES_FAILED. The PIOs are hardcoded in the
+Curator.
+      </description_user>
+      <is_internal>false</is_internal>
+      <type>boolean</type>
+      <default>false</default>
+    </config_element>
+
+
+    
+
+
+   <config_element name="I2CPios" psid="250">
+     <label>I2C PIOs configuration</label>
+     <description_user>
+     A two element octet string used to set the PIO pins used by the I2C trap
+call StreamI2cSource and I2cTransfer. The first element gives the PIO number for
+the SCL signal and the second for the SDA.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>2</range_min>
+     <range_max>2</range_max>
+     <is_internal>false</is_internal>
+     <default>[18 19]</default>
+   </config_element>
+
+   <config_element name="FeatureLicenseKey" psid="251">
+     <label>License Key for product feature</label>
+     <description_user>
+     Octet string used to selectively enable product features.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>64</range_min>
+     <range_max>96</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="AppsP1InactiveTimer" psid="253">
+     <label>Time (in milliseconds) to confirm if the application in Apps P1 is running or not.</label>
+     <description_user>
+    If this MIB key value is non-zero, then Apps P0 shall restart the chip if
+    the application running in the Apps P1 does not invoke VmSoftwareWdKick()
+    trap after a chip reset within the time configured in this MIB key.
+     </description_user>
+     <type>uint16</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+
+   <config_element name="ThermalShutdownPeriod" psid="255">
+     <label>Die temperature reading frequency in milliseconds.</label>
+     <description_user>
+     This MIB key specifies how often the die temperature is checked for thermal protection when charging.
+     The value 0 disables the thermal protection.
+     </description_user>
+     <type>uint16</type>
+     <default>100</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ThermalShutdownLongPeriod" psid="256">
+     <label>Die temperature slower reading frequency in milliseconds.</label>
+     <description_user>
+     This MIB key specifies how often the die temperature is checked for thermal protection when not
+     charging. The value 0 disables the thermal protection.
+     </description_user>
+     <type>uint16</type>
+     <default>3000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ShutdownTemperature" psid="257">
+     <label>Temperature in Celsius to turn-off the chip in Celsius.</label>
+     <description_user>
+     This MIB key specifies the die temperature at which to turn off the chip.
+     </description_user>
+     <type>int16</type>
+
+
+
+     <default>125</default>
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="RampDownTemperature" psid="258">
+     <label>Temperature in Celsius to ramp down charging.</label>
+     <description_user>
+     This MIB key specifies the die temperature at which to ramp down battery charging to 1/4 of current.
+     </description_user>
+     <type>int16</type>
+     <default>110</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ReenableTemperature" psid="259">
+     <label>Temperature in Celsius to re-enable charger.</label>
+     <description_user>
+     This MIB key specifies the die temperature at which to re-enable battery charging.
+     </description_user>
+     <type>int16</type>
+     <default>85</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ChargerMaximumCurrentTrickle" psid="260">
+     <label>Maximum Trickle Charge Current.</label>
+     <description_user>
+     This MIB key sets the maximum trickle charge current to use, which is dependent on the size and type
+     of battery. The setting to use can be determined from the battery.
+     The value 0 disables this limit.
+     </description_user>
+     <type>uint16</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ChargerMaximumCurrentPre" psid="261">
+     <label>Maximum Pre Charge Current.</label>
+     <description_user>
+     This MIB key sets the maximum pre charge current to use, which is dependent on the size and type of
+     battery. The setting to use can be determined from the battery.
+     The value 0 disables this limit.
+     </description_user>
+     <type>uint16</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ChargerMaximumCurrentFast" psid="262">
+     <label>Maximum Fast Charge Current in mA.</label>
+     <description_user>
+     This MIB key sets the maximum fast charge current to use, which is dependent on the size and type
+     of battery. The setting to use can be determined from the battery.
+     The value 0 disables this limit.
+     </description_user>
+     <type>uint16</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ChargerMaximumVoltage" psid="263">
+     <label>Maximum charger output voltage in mV.</label>
+     <description_user>
+     This MIB key controls the maximum output voltage from the charger.The charger can output
+     between 3585mV and 4425mV.
+     </description_user>
+     <type>uint16</type>
+     <default>4200</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="NfcTxControlModulationDepth" psid="264">
+     <label>Nfc Tx Control Modulation Depth</label>
+     <description_user>
+     This MIB key sets the TX modulation depth used by NFC hardware. The range
+     is from 0 to 15. The default is stored in the NFC hardware. It is set to
+     the best possible value for range performance and NFC forum compliance. It
+     should not be changed.
+
+       WARNING: changing this value may improve the range with some NFC readers
+       but it may also make the NFC subsystem uncompliant. Consequently, it is
+       ONLY provided for experimentation.
+
+       An out of range value (E.g 0xff) means that the default NFC hardware
+       value will be used.
+
+     </description_user>
+     <type>uint16</type>
+     <default>0xffff</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="NfcQuantConfig" psid="265">
+     <label>NFC Quantizer Configuration Register</label>
+     <description_user>
+     This MIB key sets the NFC quantizer configuration register which sets the
+     Hysterisis for noise removal. Options are 0-63 codes.
+
+     Usage:
+       Too little - suffer loss of good packets as they get corrupted.
+       Too much - get poor sensitivity.
+
+     </description_user>
+     <type>uint16</type>
+     <default>0xffff</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="NfcAgcControl2" psid="266">
+     <label>NFC AGC Control2 Register</label>
+     <description_user>
+     Boosts the Tx Modulation depth.
+
+     Usage:
+        Boosts TX amplitude on weak RF signals, 4 pairs of 2 bits.
+        Larger the value the bigger the TX modulation.
+
+     </description_user>
+     <type>uint16</type>
+     <default>0xffff</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="AdcTemperatureMultiplier" psid="267">
+      <label>Multiplicative factor for aux_adc temperature measurement.</label>
+      <description_user>
+This value is used to multiply the raw temperature reading derived
+from the hardware in the chip's AUX macro to give a value where
+differences between readings are in degrees Celsius. The value
+AdcTemperatureAddition is added to the result to convert to degrees
+Celsius.
+
+This value is a signed 32-bit integer in two's complement representation.
+It represents a fixed point number found by shifting right by 16 bits.
+Hence the top 16 bits of the number stored in the MIB represent the integer
+part of the resulting number while the lower 16 bits a fractional part.
+For example, 0x000A0000 represents the integer 10 and 0xFFFFC000
+represents -1/4.
+
+This key must be set for temperature compensation to be performed.
+      </description_user>
+      <type>int32</type>
+
+      <default>0x01932952</default>
+
+
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="AdcTemperatureAddition" psid="268">
+      <label>Additive constant for the aux_adc temperature measurement.</label>
+      <description_user>
+This value is added to the result of using the MIB attribute
+AdcTemperatureMultiplier to give a temperature in degrees Celsius
+from the chip's AUX macro.
+
+The value is 16-bit signed integer: there is no fractional part as
+the temperature accuracy is not expected to be better than one
+degree Celsius.
+
+The default is zero: this allows a value of AdcTemperatureMultiplier
+to be set and a reading performed to compare the measured temperature
+with the known ambient temperature in order to set the correct value
+of AdcTemperatureAddition.
+
+This key must be set for temperature compensation to be performed.
+      </description_user>
+      <type>int16</type>
+
+      <default>129</default>
+
+
+
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalTemperatureLookupTable" psid="269">
+      <label>Lookup table for compensating crystal for temperature</label>
+      <description_user>
+If this MIB key is set, temperature compensation may be performed
+on the crystal that supplies the system clock. The value gives
+an array of mappings from temperature to the internal units used
+for determining the capacitance fine trim applied to the crystal.
+
+Each entry consists of 3 octets supplying one 8-bit integer and one 16-bit integer.
+The first entry is a signed 8-bit integer giving absolute temperature in degrees
+Celsius. Range for it is -128 to +127.
+The second entry is a signed 16-bit integer giving delta to the original trim value.
+Range for it is -32768 to +32767.
+
+Outside the range of the minimum and maximum temperature given,
+no extrapolation is performed: the corresponding delta to original fine trim
+for the minimum temperature is used for all lower temperatures,
+and that for the maximum temperature is used for all higher temperatures.
+
+Within the range of the temperatures in the table, piecewise linear
+interpolation is performed between adjacent temperature values to
+determine the appropriate delta to original fine trim.
+
+This key must be set for temperature compensation to be performed.
+      </description_user>
+      <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>48</range_max>
+      <default>[d3 ff ba d8 ff c9 dd ff d7 e2 ff e3 e7 ff ec f1 ff fd fb 00 04 05 00 05 0f 00 03 19 ff fd 23 ff f8 2c ff f2 36 ff f0 40 ff f4 4a ff ff 55 00 15]</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalTemperatureDACConversion" psid="270">
+      <label>Number of fine steps equivalent to 1 coarse step.</label>
+      <description_user>
+      For every delta within fine DAC range the coarse DAC also needs to be modified.
+      This defines the number of fine DAC steps equating to 1 coarse DAC step.
+      </description_user>
+      <type>uint16</type>
+      <default>16</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="XtalTemperaturePeriod" psid="271">
+      <label>Period of crystal temperature compensation mechanism in milliseconds.</label>
+      <description_user>
+If the crystal temperature compensation mechanism is in use this key
+determines the period between AUX temperature measurements made.
+If used the recommended period is 10000 milliseconds
+
+The value 0 disables the crystal temperature compensation.
+      </description_user>
+      <type>uint16</type>
+      <default>0</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+  <config_element name="AdcReadDelay" psid="272">
+      <label>Delay in microseconds to be used before taking ADC reading.</label>
+      <description_user>
+Adc reading for various analogue sources require a delay before actual reading is done.
+This is to let noise due to internal switches and transients due to stray capacitance to settle down and not impact the reading.
+The default is 15000 microsecond.
+      </description_user>
+      <type>uint16</type>
+      <default>15000</default>
+      <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="InitialLogLevels" psid="273">
+     <label>MIB key to set log levels during boot up </label>
+     <description_user>
+     Pair of module numbers with their log level.
+     Octet 1 is the module number, octet 2 is the log level and the sequence continues.
+     Can hold upto 64 pairs of module numbers with their log level.
+     </description_user>
+     <type>octet_string</type>
+     <function_list>
+       <function function_name="mibgetfn_hydra_log_init_levels" type="get" />
+       <function function_name="mibsetfn_hydra_log_init_levels" type="set" />
+     </function_list>
+     <range_min>0</range_min>
+     <range_max>128</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="EnableTRBLog" psid="274">
+     <label>MIB to enable TRB logging </label>
+     <description_user>
+     This MIB key enables/disables TRB logging.
+     Usage:
+        true - enables TRB logging.
+        false - disables TRB logging.
+     </description_user>
+     <type>boolean</type>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+     <default>false</default>
+    </config_element>
+
+   <config_element name="AuthenticateROFS" psid="275">
+     <label>Authenticate Apps read-only filesystem.</label>
+     <description_user>
+     Controls whether authentication of the read only filesystem is required.
+     If this key is set to TRUE then the hash of the filesystem will be checked
+     before it is used and the device will panic with code
+     PANIC_FLASH_SECTION_AUTHENTICATION_FAILED.
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>true</default>
+   </config_element>
+
+   <config_element name="SiflashResumeToSuspendDelay" psid="276">
+     <label>Minimum delay in microseconds after Write/Erase Resume and before
+     Write/Erase Suspend for siflash operation.</label>
+     <description_user>
+Some devices require a minimum delay after resuming suspended write/erase
+and before issuing another write/erase suspend. The default value is
+chosen conservatively to work with most devices and can be decreased if
+particular flash can tolerate smaller delay.
+
+Although the system will remain stable up to the maximum permissable value of
+2000us, longer delays will have a negative impact on performance.
+     </description_user>
+     <description_internal>
+This value must be less than or equal to Curator's TBus transaction timeout
+or it can panic when it attempts to read the SLT while the SQIF masters are
+blocked. Curator's timeout has been data-patched up to 2500us for safety.
+(6.3.1 and later). See CUR-6037 and related bugs.
+     </description_internal>
+     <type>uint16</type>
+     <default>1000</default>
+     <range_min>0</range_min>
+     <range_max>2000</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="SiflashSuspendResumeCommands" psid="277">
+     <label>Command codes for write/erase suspend and resume siflash operations.</label>
+
+     <description_user>
+The 32-bit value provides 4 command codes encoded as follows:
+MSB 8 bit: erase suspend code;
+    8 bit: erase resume code;
+    8 bit: write suspend code;
+LSB 8 bit: write resume code.
+This MIB key is being deprecated. The default value is now set to ZERO.
+The curator MIB key QSPIFRAMLUTSuspendResumeCmds should now be used.
+
+However, if the default value of this MIB key is overridden with a non
+zero value then this apps subsystem MIB key will be used.
+     </description_user>
+     <type>uint32</type>
+     <default>0x0</default>
+
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="SiflashPageSize" psid="278">
+     <label>Write page size for siflash operations.</label>
+     <description_user>
+Write page size for siflash page program command.
+     </description_user>
+     <type>uint16</type>
+     <default>256</default>
+     <range_min>1</range_min>
+     <range_max>2048</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="SiflashEraseRegion0" psid="279">
+     <label>Specifies erase region #0 for siflash operations.</label>
+     <description_user>
+Siflash needs to know erase command code and erase block size.
+Some devices have non-uniform organization, so different commands might be
+needed for different regions of flash.
+
+The value is encoded as follows:
+MSB 8 bit: erase command code;
+     8 bit: erase block size exponent (e.g. 16 means 2^16=64KB erase block size).
+LSB 16 bit: erase region size, in erase blocks, 0xffff means the region
+             spans until the end of device.
+
+Erase regions #0...#3 follow one after another and should cover
+the whole device. If less than 4 erase regions are needed, when those
+at the end can be left undefined.
+
+If all erase regions undefined, erase block parameters are obtained
+from Curator, otherwise Curator settings are ignored.
+
+Example: 0xD8100100 - erase command code 0xD8, block size 10^16 = 64KB,
+region size is 256 blocks of size 64KB: 16MB.
+     </description_user>
+     <type>uint32</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="SiflashEraseRegion1" psid="280">
+     <label>Specifies erase region #1 for siflash operations.</label>
+     <description_user>
+Refer to description for SiflashEraseRegion0.
+     </description_user>
+     <type>uint32</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="SiflashEraseRegion2" psid="281">
+     <label>Specifies erase region #2 for siflash operations.</label>
+     <description_user>
+Refer to description for SiflashEraseRegion0.
+     </description_user>
+     <type>uint32</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="SiflashEraseRegion3" psid="282">
+     <label>Specifies erase region #3 for siflash operations.</label>
+     <description_user>
+Refer to description for SiflashEraseRegion0.
+     </description_user>
+     <type>uint32</type>
+     <default>0</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ResetOnChargerAttach" psid="283">
+     <label>MIB to enable chip reset on attaching a charger.</label>
+     <description_user>
+     This key, when TRUE, resets the chip when a charger is connected.
+     When FALSE, the chip doesn't reset when a charger is connected.
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+
+   <config_element name="UsbTypeCCCSource" psid="285">
+     <label>USB Type-C CC line source.</label>
+     <description_user>
+     This MIB key specifies the PIO number which is connected to CC line.
+     An out of range value (e.g. 0xff) means that the USB Type-C support
+     does not exist.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>1</range_min>
+     <range_max>1</range_max>
+     <default>[FF]</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+  <config_element name="CcVoltageThresholdAt500mAMin" psid="286">
+     <label>Specifies the minimum threshold voltage at default current.</label>
+     <description_user>
+     USB Type-C specification 1.2, table 4-27, specifies multiple source current
+     advertisement. Due to external resistor, voltage range of default current
+     advertisement differs. This MIB key is used to specify the minimum
+     threshold voltage (mV) when source advertises default current.
+
+     </description_user>
+     <type>uint16</type>
+     <default>0</default>
+     <range_min>0</range_min>
+     <range_max>660</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+  <config_element name="CcVoltageThresholdAt500mAMax" psid="287">
+     <label>Specifies the maximum threshold voltage at default current.</label>
+     <description_user>
+     USB Type-C specification 1.2, table 4-27, specifies multiple source
+     current advertisement. Due to external resistor, voltage range of default
+     current advertisement differs. This MIB key is used to specify the maximum
+     threshold voltage (mV) when source advertises default current.
+
+     The default value is set considering external resistor is 100Kohm.
+     The maximum value of this MIB key can be 660 (as per USB Type-C
+     specification).
+
+     </description_user>
+     <type>uint16</type>
+     <default>340</default>
+     <range_min>0</range_min>
+     <range_max>660</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CcVoltageThresholdAt1500mAMin" psid="288">
+     <label>Specifies the minimum threshold voltage at 1500 mA current.</label>
+     <description_user>
+     USB Type-C specification 1.2, table 4-27, specifies multiple source current
+     advertisement. Due to external resistor, voltage range of 1500 mA current
+     advertisement differs. This MIB key is used to specify the minimum
+     threshold voltage (mV) when source advertises 1500 mA current.
+
+     The default value is set considering external resistor is 100Kohm.
+
+     </description_user>
+     <type>uint16</type>
+     <default>341</default>
+     <range_min>0</range_min>
+     <range_max>1230</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CcVoltageThresholdAt1500mAMax" psid="289">
+     <label>Specifies the maximum threshold voltage at 1500 mA current.</label>
+     <description_user>
+     USB Type-C specification 1.2, table 4-27, specifies multiple source current
+     advertisement. Due to external resistor, voltage range of 1500 mA current
+     advertisement differs. This MIB key is used to specify the maximum
+     threshold voltage (mV) when source advertises 1500 mA current.
+
+     The default is set considering external resistor is 100Kohm.
+     The maximum value of this MIB key can be 1230 (as per USB Type-C
+     specification).
+
+     </description_user>
+     <type>uint16</type>
+     <default>630</default>
+     <range_min>0</range_min>
+     <range_max>1230</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CcVoltageThresholdAt3000mAMin" psid="290">
+     <label>Specifies the minimum threshold voltage at 1500 mA current.</label>
+     <description_user>
+     USB Type-C specification 1.2, table 4-27, specifies multiple source current
+     advertisement. Due to external resistor, voltage range of 3000 mA current
+     advertisement differs. This MIB key is used to specify the minimum
+     threshold voltage (mV) when source advertises 3000 mA current.
+
+     The default is set considering external resistor is 100Kohm.
+
+     </description_user>
+     <type>uint16</type>
+     <default>631</default>
+     <range_min>0</range_min>
+     <range_max>2040</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CcVoltageThresholdAt3000mAMax" psid="291">
+     <label>Specifies the maximum threshold voltage at 1500 mA current.</label>
+     <description_user>
+     USB Type-C specification 1.2, table 4-27, specifies multiple source current
+     advertisement. Due to external resistor, voltage range of 3000 mA current
+     advertisement differs. This MIB key is used to specify the maximum
+     threshold voltage (mV) when source advertises 3000 mA current.
+
+     The default value is set considering external resistor is 100Kohm.
+     The maximum value of this MIB key can be 2040 (as per USB Type-C
+     specification).
+
+     </description_user>
+     <type>uint16</type>
+     <default>1045</default>
+     <range_min>0</range_min>
+     <range_max>2040</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="IpcLeaveRecvBufferPagesMapped" psid="292">
+     <label>Leaves IPC receive buffer pages mapped in.</label>
+     <description_user>
+When this key is set to true pages no longer in use by the IPC receive
+buffer will not be freed. This means old messages are still visible to the
+debugger after they have been processed by the IPC module, making debugging
+IPC related issues easier.
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+    <config_element name="SDHostSlot0Pio" psid="293">
+      <label>PIO Config for Slot 0</label>
+      <description_user>
+The PIO numbers to use for Slot 0 configuration.
+The string is defined as the pio nr for [ Card Detect, Write Protect, Card Enable ]
+    Card Detect - PIO input for card detection. A value of 0xFF will ignore hot insertion and
+    treat the card state as always inserted.
+    Write Protect - PIO input for write protect detect. A value of 0xFF ignores the field.
+    Card Enable - PIO output driven before SD operation. A value of 0xFF ignores the field.
+If the PIOs cannot be allocated the firmware will panic with ID PANIC_SD_HOST_SUBRES_FAILED.
+SDHostSlot0 should be enabled for this to take effect.
+      </description_user>
+     <type>octet_string</type>
+     <range_min>3</range_min>
+     <range_max>3</range_max>
+     <is_internal>false</is_internal>
+     <default>[ff ff ff]</default>
+    </config_element>
+
+    <config_element name="SDHostSlot1Pio" psid="294">
+      <label>PIO Config for Slot 1</label>
+      <description_user>
+The PIO numbers to use for Slot 1 configuration. A value of 0xFF ignores the field.
+The string is defined as the pio nr for [ Card Detect, Write Protect, Card Enable ]
+    Card Detect - PIO input for card detection. A value of 0xFF will ignore hot insertion and
+    treat the card state as always inserted.
+    Write Protect - PIO input for write protect detect. A value of 0xFF ignores the field.
+    Card Enable - PIO output driven before SD operation. A value of 0xFF ignores the field.
+If the PIOs cannot be allocated the firmware will panic with ID PANIC_SD_HOST_SUBRES_FAILED.
+SDHostSlot1 should be enabled for this to take effect.
+      </description_user>
+     <type>octet_string</type>
+     <range_min>3</range_min>
+     <range_max>3</range_max>
+     <is_internal>false</is_internal>
+     <default>[ff ff ff]</default>
+    </config_element>
+
+   <config_element name="CustomerReadOnlyKey0" psid="295">
+     <label>ReadOnly Customer Key 0</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY0
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey1" psid="296">
+     <label>ReadOnly Customer Key 1</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY1
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey2" psid="297">
+     <label>ReadOnly Customer Key 2</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY2
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey3" psid="298">
+     <label>ReadOnly Customer Key 3</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY3
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey4" psid="299">
+     <label>ReadOnly Customer Key 4</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY4
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey5" psid="300">
+     <label>ReadOnly Customer Key 5</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY5
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey6" psid="301">
+     <label>ReadOnly Customer Key 6</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY6
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey7" psid="302">
+     <label>ReadOnly Customer Key 7</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY7
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey8" psid="303">
+     <label>ReadOnly Customer Key 8</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY8
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CustomerReadOnlyKey9" psid="304">
+     <label>ReadOnly Customer Key 9</label>
+     <description_user>
+This key is reserved for the Customer's use. This implements read-only
+storage which the customer application can retrieve via the PsFullRetrieve
+trap as PSKEY_READONLY9
+     </description_user>
+     <type>octet_string</type>
+      <range_min>0</range_min>
+      <range_max>255</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="StreamFilesystemEnable" psid="305">
+     <label>Enables the StreamFilesystemSource and StreamFilesystemSink traps.</label>
+     <description_user>
+When this key is set to true the StreamFilesystemSource and StreamFilesystemSink
+traps are enabled, making it possible to update the device read only config
+filesystem whilst the application subsystem is running.
+
+Since this key allows read / write access from / to filesystems that may contain
+sensitive data the key is disabled by default and must be explicitly enabled for
+use on the production line and disabled before the product is released.
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+
+   <config_element name="SDHost1BitOnlySlot0" psid="306">
+     <label>Restrict SD/MMC operation to 1-bit on Slot 0</label>
+     <description_user>
+When this is set to true, the SD Host Controller will restrict Slot 0 to
+1-bit data operation. Certain package variants do not have sufficient number of pins for
+typical 4-bit SD/MMC operation. On such packages, this mib should be
+set to true, to ensure that only CMD, CLK and D0 lines are used. D1-3 will be unavailable
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+
+   <config_element name="SDHost1BitOnlySlot1" psid="307">
+     <label>Restrict SD/MMC operation to 1-bit on Slot 1</label>
+     <description_user>
+When this is set to true, the SD Host Controller will restrict Slot 1 to
+1-bit data operation. Certain package variants do not have sufficient number of pins for
+typical 4-bit SD/MMC operation. On such packages, this mib should be
+set to true, to ensure that only CMD, CLK and D0 lines are used. D1-3 will be unavailable
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+
+   <config_element name="CcDefaultPollPeriod" psid="308">
+     <label>Polling period when drawing default current.</label>
+     <description_user>
+     USB Type-C specification does not require device to start drawing
+     higher current once allowed to do so by the CC-line state.
+     It is up to device when to do the switch.
+
+     To save power default period is chosen to be 1000ms, it can be either
+     increased or decreased depending on the application.
+
+     Period value is in milliseconds.
+     </description_user>
+     <type>uint16</type>
+     <default>1000</default>
+     <range_min>0</range_min>
+     <range_max>65535</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="CcFastPollPeriod" psid="309">
+     <label>Polling period when drawing 1.5A/3.0A current.</label>
+     <description_user>
+     USB Type-C specification Table 4-20: tSinkAdj max time is 60 msec.
+
+     If device is drawing 1.5A/3.0A, it has to react within 60ms to any
+     change in the state of CC-line by adjusting the current drawn from VBUS.
+
+     ADC unit is used to measure voltage level on CC-line. The measurement
+     can take up to 4ms and can be delayd if there is another ADC measurement
+     in progress. Default value is chosen to be 20ms to leave some room for
+     delays.
+
+     Period value is in milliseconds.
+     </description_user>
+     <type>uint16</type>
+     <default>20</default>
+     <range_min>0</range_min>
+     <range_max>65535</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PsAesKey" psid="310">
+     <label>Cryptographic key for user PS store encryption</label>
+     <description_user>
+This is the key used to encrypt Audio and Apps P1 PS keys. It is represented as
+an octet string where the first octet represents the MSB of a 128bit key.
+     </description_user>
+     <type>octet_string</type>
+     <function_list>
+       <function function_name="mibgetfn_ps_aes_key" type="get" />
+       <function function_name="mibsetfn_ps_aes_key" type="set" />
+     </function_list>
+     <range_min>16</range_min>
+     <range_max>16</range_max>
+     <is_internal>false</is_internal>
+     <default>[00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00]</default>
+   </config_element>
+
+
+   <config_element name="SiflashResumeHoldOffDelay" psid="311">
+     <label>After suspending flash Write/Erase operation due to remote
+     subsystem access, hold off subsequent resume for some time.</label>
+     <description_user>
+Some applications require uninterrupted access to flash to do burst reads.
+
+This key ensures that flash operation once suspended is not resumed until
+after the delay has passed. This affects only those operations that
+were suspended due to a remote subsystem access request.
+
+The delay value is in microseconds, default is chosen conservatively to not
+block siflash access for long time and can be increased if particular
+application cannot tolerate delays in accessing data on the flash.
+     </description_user>
+     <type>uint16</type>
+     <default>100</default>
+     <range_min>0</range_min>
+     <range_max>65535</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="UartFlowCtrlEnable" psid="312">
+     <label>Enables or disables the UART RTS/CTS flow control</label>
+     <description_user>
+Set to true to enable UART RTS/CTS flow control. This requires the app to also
+set two more PIOs to UART_RTS and UART_CTS. Set to false to disable UART RTS/CTS
+flow control.
+     </description_user>
+     <type>boolean</type>
+     <function_list>
+       <function function_name="mibgetfn_uart_flow_ctrl_enable" type="get" />
+       <function function_name="mibsetfn_uart_flow_ctrl_enable" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+
+   <config_element name="UsbTypeCMaxCurrent" psid="313">
+     <label>Maximum current that device can draw from VBUS as allowed
+     by USB Type-C specification.
+     </label>
+     <description_user>
+         The maximum current value in 1 mA units.
+         It is used to populate dwMaxOperatingPower and dwMaxPeakPower fields in
+         PD Consumer Port Capability POS Descriptor (USB PD 3.0 spec, section 9.2.3.),
+         the same value is used for both fields. The value specified here is not
+         used to limit the current, the current drawn from USB is configured
+         in the application.
+     </description_user>
+     <type>uint16</type>
+     <default>1800</default>
+     <range_min>500</range_min>
+     <range_max>3000</range_max>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="DeviceName" psid="315">
+     <label>MIB key to set device name</label>
+     <description_user>
+       This key is used to set the name of the device.
+       If the key is not provided, the name will be an empty string.
+     </description_user>
+     <type>octet_string</type>
+     <range_min>0</range_min>
+     <range_max>248</range_max>
+     <is_internal>false</is_internal>
+     <format>unicode_string</format>
+   </config_element>
+
+
+   <config_element name="TrapTimeout" psid="316">
+     <label>Maximum time (in ms) a trap can take before causing a panic.</label>
+     <description_user>
+        When a customer calls a trap, if this timeout is reached (due to
+        internal failure in the system firmware before the trap returns), the
+        system will panic with PANIC_TRAP_TIMEOUT in order to prevent a permanent
+        stall in the customer code. If set to 0, the timeout is disabled.
+     </description_user>
+     <type>uint32</type>
+     <range_min>0</range_min>
+     <range_max>1800000</range_max>
+     <default>60000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+
+   <config_element name="PanicOnFault" psid="317">
+     <label>Panic the system on any fault</label>
+     <description_user>
+When the chip's firmware detects a problem that implies that it
+cannot continue operation (for example, running out of pool memory) it
+normally calls panic(). This halts the firmware, and may reboot it.
+By contrast, when the chip's firmware encounters a problem that
+it can survive (for example, detecting a received corrupt packet) it
+normally calls fault(), which can cause a fault report
+message to be created.
+
+If this MIB entry is set to TRUE, the firmware calls panic()
+when it would normally call fault().
+
+Only set this for system debugging.
+     </description_user>
+     <type>boolean</type>
+     <default>false</default>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PanicOnFaultCode" psid="318">
+     <label>Panic the system only on given fault</label>
+     <description_user>
+If PanicOnFault is TRUE this key will limit the subsystem to Only
+panicking for the ONE given code. Default is FAULT_NONE which will
+let any fault trigger PANIC_HYDRA_ON_FAULT.
+     </description_user>
+     <type>uint16</type>
+     <default>0x0000</default>
+     <function_list>
+       <function function_name="mibgetfn_common" type="get" />
+       <function function_name="mibsetfn_common" type="set" />
+     </function_list>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   
+
+   <config_element name="ReserveP1TcmForData" psid="320">
+     <label>Specify whether the TCM (Tightly Coupled Memory) on the customer processor is reserved
+     for customer data or to accelerate code.
+     </label>
+     <description_user>
+         The P1 application processor includes a TCM (Tightly coupled memory)
+         which reduces the time penalty for instruction fetches for the
+         hydra_os library.
+         Allowing P1 program code to use TCM ensures applications respond
+         as quickly as possible thus keeping power consumption to a minimum.
+         This MIB key allows a user to specify that P1 TCM should be used
+         only for data, which may impact performance in some applications.
+     </description_user>
+     <type>boolean</type>
+     <is_internal>false</is_internal>
+     <default>false</default>
+   </config_element>
+
+   <config_element name="ExtScanFloodDefenceMaxTotalAdvertOctets" psid="321">
+     <label>Total amount of extended advert data</label>
+     <description_user>
+The total number of octets of extended advertising data that can be
+buffered on entry to Apps P0 before new adverts will be discarded.
+     </description_user>
+     <type>uint16</type>
+     <range_min>1</range_min>
+     <range_max>10000</range_max>
+     <default>2000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ExtScanFloodDefenceMaxInstantaneousAdverts" psid="322">
+     <label>Maximum number of extended adverts</label>
+     <description_user>
+The maximum number of extended adverts that can exist at the same time on Apps
+P0. Once this limit is reached new adverts will be discarded.
+     </description_user>
+     <type>uint16</type>
+     <range_min>1</range_min>
+     <range_max>50</range_max>
+     <default>20</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="ExtScanFloodDefenceMaxSingleAdvertOctets" psid="323">
+     <label>Maximum amount of data in a single extended scanning advert</label>
+     <description_user>
+The maximum amount of data in a single extended scanning advert. Adverts that
+contain more data that this will be discarded on entry to Apps P0.
+     </description_user>
+     <type>uint16</type>
+     <range_min>1</range_min>
+     <range_max>1650</range_max>
+     <default>1650</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PeriodicScanFloodDefenceMaxTotalAdvertOctets" psid="324">
+     <label>Total amount of periodic advert data per train</label>
+     <description_user>
+The total number of octets of periodic advertising data that can be
+buffered on entry to Apps P0 per train before new adverts will be discarded.
+     </description_user>
+     <type>uint16</type>
+     <range_min>1</range_min>
+     <range_max>10000</range_max>
+     <default>2000</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PeriodicScanFloodDefenceMaxInstantaneousAdverts" psid="325">
+     <label>Maximum number of periodic adverts per train</label>
+     <description_user>
+The maximum number of periodic adverts that can exist at the same time on Apps
+P0 per train. Once this limit is reached new adverts will be discarded.
+     </description_user>
+     <type>uint16</type>
+     <range_min>1</range_min>
+     <range_max>50</range_max>
+     <default>20</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+   <config_element name="PeriodicScanFloodDefenceMaxSingleAdvertOctets" psid="326">
+     <label>Maximum amount of data in a single periodic scanning advert</label>
+     <description_user>
+The maximum amount of data in a single periodic scanning advert. Adverts that
+contain more data that this will be discarded on entry to Apps P0.
+     </description_user>
+     <type>uint16</type>
+     <range_min>1</range_min>
+     <range_max>1650</range_max>
+     <default>1650</default>
+     <is_internal>false</is_internal>
+   </config_element>
+
+</metadata>
+
+  </metadata_list>

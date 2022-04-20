@@ -1,0 +1,80 @@
+file=app1
+
+#############
+# USER KEYS #
+#############
+# These keys are used to configure the software or to save settings.
+# See the corresponding adk\src\domains\common\ps_key_map.h
+
+
+#USR1 - This key is reserved. It is used to save the last volume for HFP.
+#       See hfp_profile.
+
+# USR2 Setting for earbud to have a fixed role. 
+# If this key is not set then the earbud will be able to switch roles (recommended)
+# If fixed roles are to be used each earbud pair must have one primary and one secondary. 
+# This setting is currently only supported on ROM based QCC512x parts.
+#USR2 = [ 01 00 ] #Uncomment to set the earbud to always be a primary device
+#USR2 = [ 02 00 ] #Uncomment to set the earbud to always be a secondary device
+#USR2 = [ 03 00 ] #Uncomment to set the earbud to use a fixed role. Right earbud will be primary.
+
+# USR3 Setting to enable device testing.
+#
+# The key controls access to several test modes, including the device test service.
+#
+# If this key is not set, or is zero, then the device will behave as normal.
+# In all other cases, test support will be enabled on boot. The device may
+# not support normal operation.
+#
+# Setting [ 01 00 ] enables the device test service, which uses the SPP interface.
+# Setting [ 02 00 ] enables a test mode. LE connections are supported.
+# Setting [ 03 00 ] enables RF testing. The device enables RF DUT mode.
+#USR3 = [ 01 00 ] # Uncomment to enable device test mode
+
+#USR4 = This key is reserved to store reboot action. 
+#       See system_reboot.c
+
+# USR5 - This key is used to set Fast Pair Model ID for an audio sink device. Stored in Little Endian format.
+USR5 = [ 09 D1 B1 00 ]
+
+# USR6 - This key is used to set Scrambled ASPK for an audio sink device. Stored in Little Endian format.
+USR6 = [ FD 1D D9 99 9A 5A 4B 7A 2D F5 DB C2 FF D5 4E 8C 16 47 04 78 3E 55 EF C1 6A EA F7 33 BB E3 4A A3 ]
+
+#USR7 - This key is reserved. It is used to save the status for device upgrade
+#       See upgrade.h
+
+#USR8 - GAA model ID: A 32-bit unsigned number assigned by Google to identify the device to the Google Assistant Accessory (GAA).
+#The bytes in each 16-bit pair are reversed, so for example, for the Qualcomm ADK earbuds GAA model ID of 0xB50279 the sequence
+#is [ B5 00 79 02 ].
+USR8 = [ B5 00 79 02 ]
+
+#USR10 - GAA OTA test control: A 16-bit value used to control GAA OTA testing. At the moment if it is absent or FALSE (0) then
+#no GAA OTA test control is done. If it is present and non-zero (TRUE) then silent commit is not supported and the GAA OTA will
+#perform an immediate commit on apply. In future this may be bit-mapped to provide separate controls of other aspects.
+#USR10 = [ 01 00 ] #Uncomment to enable GAA OTA test control
+
+#USR13 - This key stores delta gain (in fixed-point format Q6.9) between ANC golden gain configuration and calibrated gain
+#during production test: FFA, FFB and FB
+USR13 = [00 00 00 00 00 00]
+
+# USR50 Version of ps key layout. Can be used in future to simplify upgrade.
+USR50 = [ 01 00 ]
+
+# USR80 Setting for testing AV Codec in test mode.
+# Note: Needs TEST_AV_CODEC_PSKEY defined within the application
+#
+#   bit0 - SBC
+#   bit1 - AAC
+#   bit2 - aptX
+#   bit3 - aptX-Adaptive
+#   bit4 - aptX-HD
+#
+#USR80 = [ 01 00 ] # Uncomment to enable use of the test AV Codec
+
+# USR81 Setting for testing HFP Codec in test mode.
+# Note: Needs TEST_HFP_CODEC_PSKEY defined within the application
+#
+#   bit0 - NB
+#   bit1 - WB
+#   bit2 - SWB
+#USR81 = [ 03 00 ] # Uncomment to enable use of the test HFP Codec

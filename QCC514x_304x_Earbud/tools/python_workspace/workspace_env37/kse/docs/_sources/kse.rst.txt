@@ -1,0 +1,22 @@
+kse package
+===========
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.core
+   kse.framework
+   kse.instrument
+   kse.kalsim
+   kse.kymera
+   kse.library
+
+Module contents
+---------------
+
+.. automodule:: kse
+   :members:
+   :undoc-members:
+   :show-inheritance:

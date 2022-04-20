@@ -1,0 +1,8 @@
+
+Automatic
+==========================================================================
+
+This module can be imported from ``ACAT.Interpreter.Automatic``.
+
+.. automodule:: ACAT.Interpreter.Automatic
+   :members:

@@ -1,0 +1,22 @@
+kse.instrument.kalsim package
+=============================
+
+Submodules
+----------
+
+kse.instrument.kalsim.kalsim module
+-----------------------------------
+
+.. automodule:: kse.instrument.kalsim.kalsim
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.instrument.kalsim
+   :members:
+   :undoc-members:
+   :show-inheritance:

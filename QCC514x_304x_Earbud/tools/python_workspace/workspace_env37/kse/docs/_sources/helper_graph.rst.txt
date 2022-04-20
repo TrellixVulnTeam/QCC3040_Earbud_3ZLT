@@ -1,0 +1,27 @@
+.. _helper_graph:
+
+=====
+Graph
+=====
+
+Graphs are container objects for :ref:`helper_endpoint`, :ref:`helper_stream` and
+:ref:`helper_capability`.
+
+Suported operations are:
+
+   * :meth:`kse.kalsim.graph.graph.Graph.load` to load a graph configuration
+   * :meth:`kse.kalsim.graph.graph.Graph.create` to create a graph based on the
+     configuration provided
+   * :meth:`kse.kalsim.graph.graph.Graph.config` to configure a graph
+   * :meth:`kse.kalsim.graph.graph.Graph.connect` to connect all elements in a graph
+   * :meth:`kse.kalsim.graph.graph.Graph.start` to start streaming
+   * :meth:`kse.kalsim.graph.graph.Graph.check_active` to check if streams has finished
+   * :meth:`kse.kalsim.graph.graph.Graph.stop` to stop streaming
+   * :meth:`kse.kalsim.graph.graph.Graph.disconnect` to disconnect all elements in a graph
+   * :meth:`kse.kalsim.graph.graph.Graph.destroy` to destroy a graph
+   * :meth:`kse.kalsim.graph.graph.Graph.play` to play a graph, which essentially is execute all
+     methods above in sequence
+
+In the shell it is available as ``graph``
+
+

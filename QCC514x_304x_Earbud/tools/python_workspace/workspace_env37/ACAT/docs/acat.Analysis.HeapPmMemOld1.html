@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HeapPmMemOld1 &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="HeapPmMemOld2" href="acat.Analysis.HeapPmMemOld2.html"/>
+        <link rel="prev" title="HeapMemOld3" href="acat.Analysis.HeapMemOld3.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.AANC.html">AANC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Analysis.html">Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Buffers.html">Buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Cbops.html">Cbops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DebugLog.html">DebugLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DmProfiler.html">DmProfiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Dorm.html">Dorm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fats.html">Fats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fault.html">Fault</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.FaultOld1.html">FaultOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld1.html">HeapMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld2.html">HeapMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld3.html">HeapMemOld3</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">HeapPmMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld2.html">HeapPmMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld3.html">HeapPmMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld4.html">HeapPmMemOld4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.IPC.html">IPC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Patches.html">Patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PatchesOld1.html">PatchesOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfo.html">PoolInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfoOld1.html">PoolInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Profiler.html">Profiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.RtpDecode.html">RtpDecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheck.html">SanityCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheckOld1.html">SanityCheckOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Sched.html">Sched</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SchedOld1.html">SchedOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.ScratchMem.html">ScratchMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SharedMem.html">SharedMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SourceSync.html">SourceSync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Splitter.html">Splitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfo.html">StackInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfoOld1.html">StackInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Heap.html">Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMem.html">HeapMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMem.html">HeapPmMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Opmgr.html">Opmgr</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>HeapPmMemOld1</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Analysis.HeapPmMemOld1.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="heappmmemold1">
+<h1>HeapPmMemOld1<a class="headerlink" href="#heappmmemold1" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Analysis.HeapPmMemOld1</span></code>.</p>
+<span class="target" id="module-ACAT.Analysis.HeapPmMemOld1"></span><p>Heap PM Memory Analysis.</p>
+<p>Module which analyses the heap PM ram.</p>
+<dl class="class">
+<dt id="ACAT.Analysis.HeapPmMemOld1.HeapPmMem">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.HeapPmMemOld1.</code><code class="sig-name descname">HeapPmMem</code><span class="sig-paren">(</span><em class="sig-param">**kwarg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/HeapPmMemOld1.html#HeapPmMem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.HeapPmMemOld1.HeapPmMem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates an analysis for heap program memory usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwarg</strong> – Arbitrary keyword arguments.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.HeapPmMemOld1.HeapPmMem.display_memory_map">
+<code class="sig-name descname">display_memory_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/HeapPmMemOld1.html#HeapPmMem.display_memory_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.HeapPmMemOld1.HeapPmMem.display_memory_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays PM memory map based on current settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.HeapPmMemOld1.HeapPmMem.ret_get_watermarks">
+<em class="property">static </em><code class="sig-name descname">ret_get_watermarks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/HeapPmMemOld1.html#HeapPmMem.ret_get_watermarks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.HeapPmMemOld1.HeapPmMem.ret_get_watermarks" title="Permalink to this definition">¶</a></dt>
+<dd><p>heap_pm does not have watermark information
+the values returned are made 0, -1, -1 to escape
+_get_overview_str function’s main purpose in heap.py
+as we dont have watermarks here.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.HeapPmMemOld1.HeapPmMem.run_all">
+<code class="sig-name descname">run_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/HeapPmMemOld1.html#HeapPmMem.run_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.HeapPmMemOld1.HeapPmMem.run_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform all analysis and spew the output to the formatter.</p>
+<p>Displays the heap_pm memory usage.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Analysis.HeapPmMemOld2.html" class="btn btn-neutral float-right" title="HeapPmMemOld2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Analysis.HeapMemOld3.html" class="btn btn-neutral" title="HeapMemOld3" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

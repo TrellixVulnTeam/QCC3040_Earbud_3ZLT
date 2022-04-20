@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.instrument.acat package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.instrument package" href="kse.instrument.html"/>
+        <link rel="next" title="kse.instrument.kalaccess package" href="kse.instrument.kalaccess.html"/>
+        <link rel="prev" title="kse.instrument package" href="kse.instrument.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.instrument.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.instrument.html#module-kse.instrument">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.instrument.html">kse.instrument package</a> &raquo;</li>
+      
+    <li>kse.instrument.acat package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.instrument.acat.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-instrument-acat-package">
+<h1>kse.instrument.acat package<a class="headerlink" href="#kse-instrument-acat-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.instrument.acat.acat">
+<span id="kse-instrument-acat-acat-module"></span><h2>kse.instrument.acat.acat module<a class="headerlink" href="#module-kse.instrument.acat.acat" title="Permalink to this headline">¶</a></h2>
+<p>ACAT instrument</p>
+<dl class="class">
+<dt id="kse.instrument.acat.acat.Acat">
+<em class="property">class </em><code class="sig-prename descclassname">kse.instrument.acat.acat.</code><code class="sig-name descname">Acat</code><span class="sig-paren">(</span><em class="sig-param">firmware</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.framework.library.instrument.Instrument</span></code></p>
+<p>ACAT instrument.</p>
+<p>This instrument instantiates an ACAT class instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>firmware</strong> (<em>str</em>) – Path to firmware</p></li>
+<li><p><strong>transport</strong> (<em>str</em>) – kalaccess transport</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – Run in interactive mode</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to ACAT package directory, if not set then the module will be imported as
+ACAT</p></li>
+<li><p><strong>kal_path</strong> (<em>str</em>) – Path to kalimba python tools package directory, if not set then the module
+will be imported as kal_python_tools</p></li>
+<li><p><strong>bundle</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Path to additional firmware files to be loaded</p></li>
+<li><p><strong>firmware_log_enable</strong> (<em>bool</em>) – Enable logging firmware messages</p></li>
+<li><p><strong>firmware_log_level</strong> (<em>int</em>) – Firmware defined log level</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.check_connected">
+<code class="sig-name descname">check_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.check_connected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.check_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if instrument is connected to ACAT and ready for operation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>acat connected</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to ACAT an create a session</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect instrument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.get_heap_mem_info">
+<code class="sig-name descname">get_heap_mem_info</code><span class="sig-paren">(</span><em class="sig-param">processor=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.get_heap_mem_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.get_heap_mem_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Heap memory information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>processor</strong> (<em>int</em>) – Kalimba processor number, starting with 0</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int: Total heap size in bytes
+int: Free heap size in bytes
+int: Mininum free heap size in bytes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.get_mips_info">
+<code class="sig-name descname">get_mips_info</code><span class="sig-paren">(</span><em class="sig-param">processor=0</em>, <em class="sig-param">period=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.get_mips_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.get_mips_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get MIPS information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>processor</strong> (<em>int</em>) – Kalimba processor number, starting with 0</p></li>
+<li><p><strong>period</strong> (<em>int</em>) – Period in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float: MIPS usage in MIPS
+float: MIPS percent
+int: Chip CPU speed in MHz</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.get_pool_mem_info">
+<code class="sig-name descname">get_pool_mem_info</code><span class="sig-paren">(</span><em class="sig-param">processor=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.get_pool_mem_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.get_pool_mem_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Pool memory information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>processor</strong> (<em>int</em>) – Kalimba processor number, starting with 0</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int: Total pool size in bytes
+int: Free pool size in bytes
+int: Mininum free pool size in bytes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.get_session">
+<code class="sig-name descname">get_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.get_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.get_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ACAT instance</p>
+<dl class="simple">
+<dt>Returns</dt><dd><p>acat session</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.Acat.get_version">
+<code class="sig-name descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#Acat.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.Acat.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ACAT version</p>
+<dl class="simple">
+<dt>Returns</dt><dd><p>str: Version</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.instrument.acat.acat.Acat.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'acat'</em><a class="headerlink" href="#kse.instrument.acat.acat.Acat.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.instrument.acat.acat.Acat.schema">
+<code class="sig-name descname">schema</code><em class="property"> = {'items': {'properties': {'analyses': {'default': [], 'items': {'type': 'string'}, 'type': 'array'}, 'bundle': {'default': [], 'item': {'type': 'string'}, 'type': 'array'}, 'dual_core': {'default': False, 'type': 'boolean'}, 'firmware': {'type': 'string'}, 'firmware_log_enable': {'default': False, 'type': 'boolean'}, 'firmware_log_level': {'default': 2, 'type': 'integer'}, 'firmware_log_timer_update_period': {'default': 0.5, 'minimum': 0.01, 'type': 'number'}, 'interactive': {'default': False, 'type': 'boolean'}, 'kal_path': {'type': 'string'}, 'path': {'type': 'string'}, 'transport': {'default': 'kalsim', 'type': 'string'}}, 'required': ['firmware'], 'type': 'object'}, 'minItems': 1, 'type': 'array', 'uniqueItems': True}</em><a class="headerlink" href="#kse.instrument.acat.acat.Acat.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="kse.instrument.acat.acat.KalcmdAcat">
+<em class="property">class </em><code class="sig-prename descclassname">kse.instrument.acat.acat.</code><code class="sig-name descname">KalcmdAcat</code><span class="sig-paren">(</span><em class="sig-param">kalcmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#KalcmdAcat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.KalcmdAcat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Adaptation for ACAT to interface kalcmd</p>
+<p>This class bridges between ACAT expected kalcmd interface and kalcmd instrument actual interface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kalcmd</strong> – kats.instrument.kalcmd.kalcmd.Kalcmd</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.instrument.acat.acat.KalcmdAcat.block_mem_read">
+<code class="sig-name descname">block_mem_read</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">num_words</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#KalcmdAcat.block_mem_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.KalcmdAcat.block_mem_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read kalimba memory in blocks of uint32_t data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Memory space as specified in kalcmd2.kalmem_spaces</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>num_words</strong> (<em>int</em>) – Number of uint32_t data blocks to read</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Data read</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.KalcmdAcat.block_mem_write">
+<code class="sig-name descname">block_mem_write</code><span class="sig-paren">(</span><em class="sig-param">memory_space</em>, <em class="sig-param">address</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#KalcmdAcat.block_mem_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.KalcmdAcat.block_mem_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write kalimba memory in blocks of uint32_t data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory_space</strong> (<em>int</em>) – Memory space as specified in kalcmd2.kalmem_spaces</p></li>
+<li><p><strong>address</strong> (<em>int</em>) – Memory address</p></li>
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data to be written</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.KalcmdAcat.getKalArch">
+<code class="sig-name descname">getKalArch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#KalcmdAcat.getKalArch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.KalcmdAcat.getKalArch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Kalimba architecture</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Kalimba architecture</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.KalcmdAcat.getKalimbaName">
+<code class="sig-name descname">getKalimbaName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#KalcmdAcat.getKalimbaName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.KalcmdAcat.getKalimbaName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Kalimba name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Kalimba name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.instrument.acat.acat.KalcmdAcat.querryDspReg">
+<code class="sig-name descname">querryDspReg</code><span class="sig-paren">(</span><em class="sig-param">register</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/instrument/acat/acat.html#KalcmdAcat.querryDspReg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.instrument.acat.acat.KalcmdAcat.querryDspReg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalimba register value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>register</strong> (<em>int</em>) – Register as in kalcmd2.kal_regs</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Register value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.instrument.acat">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.instrument.acat" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.instrument.kalaccess.html" class="btn btn-neutral float-right" title="kse.instrument.kalaccess package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.instrument.html" class="btn btn-neutral" title="kse.instrument package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

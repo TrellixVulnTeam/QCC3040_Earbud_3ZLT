@@ -1,0 +1,13 @@
+file=curator3
+
+# Crystal trim.  Currently set to default values - modify as indicated by board
+# label.
+XtalLoadCapacitance = 10
+XtalFreqTrim = 0
+
+# Configure Earbud left or right for Chargercomms.
+# Modify as indicated by Earbud left/right role.
+# 0 - Ignore all messages
+# 1 - Right Earbud
+# 2 - Left Earbud
+VCHGMessageEarbud = 0

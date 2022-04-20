@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<chain name="CHAIN_MUSIC_PROCESSING_USER_EQ" id="0" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_ADD_HEADROOM" id="CAP_ID_BASIC_PASS" processor="P0,P1">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_SPEAKER_EQ" id="CAP_ID_PEQ" processor="P0,P1">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_USER_EQ" id="CAP_ID_PEQ" processor="P0,P1">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_REMOVE_HEADROOM" id="CAP_ID_BASIC_PASS" processor="P0,P1">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <input sink="OPR_ADD_HEADROOM.IN" role="EPR_MUSIC_PROCESSING_IN_L"/>
+    <connection source="OPR_ADD_HEADROOM.OUT" sink="OPR_SPEAKER_EQ.IN"/>
+    <connection source="OPR_SPEAKER_EQ.OUT" sink="OPR_USER_EQ.IN"/>
+    <connection source="OPR_USER_EQ.OUT" sink="OPR_REMOVE_HEADROOM.IN"/>
+    <output source="OPR_REMOVE_HEADROOM.OUT" role="EPR_MUSIC_PROCESSING_OUT_L"/>
+
+</chain>

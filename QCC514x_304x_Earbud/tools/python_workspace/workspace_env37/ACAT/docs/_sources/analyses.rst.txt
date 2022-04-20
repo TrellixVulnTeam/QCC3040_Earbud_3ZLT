@@ -1,0 +1,631 @@
+Analyses
+========
+ACAT provides multiple analyses, each designed to analyze a specific
+Kymera framework module.  Each ACAT analysis is implemented as a separate
+Python Class, with ``Analysis`` Class as a common ancestor.
+
+
+run_all() function
+------------------
+The ``run_all()`` function is only called when ACAT is run in automatic
+mode.
+
+Most Analysis classes contain a ``run_all()`` function, used to get all
+available analysis data without further input. Analysis Classes only used
+to support other analyses do not contain a ``run_all()`` function.
+
+.. note::
+    It is possible to call any public function contained within the
+    analyses individually, when operating in interactive mode.
+
+
+help(ANALYSIS_NAME) command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Call the ``help(ANALYSIS_NAME)`` command to obtain a summary of the
+analysis functions and their descriptions, at any time.
+
+
+SanityCheck class
+-----------------
+The ``SanityCheck`` class is used in interactive mode to call routines
+that perform a set of high-level system checks, used either as a
+diagnostic tool or to debug unidentified errors.
+
+.. list-table:: SanityCheck class routines
+    :widths: 50 50
+    :header-rows: 1
+
+    * - Command
+      - Action
+    * - ``sanitycheck.chip_has_panicked()``
+      - Checks to see if the chip has panicked.
+        Returns: ``True`` or ``False``.
+    * - ``sanitycheck.get_panic_time()``
+      - Returns the time when the chip Panicked. (Local
+        Chip Time).
+    * - ``sanitycheck.analyse_processor_regs()``
+      - Checks all Processor Registers.
+    * - ``sanitycheck.analyse_all_mmr()``
+      - Checks all Memory-Mapped Registers.
+
+
+
+StackInfo class
+---------------
+The ``StackInfo`` class is used to examine stack overflows, underflows,
+panics and software or hardware exceptions.
+
+The ``StackInfo`` class also incorporates a stack back-trace analysis.
+
+Calling the ``stackinfo.run_all()`` function displays:
+
+ 1. Stack Start address.
+ 2. Stack End address.
+ 3. Location indicated by the Stack Pointer (SP).
+ 4. Location indicated by the Frame Pointer (FP).
+ 5. Stack usage.
+ 6. Stack Frames.
+ 7. A simple Stack Backtrace.
+ 8. The Interrupt Stack Frames.
+ 9. The detailed Stack Backtrace, relating it to the source code of the
+    build.
+
+The ``help(stackinfo)`` command is used to call a number of individual
+functions, for example, to get a simple representation of the stack trace:
+
+::
+
+ > stackinfo.analyse_stack_trace()
+ ------------
+ Stack frames
+ ------------
+ ['0x90138', '0x2874e3ac', '0x2874e3ac', '0x53c', '0x2ceaf', '0x2cf3f']
+ ['0x90120', '0x9c0', '0x538', '0x114db']
+ ['0x90108', '0x1075d', '0x2874e3ac', '0x9bc', '0x120', '0x0']
+ ['0x90100', '0x0', '0x0', '0x0', '0x0', '0x21533']
+ ['0x90100', '0x3d6e9']
+ ----------------------
+ Simple stack backtrace
+ ----------------------
+ Note that this r is a GUESS. Assembler code can cause confusion.
+ PC - $M.safe_enable_shallow_sleep
+ RLINK - $M.safe_enable_shallow_sleep
+ 0x2cf3f - safe_enable_deep_sleep
+ 0x2ceaf - dorm_sleep
+ 0x114db - sched_sleep
+ 0x1075d - sched_norunlevels
+ 0x21533 - main
+ 0x3d6e9 - $M.crt0
+  
+
+Stream class
+------------
+The ``Stream`` class is used to analyze the Stream module in the Kymera
+framework.
+
+Use ``Stream`` class to obtain information about:
+
+ - Endpoint configurations, connections and their respective transforms.
+ - Buffer connections between operators and endpoints.
+ - Running CBOPs and their chain configuration.
+
+
+stream.run_all() function
+~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``stream.run_all()`` function provokes the analysis to interrogate
+transform and endpoint objects, which are then displayed alongside the
+rate-match pairs and kick objects.
+
+For example, call either of the following functions to get the endpoints
+and their contents:
+
+ - ``stream.run_all()``
+ - ``stream.analyse_endpoints()``
+
+.. note::
+ The contents of the CBOPs graph is obtained by passing a Boolean value of
+ ``True`` as an argument to either function.
+
+The following three code example exclude all non-relevant information:
+
+ 1. To get Audio Endpoint with CBOPs:
+
+    ::
+
+     > stream.run_all(True)
+     AudioEndpoint SOURCE 0x2ea3
+     Address: 0xf08c
+     Key: 0x100
+     is_real: True can_be_closed: True
+     can_be_destroyed: False e destroy_on_disconnect: False
+     Connection ID: 0
+     connected_to: 0xe040
+     ep_to_kick: 0xe040
+     struct cbops_mgr:
+       graph:
+         num_sections: 0x1
+         heads: 0xfff32aa4
+         fw_obj_ptrs: 0xfff32aa8
+
+       req_ops: 0xfff32aa0
+       dir: 0x0
+     struct cbops_rate_adjustment_and_shift:
+       sra:
+         shift_amount: 0x0
+         filter_coeffs: 0xfff94c84
+         sra_target_rate_addr: 0xf0b8
+         filter_coeffs_size: 0xc
+         sra_current_rate: 0x0
+         rf: 0x80000001
+         prev_short_samples: 0x0
+       passthrough_mode: True
+       channel_params:
+         struct cbops_rate_adjustment_and_shift.channel_params[0]:
+           hist_buf: 0x0
+           hist_buf_start: 0xfff94c84
+         struct cbops_rate_adjustment_and_shift.channel_params[1]:
+           hist_buf: 0xf0b8
+           hist_buf_start: 0xc
+         struct cbops_rate_adjustment_and_shift.channel_params[2]:
+           hist_buf: 0x0
+           hist_buf_start: 0x80000001
+         struct cbops_rate_adjustment_and_shift.channel_params[3]:
+           hist_buf: 0x0
+           hist_buf_start: 0x1
+         CBOP not running in-place.
+         struct cbops_dc_remove:
+           dc_estimate:
+             [0]: 0xffffb3fe
+         CBOP running in-place.
+         audio:
+
+ 2. To get Audio Endpoint without CBOPs:
+
+    :: 
+
+     > stream.run_all()
+     AudioEndpoint SOURCE 0x2ea3
+     Address: 0xf08c
+     Key: 0x100
+     is_real: True can_be_closed: True
+     can_be_destroyed: False destroy_on_disconnect: False
+     Connection ID: 0
+     connected_to: 0xe040
+     ep_to_kick: 0xe040
+     struct cbops_mgr:
+       graph:
+         num_sections: 0x1
+         heads: 0xfff32aa4
+       fw_obj_ptrs: 0xfff32aa8
+       req_ops: 0xfff32aa0
+       dir: 0x0
+     audio:
+
+ 3. An Operator Endpoint also returns its type, since this represents an
+    instance of a capability:
+
+    ::
+
+     BASIC_PASS OperatorEndpoint SOURCE 0x6040
+     Address: 0xfff32b4c
+     Key: 0x6040
+     is_real: False can_be_closed: False
+     can_be_destroyed: False destroy_on_disconnect: True
+     Connection ID: 0
+     connected_to: 0xaa5f
+     ep_to_kick: NULL
+     cbops: 0x0
+     operator:
+       cbops_flags: 0x0
+       op_bg_task: 0xfff31ae4
+
+
+stream.plot_transforms_buffers() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``stream.plot_transforms_buffers()`` function can be used to monitor
+the buffer usage on a live chip.
+
+
+stream.create_graph_img() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``stream.create_graph_img()`` function draws a graphical
+representation of streams chains using Graphviz. This function only works
+if all the external dependencies are satisfied.
+
+External dependencies:
+
+ 1. Graphviz python module. Install it with ``pip install graphviz``
+    command.
+ 2. Graphviz graph visualization software. Install it from
+    www.graphviz.org using the appropriate installer and make sure the
+    installation directory is in the ``PATH`` of the operating system.
+
+
+Operator Manager (Opmgr) class
+------------------------------
+Use the ``Opmgr`` class to interrogate the internal data of instantiated
+operators, either in bulk or individually, to identify both the operators
+in use and display their capabilities.
+
+This analysis creates instances of Operators and Capabilities that show:
+
+ - Which operators are instantiated.
+ - How many operators are instantiated.
+ - How the operators are configured.
+ - What capabilities are available.
+
+Call the ``Opmgr`` Class using either:
+
+ - ``run_all()``
+ - ``analyse_all_operators()``
+
+The following code example illustrates the ``run_all()`` function:
+
+::
+
+ > opmgr.run_all()
+ -----
+ Opmgr
+ -----
+     ----------------
+     Operators in use
+     ----------------
+     -----
+     Operator 0x1, ep_op_id 0x4040
+     Type: BASIC_PASS 
+     Connection ID: 0x0
+     Task ID: 0x200007
+     Creator client ID: 0x0
+     State: RUNNING
+     Kicks ignored at NEITHER_SIDE
+     1 source endpoint(s): 0x6040
+     1 sink endpoint(s): 0xe040
+     struct BASIC_PASSTHROUGH_OP_DATA:
+       copy_function: 0x379eb
+       ip_format: 0x1
+       op_format: 0x1
+       working_data: 0x7fffffff
+       simple_data_test_safe: False
+       num_active_chans: 0x1
+       active_chans: 0x1
+       channel:
+        [0]: 0xfff31b34
+        [1]: 0x0
+        [2]: 0x0
+        [3]: 0x0
+        [4]: 0x0
+        [5]: 0x0
+        [6]: 0x0
+        [7]: 0x0
+
+
+opmgr.get_operator() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To analyse a specified operator, call the ``opmgr.get_operator()``
+function, with the respective Operator ID set as a parameter.
+
+
+opmgr.find_capability() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If the capability address data is passed as a parameter, use the
+``opmgr.find_capability()`` function to analyse the specified capability.
+
+
+Buffer class
+------------
+The ``Buffers`` class contains functions used by the Stream, Operators and
+SCO modules to analyze the buffers.
+
+``Buffers`` do not include a ``run_all()`` function, as its functions are
+only run selectively, in support of other analyses.
+
+The ``Buffers`` class analysis is used to:
+
+ - Locate a buffer in memory.
+ - Identify Buffer size.
+ - Identify how much data a Buffer contains.
+ - Locate Buffer pointers like read pointer, write pointer and base
+   address.
+ - Read and display the buffer content.
+
+For example, call the ``buffers.analyse_transform_buffers()`` function to
+analyze the Transform Buffers. A graphical representation of the
+``cbuffers`` is returned that corresponds to all the transforms in the
+system. For clarity, only one ``cbuffer`` is depicted in the following
+code sample:
+
+::
+
+ > buffers.analyse_transform_buffers()
+ --------------------
+ SW-flavoured cbuffer
+ --------------------
+ Buffer type: SW
+ Buffer struct address: 0xfff390e4
+ Buffer descriptor: 0b11000000000000000
+ Base address: 0x57930
+ Size: 179
+ SW read offset: 118
+ SW write offset: 118
+ Amount of Data: 0
+ Amount of Space: 178
+ This is an in-place buffer.
+ 0x00057930
+             +----------+<    27 < rd
+             |          |
+             |   179    |
+ wr >   115 >|          |
+             +----------+
+              0x00057bfc
+ 0x00057930: 00000000 00000000 00000000 00000000
+ *
+ 0x00057af0: 00000000 00000000 00000000 00000000
+ 0x00057b00: 00000000 00000000
+ --- read pointer at 0x00057b08
+ --- write pointer at 0x00057b08
+ 0x00057b08:                   00000000 00000000
+ 0x00057b10: 00000000 00000000 00000000 00000000
+ *
+ 0x00057be0: 00000000 00000000 00000000 00000000
+ 0x00057bf0: 00000000 00000000 00000000
+
+.. note::
+ ``*`` represents multiple lines of memory section with the same value as
+ the one before the sign.
+
+
+Memory pool information (poolinfo) class
+----------------------------------------
+The ``PoolInfo`` class analyzes memory pool usage and displays the memory
+pools, their size in words and their allocation or usage.
+
+For example:
+
+::
+
+ > poolinfo.run_all()
+ ----------------
+ Memory Pool Info
+ ----------------
+    -------
+    Summary
+    -------
+ Pool:   0 Size:   4 Total:  78 Free:  72 Min:  67
+ Pool:   1 Size:   8 Total: 104 Free: 104 Min: 104
+ Pool:   2 Size:  12 Total: 104 Free: 104 Min: 104
+ Pool:   3 Size:  24 Total:   2 Free:   2 Min:   2
+ Pool:   4 Size:  48 Total:   1 Free:   1 Min:   1
+ Pool:   5 Size:   4 Total: 128 Free:  71 Min:  66
+ Pool:   6 Size:   8 Total: 322 Free: 212 Min: 209
+ Pool:   7 Size:  12 Total: 204 Free: 109 Min: 107
+ Oversize allocation not available
+ ----------
+ Debug info
+ ----------
+ pmalloc_debug_enabled = False
+ ------
+ Errors
+ ------
+ No memory pool errors found
+ ------------------
+ Pool Configuration
+ ------------------
+ pool nr 0: 1.5  KiB,  78 blocks of size   4 words (0x00000618 bytes) at 0x00008000 - 0x00008617
+ pool nr 1: 3.7  KiB, 104 blocks of size   8 words (0x00000ea0 bytes) at 0x00008618 - 0x000094b7
+ pool nr 2: 5.3  KiB, 104 blocks of size  12 words (0x00001520 bytes) at 0x000094b8 - 0x0000a9d7
+ pool nr 3: 0.2  KiB,   2 blocks of size  24 words (0x000000c8 bytes) at 0x0000a9d8 - 0x0000aa9f
+ pool nr 4: 0.2  KiB,   1 blocks of size  48 words (0x000000c4 bytes) at 0x0000aaa0 - 0x0000ab63
+ pool nr 5: 2.5  KiB, 128 blocks of size   4 words (0x00000a00 bytes) at 0xfff38000 - 0xfff389ff
+ pool nr 6: 11.3 KiB, 322 blocks of size   8 words (0x00002d48 bytes) at 0xfff38a00 - 0xfff3b747
+ pool nr 7: 10.4 KiB, 204 blocks of size  12 words (0x00002970 bytes) at 0xfff3b748 - 0xfff3e0b7
+ * for each block, one word is used for internal tracking data.
+
+
+poolinfo.get_watermarks() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``poolinfo.get_watermarks()`` function is called to return values for:
+Total Memory, Minimum Free Memory and Actual Free Memory available for use
+by the watermarks.
+
+
+poolinfo.clear_watermarks() function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``poolinfo.clear_watermarks()`` function is called to clear pool
+values and equate the pool with the actual values.
+
+
+Scratch memory (ScratchMem) class
+---------------------------------
+The ``ScratchMem`` class is used to analyze the amount of scratch memory
+dedicated to a particular task as well as its usage, ranked by task
+priority, within the system.
+
+
+Scratch memory (SharedMem) class
+--------------------------------
+The ``SharedMem`` class is used to analyse the amount of shared memory
+allocated in the system, including: the number users, shared memory IDs
+and so on.
+
+
+Heap memory (HeapMem) class
+---------------------------
+As an aid to identify instances of memory fragmentation, the ``HeapMem``
+class displays actual heap memory usage.
+
+The Heap memory analysis shows:
+
+ * Heap block size
+ * If the block is:
+
+   * Allocated or Free
+   * Located in DM1 or DM2
+
+Similar to the ``PoolInfo`` analysis, the ``HeapMem`` analysis also
+contains functions for analysing watermarks.
+
+If the ``pmalloc`` debug is compiled into firmware, ``HeapMem`` includes
+the file and line of the code that allocated the memory.
+
+The following code example illustrates a ``HeapMem`` analysis:
+
+::
+
+ > heapmem.run_all()
+ ----------------
+ Heap Memory Info
+ ----------------
+ DM1 heap enabled
+ Free block size : 8 at address: 00c9b0
+ Free block size : 28 at address: 00bce8
+ Free block size : 12 at address: 00af80
+ Free block size : 19180 at address: 00e9e4
+ Free block size : 12 at address: 00ab64
+ Allocated block size : 1024 at address: 00ab78
+ Allocated block size :
+ 68 at address: 00af94
+ Allocated block size :
+ 60 at address: 00afe0
+ ...
+ Allocated block size : 1024 at address: 01fbf8
+ Total heap allocation : 67548
+ DM1 fast heap enabled
+ Free block size : 12 at address: 048984
+ Free block size : 16 at address: 049000
+ Allocated block size : 48 at address: 048000
+ Allocated block size : 80 at address: 048038
+ Allocated block size : 72 at address: 048090
+ ...
+ Allocated block size : 1712 at address: 057948
+ Total heap allocation : 65164
+ DM2 heap enabled
+ Free block size : 56 at address: fff776c8
+ Free block size : 28 at address: fff6dacc
+ Free block size : 12 at address: fff77aa0
+ Free block size : 29508 at address: fff61000
+ Allocated block size :  80 at address: fff6834c
+ Allocated block size : 232 at address: fff683a4
+ Allocated block size : 124 at address: fff68494
+ ...
+ Allocated block size : 512 at address: fff77df8
+ Total heap allocation : 64012
+ DM2 shared heap enabled
+ Free block size : 14916 at address: fff40000
+ Allocated block size : 36 at address: fff43a4c
+ ...
+ Allocated block size :   16 at address: fff43fe8
+ Total heap allocation : 1380
+     ------------------
+     Heap Configuration
+     ------------------
+     --
+     P0
+     --
+            DM1 heap : 1549c ( 85.2 KiB) at address: 00ab64
+            DM2 heap : 17000 ( 92.0 KiB) at address: fff61000
+     DM2 shared heap : 4000 ( 16.0 KiB) at address: fff40000
+       DM1 fast heap : 10000 ( 64.0 KiB) at address: 048000
+     --
+     P1
+     --
+            DM1 heap : d49c ( 53.2 KiB) at address: 020000
+            DM2 heap : 7000 ( 28.0 KiB) at address: fff78000
+     DM2 shared heap : 4000 ( 16.0 KiB) at address: fff44000
+       DM1 fast heap : 8000 ( 32.0 KiB) at address: 058000
+     ----------
+     Debug info
+     ----------
+     pmalloc_debug_enabled = False
+
+
+Profiler class
+--------------
+The ``Profiler`` class is used to facilitate the measurement of MIPS and
+to identify the percentage of CPU time used by either: the application,
+for Sleep Time or Scheduler Loop Time.
+
+The analysis provides three ways to measure MIPS:
+
+ 1. Use the Kymera built-in profiler (If enabled).
+ 2. Interrogate the ``profiler.run_clks`` counter.
+ 3. Interrogate the PC registers.
+
+
+.. note::
+ Options 2 and 3 are only available when dealing with live chips.
+
+For example:
+
+::
+
+ > profiler.run_kymera_builtin()
+ Overview:
+ sleep 80.100%
+ sched_loop 18.700%
+ total interrupt = int. handler + int.  triggered task 0.800%
+     interrupt handler (cannot be nested) 0.600%
+     interrupt with task at nested level 0 0.800%
+     interrupt with task at nested level 1 0.000%
+     interrupt with task at nested level 2 0.000%
+     interrupt with task at nested level 3 0.000%
+     interrupt with task at nested level 4 0.000%
+ sleep + active 2 + int = 99 Remains 0.400%
+ Kymera and user defined measurements:
+                                 current peak  KickPd   KickEffic
+                                 4.000% 4.200%  5.333ms  91.429%
+ Operator 0x40c0 (SBC_DECODER)
+ ...
+ Operator 0x4080 (SPLITTER)
+                                 0.000% 0.000% 19.692ms 100.000%
+ __________________________________________________________
+ total user defined             12.900%
+
+.. note::
+ In the example above ``KickPd`` represents the kick period. This is
+ calculated using the average kick number of kicks in 1.024 seconds.
+ ``KickEffic`` or kick efficiency measures how many times the operator
+ produced data when it was kicked.
+
+ The ``profiler.run_pc()`` method interrogates the chip Program Counter
+ (``_pc``) register and returns the amount of time each function ran,
+ during the profiling period.
+
+
+CBOPs class
+-----------
+The ``CBOPs`` class is used to analyze a CBOP chain or graph and display
+the current buffer operation, with other relevant information.
+
+Passing the Boolean value ``True`` to any function that processes
+endpoints within the Stream analysis calls the ``CBOPs`` Class, for
+example:
+
+::
+
+ stream.analyse_endpoints(True).
+
+.. note::
+ The ``CBOPs`` Class does not include a ``run_all()`` function because it
+ is just a helper analysis.
+
+
+DebugLog class
+--------------
+The ``DebugLog`` class is used to analyze firmware logs in real time, even
+if other ACAT commands are polling.
+
+When ``DebugLog`` is enabled within a module, all logging results are
+stored in a fixed-size Debug Log buffer that can be printed, by calling:
+
+ - ``debuglog.run_all()`` - Reads all the logging available in the chip.
+ - ``debuglog.poll_debug_log()`` - Reads the log, in real time.
+ - ``debuglog.stop_polling()`` - Stops polling logs.
+
+
+Scheduler (Sched) class
+-----------------------
+The ``Sched`` class is used to analyse and display active scheduler tasks,
+their priority level and any pending messages.
+
+To enable analysis of both casual and strict events, ``Sched`` outputs the
+current system timers as well as the time of the next wake-up call.

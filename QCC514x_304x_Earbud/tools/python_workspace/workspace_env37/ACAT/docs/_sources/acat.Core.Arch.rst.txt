@@ -1,0 +1,8 @@
+
+Arch
+==========================================================================
+
+This module can be imported from ``ACAT.Core.Arch``.
+
+.. automodule:: ACAT.Core.Arch
+   :members:

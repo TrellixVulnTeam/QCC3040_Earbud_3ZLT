@@ -1,0 +1,1611 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.hydra_service package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim package" href="kse.kalsim.html"/>
+        <link rel="next" title="kse.kalsim.library package" href="kse.kalsim.library.html"/>
+        <link rel="prev" title="kse.kalsim.graph package" href="kse.kalsim.graph.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+    <li>kse.kalsim.hydra_service package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.hydra_service.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-hydra-service-package">
+<h1>kse.kalsim.hydra_service package<a class="headerlink" href="#kse-kalsim-hydra-service-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.audio_data_service">
+<span id="kse-kalsim-hydra-service-audio-data-service-module"></span><h2>kse.kalsim.hydra_service.audio_data_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.audio_data_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra Audio Data Services</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.audio_data_service.</code><code class="sig-name descname">HydraAudioDataService</code><span class="sig-paren">(</span><em class="sig-param">hydra_protocol</em>, <em class="sig-param">service_type</em>, <em class="sig-param">device_type</em>, <em class="sig-param">service_tag</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hydra Audio Data Service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hydra_protocol</strong> (<em>kats.kalsim.hydra_service.protocol.HydraProtocol</em>) – Protocol handler</p></li>
+<li><p><strong>service_type</strong> (<em>int</em>) – Service type</p></li>
+<li><p><strong>device_type</strong> (<em>int</em>) – Device type</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Hydra service tag</p></li>
+<li><p><strong>data_buffer_size</strong> (<em>int</em>) – Audio data buffer size in octets</p></li>
+<li><p><strong>metadata_buffer_size</strong> (<em>int</em>) – Meta data buffer size in octets</p></li>
+<li><p><strong>kick_required</strong> (<em>int</em>) – Signal remote system want to receive kicks</p></li>
+<li><p><strong>metadata_buffer_size</strong> – Header length in a metadata buffer record in octets</p></li>
+<li><p><strong>connect_endpoint</strong> (<em>int</em>) – Endpoint id provided by the remote subsystem (the endpoint created
+by the service start will be connected via ACCMD to this endpoint.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.check_started">
+<code class="sig-name descname">check_started</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.check_started"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.check_started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the audio data service is started</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Service already started</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_buffer_stats">
+<code class="sig-name descname">get_buffer_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_buffer_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_buffer_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalcmd buffer statistics</p>
+<p>Buffer size doesn’t change during the lifetime of the service; to speed things
+up we read the buffer size only on the first run and cache it.
+The values returned by Kalsim for handle offsets and buffer sizes are in
+octets and include all the octets in the buffer, useful or wasted. If the BAC sample
+size is configured to 8|16|24_BIT_UNPACKED a part of the buffer is wasted
+(e.g. 16_BIT_UNPACKED, only half of the buffer contains useful data - the lower
+16 bits of each 32-bit word).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>int: Used bytes
+int: Free bytes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_data_read_handle">
+<code class="sig-name descname">get_data_read_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_data_read_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_data_read_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get audio data read BAC handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Read handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_data_write_handle">
+<code class="sig-name descname">get_data_write_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_data_write_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_data_write_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get audio data write BAC handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Write handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_endpoint_id">
+<code class="sig-name descname">get_endpoint_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_endpoint_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_endpoint_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_meta_data_read_handle">
+<code class="sig-name descname">get_meta_data_read_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_meta_data_read_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_meta_data_read_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get meta data read BAC handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Read handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_meta_data_write_handle">
+<code class="sig-name descname">get_meta_data_write_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_meta_data_write_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_meta_data_write_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get meta data write BAC handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Read handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_metadata_buffer_stats">
+<code class="sig-name descname">get_metadata_buffer_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_metadata_buffer_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_metadata_buffer_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalcmd metadata buffer statistics</p>
+<p>Buffer size doesn’t change during the lifetime of the service; to speed things
+up we read the buffer size only on the first run and cache it.
+The values returned by Kalsim for handle offsets and buffer sizes are in
+octets and include all the octets in the buffer, useful or wasted. If the BAC sample
+size is configured to 8|16|24_BIT_UNPACKED a part of the buffer is wasted
+(e.g. 16_BIT_UNPACKED, only half of the buffer contains useful data - the lower
+16 bits of each 32-bit word).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>int: Used bytes
+int: Free bytes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_space">
+<code class="sig-name descname">get_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.get_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get buffer statistics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Free samples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.kick">
+<code class="sig-name descname">kick</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.kick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.kick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kick firmware to alert new data is available</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start audio data service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the service has already been started</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_data_service.html#HydraAudioDataService.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop audio data service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the service as not been previously started</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.audio_sink_service">
+<span id="kse-kalsim-hydra-service-audio-sink-service-module"></span><h2>kse.kalsim.hydra_service.audio_sink_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.audio_sink_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra Audio Data Sink Service</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.audio_sink_service.HydraAudioSink">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.audio_sink_service.</code><code class="sig-name descname">HydraAudioSink</code><span class="sig-paren">(</span><em class="sig-param">hydra_protocol</em>, <em class="sig-param">device_type=12</em>, <em class="sig-param">service_tag=1</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_sink_service.html#HydraAudioSink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_sink_service.HydraAudioSink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService" title="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService</span></code></a></p>
+<p>Hydra Audio Data Sink Service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hydra_protocol</strong> (<em>kats.kalsim.hydra_service.protocol.HydraProcotol</em>) – Hydra messaging
+protocol instance</p></li>
+<li><p><strong>device_type</strong> (<em>int</em>) – Device type</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Service tag when starting the service</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.audio_source_service">
+<span id="kse-kalsim-hydra-service-audio-source-service-module"></span><h2>kse.kalsim.hydra_service.audio_source_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.audio_source_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra Audio Data Source Service</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.audio_source_service.HydraAudioSource">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.audio_source_service.</code><code class="sig-name descname">HydraAudioSource</code><span class="sig-paren">(</span><em class="sig-param">hydra_protocol</em>, <em class="sig-param">device_type=126</em>, <em class="sig-param">service_tag=1</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/audio_source_service.html#HydraAudioSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.audio_source_service.HydraAudioSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService" title="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService</span></code></a></p>
+<p>Hydra Audio Data Source Service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hydra_protocol</strong> (<em>kats.kalsim.hydra_service.protocol.HydraProcotol</em>) – Hydra messaging
+protocol instance</p></li>
+<li><p><strong>device_type</strong> (<em>int</em>) – Device type</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Service tag when starting the service</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.constants">
+<span id="kse-kalsim-hydra-service-constants-module"></span><h2>kse.kalsim.hydra_service.constants module<a class="headerlink" href="#module-kse.kalsim.hydra_service.constants" title="Permalink to this headline">¶</a></h2>
+<p>Hydra Data Services Constants</p>
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.download_service">
+<span id="kse-kalsim-hydra-service-download-service-module"></span><h2>kse.kalsim.hydra_service.download_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.download_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra Capability Download Service</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.download_service.</code><code class="sig-name descname">HydraCapabilityDownloadService</code><span class="sig-paren">(</span><em class="sig-param">stream</em>, <em class="sig-param">accmd</em>, <em class="sig-param">hydra_protocol</em>, <em class="sig-param">service_tag=1</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/download_service.html#HydraCapabilityDownloadService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService" title="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService</span></code></a></p>
+<p>Hydra Capability Download Service</p>
+<p>A service used to download and remove hydra capability files to and from kalsim.</p>
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">timeout=15</em>, <em class="sig-param">download_type=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/download_service.html#HydraCapabilityDownloadService.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download dkcs file with capabilities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Full path to dkcs file</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – Timeout in seconds</p></li>
+<li><p><strong>download_type</strong> (<em>int</em>) – download type possible value : 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>kcs identifier</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><em class="sig-param">kcs_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/download_service.html#HydraCapabilityDownloadService.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a previously downloaded capability file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kcs_id</strong> (<em>int</em>) – kcs identifier obtained in download</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.file_manager_service">
+<span id="kse-kalsim-hydra-service-file-manager-service-module"></span><h2>kse.kalsim.hydra_service.file_manager_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.file_manager_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra File Manager Service</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.file_manager_service.HydraFileManagerService">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.file_manager_service.</code><code class="sig-name descname">HydraFileManagerService</code><span class="sig-paren">(</span><em class="sig-param">stream</em>, <em class="sig-param">accmd</em>, <em class="sig-param">hydra_protocol</em>, <em class="sig-param">service_tag=1</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/file_manager_service.html#HydraFileManagerService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.file_manager_service.HydraFileManagerService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService" title="kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService</span></code></a></p>
+<p>Hydra File Manager Service</p>
+<p>A service used to download and remove hydra files to and from Audio subsystem.</p>
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.file_manager_service.HydraFileManagerService.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">timeout=15</em>, <em class="sig-param">memory_type=1</em>, <em class="sig-param">auto_remove=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/file_manager_service.html#HydraFileManagerService.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.file_manager_service.HydraFileManagerService.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download file using file manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Full path to file to download</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – Timeout in seconds</p></li>
+<li><p><strong>memory_type</strong> (<em>int</em>) – Type of allocated memory</p></li>
+<li><p><strong>auto_remove</strong> (<em>int</em>) – Allow the operator to remove the file when it is no longer required</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>file_id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.file_manager_service.HydraFileManagerService.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><em class="sig-param">file_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/file_manager_service.html#HydraFileManagerService.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.file_manager_service.HydraFileManagerService.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a previously allocated file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_id</strong> (<em>int</em>) – file identifier obtained in file allocation request</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.iso_processing_service">
+<span id="kse-kalsim-hydra-service-iso-processing-service-module"></span><h2>kse.kalsim.hydra_service.iso_processing_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.iso_processing_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra ISO Processing Services</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.iso_processing_service.</code><code class="sig-name descname">HydraIsoProcessingService</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hydra ISO Processing Service</p>
+<p>This is a hydra service
+It supports one bidirectional connection, with from air and to air streams.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service_tag</strong> (<em>int</em>) – Hydra service tag. Every service including non iso processing services
+should have a unique tag</p></li>
+<li><p><strong>hci_handle</strong> (<em>int</em>) – Host Controller Interface handle. This should be a unique number among all
+sco/iso processing services. This number is used to create sco endpoints, if not
+provided then service_tag value will be used</p></li>
+<li><p><strong>from_air_buffer_size</strong> (<em>int</em>) – from-air buffer size in octets, 0 for from air direction unused</p></li>
+<li><p><strong>wallclock_accuracy</strong> (<em>float</em>) – Wallclock simulation accuracy in parts per million.</p></li>
+<li><p><strong>wallclock_handle</strong> (<em>int</em>) – Wallclock MMU handle, dummy handle, any non zero value is valid</p></li>
+<li><p><strong>wallclock_offset</strong> (<em>int</em>) – Wallclock offset in bytes</p></li>
+<li><p><strong>bt_clock_value</strong> (<em>int</em>) – Initial bt clock value (2*slots)</p></li>
+<li><p><strong>endpoint_type</strong> (<em>int</em>) – Type of endpoint, 0 for sco, 1 for iso</p></li>
+<li><p><strong>to_air_buffer_size</strong> (<em>int</em>) – to air buffer size in octets, 0 for to air direction unused</p></li>
+<li><p><strong>iso_stream_type</strong> (<em>str/int</em>) – Type of iso stream, 0/”cis” for connected, 1/”bis” for broadcast</p></li>
+<li><p><strong>isoal_framing</strong> (<em>str/int</em>) – Type of framing, 0/”unframed” for unframed, 1/”framed” for framed</p></li>
+<li><p><strong>iso_interval</strong> (<em>int</em>) – ISO interval in 1.25 msec units, valid values 4 to 3200</p></li>
+<li><p><strong>sdu_interval_to_air</strong> (<em>int</em>) – sdu interval for data being transmitted in microseconds</p></li>
+<li><p><strong>sdu_interval_from_air</strong> (<em>int</em>) – sdu interval for data being received in microseconds</p></li>
+<li><p><strong>max_sdu_to_air</strong> (<em>int</em>) – to-air maximum sdu length in octets</p></li>
+<li><p><strong>max_sdu_from_air</strong> (<em>int</em>) – from-air maximum sdu length in octets</p></li>
+<li><p><strong>next_slot_time</strong> (<em>int</em>) – Next reserved slot time in bt ticks (2*slots)</p></li>
+<li><p><strong>cis_sync_delay/stream_sync_delay</strong> (<em>int</em>) – CIS/BIS synchronization delay in microseconds</p></li>
+<li><p><strong>cig_sync_delay/group_sync_delay</strong> (<em>int</em>) – CIG/BIG synchronization delay in microseconds</p></li>
+<li><p><strong>flush_timeout_to_air</strong> (<em>int</em>) – Flush timeout for data being transmitted in ISO intervals</p></li>
+<li><p><strong>flush_timeout_from_air</strong> (<em>int</em>) – Flush timeout for data being received in ISO intervals</p></li>
+<li><p><strong>to_air_latency</strong> (<em>int</em>) – Latency in the to-air direction in microseconds</p></li>
+<li><p><strong>from_air_latency</strong> (<em>int</em>) – Latency in the from-air direction in microseconds</p></li>
+<li><p><strong>sdu_number</strong> (<em>int</em>) – Initial sequence number (both to air and from air)</p></li>
+<li><p><strong>sdu_number_to_air</strong> (<em>int</em>) – Initial to air sequence number, if not supplied use sdu_number</p></li>
+<li><p><strong>sdu_number_from_air</strong> (<em>int</em>) – Initial from air sequence number, if not supplied use sdu_number</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.bt_clock_value">
+<em class="property">property </em><code class="sig-name descname">bt_clock_value</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.bt_clock_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>BT clock initial value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.check_started">
+<code class="sig-name descname">check_started</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService.check_started"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.check_started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the ISO processing service is started</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Service already started</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure ISO processing service</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.endpoint_type">
+<em class="property">property </em><code class="sig-name descname">endpoint_type</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.endpoint_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Endpoint type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.flush_timeout_from_air">
+<em class="property">property </em><code class="sig-name descname">flush_timeout_from_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.flush_timeout_from_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flush timeout from air in iso interval units</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.flush_timeout_to_air">
+<em class="property">property </em><code class="sig-name descname">flush_timeout_to_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.flush_timeout_to_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flush timeout to air in iso interval units</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_buffer_size">
+<em class="property">property </em><code class="sig-name descname">from_air_buffer_size</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>From air buffer size in octets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_handle">
+<em class="property">property </em><code class="sig-name descname">from_air_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ISO processing service from air bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_latency">
+<em class="property">property </em><code class="sig-name descname">from_air_latency</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_latency" title="Permalink to this definition">¶</a></dt>
+<dd><p>From air latency in usecs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_read_handle">
+<em class="property">property </em><code class="sig-name descname">from_air_read_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_read_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ISO processing service from air read bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_write_handle">
+<em class="property">property </em><code class="sig-name descname">from_air_write_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.from_air_write_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ISO processing service from air write bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.get_buffer_stats">
+<code class="sig-name descname">get_buffer_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService.get_buffer_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.get_buffer_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get buffer statistics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>int: Used bytes
+int: Free bytes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.group_sync_delay">
+<em class="property">property </em><code class="sig-name descname">group_sync_delay</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.group_sync_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>CIG/BIG synchronisation delay in usec</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.hci_handle">
+<em class="property">property </em><code class="sig-name descname">hci_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.hci_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>HCI handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.iso_interval">
+<em class="property">property </em><code class="sig-name descname">iso_interval</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.iso_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>ISO interval in 1.25 msec units</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.iso_interval_sec">
+<em class="property">property </em><code class="sig-name descname">iso_interval_sec</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.iso_interval_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>iso interval in seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.iso_stream_type">
+<em class="property">property </em><code class="sig-name descname">iso_stream_type</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.iso_stream_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>ISO stream type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.isoal_framing">
+<em class="property">property </em><code class="sig-name descname">isoal_framing</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.isoal_framing" title="Permalink to this definition">¶</a></dt>
+<dd><p>isoal framing stream type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.max_sdu_from_air">
+<em class="property">property </em><code class="sig-name descname">max_sdu_from_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.max_sdu_from_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Max SDU from air in octets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.max_sdu_to_air">
+<em class="property">property </em><code class="sig-name descname">max_sdu_to_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.max_sdu_to_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Max SDU to air in octets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.next_slot_time">
+<em class="property">property </em><code class="sig-name descname">next_slot_time</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.next_slot_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Next slot time in bt ticks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_from_air">
+<em class="property">property </em><code class="sig-name descname">sdu_interval_from_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_from_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>SDU interval from air in usecs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_from_air_sec">
+<em class="property">property </em><code class="sig-name descname">sdu_interval_from_air_sec</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_from_air_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sdu interval from air parameter in seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_to_air">
+<em class="property">property </em><code class="sig-name descname">sdu_interval_to_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_to_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>SDU interval to air in usecs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_to_air_sec">
+<em class="property">property </em><code class="sig-name descname">sdu_interval_to_air_sec</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_interval_to_air_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sdu interval to air parameter in seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_number_from_air">
+<em class="property">property </em><code class="sig-name descname">sdu_number_from_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_number_from_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial from air sdu number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_number_to_air">
+<em class="property">property </em><code class="sig-name descname">sdu_number_to_air</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.sdu_number_to_air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial to air sdu number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.service_tag">
+<em class="property">property </em><code class="sig-name descname">service_tag</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.service_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>ISO service tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start ISO processing service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – <ul class="simple">
+<li><p>If the service has already been started
+    - The response payload length is incorrect
+    - The response service tag doesn’t match expected value</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.start_channel">
+<code class="sig-name descname">start_channel</code><span class="sig-paren">(</span><em class="sig-param">channel</em>, <em class="sig-param">callback</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService.start_channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.start_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request callback to be invoked when a given channel is ready to start streaming</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>int</em>) – 0 for to air, 1 for from air</p></li>
+<li><p><strong>callback</strong> (<em>func</em>) – Callback to be called when the service is ready to start streaming</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/iso_processing_service.html#HydraIsoProcessingService.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop ISO processing service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the service as not been previously started</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.stream_sync_delay">
+<em class="property">property </em><code class="sig-name descname">stream_sync_delay</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.stream_sync_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>CIS/BIS synchronisation delay in usec</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_buffer_size">
+<em class="property">property </em><code class="sig-name descname">to_air_buffer_size</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>To air buffer size in octets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_handle">
+<em class="property">property </em><code class="sig-name descname">to_air_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ISO processing service to air bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_latency">
+<em class="property">property </em><code class="sig-name descname">to_air_latency</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_latency" title="Permalink to this definition">¶</a></dt>
+<dd><p>To air latency in usecs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_read_handle">
+<em class="property">property </em><code class="sig-name descname">to_air_read_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_read_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ISO processing service to air read bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_write_handle">
+<em class="property">property </em><code class="sig-name descname">to_air_write_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.to_air_write_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ISO processing service to air read bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.wallclock_accuracy">
+<em class="property">property </em><code class="sig-name descname">wallclock_accuracy</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.wallclock_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wallclock accuracy in ppm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.wallclock_handle">
+<em class="property">property </em><code class="sig-name descname">wallclock_handle</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.wallclock_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wallclock handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.wallclock_offset">
+<em class="property">property </em><code class="sig-name descname">wallclock_offset</code><a class="headerlink" href="#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService.wallclock_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wallclock offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.protocol">
+<span id="kse-kalsim-hydra-service-protocol-module"></span><h2>kse.kalsim.hydra_service.protocol module<a class="headerlink" href="#module-kse.kalsim.hydra_service.protocol" title="Permalink to this headline">¶</a></h2>
+<p>Hydra Control and Configuration protocol for kalsim firmware</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.protocol.</code><code class="sig-name descname">HydraProtocol</code><span class="sig-paren">(</span><em class="sig-param">uut</em>, <em class="sig-param">subsystem=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hydra Messaging Protocol handler</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uut</strong> (<em>kats.core.uut_base.UutBase</em>) – Uut abstraction instance</p></li>
+<li><p><strong>subsystem</strong> (<em>int</em>) – Subsystem ID</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.install_message_handler">
+<code class="sig-name descname">install_message_handler</code><span class="sig-paren">(</span><em class="sig-param">callback</em>, <em class="sig-param">flt=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.install_message_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.install_message_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install message handler for hydra services</p>
+<p>If filter is provided then it will be evaluated and the handler only called if the
+filter returns True</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callback</strong> (<em>func</em><em>(</em><em>list</em><em>[</em><em>int</em><em>]</em><em>)</em>) – Message reception callback</p></li>
+<li><p><strong>flt</strong> (<em>func</em>) – Filtering function receiving one parameter being the message received and
+returning True if the message is accepted in the filter, False otherwise</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Message handler</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.kick">
+<code class="sig-name descname">kick</code><span class="sig-paren">(</span><em class="sig-param">status_to_kick</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.kick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.kick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kick firmware</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status_to_kick</strong> (<em>int</em>) – Buffer to kick</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.recv">
+<code class="sig-name descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive a hydra service message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Message payload</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send">
+<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a generic hydra service message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message payload</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send_ftp_server_to_fw_control">
+<code class="sig-name descname">send_ftp_server_to_fw_control</code><span class="sig-paren">(</span><em class="sig-param">payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send_ftp_server_to_fw_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send_ftp_server_to_fw_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send ftp server message control path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>payload</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to send</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send_ftp_server_to_fw_data">
+<code class="sig-name descname">send_ftp_server_to_fw_data</code><span class="sig-paren">(</span><em class="sig-param">payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send_ftp_server_to_fw_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send_ftp_server_to_fw_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send ftp server message data path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>payload</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to send</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send_license_query_response">
+<code class="sig-name descname">send_license_query_response</code><span class="sig-paren">(</span><em class="sig-param">ccp_header</em>, <em class="sig-param">service_tag</em>, <em class="sig-param">status</em>, <em class="sig-param">payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send_license_query_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send_license_query_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response to license query from license manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ccp_header</strong> (<em>int</em>) – CCP Header</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Service tag</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – License status</p></li>
+<li><p><strong>payload</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to send</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send_license_start_response">
+<code class="sig-name descname">send_license_start_response</code><span class="sig-paren">(</span><em class="sig-param">ccp_header</em>, <em class="sig-param">service_tag</em>, <em class="sig-param">payload=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send_license_start_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send_license_start_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start response from license manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ccp_header</strong> (<em>int</em>) – CCP Header</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Service tag</p></li>
+<li><p><strong>payload</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message to send</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send_recv">
+<code class="sig-name descname">send_recv</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send_recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a generic hydra service message and get a response</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Message payload</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Message payload</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.send_service_advice_indication">
+<code class="sig-name descname">send_service_advice_indication</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.send_service_advice_indication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.send_service_advice_indication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send service advice indication</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.set_iso_params">
+<code class="sig-name descname">set_iso_params</code><span class="sig-paren">(</span><em class="sig-param">service_tag</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.set_iso_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.set_iso_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set ISO parameters for service instance identified by service_tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service_tag</strong> (<em>int</em>) – Service tag obtained in start_service</p></li>
+<li><p><strong>iso_interval</strong> (<em>uint16</em>) – Fundamental interval between air events, in BT slot-pairs
+(units of 1.25ms). [valid values 4-3200]</p></li>
+<li><p><strong>sdu_interval_to_air</strong> (<em>uint32</em>) – SDU interval for data being transmitted, in microseconds
+[20 bits significant]</p></li>
+<li><p><strong>sdu_interval_from_air</strong> (<em>uint32</em>) – SDU interval for data being received, in microseconds
+[20 bits significant]</p></li>
+<li><p><strong>max_sdu_to_air</strong> (<em>uint16</em>) – maximum SDU length, in octets [uint16, 12 bits significant]</p></li>
+<li><p><strong>max_sdu_from_air</strong> (<em>uint16</em>) – maximum SDU length, in octets [uint16, 12 bits significant]</p></li>
+<li><p><strong>next_slot_time</strong> (<em>uint32</em>) – next reserved slot time in BT ticks (312.5 us)</p></li>
+<li><p><strong>stream_sync_delay</strong> (<em>uint32</em>) – CIS/BIS Synchronisation Delay in microseconds</p></li>
+<li><p><strong>group_sync_delay</strong> (<em>uint32</em>) – CIG/BIG Synchronisation Delay in microseconds</p></li>
+<li><p><strong>flush_timeout_to_air</strong> (<em>uint16</em>) – Flush timeout for data being tx, in ISO intervals</p></li>
+<li><p><strong>flush_timeout_from_air</strong> (<em>uint16</em>) – Flush timeout for data being received, in ISO intervals</p></li>
+<li><p><strong>to_air_latency</strong> (<em>uint32</em>) – latency in the to-air direction, in microseconds</p></li>
+<li><p><strong>from_air_latency</strong> (<em>uint32</em>) – latency in the from-air direction, in microseconds</p></li>
+<li><p><strong>sdu_number_to_air</strong> (<em>uint16</em>) – sequence number of first SDU, integer (unused for now,
+leave 0)</p></li>
+<li><p><strong>sdu_number_from_air</strong> (<em>uint16</em>) – sequence number of first SDU, integer (unused for now,
+leave 0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError if the set_iso_params response is invalid</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.set_sco_params">
+<code class="sig-name descname">set_sco_params</code><span class="sig-paren">(</span><em class="sig-param">service_tag</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.set_sco_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.set_sco_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set SCO parameters for service instance identified by service_tag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service_tag</strong> (<em>int</em>) – Service tag obtained in start_service</p></li>
+<li><p><strong>tesco</strong> (<em>uint16</em>) – SPS BT link TeSCO, the interval between transmissions in slots</p></li>
+<li><p><strong>wesco</strong> (<em>uint16</em>) – SPS BT link WeSCO, the retransmission window in slots</p></li>
+<li><p><strong>to_air_length</strong> (<em>uint16</em>) – SPS to-air packet length in octets</p></li>
+<li><p><strong>from_air_length</strong> (<em>uint16</em>) – SPS from-air packet length in octets</p></li>
+<li><p><strong>next_slot_time</strong> (<em>uint32</em>) – BT clock of first packet to be received from-air
+(this is received in a field of metadata)</p></li>
+<li><p><strong>to_air_latency</strong> (<em>int</em>) – interval to/from the start of first reserved slot when the audio
+graph should have data ready for transmission in microseconds</p></li>
+<li><p><strong>from_air_latency</strong> (<em>int</em>) – interval to/from the start of first reserved slot when data
+should be ready for the audio graph to process in microseconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError if the set_sco_params response is invalid</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.start_service">
+<code class="sig-name descname">start_service</code><span class="sig-paren">(</span><em class="sig-param">service_type</em>, <em class="sig-param">payload=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.start_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.start_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a hydra service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service_type</strong> (<em>int</em>) – Service type</p></li>
+<li><p><strong>payload</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Specific service payload data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int: Service tag
+list[int]: Service payload</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.stop_service">
+<code class="sig-name descname">stop_service</code><span class="sig-paren">(</span><em class="sig-param">service_type</em>, <em class="sig-param">service_tag</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.stop_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.stop_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop a hydra service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service_type</strong> (<em>int</em>) – Service type</p></li>
+<li><p><strong>int</strong><strong>)</strong> (<em>service_tag</em>) – Service tag obtained in start_service</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError if the stop_service response is invalid</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.protocol.HydraProtocol.uninstall_message_handler">
+<code class="sig-name descname">uninstall_message_handler</code><span class="sig-paren">(</span><em class="sig-param">handler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/protocol.html#HydraProtocol.uninstall_message_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.protocol.HydraProtocol.uninstall_message_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister previously register accmd messsage handler</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>handler</strong> (<em>dict</em>) – Message handler</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.sco_processing_service">
+<span id="kse-kalsim-hydra-service-sco-processing-service-module"></span><h2>kse.kalsim.hydra_service.sco_processing_service module<a class="headerlink" href="#module-kse.kalsim.hydra_service.sco_processing_service" title="Permalink to this headline">¶</a></h2>
+<p>Hydra SCO Processing Service</p>
+<dl class="class">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.hydra_service.sco_processing_service.</code><code class="sig-name descname">HydraScoProcessingService</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hydra SCO Processing Service</p>
+<p>This is a hydra service
+It supports one bidirectional connection, with from air and to air streams. Both streams
+are symmetrical, same tesco, slots and air_packet_length</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service_tag</strong> (<em>int</em>) – Hydra service tag. Every service including non sco processing services
+should have a unique tag</p></li>
+<li><p><strong>hci_handle</strong> (<em>int</em>) – Host Controller Interface handle. This should be a unique number among all
+sco processing services. This number is used to create sco endpoints</p></li>
+<li><p><strong>wallclock_accuracy</strong> (<em>float</em>) – Wallclock simulation accuracy in part per million.</p></li>
+<li><p><strong>wallclock_handle</strong> (<em>int</em>) – TBD FIXME</p></li>
+<li><p><strong>wallclock_offset</strong> (<em>int</em>) – TBD FIXME</p></li>
+<li><p><strong>next_slot_time</strong> (<em>int</em>) – Next reserved slot time in bt ticks (2*slits)</p></li>
+<li><p><strong>role</strong> (<em>str</em>) – Bluetooth link role, master or slave</p></li>
+<li><p><strong>air_compression_factor</strong> (<em>int</em>) – SPS to/from-air compression factor
+VALID_COMPRESSION_FACTORS = (1, 2)</p></li>
+<li><p><strong>air_buffer_size</strong> (<em>int</em>) – SPS to/from-air buffer size in octets</p></li>
+<li><p><strong>air_packet_length</strong> (<em>int</em>) – SPS to/from-air packet length in octets</p></li>
+<li><p><strong>tesco</strong> (<em>int</em>) – SPS BT link TeSCO (interval between transmissions)
+VALID_TESCOS = (2, 4, 6, 8, 10, 12, 14, 16, 18)</p></li>
+<li><p><strong>wesco</strong> (<em>int</em>) – SPS BT link WeSCO (retransmission window)</p></li>
+<li><p><strong>slot_occupancy</strong> (<em>int</em>) – Number of slots on the BT physical channel taken by one packet
+VALID_SLOT_OCCUPANCIES = (1, 3)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.check_started">
+<code class="sig-name descname">check_started</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.check_started"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.check_started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the SCO processing service is started</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Service already started</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure SCO processing service</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_buffer_stats">
+<code class="sig-name descname">get_buffer_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_buffer_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_buffer_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get buffer statistics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Used bytes
+int: Free bytes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_frame_length">
+<code class="sig-name descname">get_frame_length</code><span class="sig-paren">(</span><em class="sig-param">channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_frame_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_frame_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request channel frame length</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>channel</strong> (<em>int</em>) – 0 for to air, 1 for from air</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Frame length</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_from_air_handle">
+<code class="sig-name descname">get_from_air_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_from_air_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_from_air_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service from air bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bac handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_from_air_read_handle">
+<code class="sig-name descname">get_from_air_read_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_from_air_read_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_from_air_read_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service from air read bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bac handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_from_air_write_handle">
+<code class="sig-name descname">get_from_air_write_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_from_air_write_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_from_air_write_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service from air write bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bac handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_hci_handle">
+<code class="sig-name descname">get_hci_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_hci_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_hci_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service hci handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>hci_handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_tesco">
+<code class="sig-name descname">get_tesco</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_tesco"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_tesco" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service tesco value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>tesco</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_to_air_handle">
+<code class="sig-name descname">get_to_air_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_to_air_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_to_air_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service to air bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bac handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_to_air_read_handle">
+<code class="sig-name descname">get_to_air_read_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_to_air_read_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_to_air_read_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service to air read bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bac handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_to_air_write_handle">
+<code class="sig-name descname">get_to_air_write_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.get_to_air_write_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.get_to_air_write_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SCO processing service to air read bac handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bac handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start SCO processing service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – <ul class="simple">
+<li><p>If the service has already been started
+    - The response payload length is incorrect
+    - The response service tag doesn’t match expected value</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.start_channel">
+<code class="sig-name descname">start_channel</code><span class="sig-paren">(</span><em class="sig-param">channel</em>, <em class="sig-param">callback</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.start_channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.start_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request callback to be invoked when a given channel is ready to start streaming</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>int</em>) – 0 for to air, 1 for from air</p></li>
+<li><p><strong>callback</strong> (<em>func</em>) – Callback to be called when the service is ready to start streaming</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/sco_processing_service.html#HydraScoProcessingService.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop SCO processing service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the service as not been previously started</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service.util">
+<span id="kse-kalsim-hydra-service-util-module"></span><h2>kse.kalsim.hydra_service.util module<a class="headerlink" href="#module-kse.kalsim.hydra_service.util" title="Permalink to this headline">¶</a></h2>
+<p>Hydra utility library</p>
+<dl class="function">
+<dt id="kse.kalsim.hydra_service.util.get_buffer_stats">
+<code class="sig-prename descclassname">kse.kalsim.hydra_service.util.</code><code class="sig-name descname">get_buffer_stats</code><span class="sig-paren">(</span><em class="sig-param">read_handle</em>, <em class="sig-param">write_handle</em>, <em class="sig-param">buffer_size=None</em>, <em class="sig-param">buffer_width=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/hydra_service/util.html#get_buffer_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.hydra_service.util.get_buffer_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get kalcmd buffer statistics</p>
+<p>The values returned by Kalsim for handle offsets and buffer sizes are in
+octets and include all the octets in the buffer, useful or wasted. If the BAC sample
+size is configured to 8|16|24_BIT_UNPACKED a part of the buffer is wasted
+(e.g. 16_BIT_UNPACKED, only half of the buffer contains useful data - the lower
+16 bits of each 32-bit word).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>read_handle</strong> (<em>int</em>) – Read BAC handle</p></li>
+<li><p><strong>write_handle</strong> (<em>int</em>) – Write BAC handle</p></li>
+<li><p><strong>buffer_size</strong> (<em>int</em>) – Buffer size or None to autodetect</p></li>
+<li><p><strong>buffer_width</strong> (<em>int</em>) – Buffer width or None to autodetect</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int: Used bytes
+int: Free bytes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.hydra_service">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.hydra_service" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.library.html" class="btn btn-neutral float-right" title="kse.kalsim.library package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.graph.html" class="btn btn-neutral" title="kse.kalsim.graph package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

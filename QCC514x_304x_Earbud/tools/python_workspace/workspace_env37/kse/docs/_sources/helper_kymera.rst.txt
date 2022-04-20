@@ -1,0 +1,23 @@
+.. _helper_kymera:
+
+======
+Kymera
+======
+
+This is the basic KATS language to firmware, through the Kymera API.
+
+This helper is very similar to the internal kymera api with the differences
+
+    * all commands are blocking (as opposed to report result through a callback)
+    * there is no connection ID parameter.
+
+Depending on the platform, the right kymera API adapter is loaded at start.
+
+Available methods are listed in :class:`kse.kymera.kymera.kymera_base.KymeraBase`.
+
+In the shell it is avaailable as ``kymera``::
+
+    >>> kymera.opmgr_create_operator(1)
+    0x4040
+    >>> kymera.opmgr_get_opid_list()
+    [0x4040]

@@ -1,0 +1,35 @@
+file = audio
+
+# PSID=0x204F80, capID=0x409F, UCID=0x0000 (Fill tuned parameters for Adaptive ANC (anc_mode_1))
+#0x204F80 = [ ]
+
+# PSID=0x204F82, capID=0x409F, UCID=0x0001 (Fill tuned parameters for Adaptive ANC (anc_mode_2)
+#0x204F82 = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0002 (Fill tuned parameters for Adaptive ANC (anc_mode_3))
+#0x204F84 = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0003 (Fill tuned parameters for Adaptive ANC (anc_mode_4))
+#0x204F86 = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0004 (Fill tuned parameters for Adaptive ANC (anc_mode_5))
+#0x204F88 = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0005 (Fill tuned parameters for Adaptive ANC (anc_mode_6))
+#0x204F8A = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0006 (Fill tuned parameters for Adaptive ANC (anc_mode_7))
+0x204F8C = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0007 (Fill tuned parameters for Adaptive ANC (anc_mode_8))
+#0x204F8E = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0008 (Fill tuned parameters for Adaptive ANC (anc_mode_9))
+#0x204F90 = [ ]
+
+# PSID=0x204F84, capID=0x409F, UCID=0x0009 (Fill tuned parameters for Adaptive ANC (anc_mode_10))
+#0x204F92 = [ ]
+
+# HBL tuned parameters for Static ANC mode (anc_mode_fit_test)
+# PSID=0x204F94, capID=0x409F, UCID=0x003F((63)D last ucid supported)(Fill tuned parameters for Adaptive ANC (anc_mode_fit_test))
+#0x204FFE = [ ]

@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Shell &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="User guide" href="user_guide.html"/>
+        <link rel="next" title="Graph examples" href="examples.html"/>
+        <link rel="prev" title="Workspace" href="workspace.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage">Basic usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#first-steps">First steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graph">Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-pass-with-streams-and-endpoints">BASIC_PASS with streams and endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command-line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Graph examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">Command-line tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+    <li>Shell</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/shell.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="shell">
+<h1>Shell<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<p>The shell is the preferred tool for interactive usage, as in prototyping.</p>
+<p><strong>Features</strong></p>
+<p>Depending on the selected REPL (Read-Evaluate-Print-Loop) different features are available.
+In the case of <em>IPython</em> (default) those are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Command completion through the TAB key</p></li>
+<li><p>Command history with the UP and DOWN keys</p></li>
+<li><p>Introspection with <code class="docutils literal notranslate"><span class="pre">object?</span></code> or deep intropection with <code class="docutils literal notranslate"><span class="pre">object??</span></code></p></li>
+<li><p>Execution of scripts with <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">-i</span> <span class="pre">&lt;script_name&gt;</span></code></p></li>
+<li><p>Syntax highlighting</p></li>
+<li><p>Multiline edit support</p></li>
+<li><p>Execution of shell commands with <code class="docutils literal notranslate"><span class="pre">!cmd</span></code> as <code class="docutils literal notranslate"><span class="pre">!dir</span></code></p></li>
+</ul>
+</div></blockquote>
+<p><strong>Logging</strong></p>
+<p>Log configuration is located in <code class="docutils literal notranslate"><span class="pre">$KATS_WORKSPACE/config/log_shell.cfg.json</span></code>.</p>
+<p>Log output is placed in <code class="docutils literal notranslate"><span class="pre">$KATS_WORKSPACE/log/shell.log.txt</span></code>.</p>
+<p>Log level is selected with <code class="docutils literal notranslate"><span class="pre">--log_level</span> <span class="pre">&lt;val&gt;</span></code> command-line argument.
+The default is 30 (WARNING) which does not produce much output, while 20 (INFO) will produce
+complete log information.</p>
+<div class="section" id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>To obtain help:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">khelp</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Available objects are</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="helper_uut.html#helper-uut"><span class="std std-ref">uut</span></a>. Abstraction supporting messages, timers, interrupts and memory access</p></li>
+<li><p><a class="reference internal" href="helper_kymera.html#helper-kymera"><span class="std std-ref">kymera</span></a> api</p></li>
+<li><p><a class="reference internal" href="helper_endpoint.html#helper-endpoint"><span class="std std-ref">endpoint</span></a> factory</p></li>
+<li><p><a class="reference internal" href="helper_capability.html#helper-capability"><span class="std std-ref">capability</span></a> factory</p></li>
+<li><p><a class="reference internal" href="helper_stream.html#helper-stream"><span class="std std-ref">stream</span></a> factory</p></li>
+<li><p><a class="reference internal" href="helper_graph.html#helper-graph"><span class="std std-ref">graph</span></a> helper</p></li>
+<li><p><a class="reference internal" href="kse.instrument.kalcmd.html#kse.instrument.kalcmd.kalcmd.Kalcmd" title="kse.instrument.kalcmd.kalcmd.Kalcmd"><code class="xref py py-class docutils literal notranslate"><span class="pre">kalcmd</span></code></a>. Kalcmd instrument interface to kalcmd2/kalsim</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.protocol.HydraProtocol" title="kse.kalsim.hydra_service.protocol.HydraProtocol"><code class="xref py py-class docutils literal notranslate"><span class="pre">hydra_protocol</span></code></a>. Hydra protocol interface</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService" title="kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService"><code class="xref py py-class docutils literal notranslate"><span class="pre">hydra_cap_download</span></code></a>. Hydra capability download interface</p></li>
+<li><p><a class="reference internal" href="kse.instrument.acat.html#kse.instrument.acat.acat.Acat" title="kse.instrument.acat.acat.Acat"><code class="xref py py-class docutils literal notranslate"><span class="pre">acat</span></code></a>. ACAT instance (requires to be enabled on invocation)</p></li>
+</ul>
+</div></blockquote>
+<p>To reset your environment, close and respawn kalsim/kalcmd2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="first-steps">
+<h2>First steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h2>
+<p>To generate a simulated timer and poll for its expiration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span> <span class="o">=</span> <span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># add simulated timer in 5 seconds</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">uut</span><span class="o">.</span><span class="n">timer_check_expired</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;not expired yet&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;timer </span><span class="si">%s</span><span class="s1"> expired&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>To generate a simulated timer with expiration callback:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">timer_expired</span><span class="p">(</span><span class="n">timer_id</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;timer </span><span class="si">%s</span><span class="s1"> expired, expecting </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">timer_id</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span> <span class="o">=</span> <span class="n">uut</span><span class="o">.</span><span class="n">timer_add_relative</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">timer_expired</span><span class="p">)</span> <span class="c1"># add simulated timer in 5 seconds</span>
+</pre></div>
+</div>
+<p>To lists capabilities available in running Kymera.
+The result depends on the selected platform and e.g. downloaded capabilities present
+in addition to the built-in capabilities:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_get_capid_list</span><span class="p">()</span>
+<span class="go">    [0x0001,</span>
+<span class="go">     0x0003,</span>
+<span class="go">     0x0004,</span>
+<span class="go">     ...</span>
+<span class="go">     ...</span>
+<span class="go">     ...</span>
+<span class="go">     0x3ff7,</span>
+<span class="go">     0x3ff5,</span>
+<span class="go">     0x00cb]</span>
+</pre></div>
+</div>
+<p>To run <code class="docutils literal notranslate"><span class="pre">BASIC_PASS_THROUGH</span></code> operator life cycle:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">op_id</span><span class="o">=</span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_create_operator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_start_operators</span><span class="p">([</span><span class="n">op_id</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_stop_operators</span><span class="p">([</span><span class="n">op_id</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_destroy_operators</span><span class="p">([</span><span class="n">op_id</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="graph">
+<h2>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h2>
+<p>The shell has access to the graph helper, which allows easy graph play (creation, configuration,
+connection, start, stop, disconnect and destruction) of a kymera graph.</p>
+<p>The following commands will play a graph file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kse.framework.library.file_util</span> <span class="k">import</span> <span class="n">load</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s1">&#39;config/pt.cfg.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More information in <a class="reference internal" href="graph.html#graph"><span class="std std-ref">Graphs</span></a>.</p>
+</div>
+<div class="section" id="basic-pass-with-streams-and-endpoints">
+<span id="simple-basic-pass-with-streams-and-endpoints"></span><h2>BASIC_PASS with streams and endpoints<a class="headerlink" href="#basic-pass-with-streams-and-endpoints" title="Permalink to this headline">¶</a></h2>
+<p>Create a source stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="go">    &#39;hydra_type&#39;: &#39;audio_slot&#39;,</span>
+<span class="go">    &#39;hydra_bac_handle&#39;: 0,</span>
+<span class="go">    &#39;hydra_audioslot&#39;: 0,</span>
+<span class="go">    &#39;stream_flow_control_drive&#39;: &#39;kalsim&#39;,</span>
+<span class="go">    &#39;stream_flow_control_block_size&#39;: 1,</span>
+<span class="go">    &#39;stream_format&#39;: 16,</span>
+<span class="go">    &#39;stream_backing&#39;: &#39;file&#39;,</span>
+<span class="go">    &#39;stream_filename&#39;:&quot;resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw&quot;,</span>
+<span class="go">    &#39;stream_flow_control_rate&#39;: 8000,</span>
+<span class="go">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;hydra&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span><span class="o">.</span><span class="n">config</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create a sink stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="go">    &#39;hydra_type&#39;: &#39;audio_slot&#39;,</span>
+<span class="go">    &#39;hydra_bac_handle&#39;: 0,</span>
+<span class="go">    &#39;hydra_audioslot&#39;: 0,</span>
+<span class="go">    &#39;stream_flow_control_drive&#39;: &#39;kalsim&#39;,</span>
+<span class="go">    &#39;stream_flow_control_block_size&#39;: 1,</span>
+<span class="go">    &#39;stream_format&#39;: 16,</span>
+<span class="go">    &#39;stream_backing&#39;: &#39;file&#39;,</span>
+<span class="go">    &#39;stream_filename&#39;: &quot;tmp/kalsim_pass_through.raw&quot;,</span>
+<span class="go">    &#39;stream_flow_control_rate&#39;: 8000,</span>
+<span class="go">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_sink</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;hydra&#39;</span><span class="p">,</span> <span class="s1">&#39;sink&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_sink</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_sink</span><span class="o">.</span><span class="n">config</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create endpoints:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ep_source</span><span class="o">=</span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_get_source</span><span class="p">(</span><span class="s1">&#39;pcm&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_configure_sid</span><span class="p">(</span><span class="n">ep_source</span><span class="p">,</span> <span class="s1">&#39;pcm_master_clock_rate&#39;</span><span class="p">,</span> <span class="mi">512000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_configure_sid</span><span class="p">(</span><span class="n">ep_source</span><span class="p">,</span> <span class="s1">&#39;pcm_master_mode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_configure_sid</span><span class="p">(</span><span class="n">ep_source</span><span class="p">,</span> <span class="s1">&#39;pcm_sample_format&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_configure_sid</span><span class="p">(</span><span class="n">ep_source</span><span class="p">,</span> <span class="s1">&#39;pcm_sync_rate&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_configure_sid</span><span class="p">(</span><span class="n">ep_source</span><span class="p">,</span> <span class="s1">&#39;pcm_slot_count&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ep_sink</span> <span class="o">=</span> <span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_get_sink</span><span class="p">(</span><span class="s1">&#39;pcm&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Create BASIC_PASS operator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">op</span> <span class="o">=</span> <span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_create_operator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_operator_message</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_operator_message</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Connect endpoints:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_connect</span><span class="p">(</span><span class="n">ep_source</span><span class="p">,</span> <span class="n">op</span> <span class="o">|</span> <span class="mh">0xa000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_connect</span><span class="p">(</span><span class="n">op</span> <span class="o">|</span> <span class="mh">0x2000</span><span class="p">,</span> <span class="n">ep_sink</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Start streaming:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">st_sink</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_start_operators</span><span class="p">([</span><span class="n">op</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Wait for 2 minutes and check that the stream is not active:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span><span class="o">.</span><span class="n">check_active</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Stop streaming:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_source</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_sink</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">st_sink</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Release resources:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_stop_operators</span><span class="p">([</span><span class="n">op</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">opmgr_destroy_operators</span><span class="p">([</span><span class="n">op</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_close_source</span><span class="p">(</span><span class="n">ep_source</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kymera</span><span class="o">.</span><span class="n">stream_if_close_sink</span><span class="p">(</span><span class="n">ep_sink</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command-line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="command_line.html#command-line-kse-shell"><span class="std std-ref">kse_shell</span></a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples.html" class="btn btn-neutral float-right" title="Graph examples" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="workspace.html" class="btn btn-neutral" title="Workspace" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

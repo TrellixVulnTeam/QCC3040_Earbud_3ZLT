@@ -1,0 +1,1 @@
+gatt_logging_server/gatt_logging_server_db.dbi_: gatt_logging_server/gatt_logging_server_db.dbi gatt_logging_server/gatt_logging_server_uuids.h

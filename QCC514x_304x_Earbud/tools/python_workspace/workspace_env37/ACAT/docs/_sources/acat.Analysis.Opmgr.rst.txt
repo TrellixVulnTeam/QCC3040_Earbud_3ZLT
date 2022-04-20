@@ -1,0 +1,8 @@
+
+Opmgr
+==========================================================================
+
+This module can be imported from ``ACAT.Analysis.Opmgr``.
+
+.. automodule:: ACAT.Analysis.Opmgr
+   :members:

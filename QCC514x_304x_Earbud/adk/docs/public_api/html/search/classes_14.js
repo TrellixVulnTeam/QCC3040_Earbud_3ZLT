@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['va_5faudio_5fencode_5fconfig_5ft_2374',['va_audio_encode_config_t',['../structva__audio__encode__config__t.html',1,'']]],
+  ['va_5faudio_5fencoder_5fparams_5ft_2375',['va_audio_encoder_params_t',['../unionva__audio__encoder__params__t.html',1,'']]],
+  ['va_5faudio_5fencoder_5fsbc_5fparams_5ft_2376',['va_audio_encoder_sbc_params_t',['../structva__audio__encoder__sbc__params__t.html',1,'']]],
+  ['va_5faudio_5fmic_5fconfig_5ft_2377',['va_audio_mic_config_t',['../structva__audio__mic__config__t.html',1,'']]],
+  ['va_5faudio_5fvoice_5fcapture_5fparams_5ft_2378',['va_audio_voice_capture_params_t',['../structva__audio__voice__capture__params__t.html',1,'']]],
+  ['va_5faudio_5fwuw_5fcapture_5fparams_5ft_2379',['va_audio_wuw_capture_params_t',['../structva__audio__wuw__capture__params__t.html',1,'']]],
+  ['va_5faudio_5fwuw_5fconfig_5ft_2380',['va_audio_wuw_config_t',['../structva__audio__wuw__config__t.html',1,'']]],
+  ['va_5faudio_5fwuw_5fdetected_5fresponse_5ft_2381',['va_audio_wuw_detected_response_t',['../structva__audio__wuw__detected__response__t.html',1,'']]],
+  ['va_5faudio_5fwuw_5fdetection_5finfo_5ft_2382',['va_audio_wuw_detection_info_t',['../structva__audio__wuw__detection__info__t.html',1,'']]],
+  ['va_5faudio_5fwuw_5fdetection_5fparams_5ft_2383',['va_audio_wuw_detection_params_t',['../structva__audio__wuw__detection__params__t.html',1,'']]],
+  ['va_5faudio_5fwuw_5fengine_5fversion_5ft_2384',['va_audio_wuw_engine_version_t',['../structva__audio__wuw__engine__version__t.html',1,'']]],
+  ['va_5fencode_5fchain_5fcreate_5fparams_5ft_2385',['va_encode_chain_create_params_t',['../structva__encode__chain__create__params__t.html',1,'']]],
+  ['va_5fencode_5fchain_5fop_5fparams_5ft_2386',['va_encode_chain_op_params_t',['../structva__encode__chain__op__params__t.html',1,'']]],
+  ['va_5fmic_5fchain_5fconnect_5fparams_5ft_2387',['va_mic_chain_connect_params_t',['../structva__mic__chain__connect__params__t.html',1,'']]],
+  ['va_5fmic_5fchain_5fcreate_5fparams_5ft_2388',['va_mic_chain_create_params_t',['../structva__mic__chain__create__params__t.html',1,'']]],
+  ['va_5fmic_5fchain_5fop_5fparams_5ft_2389',['va_mic_chain_op_params_t',['../structva__mic__chain__op__params__t.html',1,'']]],
+  ['va_5fwuw_5fchain_5fcreate_5fparams_5ft_2390',['va_wuw_chain_create_params_t',['../structva__wuw__chain__create__params__t.html',1,'']]],
+  ['va_5fwuw_5fchain_5fop_5fparams_5ft_2391',['va_wuw_chain_op_params_t',['../structva__wuw__chain__op__params__t.html',1,'']]],
+  ['voice_5fsource_5fobserver_5finterface_5ft_2392',['voice_source_observer_interface_t',['../structvoice__source__observer__interface__t.html',1,'']]],
+  ['voice_5fsource_5fvolume_5fcontrol_5finterface_5ft_2393',['voice_source_volume_control_interface_t',['../structvoice__source__volume__control__interface__t.html',1,'']]],
+  ['voice_5fsource_5fvolume_5finterface_5ft_2394',['voice_source_volume_interface_t',['../structvoice__source__volume__interface__t.html',1,'']]],
+  ['voice_5fsource_5fvolume_5fupdate_5frequest_5fmessage_5ft_2395',['voice_source_volume_update_request_message_t',['../structvoice__source__volume__update__request__message__t.html',1,'']]],
+  ['voice_5fui_5fhandle_5ft_2396',['voice_ui_handle_t',['../structvoice__ui__handle__t.html',1,'']]],
+  ['voice_5fui_5fif_5ft_2397',['voice_ui_if_t',['../structvoice__ui__if__t.html',1,'']]]
+];

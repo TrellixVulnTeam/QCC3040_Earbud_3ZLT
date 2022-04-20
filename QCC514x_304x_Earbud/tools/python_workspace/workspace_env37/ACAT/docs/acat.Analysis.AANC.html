@@ -1,0 +1,1832 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AANC &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="Analysis" href="acat.Analysis.Analysis.html"/>
+        <link rel="prev" title="Code Documentation" href="code_documentation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AANC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Analysis.html">Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Buffers.html">Buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Cbops.html">Cbops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DebugLog.html">DebugLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DmProfiler.html">DmProfiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Dorm.html">Dorm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fats.html">Fats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fault.html">Fault</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.FaultOld1.html">FaultOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld1.html">HeapMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld2.html">HeapMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld3.html">HeapMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld1.html">HeapPmMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld2.html">HeapPmMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld3.html">HeapPmMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld4.html">HeapPmMemOld4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.IPC.html">IPC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Patches.html">Patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PatchesOld1.html">PatchesOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfo.html">PoolInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfoOld1.html">PoolInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Profiler.html">Profiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.RtpDecode.html">RtpDecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheck.html">SanityCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheckOld1.html">SanityCheckOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Sched.html">Sched</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SchedOld1.html">SchedOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.ScratchMem.html">ScratchMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SharedMem.html">SharedMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SourceSync.html">SourceSync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Splitter.html">Splitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfo.html">StackInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfoOld1.html">StackInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Heap.html">Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMem.html">HeapMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMem.html">HeapPmMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Opmgr.html">Opmgr</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>AANC</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Analysis.AANC.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="aanc">
+<h1>AANC<a class="headerlink" href="#aanc" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Analysis.AANC</span></code>.</p>
+<span class="target" id="module-ACAT.Analysis.AANC"></span><p>Adaptive ANC ACAT Analysis Module.</p>
+<p>This module provides an ACAT analysis class and python object representation
+for AANC operators.</p>
+<p class="rubric">Examples</p>
+<p>Display information about the currently running AANC operator(s).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">aanc</span><span class="o">.</span><span class="n">run_all</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Get a list of currently running AANC operators.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">aanc</span><span class="o">.</span><span class="n">find_operators</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.AANC">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">AANC</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates an analysis for adaptive ANC (AANC).</p>
+<p>This class provides methods to summarize the current AANC operators or find
+and return AANC objects associated with each of the operators currently
+running in kymera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Arbitrary keyword arguments.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANC.find_operators">
+<code class="sig-name descname">find_operators</code><span class="sig-paren">(</span><em class="sig-param">opname='AANC'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANC.find_operators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANC.find_operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify AANC operators in the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>opname</strong> (<em>str</em><em>, </em><em>optional</em>) – Operator name to filter for. Defaults to
+<cite>AANC</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of AANC operators.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list(ACAT.AANC.AANCOperator)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANC.run_all">
+<code class="sig-name descname">run_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANC.run_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANC.run_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standard analysis function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.AANCBuffer">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">AANCBuffer</code><span class="sig-paren">(</span><em class="sig-param">buffers</em>, <em class="sig-param">obj</em>, <em class="sig-param">filt_nsam=16</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates an AANC buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffers</strong> (<a class="reference internal" href="acat.Analysis.Buffers.html#ACAT.Analysis.Buffers.Buffers" title="ACAT.Analysis.Buffers.Buffers"><em>ACAT.Analysis.Buffers.Buffers</em></a>) – ACAT Buffers Analysis
+object.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – Buffer object.</p></li>
+<li><p><strong>filt_nsam</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples to average over for
+filtering. Defaults to <cite>16</cite>.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCBuffer.avg">
+<em class="property">property </em><code class="sig-name descname">avg</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer.avg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average value of the buffer in dB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCBuffer.data">
+<em class="property">property </em><code class="sig-name descname">data</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data in this buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCBuffer.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><em class="sig-param">line_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCBuffer.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display AANC buffer information using the ACAT formatter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>line_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return a single line table entry instead
+of using the formatter. Defaults to <cite>False</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCBuffer.filt">
+<em class="property">property </em><code class="sig-name descname">filt</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer.filt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moving average filtered value of the buffer data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCBuffer.filt_nsam">
+<code class="sig-name descname">filt_nsam</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer.filt_nsam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of samples to average over for filtering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCBuffer.obj">
+<code class="sig-name descname">obj</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCBuffer.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer object reference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="ACAT.Analysis.AANC.AANCFindOperatorError">
+<em class="property">exception </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">AANCFindOperatorError</code><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCFindOperatorError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFindOperatorError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Failed to find an AANC operator in the graph.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.AANCFlags">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">AANCFlags</code><span class="sig-paren">(</span><em class="sig-param">addr</em>, <em class="sig-param">read_func</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCFlags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represent AANC flags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> (<em>int</em>) – Address of the flags variable.</p></li>
+<li><p><strong>read_func</strong> (<em>function</em>) – Function to read the flags variable.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.CLIP_EXT_MASK">
+<code class="sig-name descname">CLIP_EXT_MASK</code><em class="property"> = 512</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.CLIP_EXT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for external microphone clipping flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.CLIP_INT_MASK">
+<code class="sig-name descname">CLIP_INT_MASK</code><em class="property"> = 256</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.CLIP_INT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for internal microphone clipping flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.CLIP_PB_MASK">
+<code class="sig-name descname">CLIP_PB_MASK</code><em class="property"> = 1024</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.CLIP_PB_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for playback stream clipping flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.ED_EXT_MASK">
+<code class="sig-name descname">ED_EXT_MASK</code><em class="property"> = 32</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.ED_EXT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for external microphone ED detection flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.ED_INT_MASK">
+<code class="sig-name descname">ED_INT_MASK</code><em class="property"> = 16</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.ED_INT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for internal microphone ED detection flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.ED_PB_MASK">
+<code class="sig-name descname">ED_PB_MASK</code><em class="property"> = 64</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.ED_PB_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for playback stream ED detection flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.QUIET_MODE_MASK">
+<code class="sig-name descname">QUIET_MODE_MASK</code><em class="property"> = 1048576</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.QUIET_MODE_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for quiet mode condition detection flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.SAT_EXT_MASK">
+<code class="sig-name descname">SAT_EXT_MASK</code><em class="property"> = 8192</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.SAT_EXT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for external microphone saturation flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.SAT_INT_MASK">
+<code class="sig-name descname">SAT_INT_MASK</code><em class="property"> = 4096</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.SAT_INT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for internal microphone saturation flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.SAT_MDL_MASK">
+<code class="sig-name descname">SAT_MDL_MASK</code><em class="property"> = 32768</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.SAT_MDL_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for model output saturation flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCFlags.SELF_SPEECH_MASK">
+<code class="sig-name descname">SELF_SPEECH_MASK</code><em class="property"> = 128</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.SELF_SPEECH_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask for self-speech detection flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.clip_ext">
+<em class="property">property </em><code class="sig-name descname">clip_ext</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.clip_ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clipping detection on the external microphone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.clip_int">
+<em class="property">property </em><code class="sig-name descname">clip_int</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.clip_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clipping detected on the internal microphone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.clip_pb">
+<em class="property">property </em><code class="sig-name descname">clip_pb</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.clip_pb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clipping detection on the playback stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCFlags.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display AANC flags using the ACAT formatter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.ed_ext_event">
+<em class="property">property </em><code class="sig-name descname">ed_ext_event</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.ed_ext_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED detection on the external microphone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.ed_int_event">
+<em class="property">property </em><code class="sig-name descname">ed_int_event</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.ed_int_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED detection on the internal microphone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.ed_pb_event">
+<em class="property">property </em><code class="sig-name descname">ed_pb_event</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.ed_pb_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED detection on the playback stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.quiet_mode">
+<em class="property">property </em><code class="sig-name descname">quiet_mode</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.quiet_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quiet mode condition detected flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.raw">
+<em class="property">property </em><code class="sig-name descname">raw</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raw flags reported by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.sat_ext">
+<em class="property">property </em><code class="sig-name descname">sat_ext</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.sat_ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturation detection on the external microphone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.sat_int">
+<em class="property">property </em><code class="sig-name descname">sat_int</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.sat_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturation detection on the internal microphone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.sat_model">
+<em class="property">property </em><code class="sig-name descname">sat_model</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.sat_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturation detection on the control-plant model output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCFlags.self_speech_event">
+<em class="property">property </em><code class="sig-name descname">self_speech_event</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCFlags.self_speech_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>self speech detection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.AANCOperator">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">AANCOperator</code><span class="sig-paren">(</span><em class="sig-param">operator</em>, <em class="sig-param">buffers</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates an adaptive ANC operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> (<em>ACAT.Opmgr.Operator</em>) – AANC Operator object.</p></li>
+<li><p><strong>buffers</strong> (<em>ACAT.Buffers.Buffers</em>) – ACAT Buffer Analysis object.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT Formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.agstruct">
+<code class="sig-name descname">agstruct</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.agstruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adaptive gain object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.buffers">
+<code class="sig-name descname">buffers</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.buffers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Namespace for buffer objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>argparse.Namespace</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.channel">
+<em class="property">property </em><code class="sig-name descname">channel</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>AANC channel for this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.clip_event_count">
+<em class="property">property </em><code class="sig-name descname">clip_event_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.clip_event_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clip event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.clip_event_max">
+<em class="property">property </em><code class="sig-name descname">clip_event_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.clip_event_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clip event counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.disable_gain_calc">
+<em class="property">property </em><code class="sig-name descname">disable_gain_calc</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.disable_gain_calc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operator gain calculation disable flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCOperator.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display AANC capability data using the ACAT formatter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.ec_coarse_gain">
+<em class="property">property </em><code class="sig-name descname">ec_coarse_gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.ec_coarse_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>EC coarse gain value written to ANC HW by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.ec_fine_gain">
+<em class="property">property </em><code class="sig-name descname">ec_fine_gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.ec_fine_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>EC fine gain value written to ANC HW by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.ed_event_count">
+<em class="property">property </em><code class="sig-name descname">ed_event_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.ed_event_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.ed_event_max">
+<em class="property">property </em><code class="sig-name descname">ed_event_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.ed_event_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED event counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.eds">
+<code class="sig-name descname">eds</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.eds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Namespace for ED objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>argparse.Namespace</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.fb_coarse_gain">
+<em class="property">property </em><code class="sig-name descname">fb_coarse_gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.fb_coarse_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>FB coarse gain value written to ANC HW by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.fb_fine_gain">
+<em class="property">property </em><code class="sig-name descname">fb_fine_gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.fb_fine_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>FB fine gain value written to ANC HW by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.ff_coarse_gain">
+<em class="property">property </em><code class="sig-name descname">ff_coarse_gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.ff_coarse_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>FF coarse gain value written to ANC HW by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.ff_fine_gain">
+<em class="property">property </em><code class="sig-name descname">ff_fine_gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.ff_fine_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>FF fine gain value written to ANC HW by the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.find_operator">
+<code class="sig-name descname">find_operator</code><span class="sig-paren">(</span><em class="sig-param">op_name='AANC'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCOperator.find_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.find_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find an adaptive ANC operator in the graph.</p>
+<p>This can be used if the AANC object was initialized but the graph has
+changed. It follows the same approach as the analysis
+<code class="docutils literal notranslate"><span class="pre">aanc.find_operator</span></code>, so looks for operators with a particular name.
+It will also try to match the channel that this AANC object was
+originally instantiated with to avoid ambiguity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>op_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the operator to look for. Defaults
+to <cite>AANC</cite>.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#ACAT.Analysis.AANC.AANCFindOperatorError" title="ACAT.Analysis.AANC.AANCFindOperatorError"><strong>AANCFindOperatorError</strong></a> – if no operator was found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.flags">
+<code class="sig-name descname">flags</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.flags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flags associated with the AANC operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ACAT.Analysis.AANC.AANCFlags" title="ACAT.Analysis.AANC.AANCFlags">AANC.AANCFlags</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.fxlms">
+<code class="sig-name descname">fxlms</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.fxlms" title="Permalink to this definition">¶</a></dt>
+<dd><p>FxLMS object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ACAT.Analysis.AANC.FxLMSv0102" title="ACAT.Analysis.AANC.FxLMSv0102">AANC.FxLMSv0102</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.gain_event_count">
+<em class="property">property </em><code class="sig-name descname">gain_event_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.gain_event_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.gain_event_max">
+<em class="property">property </em><code class="sig-name descname">gain_event_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.gain_event_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain event counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.obj">
+<code class="sig-name descname">obj</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extra operator data object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.opid">
+<code class="sig-name descname">opid</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.opid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operator ID associated with this AANC instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.quiet_event_clear_count">
+<em class="property">property </em><code class="sig-name descname">quiet_event_clear_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.quiet_event_clear_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quiet event clear count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.quiet_event_clear_max">
+<em class="property">property </em><code class="sig-name descname">quiet_event_clear_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.quiet_event_clear_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quiet event clear counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.quiet_event_detect_count">
+<em class="property">property </em><code class="sig-name descname">quiet_event_detect_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.quiet_event_detect_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quiet event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.quiet_event_detect_max">
+<em class="property">property </em><code class="sig-name descname">quiet_event_detect_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.quiet_event_detect_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quiet event detection counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#AANCOperator.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh the cached data read in ACAT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if successful, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.sat_event_count">
+<em class="property">property </em><code class="sig-name descname">sat_event_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.sat_event_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturation event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.sat_event_max">
+<em class="property">property </em><code class="sig-name descname">sat_event_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.sat_event_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturation event counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.self_talk_event_count">
+<em class="property">property </em><code class="sig-name descname">self_talk_event_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.self_talk_event_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Self-Talk event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.self_talk_event_max">
+<em class="property">property </em><code class="sig-name descname">self_talk_event_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.self_talk_event_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Self-Talk event counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.spl_event_count">
+<em class="property">property </em><code class="sig-name descname">spl_event_count</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.spl_event_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>SPL event detection count value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.spl_event_max">
+<em class="property">property </em><code class="sig-name descname">spl_event_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.spl_event_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>SPL event counter reset value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.AANCOperator.valid">
+<em class="property">property </em><code class="sig-name descname">valid</code><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validity of the data in this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.AANCOperator.version">
+<code class="sig-name descname">version</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.AANCOperator.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capability version (major, minor).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.ED">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">ED</code><span class="sig-paren">(</span><em class="sig-param">helper</em>, <em class="sig-param">obj</em>, <em class="sig-param">stats=None</em>, <em class="sig-param">params=None</em>, <em class="sig-param">elf_id=None</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#ED"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.ED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the Energy Detector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>helper</strong> (<em>ACAT.Analysis.Analysis</em>) – ACAT Analysis object.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – ED object.</p></li>
+<li><p><strong>stats</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – ED statistics
+object.</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – ED parameters
+object.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em>) – ELF ID for AANC.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.ED.address">
+<code class="sig-name descname">address</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.ED.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of the ED data object in the chip.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.delta_spl">
+<em class="property">property </em><code class="sig-name descname">delta_spl</code><a class="headerlink" href="#ACAT.Analysis.AANC.ED.delta_spl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delta SPL value in dB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><em class="sig-param">line_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#ED.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.ED.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display AANC flags using the ACAT formatter.</p>
+<p>This function assumes that a table has been defined with columns for
+each value in the formatter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.ED.elf_id">
+<code class="sig-name descname">elf_id</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.ED.elf_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ELF ID for AANC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.licensed">
+<em class="property">property </em><code class="sig-name descname">licensed</code><a class="headerlink" href="#ACAT.Analysis.AANC.ED.licensed" title="Permalink to this definition">¶</a></dt>
+<dd><p>License state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.ED.obj">
+<code class="sig-name descname">obj</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.ED.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.ED.params">
+<code class="sig-name descname">params</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.ED.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED parameters object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#ED.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.ED.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Re-read values from the chip to refresh the cached data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.speech_detected">
+<em class="property">property </em><code class="sig-name descname">speech_detected</code><a class="headerlink" href="#ACAT.Analysis.AANC.ED.speech_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speech detected state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.spl">
+<em class="property">property </em><code class="sig-name descname">spl</code><a class="headerlink" href="#ACAT.Analysis.AANC.ED.spl" title="Permalink to this definition">¶</a></dt>
+<dd><p>SPL value in dB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.spl_max">
+<em class="property">property </em><code class="sig-name descname">spl_max</code><a class="headerlink" href="#ACAT.Analysis.AANC.ED.spl_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>SPL max value in dB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.ED.spl_mid">
+<em class="property">property </em><code class="sig-name descname">spl_mid</code><a class="headerlink" href="#ACAT.Analysis.AANC.ED.spl_mid" title="Permalink to this definition">¶</a></dt>
+<dd><p>SPL mid value in dB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.ED.stats">
+<code class="sig-name descname">stats</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.ED.stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>ED statistics object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.FxLMS">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">FxLMS</code><span class="sig-paren">(</span><em class="sig-param">helper</em>, <em class="sig-param">obj</em>, <em class="sig-param">stats</em>, <em class="sig-param">params</em>, <em class="sig-param">elf_id</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the FxLMS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>helper</strong> (<em>ACAT.Analysis.Analysis</em>) – ACAT Analysis object.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – FxLMS object.</p></li>
+<li><p><strong>stats</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – FxLMS statistics
+object.</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – FxLMS parameters
+object.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em>) – ELF ID for AANC.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMS.address">
+<code class="sig-name descname">address</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of the FxLMS data object on the chip.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.control0_denominator">
+<em class="property">property </em><code class="sig-name descname">control0_denominator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.control0_denominator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control 0 denominator coefficients.</p>
+<p>In eANC there are up to 2x control filters used in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.control0_numerator">
+<em class="property">property </em><code class="sig-name descname">control0_numerator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.control0_numerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control 0 numerator coefficients.</p>
+<p>In eANC there are up to 2x control filters used in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.control1_denominator">
+<em class="property">property </em><code class="sig-name descname">control1_denominator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.control1_denominator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control 1 denominator coefficients.</p>
+<p>In eANC there are up to 2x control filters used in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.control1_numerator">
+<em class="property">property </em><code class="sig-name descname">control1_numerator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.control1_numerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control 1 numerator coefficients.</p>
+<p>In eANC there are up to 2x control filters used in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.cp_denominator">
+<em class="property">property </em><code class="sig-name descname">cp_denominator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.cp_denominator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control-plant denominator coefficients.</p>
+<p>These are the convolved plant-coefficients used in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.cp_numerator">
+<em class="property">property </em><code class="sig-name descname">cp_numerator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.cp_numerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control-plant numerator coefficients.</p>
+<p>These are the convolved plant-coefficients used in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMS.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display AANC flags using the ACAT formatter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.display_coeffs">
+<code class="sig-name descname">display_coeffs</code><span class="sig-paren">(</span><em class="sig-param">coeff</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMS.display_coeffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.display_coeffs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the selected coefficient using the formatter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coeff</strong> (<em>str</em>) – Coefficient to display.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Title to give for the coefficients.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMS.elf_id">
+<code class="sig-name descname">elf_id</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.elf_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ELF ID for AANC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.gain">
+<em class="property">property </em><code class="sig-name descname">gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculated gain value from the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.gamma">
+<em class="property">property </em><code class="sig-name descname">gamma</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gamma value used by the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.lambda_param">
+<em class="property">property </em><code class="sig-name descname">lambda_param</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.lambda_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lambda value used by the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.licensed">
+<em class="property">property </em><code class="sig-name descname">licensed</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.licensed" title="Permalink to this definition">¶</a></dt>
+<dd><p>License status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.mu">
+<em class="property">property </em><code class="sig-name descname">mu</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.mu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mu value used by the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMS.obj">
+<code class="sig-name descname">obj</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>FxLMS object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.operating_config">
+<em class="property">property </em><code class="sig-name descname">operating_config</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.operating_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operating configuration for the FxLMS algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMS.params">
+<code class="sig-name descname">params</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>FxLMS parameters object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.plant_denominator">
+<em class="property">property </em><code class="sig-name descname">plant_denominator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.plant_denominator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plant denominator coefficients.</p>
+<p>In eANC the plant and control filters are separated in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.plant_numerator">
+<em class="property">property </em><code class="sig-name descname">plant_numerator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.plant_numerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plant numerator coefficients.</p>
+<p>In eANC the plant and control filters are separated in the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.read_coeffs">
+<code class="sig-name descname">read_coeffs</code><span class="sig-paren">(</span><em class="sig-param">stat_name</em>, <em class="sig-param">stat_length_name</em>, <em class="sig-param">conv=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMS.read_coeffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.read_coeffs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read coefficients from the FxLMS statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stat_name</strong> (<em>str</em>) – Name of pointer to coefficients.</p></li>
+<li><p><strong>stat_length_name</strong> (<em>str</em>) – Name of the pointer to number of
+coefficients.</p></li>
+<li><p><strong>conv</strong> (<em>function</em>) – Conversion function for the final value e.g. Q27</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of coefficients if the statistic is valid</dt><dd><p>otherwise <cite>None</cite>.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMS.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMS.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Re-read values from the chip to refresh the cached data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMS.stats">
+<code class="sig-name descname">stats</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMS.stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>FxLMS statistics object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">FxLMSFilter</code><span class="sig-paren">(</span><em class="sig-param">helper</em>, <em class="sig-param">obj</em>, <em class="sig-param">name</em>, <em class="sig-param">elf_id</em>, <em class="sig-param">conv=None</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMSFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates an FxLMS filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>helper</strong> (<em>ACAT.Analysis.Analysis</em>) – ACAT Analysis object.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – FxLMS filter object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name of the filter</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em>) – ELF ID for AANC.</p></li>
+<li><p><strong>conv</strong> (<em>function</em><em>, </em><em>optional</em>) – Conversion function when displaying the
+filter coefficients. Defaults to <cite>None</cite>.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.address">
+<code class="sig-name descname">address</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of the FxLMS filter object on the chip.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.conv">
+<code class="sig-name descname">conv</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.conv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conversion function for displaying coefficients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.denominator">
+<em class="property">property </em><code class="sig-name descname">denominator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.denominator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerator coefficients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMSFilter.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the filter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.elf_id">
+<code class="sig-name descname">elf_id</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.elf_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ELF ID for AANC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.full_num_coeffs">
+<em class="property">property </em><code class="sig-name descname">full_num_coeffs</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.full_num_coeffs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete number of coefficients in the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.name">
+<code class="sig-name descname">name</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.nbytes">
+<em class="property">property </em><code class="sig-name descname">nbytes</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.nbytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of bytes to read for each list in the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.num_coeffs">
+<em class="property">property </em><code class="sig-name descname">num_coeffs</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.num_coeffs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of active coefficients in the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.numerator">
+<em class="property">property </em><code class="sig-name descname">numerator</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.numerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerator coefficients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.obj">
+<code class="sig-name descname">obj</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>FxLMS filter object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSFilter.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMSFilter.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSFilter.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh the data in the filter.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">FxLMSv0102</code><span class="sig-paren">(</span><em class="sig-param">helper</em>, <em class="sig-param">obj</em>, <em class="sig-param">elf_id</em>, <em class="sig-param">formatter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMSv0102"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the FxLMS on capability versions 1.02+.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>helper</strong> (<em>ACAT.Analysis.Analysis</em>) – ACAT Analysis object.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable"><em>ACAT.Core.CoreTypes.ChipdataVariable</em></a>) – FxLMS object.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em>) – ELF ID for AANC.</p></li>
+<li><p><strong>formatter</strong> (<em>ACAT.Display.Formatter</em><em>, </em><em>optional</em>) – ACAT formatter.
+Defaults to <cite>None</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.address">
+<code class="sig-name descname">address</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address of the FxLMS data object on the chip.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.display">
+<code class="sig-name descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMSv0102.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display AANC flags using the ACAT formatter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.elf_id">
+<code class="sig-name descname">elf_id</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.elf_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ELF ID for AANC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.gain">
+<em class="property">property </em><code class="sig-name descname">gain</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculated gain value from the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.gamma">
+<em class="property">property </em><code class="sig-name descname">gamma</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gamma value used by the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.lambda_param">
+<em class="property">property </em><code class="sig-name descname">lambda_param</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.lambda_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lambda value used by the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.licensed">
+<em class="property">property </em><code class="sig-name descname">licensed</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.licensed" title="Permalink to this definition">¶</a></dt>
+<dd><p>License status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.mu">
+<em class="property">property </em><code class="sig-name descname">mu</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.mu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mu value used by the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.obj">
+<code class="sig-name descname">obj</code><em class="property"> = None</em><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>FxLMS object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.CoreTypes.html#ACAT.Core.CoreTypes.ChipdataVariable" title="ACAT.Core.CoreTypes.ChipdataVariable">ACAT.Core.CoreTypes.ChipdataVariable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.operating_config">
+<em class="property">property </em><code class="sig-name descname">operating_config</code><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.operating_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operating configuration for the FxLMS algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Analysis.AANC.FxLMSv0102.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#FxLMSv0102.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.FxLMSv0102.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh FxLMS data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Analysis.AANC.rms_db_buffer">
+<code class="sig-prename descclassname">ACAT.Analysis.AANC.</code><code class="sig-name descname">rms_db_buffer</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Analysis/AANC.html#rms_db_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Analysis.AANC.rms_db_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the average of a buffer and return the RMS in dB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>(</em><em>int</em><em>, </em><em>float</em><em>)</em>) – List of input data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>decibel value of the input list.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Analysis.Analysis.html" class="btn btn-neutral float-right" title="Analysis" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="code_documentation.html" class="btn btn-neutral" title="Code Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+.. _graph_endpoint:
+
+=========
+Endpoints
+=========
+
+All endpoints must have ``interface`` and ``type`` defined before setting endpoint
+properties. The possible options are as follows:
+
+   * ``interface`` selects the type of the stream.
+      - :ref:`endpoint_pcm` hardware endpoint.
+      - :ref:`endpoint_l2cap` software endpoint.
+      - :ref:`endpoint_file` software endpoint.
+      - :ref:`endpoint_timestamped` software endpoint.
+      - :ref:`endpoint_tester` software endpoint.
+
+   * ``type`` is the endpoint direction, read and write respectively.
+      - ``source`` for endpoint that pushes data into kymera
+      - ``sink`` for endpoint that extracts data out of kymera
+
+.. _endpoint_pcm:
+
+pcm
+---
+
+    Each PCM sample coming from a PCM stream can either be of 16 bits or 24 bits.
+    PCM endpoints have buffers, which have the size of 4 bytes per sample. This
+    means depending on the sample size, either 2 or 3 bytes of the buffer can be
+    filled for any given sample pushed from the source stream. The buffer at the
+    source endpoint is filled such that the most significant bytes are filled
+    first, and the rest are filled with 0s.
+
+    On the data that is filled in their buffer PCM endpoints carry out two operations:
+
+    * ``DC removal``: To remove the DC component from the data on a moving window basis.
+    * ``Rate matching``: To adjust the incoming sample rate to the rate that is specified
+      in the endpoint configuration.
+
+    These two operations can be controlled by a configuration key named
+    ``audio_disable_endpoint_processing``. A value of ``0x0000`` disables both
+    functionalities and ``0x0001`` disables ``DC removal``.
+
+    The ``sample_width`` parameter in PCM endpoints can be specified by
+    ``audio_sample_size`` parameter, which can take either ``16-bit`` or ``24-bit`` as values.
+    For the ``16-bit`` sample width case, the same can also be indicated by
+    ``pcm_sample_format`` parameter, which takes ``1`` as the value.
+
+    The ``pcm_master_clock_rate`` parameter value is the product of the following parameters:
+
+    * pcm_sync_rate
+    * pcm_slot_count
+    * audio_sample_size (indicated as pcm_sample_format sometimes). See the example below
+
+    .. note::  In PCM, when there are multiple source or multiple sink streams, the
+               order of creation of streams and endpoints must match. This is for
+               KSE to connect appropriate streams to the corresponding endpoints.
+
+    .. note:: Although, ``pcm_master_clock_rate`` can be derived as shown below from
+              the other three parameters specified in the configuration, it is
+              mandatory to specify the correct value for ``pcm_master_clock_rate``
+              as well in the configuration. For the details on parameters used
+              to configure PCM endpoints, see Streams and endpoints
+              configuration parameters.
+
+    .. autoclass:: kse.kymera.endpoint.common.pcm.EndpointPcmHydra
+        :noindex:
+
+    **Examples**
+
+    Endpoint configured as pcm sink, to be connected to a pcm stream.
+    The endpoint is in the first channel of the first instance, as pcm master with 4 slots, 16 bits
+    audio samples and 48000 hertz sampling rate::
+
+        pcm_sync_rate         = 48000
+        pcm_slot_count        = 4
+        audio_sample_size     = 16
+        pcm_master_clock_rate = 48000 x 4 x 16 = 3072000
+
+            {
+                "interface":"pcm",
+                "type": "sink",
+                "kwargs" : {
+                    "instance": 0,
+                    "channel": 0,
+                    "pcm_sync_rate": 48000,
+                    "pcm_sample_rising_edge": 0,
+                    "pcm_master_mode": 1,
+                    "pcm_slot_count": 4,
+                    "pcm_sample_format": 1,
+                    "pcm_master_clock_rate": 3072000
+            }
+
+
+.. _endpoint_l2cap:
+
+l2cap
+-----
+
+    l2cap endpoints contain a buffer that can be filled and cleared in terms of
+    4 bytes at a time. The filling of the buffer occurs in a big-endian way with
+    2 bytes of stream data. The rest 2 bytes are filled with 0’s.
+
+    .. autoclass:: kse.kalsim.endpoint.hydra.l2cap.EndpointHydraL2cap
+        :noindex:
+
+    **Examples**
+
+    Endpoint configured as hydra l2cap source, to be connected to the first hydra l2cap stream::
+
+            {
+                "interface": "l2cap",
+                "type": "source",
+                "kwargs": {
+                    "stream": 0
+                }
+            }
+
+.. _endpoint_file:
+
+file
+----
+
+    file endpoints contain a buffer that can be filled and cleared in terms of
+    4 bytes at a time. The filling of the buffer occurs in a big-endian way with
+    2 bytes of stream data. The rest 2 bytes are filled with 0’s.
+
+    .. autoclass:: kse.kalsim.endpoint.hydra.file.EndpointHydraFile
+        :noindex:
+
+    **Examples**
+
+    Endpoint configured as hydra file source, to be connected to the first hydra file stream::
+
+            {
+                "interface": "file",
+                "type": "source",
+                "kwargs": {
+                    "stream": 0
+                }
+            }
+
+.. _endpoint_timestamped:
+
+timestamped
+-----------
+
+    timestamped endpoints contain a buffer that can be filled and cleared in terms of
+    4 bytes at a time. The filling of the buffer occurs in a big-endian way with
+    2 bytes of stream data. The rest 2 bytes are filled with 0’s.
+
+    .. autoclass:: kse.kalsim.endpoint.hydra.timestamped.EndpointHydraTimestamped
+        :noindex:
+
+    **Examples**
+
+    Endpoint configured as hydra timestamped sink, to be connected to the first hydra timestamped stream::
+
+            {
+                "interface": "timestamped",
+                "type": "sink",
+                "kwargs": {
+                    "stream": 0
+                }
+            }
+
+
+.. _endpoint_tester:
+
+tester
+------
+
+    tester endpoints also contain a buffer that can be filled and cleared in terms
+    of 4 bytes at a time. The filling of the buffer occurs in a little-endian way with
+    4 bytes of stream data
+
+    .. autoclass:: kse.kalsim.endpoint.hydra.tester.EndpointHydraTester
+        :noindex:
+
+    **Examples**
+
+    Endpoint configured as hydra tester sink, to be connected to the first hydra tester stream::
+
+            {
+                "interface": "tester",
+                "type": "sink",
+                "kwargs": {
+                    "stream": 0
+                }
+            }
+

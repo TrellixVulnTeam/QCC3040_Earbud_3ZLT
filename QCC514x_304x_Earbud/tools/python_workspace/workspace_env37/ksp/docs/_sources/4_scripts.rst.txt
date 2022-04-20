@@ -1,0 +1,86 @@
+Scripts
+=======
+
+.. _ksp_extract_script:
+
+KSP Extract Script
+------------------
+KSP comes with a tool, ``ksp_extract.exe``, to extract streams and headers
+from a ``lrw`` file, which contains data that comes from the KSP operator
+in Kymera.
+
+Normally, the extraction occurs when the KSP has finished receiving the
+data. However, if KSP terminates prematurely the extraction fails, leaving
+the ``lrw`` files in the output directory. In this case the
+``ksp_extract.exe`` tool helps to extract audio/data from a ``lrw`` file.
+
+The KSP installation puts ``ksp_extract.exe`` in the Scripts folder of the
+Python Virtual Environment. By default, it should be in the Windows path
+when the virtual environment is activated.
+
+To get more help use ``--help`` switch, for example:::
+
+    (ksp_env) PS <CURRENT PATH>> ksp_extract.exe --help
+    usage: extract [-h] [--sample-rates SAMPLE_RATES [SAMPLE_RATES ...]] filename
+
+    Kymera Stream Probe (KSP) extract tool. It extracts Audio/Data from a recorded
+    KSP lrw file.
+
+    positional arguments:
+      filename              A recorded KSP lrw file.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --sample-rates SAMPLE_RATES [SAMPLE_RATES ...], -s SAMPLE_RATES [SAMPLE_RATES ...]
+                            Space separated sample rates in integer. Valid sample
+                            rates are between 8000 (8Khz) and 192000 (192Khz)
+                            inclusive. The first Sample rate will be applied to
+                            `Stream0`, the second one will be applied to `Stream1`
+                            and so on. Extra Sample Rates will be ignored. i.e. If
+                            the given lrw file has only two streams but three
+                            sample rates are given, the third sample rate will be
+                            ignored. If the sample rate is not provided, the
+                            script will produce multi channel raw file instead of
+                            wav file. Please note, in case of DATA type streams,
+                            the script ignores sample rates.
+
+
+KSP Reader Script
+-----------------
+KSP Reader tool, ``ksp_reader.exe``, is a script to receive Audio/Data
+from a device and saves it into a LRW file.
+
+Once the KSP operator is active and configured appropriately on the chip,
+it sends out the data via an established connection. This tool is to
+capture those data on the receiving end. For the best reading, activate
+the script before starting the operator.  Otherwise, the reader may miss
+some of the incoming data.
+
+The KSP installation puts ``ksp_reader.exe`` in the Scripts folder of the
+Python Virtual Environment. By default, it should be in the Windows path
+when the virtual environment is activated.
+
+To get more help use ``--help`` switch, for example:::
+
+    (ksp_env) PS <CURRENT PATH>> ksp_reader.exe --help
+    usage: reader.py [-h] [-w WAIT] [-t TRANSACTIONS] [-v] [--version]
+                  trb_device output
+
+    Kymera Stream Probe (KSP) TRB tool. It receives Audio/Data from a device URL
+    and saves the output in a lrw file format.
+
+    positional arguments:
+      device                A device to read from. i.e. 'trb:scar:0'
+      output                A filename which trb saves the data into it in LRW
+                            format. If the file exists, it will be overwritten.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -w WAIT, --wait WAIT  The waiting time to receive data in seconds. This
+                           value can be a decimal number. The application
+                           terminates if within this time no data has received.
+                           The default value is 3600 seconds or 1 hour.
+      -t TRANSACTIONS, --transactions TRANSACTIONS
+                            number of transaction to poll each time. The default
+                            number is 100.
+      --version             show program's version number and exit

@@ -1,0 +1,8 @@
+
+MulticoreSupport
+==========================================================================
+
+This module can be imported from ``ACAT.Core.MulticoreSupport``.
+
+.. automodule:: ACAT.Core.MulticoreSupport
+   :members:

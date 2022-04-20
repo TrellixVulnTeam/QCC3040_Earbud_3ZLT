@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.framework.library.repl &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.framework.library.repl</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.framework.library.repl</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;KATS framework Read Evaluate Print Loop utilities&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">REPL_PYTHON</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
+<span class="n">REPL_IPYTHON</span> <span class="o">=</span> <span class="s1">&#39;ipython&#39;</span>
+<span class="n">REPL_PTPYTHON</span> <span class="o">=</span> <span class="s1">&#39;ptpython&#39;</span>
+<span class="n">REPL_BPYTHON</span> <span class="o">=</span> <span class="s1">&#39;bpython&#39;</span>
+
+<span class="n">REPL_LIST</span> <span class="o">=</span> <span class="p">[</span><span class="n">REPL_PYTHON</span><span class="p">,</span> <span class="n">REPL_IPYTHON</span><span class="p">,</span> <span class="n">REPL_PTPYTHON</span><span class="p">,</span> <span class="n">REPL_BPYTHON</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="launch_ipython"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.repl.launch_ipython">[docs]</a><span class="k">def</span> <span class="nf">launch_ipython</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Invoke the ipython Read Evaluate Print Loop</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        banner (str): Display banner</span>
+<span class="sd">        namespace (dict): Namespace to use</span>
+<span class="sd">        magic (Magics): Magics instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">IPython.terminal.prompts</span> <span class="k">import</span> <span class="n">Prompts</span><span class="p">,</span> <span class="n">Token</span>
+    <span class="kn">from</span> <span class="nn">IPython.terminal.embed</span> <span class="k">import</span> <span class="n">InteractiveShellEmbed</span>
+    <span class="kn">from</span> <span class="nn">traitlets.config.loader</span> <span class="k">import</span> <span class="n">Config</span>
+
+    <span class="k">class</span> <span class="nc">KatsPrompt</span><span class="p">(</span><span class="n">Prompts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Custom ipython prompt class&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">in_prompt_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="kn">import</span> <span class="nn">kats</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">Token</span><span class="p">,</span> <span class="n">kats</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span>
+                    <span class="p">(</span><span class="n">Token</span><span class="o">.</span><span class="n">Prompt</span><span class="p">,</span> <span class="s1">&#39; &gt; &#39;</span><span class="p">)]</span>
+
+        <span class="k">def</span> <span class="nf">out_prompt_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">Token</span><span class="p">,</span> <span class="s1">&#39;    &#39;</span><span class="p">),</span>
+                    <span class="p">(</span><span class="n">Token</span><span class="o">.</span><span class="n">Prompt</span><span class="p">,</span> <span class="s1">&#39; &lt; &#39;</span><span class="p">)]</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">TerminalInteractiveShell</span><span class="o">.</span><span class="n">prompts_class</span> <span class="o">=</span> <span class="n">KatsPrompt</span>
+
+    <span class="n">shell</span> <span class="o">=</span> <span class="n">InteractiveShellEmbed</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                  <span class="n">banner1</span><span class="o">=</span><span class="n">banner</span><span class="p">,</span>
+                                  <span class="n">exit_msg</span><span class="o">=</span><span class="s1">&#39;See you again!!!&#39;</span><span class="p">,</span>
+                                  <span class="n">config</span><span class="o">=</span><span class="n">cfg</span><span class="p">,</span>
+                                  <span class="n">user_ns</span><span class="o">=</span><span class="n">namespace</span><span class="p">)</span>
+    <span class="n">magic</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;magic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">magic</span><span class="p">:</span>
+        <span class="n">shell</span><span class="o">.</span><span class="n">register_magics</span><span class="p">(</span><span class="n">magic</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="n">shell</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="launch_ptpython"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.repl.launch_ptpython">[docs]</a><span class="k">def</span> <span class="nf">launch_ptpython</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Invoke the ptpython Read Evaluate Print Loop</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        banner (str): Display banner</span>
+<span class="sd">        namespace (dict): Namespace to use</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="n">home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
+    <span class="n">configure</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;.ptpython&#39;</span><span class="p">,</span> <span class="s1">&#39;config.py&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loading configuration file </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="kn">import</span> <span class="nn">imp</span>
+        <span class="n">config_module</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_source</span><span class="p">(</span><span class="s1">&#39;ptpython_config&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">configure</span> <span class="o">=</span> <span class="n">config_module</span><span class="o">.</span><span class="n">configure</span>
+
+    <span class="kn">from</span> <span class="nn">ptpython.repl</span> <span class="k">import</span> <span class="n">embed</span>  <span class="c1"># @UnresolvedImport pylint: disable=import-error</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">banner</span><span class="p">)</span>
+    <span class="n">embed</span><span class="p">(</span><span class="nb">globals</span><span class="p">(),</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">configure</span><span class="o">=</span><span class="n">configure</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="launch_bpython"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.repl.launch_bpython">[docs]</a><span class="k">def</span> <span class="nf">launch_bpython</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Invoke the bpython Read Evaluate Print Loop</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        banner (str): Display banner</span>
+<span class="sd">        namespace (dict): Namespace to use</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+        <span class="c1"># in windows the curses implementation does not work and it has to be patched</span>
+        <span class="kn">from</span> <span class="nn">bpython.cli</span> <span class="k">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">bp_main</span>  <span class="c1"># @UnresolvedImport pylint: disable=import-error</span>
+        <span class="n">bp_main</span><span class="p">(</span><span class="n">locals_</span><span class="o">=</span><span class="n">namespace</span><span class="p">,</span> <span class="n">banner</span><span class="o">=</span><span class="n">banner</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-i&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">bpython</span> <span class="k">import</span> <span class="n">embed</span>  <span class="c1"># @UnresolvedImport pylint: disable=import-error</span>
+        <span class="n">embed</span><span class="p">(</span><span class="n">locals_</span><span class="o">=</span><span class="n">namespace</span><span class="p">,</span> <span class="n">banner</span><span class="o">=</span><span class="n">banner</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-i&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="launch_python"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.repl.launch_python">[docs]</a><span class="k">def</span> <span class="nf">launch_python</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Invoke the python standard Read Evaluate Print Loop</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        banner (str): Display banner</span>
+<span class="sd">        namespace (dict): Namespace to use</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;type quit() to exit&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">kats</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> &gt; &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">kats</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">code</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">local</span><span class="o">=</span><span class="n">namespace</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="launch_repl"><a class="viewcode-back" href="../../../../kse.framework.library.html#kse.framework.library.repl.launch_repl">[docs]</a><span class="k">def</span> <span class="nf">launch_repl</span><span class="p">(</span><span class="n">repl</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Invoke the Read Evaluate Print Loop interface</span>
+
+<span class="sd">    This will try to invoke the requested repl with the provided namespace in kwargs</span>
+<span class="sd">    if it fails it will invoke a normal python interpreter session</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        repl (str): Read Evaluate Print Loop tool to use</span>
+<span class="sd">        kwargs (dict): Set of keywords and values to be added to the debug session</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">repl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">repl</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">REPL_LIST</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;repl </span><span class="si">%s</span><span class="s1"> not supported&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">repl</span><span class="p">))</span>
+
+    <span class="n">banner</span> <span class="o">=</span> <span class="s1">&#39;Python </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">) [</span><span class="si">%s</span><span class="s1">] on </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> \
+             <span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">(),</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_build</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+              <span class="n">platform</span><span class="o">.</span><span class="n">python_build</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">platform</span><span class="o">.</span><span class="n">python_compiler</span><span class="p">(),</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">)</span>
+    <span class="n">extra_banner</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;extra_banner&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extra_banner</span><span class="p">:</span>
+        <span class="n">banner</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">banner</span><span class="p">,</span> <span class="n">extra_banner</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">repl</span> <span class="o">==</span> <span class="n">REPL_IPYTHON</span><span class="p">:</span>
+            <span class="n">launch_ipython</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">repl</span> <span class="o">==</span> <span class="n">REPL_PTPYTHON</span><span class="p">:</span>
+            <span class="n">launch_ptpython</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">repl</span> <span class="o">==</span> <span class="n">REPL_BPYTHON</span><span class="p">:</span>
+            <span class="n">launch_bpython</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">launch_python</span><span class="p">(</span><span class="n">banner</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

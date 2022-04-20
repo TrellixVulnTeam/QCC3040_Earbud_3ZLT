@@ -1,0 +1,1492 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.stream.hydra package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kalsim.stream package" href="kse.kalsim.stream.html"/>
+        <link rel="next" title="kse.kalsim.stream.packet package" href="kse.kalsim.stream.packet.html"/>
+        <link rel="prev" title="kse.kalsim.stream package" href="kse.kalsim.stream.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kalsim.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.html#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.html">kse.kalsim package</a> &raquo;</li>
+      
+        <li><a href="kse.kalsim.stream.html">kse.kalsim.stream package</a> &raquo;</li>
+      
+    <li>kse.kalsim.stream.hydra package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.stream.hydra.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-stream-hydra-package">
+<h1>kse.kalsim.stream.hydra package<a class="headerlink" href="#kse-kalsim-stream-hydra-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.a2dp">
+<span id="kse-kalsim-stream-hydra-a2dp-module"></span><h2>kse.kalsim.stream.hydra.a2dp module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.a2dp" title="Permalink to this headline">¶</a></h2>
+<p>Hydra a2dp streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.a2dp.StreamHydraA2dp">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.a2dp.</code><code class="sig-name descname">StreamHydraA2dp</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/a2dp.html#StreamHydraA2dp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.a2dp.StreamHydraA2dp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData" title="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.a2dp.StreamHydraA2dp.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'a2dp'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.a2dp.StreamHydraA2dp.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.a2dp.StreamHydraA2dp.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.a2dp.StreamHydraA2dp.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.audio_data">
+<span id="kse-kalsim-stream-hydra-audio-data-module"></span><h2>kse.kalsim.stream.hydra.audio_data module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.audio_data" title="Permalink to this headline">¶</a></h2>
+<p>Hydra audio data service streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.audio_data.</code><code class="sig-name descname">StreamHydraAudioData</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.stream.kalsim_stream.KalsimStream</span></code></p>
+<p>Hydra audio data streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – <p>Type of stream</p>
+<ul>
+<li><p>”source”. Data is pushed into kymera</p></li>
+<li><p>”sink”. Data is extracted from kymera</p></li>
+</ul>
+</p></li>
+<li><p><strong>backing</strong> (<em>str</em>) – <p>Origin (for sources) or destination (for sinks) of data.
+This parameter defines what other parameters are needed.</p>
+<ul>
+<li><p>”file”. Data is backed by a file, if it is “source” is the contents to be
+streamed, if it is a “sink” is the file where data will be written to.</p></li>
+<li><p>”data”. Data is coming from (“source”) or going to (“sink) an external software
+component. This allow to have loops where a sink stream loops back to a
+source stream.</p></li>
+</ul>
+</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – <p>Filename to back the stream</p>
+<ul>
+<li><p>backing==”file”. Mandatory</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overridden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format,
+optional metadata and optional packet based information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – <p>Number of channels/streams in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=1).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – <p>Channel index in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=0).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – <p>Sample rate in hertzs.</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory), wav source files (optional)
+and all sink files (mandatory). For sources if it is 0 it means as fast as possible.</p></li>
+<li><p>backing==”data”. Unavailable.</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – <p>Number of bits per sample. Only 8 bits is recommended</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all file types and stream types (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – <p>Number of frames per transfer</p>
+<ul>
+<li><p>backing==”file”. Valid for all file types and stream types (optional, default=1).</p></li>
+<li><p>backing==”data”. Only used in sink streams (optional default=1).</p></li>
+</ul>
+</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – <p>Delay in seconds from start to real start.
+Indicates the delay between the stream start command and the actual start in seconds</p>
+<ul>
+<li><p>backing==”file”. Only for source streams (optional default=0.0)</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>loop</strong> (<em>int</em>) – <p>Number of times the source is played, when the source gets to end of file
+it is rewinded and replayed, only for source streams (optional default=1)</p>
+<ul>
+<li><p>backing==”file”. Available</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>kick_enable</strong> (<em>bool</em>) – Enables kicking the hydra audio data service every time audio is sent,
+for source streams (optional default=True)</p></li>
+<li><p><strong>device_type</strong> (<em>int</em>) – Hydra audio data service device type, for all streams
+(optional default=12 meaning l2cap/a2dp)</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – Hydra audio data service tag, for all stream
+(optional default=None meaning autogenerated)</p></li>
+<li><p><strong>data_buffer_size</strong> (<em>int</em>) – Size of the buffer in the hydra audio data service,
+(optional default=1024)</p></li>
+<li><p><strong>metadata_enable</strong> (<em>bool</em>) – Metadata should be sent alongside the audio data, this metadata
+will be auto-generated if the format is not qwav or extracted from the qwav file,
+for source streams (optional default=False)</p></li>
+<li><p><strong>metadata_format</strong> (<em>str</em>) – Metadata format, “basic” or “timestamped”
+(optional, default=”basic”)</p></li>
+<li><p><strong>metadata_channel</strong> (<em>int</em>) – Metadata channel in the qwav file,
+for source qwav streams (optional default=0)</p></li>
+<li><p><strong>metadata_buffer_size</strong> (<em>int</em>) – Size of the buffer in the hydra audio data service
+(optional default=256)</p></li>
+<li><p><strong>ttp_delay</strong> (<em>int</em>) – Time to play delay in seconds for source timestamped streams,
+(optional default=0.050)</p></li>
+<li><p><strong>callback_consume</strong> (<em>function</em>) – <p>Function to be invoked when data is available</p>
+<ul>
+<li><p>backing==”file”. Unavailable</p></li>
+<li><p>backing ==”data”. Only used in sink streams (mandatory) but can be set in the
+config method.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.consume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.get_endpoint_id">
+<code class="sig-name descname">get_endpoint_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.get_endpoint_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.get_endpoint_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">check_space=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts data with the size specified in stream_format property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Data to insert</p></li>
+<li><p><strong>check_space</strong> (<em>bool</em>) – Check if there is space before inserting, otherwise raise
+exception.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If there is no space in MMU buffer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/audio_data.html#StreamHydraAudioData.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.file">
+<span id="kse-kalsim-stream-hydra-file-module"></span><h2>kse.kalsim.stream.hydra.file module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.file" title="Permalink to this headline">¶</a></h2>
+<p>Hydra file streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.file.StreamHydraFile">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.file.</code><code class="sig-name descname">StreamHydraFile</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/file.html#StreamHydraFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.file.StreamHydraFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData" title="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.file.StreamHydraFile.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'file'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.file.StreamHydraFile.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.file.StreamHydraFile.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.file.StreamHydraFile.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.hw">
+<span id="kse-kalsim-stream-hydra-hw-module"></span><h2>kse.kalsim.stream.hydra.hw module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.hw" title="Permalink to this headline">¶</a></h2>
+<p>Hydra hw streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.hw.</code><code class="sig-name descname">StreamHw</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.stream.kalsim_stream.KalsimStream</span></code></p>
+<p>Hydra hw streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – <p>Type of stream</p>
+<ul>
+<li><p>”source”. Data is pushed into kymera</p></li>
+<li><p>”sink”. Data is extracted from kymera</p></li>
+</ul>
+</p></li>
+<li><p><strong>backing</strong> (<em>str</em>) – <p>Origin (for sources) or destination (for sinks) of data.
+This parameter defines what other parameters are needed.</p>
+<ul>
+<li><p>”file”. Data is backed by a file, if it is “source” is the contents to be
+streamed, if it is “sink” is the file where data will be written to.</p></li>
+<li><p>”data”. Data is coming from (“source”) or going to (“sink”) an external software
+component. This allow to have loops where a sink stream loops back to a
+source stream.</p></li>
+</ul>
+</p></li>
+<li><p><strong>device</strong> (<em>int</em>) – Mapping between stream and endpoint, being the first hw source stream
+mapped to the first hw source endpoint and so on, sources and sinks mapping is
+independent. <strong>Currently unused</strong></p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – <p>Filename to back the stream</p>
+<ul>
+<li><p>backing==”file”. Mandatory</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overridden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format,
+optional metadata and optional packet based information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – <p>Number of channels/streams in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=1).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – <p>Channel index in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=0).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – <p>Sample rate in hertzs.</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory), wav source files (optional)
+and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all sink files (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – <p>Number of bits per sample</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all file types and stream types (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – <p>Number of frames per transfer</p>
+<ul>
+<li><p>backing==”file”. Valid for all file types and stream types (optional, default=1).</p></li>
+<li><p>backing==”data”. Only used in sink streams (optional default=1).</p></li>
+</ul>
+</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – <p>Delay in seconds from start to real start.
+Indicates the delay between the stream start command and the actual start in seconds</p>
+<ul>
+<li><p>backing==”file”. Only for source streams (optional default=0.0)</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>loop</strong> (<em>int</em>) – <p>Number of times the source is played, when the source gets to end of file
+it is rewinded and replayed, only for source streams (optional default=1)</p>
+<ul>
+<li><p>backing==”file”. Available</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>callback_consume</strong> (<em>function</em><em>(</em><em>int</em><em>)</em>) – <p>Callback function when data is received</p>
+<ul>
+<li><p>backing==”file”. Unavailable</p></li>
+<li><p>backing==”data”. Only used in sink streams (mandatory) but can be set in the
+config method.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.consume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.interface">
+<em class="property">abstract property </em><code class="sig-name descname">interface</code><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.platform">
+<em class="property">abstract property </em><code class="sig-name descname">platform</code><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Platform name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hw.StreamHw.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hw.html#StreamHw.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hw.StreamHw.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.hydra">
+<span id="kse-kalsim-stream-hydra-hydra-module"></span><h2>kse.kalsim.stream.hydra.hydra module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.hydra" title="Permalink to this headline">¶</a></h2>
+<p>Kalsim Hydra streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.hydra.StreamHydra">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.hydra.</code><code class="sig-name descname">StreamHydra</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hydra.html#StreamHydra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hydra.StreamHydra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="kse.kalsim.stream.html#kse.kalsim.stream.kalsim_stream.KalsimStream" title="kse.kalsim.stream.kalsim_stream.KalsimStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.kalsim_stream.KalsimStream</span></code></a></p>
+<p>Hydra Kalsim Stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – Type of stream source or sink</p></li>
+<li><p><strong>hydra_type</strong> (<em>str</em>) – Come in two flavours, namely audio_slot streams and subsystem streams.
+Audio slot streams resemble the actual hardware devices present on the chip.
+Audioslot streams have a register control interface and can have stream monitors
+attached to them.
+Subsystem streams represent streams between different subsystems on the chip.
+As such their presence is only noticeable via the bac_handles</p></li>
+<li><p><strong>hydra_bac_handle</strong> (<em>int</em>) – 0 to 128</p></li>
+<li><p><strong>hydra_audioslot</strong> (<em>int</em>) – 0 to 16</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.hydra.StreamHydra.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/hydra.html#StreamHydra.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.hydra.StreamHydra.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.hydra.StreamHydra.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'hydra'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.hydra.StreamHydra.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.hydra.StreamHydra.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.hydra.StreamHydra.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.i2s">
+<span id="kse-kalsim-stream-hydra-i2s-module"></span><h2>kse.kalsim.stream.hydra.i2s module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.i2s" title="Permalink to this headline">¶</a></h2>
+<p>Hydra i2s streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.i2s.StreamI2s">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.i2s.</code><code class="sig-name descname">StreamI2s</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/i2s.html#StreamI2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.i2s.StreamI2s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.hw.StreamHw" title="kse.kalsim.stream.hydra.hw.StreamHw"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.hw.StreamHw</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.i2s.StreamI2s.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'i2s'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.i2s.StreamI2s.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.i2s.StreamI2s.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.i2s.StreamI2s.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.iso">
+<span id="kse-kalsim-stream-hydra-iso-module"></span><h2>kse.kalsim.stream.hydra.iso module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.iso" title="Permalink to this headline">¶</a></h2>
+<p>Hydra iso streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.iso.</code><code class="sig-name descname">StreamHydraIso</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.stream.kalsim_stream.KalsimStream</span></code></p>
+<p>Hydra iso streams</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – <p>Type of stream</p>
+<ul>
+<li><p>”source”. Data is pushed into kymera</p></li>
+<li><p>”sink”. Data is extracted from kymera</p></li>
+</ul>
+</p></li>
+<li><p><strong>backing</strong> (<em>str</em>) – <p>Origin (for sources) or destination (for sinks) of data.
+This parameter defines what other parameters are needed.</p>
+<ul>
+<li><p>”file”. Data is backed by a file, if it is “source” is the contents to be
+streamed, if it is a sink is the file where data will be written to.</p></li>
+<li><p>”data”. Data is coming from (source) or going to (sink) an external software
+component. This allow to have loops where a sink stream loops back to a
+source stream.</p></li>
+</ul>
+</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – <p>Filename to back the stream</p>
+<ul>
+<li><p>backing==”file”. Mandatory</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overridden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format,
+optional metadata and optional packet based information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – <p>Number of channels/streams in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=1).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – <p>Channel index in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=0).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>bitrate</strong> (<em>float</em>) – Bits per second, if supplied instead of sample_rate, it will be used, for
+source and sink files (optional)</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – <p>Sample rate in hertzs.</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory), wav source files (optional)
+and all sink files (mandatory). If it is 0 it means as fast as possible.</p></li>
+<li><p>backing==”data”. Valid for all sink files (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – <p>Number of bits per sample</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all file types and stream types (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – <p>Number of frames per transfer. <strong>Currently unused</strong></p>
+<ul>
+<li><p>backing==”file”. Valid for all file types and stream types (optional, default=1).</p></li>
+<li><p>backing==”data”. Only used in sink streams (optional default=1).</p></li>
+</ul>
+</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – <p>Delay in seconds from start to real start.
+Indicates the delay between the stream start command and the actual start in seconds</p>
+<ul>
+<li><p>backing==”file”. Only for source streams (optional default=0.0)</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>loop</strong> (<em>int</em>) – <p>Number of times the source is played, when the source gets to end of file
+it is rewinded and replayed, only for source streams (optional default=1)</p>
+<ul>
+<li><p>backing==”file”. Available</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>callback_consume</strong> (<em>function</em><em>(</em><em>int</em><em>)</em>) – <p>Callback function when data is received</p>
+<ul>
+<li><p>backing==”file”. Unavailable</p></li>
+<li><p>backing==”data”. Only used in sink streams (mandatory) but can be set in the
+config method.</p></li>
+</ul>
+</p></li>
+<li><p><strong>metadata_enable</strong> (<em>bool</em>) – Indicates if metadata should be sent alongside the audio data
+(source streams), this metadata will be auto-generated if the format is not qwav or
+extracted from the qwav file. Indicates if metadata is expected in the sink stream.
+(optional default=False)</p></li>
+<li><p><strong>metadata_format</strong> (<em>str</em>) – Metadata format to be used, this only applies if metadata is
+enabled, valid values are “standard” and “framed_isoal”. Only for source streams
+(optional default “standard”)</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Parent stream, the sco services supports one tx and one rx channel,
+for the second stream in the service this provides the parent sco stream index</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – ISO processing service tag, if not provided one will be
+computed (optional)</p></li>
+<li><p><strong>from_air_buffer_size</strong> (<em>int</em>) – From-air buffer size in octets, 0 for from air direction
+unused</p></li>
+<li><p><strong>wallclock_accuracy</strong> (<em>float</em>) – Wallclock simulation accuracy in parts per million.
+This allows the wallclock simulation to not run at the same rate as TIMER_TIME kymera
+clock, sco insertion/extraction is synchronised with wallclock accuracy</p></li>
+<li><p><strong>wallclock_handle</strong> (<em>int</em>) – (optional default 0x254)</p></li>
+<li><p><strong>wallclock_offset</strong> (<em>int</em>) – Wallclock offset in bytes (optional default 0)</p></li>
+<li><p><strong>bt_clock_value</strong> (<em>int</em>) – Initial bt clock value (2*slots)</p></li>
+<li><p><strong>endpoint_type</strong> (<em>int</em>) – Type of endpoint, 0 for sco, 1 for iso</p></li>
+<li><p><strong>to_air_buffer_size</strong> (<em>int</em>) – to air buffer size in octets, 0 for to air direction unused</p></li>
+<li><p><strong>iso_stream_type</strong> (<em>str/int</em>) – Type of iso stream, 0/”cis” for connected, 1/”bis” for broadcast</p></li>
+<li><p><strong>isoal_framing</strong> (<em>str/int</em>) – Type of framing, 0/”unframed” for unframed, 1/”framed” for framed</p></li>
+<li><p><strong>iso_interval</strong> (<em>int</em>) – ISO interval in 1.25 msec units, valid values 4 to 3200</p></li>
+<li><p><strong>sdu_interval_to_air</strong> (<em>int</em>) – sdu interval for data being transmitted in microseconds</p></li>
+<li><p><strong>sdu_interval_from_air</strong> (<em>int</em>) – sdu interval for data being received in microseconds</p></li>
+<li><p><strong>max_sdu_to_air</strong> (<em>int</em>) – to-air maximum sdu length in octets</p></li>
+<li><p><strong>max_sdu_from_air</strong> (<em>int</em>) – from-air maximum sdu length in octets</p></li>
+<li><p><strong>next_slot_time</strong> (<em>int</em>) – Next reserved slot time in bt ticks (2*slots)</p></li>
+<li><p><strong>cis_sync_delay/stream_sync_delay</strong> (<em>int</em>) – CIS/BIS synchronization delay in microseconds</p></li>
+<li><p><strong>cig_sync_delay/group_sync_delay</strong> (<em>int</em>) – CIG/BIG synchronization delay in microseconds</p></li>
+<li><p><strong>flush_timeout_to_air</strong> (<em>int</em>) – Flush timeout for data being transmitted in ISO intervals</p></li>
+<li><p><strong>flush_timeout_from_air</strong> (<em>int</em>) – Flush timeout for data being received in ISO intervals</p></li>
+<li><p><strong>to_air_latency</strong> (<em>int</em>) – Latency in the to-air direction in microseconds</p></li>
+<li><p><strong>from_air_latency</strong> (<em>int</em>) – Latency in the from-air direction in microseconds</p></li>
+<li><p><strong>sdu_number</strong> (<em>int</em>) – Initial sequence number (both to air and from air)</p></li>
+<li><p><strong>sdu_number_to_air</strong> (<em>int</em>) – Initial to air sequence number, if not supplied use sdu_number</p></li>
+<li><p><strong>sdu_number_from_air</strong> (<em>int</em>) – Initial from air sequence number, if not supplied use sdu_number</p></li>
+<li><p><strong>drift_from_air</strong> (<em>float</em>) – Sample rate drift in the from_air direction in ppm</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.check_active">
+<code class="sig-name descname">check_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.check_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.check_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the end of file has been reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>End of file</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.consume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start service and create stream</p>
+<p>TODO: If stream_type of a SCO Processing Service instance is easily available,
+raise a RuntimeError if we are trying to start two instances with the same
+stream_type and hci_handle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.get_hci_handle">
+<code class="sig-name descname">get_hci_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.get_hci_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.get_hci_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get hci handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>hci handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.get_iso_service">
+<code class="sig-name descname">get_iso_service</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.get_iso_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.get_iso_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return iso service instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>iso service</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService" title="kse.kalsim.hydra_service.iso_processing_service.HydraIsoProcessingService">HydraIsoProcessingService</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'iso'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start streaming</p>
+<p>Notes:
+Before we start streaming:</p>
+<ul class="simple">
+<li><p>we check if Audio FW is ready to supply or consume data - check_for_channels_ready()</p></li>
+<li><p>start BT clock if Audio ready</p></li>
+<li><p>Audio FW ready is indicated by a ‘run state’ message which should have
+already been handled by SCO Processing Service</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – <ul class="simple">
+<li><p>If Audio FW not ready to process data</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.iso.StreamHydraIso.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/iso.html#StreamHydraIso.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.iso.StreamHydraIso.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.l2cap">
+<span id="kse-kalsim-stream-hydra-l2cap-module"></span><h2>kse.kalsim.stream.hydra.l2cap module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.l2cap" title="Permalink to this headline">¶</a></h2>
+<p>Hydra l2cap streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.l2cap.StreamHydraL2cap">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.l2cap.</code><code class="sig-name descname">StreamHydraL2cap</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/l2cap.html#StreamHydraL2cap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.l2cap.StreamHydraL2cap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData" title="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.l2cap.StreamHydraL2cap.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'l2cap'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.l2cap.StreamHydraL2cap.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.l2cap.StreamHydraL2cap.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.l2cap.StreamHydraL2cap.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.pcm">
+<span id="kse-kalsim-stream-hydra-pcm-module"></span><h2>kse.kalsim.stream.hydra.pcm module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.pcm" title="Permalink to this headline">¶</a></h2>
+<p>Hydra pcm streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.pcm.StreamPcm">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.pcm.</code><code class="sig-name descname">StreamPcm</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/pcm.html#StreamPcm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.pcm.StreamPcm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.hw.StreamHw" title="kse.kalsim.stream.hydra.hw.StreamHw"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.hw.StreamHw</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.pcm.StreamPcm.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'pcm'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.pcm.StreamPcm.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.pcm.StreamPcm.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.pcm.StreamPcm.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.sco">
+<span id="kse-kalsim-stream-hydra-sco-module"></span><h2>kse.kalsim.stream.hydra.sco module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.sco" title="Permalink to this headline">¶</a></h2>
+<p>Hydra sco streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.sco.</code><code class="sig-name descname">StreamHydraSco</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.kalsim.stream.kalsim_stream.KalsimStream</span></code></p>
+<p>Hydra sco streams</p>
+<p>Error insertion process</p>
+<p>Every time a packet has to be inserted in a sco source stream, its data is replicated in as
+many packets as defined (packet_number).
+Of those packets per is applied to each packet, if per is unsuccessful the packet is dropped
+Of those not dropped packets, ber is applied to every single bit in every packet,
+if ber is unsuccessful then that bit in that packet is changed</p>
+<p><strong>Standard format</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 29%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Packet</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Data</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>All packets have been received
+and have not bit errors</p></td>
+<td><p>STATUS_OK *</p></td>
+<td><p>Original data</p></td>
+</tr>
+<tr class="row-odd"><td><p>No packets actually received
+have bit errors</p></td>
+<td><p>STATUS_OK</p></td>
+<td><p>Original data</p></td>
+</tr>
+<tr class="row-even"><td><p>All packets are lost</p></td>
+<td><p>STATUS_NOTHING_RECEIVED *</p></td>
+<td><p>All bits to 0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Only one packet received
+and it has bit errors</p></td>
+<td><p>STATUS_CRC_ERROR *</p></td>
+<td><p>Data after applied bit errors</p></td>
+</tr>
+<tr class="row-even"><td><p>Multiple packets received and
+at least one has bit errors</p></td>
+<td><p>STATUS_CRC_ERROR</p></td>
+<td><p>Majority voting of rx packets</p></td>
+</tr>
+</tbody>
+</table>
+<p>It should be used only with packet_number set to 1, so combinations with * are the only ones
+that apply.</p>
+<p><strong>Zeagle format</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 24%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Packet</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Data</p></th>
+<th class="head"><p>Bit error pattern</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>All packets have been received
+and have not bit errors</p></td>
+<td><p>GOOD_CRC</p></td>
+<td><p>Original data</p></td>
+<td><p>All bits 0</p></td>
+</tr>
+<tr class="row-odd"><td><p>No packets actually received
+have bit errors</p></td>
+<td><p>GOOD_CRC</p></td>
+<td><p>Original data</p></td>
+<td><p>All bits 0</p></td>
+</tr>
+<tr class="row-even"><td><p>All packets are lost</p></td>
+<td><p>PACKET_LOST</p></td>
+<td><p>All bits to 0</p></td>
+<td><p>All bits 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Only one packet received
+and it has bit errors</p></td>
+<td><p>ONE_PACKET_CRC_ERROR</p></td>
+<td><p>Data after applied bit errors</p></td>
+<td><p>All bits 1</p></td>
+</tr>
+<tr class="row-even"><td><p>Multiple packets received and
+at least one has bit errors</p></td>
+<td><p>MULTIPLE_PACKETS_WITH_BAD_CRC</p></td>
+<td><p>Majority voting of rx packets</p></td>
+<td><p>All bits that have discrepancy
+across data packets set to 1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Bit error count is the number of 1s in bit error pattern always</p>
+<p>Majority voting</p>
+<p>Is simply to determine each bit depending of all the corresponding bits of all available
+(not dropped) packets. If there are more 1s than 0s, more 0s than 1s or equal,
+the output will be 1, 0 or 50% 1 or 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream_type</strong> (<em>str</em>) – <p>Type of stream</p>
+<ul>
+<li><p>”source”. Data is pushed into kymera</p></li>
+<li><p>”sink”. Data is extracted from kymera</p></li>
+</ul>
+</p></li>
+<li><p><strong>backing</strong> (<em>str</em>) – <p>Origin (for sources) or destination (for sinks) of data.
+This parameter defines what other parameters are needed.</p>
+<ul>
+<li><p>”file”. Data is backed by a file, if it is “source” is the contents to be
+streamed, if it is a sink is the file where data will be written to.</p></li>
+<li><p>”data”. Data is coming from (source) or going to (sink) an external software
+component. This allow to have loops where a sink stream loops back to a
+source stream.</p></li>
+</ul>
+</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – <p>Filename to back the stream</p>
+<ul>
+<li><p>backing==”file”. Mandatory</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>raw files only store audio data but no information about number of channels,
+sampling frequency or data format.
+This information (<em>channels</em>, <em>sample_rate</em>, <em>sample_width</em>) has to be supplied</p></li>
+<li><p>wav files store number of channels, sampling frequency and sample data format.
+Note that if <em>sample_rate</em> is provided then information in the file is overridden</p></li>
+<li><p>qwav files store number of channels, sampling frequency, sample data format, optional
+metadata and optional packet based information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channels</strong> (<em>int</em>) – <p>Number of channels/streams in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=1).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – <p>Channel index in the audio file</p>
+<ul>
+<li><p>backing==”file”. Only for source streams, sink streams are always created with 1
+channel (optional default=0).</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – <p>Sample rate in hertzs.</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory), wav source files (optional)
+and all sink files (mandatory). If it is 0 it means as fast as possible.</p></li>
+<li><p>backing==”data”. Valid for all sink files (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_width</strong> (<em>int</em>) – <p>Number of bits per sample</p>
+<ul>
+<li><p>backing==”file”. For raw source files (mandatory) and all sink files (mandatory).</p></li>
+<li><p>backing==”data”. Valid for all file types and stream types (mandatory).</p></li>
+</ul>
+</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em>) – <p>Number of frames per transfer. <strong>Currently unused</strong></p>
+<ul>
+<li><p>backing==”file”. Valid for all file types and stream types (optional, default=1).</p></li>
+<li><p>backing==”data”. Only used in sink streams (optional default=1).</p></li>
+</ul>
+</p></li>
+<li><p><strong>delay</strong> (<em>float</em>) – <p>Delay in seconds from start to real start.
+Indicates the delay between the stream start command and the actual start in seconds</p>
+<ul>
+<li><p>backing==”file”. Only for source streams (optional default=0.0)</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>loop</strong> (<em>int</em>) – <p>Number of times the source is played, when the source gets to end of file
+it is rewinded and replayed, only for source streams (optional default=1)</p>
+<ul>
+<li><p>backing==”file”. Available</p></li>
+<li><p>backing ==”data”. Unavailable</p></li>
+</ul>
+</p></li>
+<li><p><strong>callback_consume</strong> (<em>function</em><em>(</em><em>int</em><em>)</em>) – <p>Callback function when data is received</p>
+<ul>
+<li><p>backing==”file”. Unavailable</p></li>
+<li><p>backing==”data”. Only used in sink streams (mandatory) but can be set in the
+config method.</p></li>
+</ul>
+</p></li>
+<li><p><strong>seed</strong> (<em>int/None</em>) – Seed to compute error occurrence, integer value or None for create
+automatically. Only for sources (optional default=None)</p></li>
+<li><p><strong>packet_number</strong> (<em>int</em>) – Number of packets (with retransmission) available.
+Only for source streams (optional default=1)</p></li>
+<li><p><strong>per</strong> (<em>float</em>) – Packet error rate, in percentage.
+Only for source streams (optional default=0.0)</p></li>
+<li><p><strong>ber</strong> (<em>float</em>) – Bit error rate, in percentage.
+Only for source streams (optional default=0.0)</p></li>
+<li><p><strong>never_scheduled_error</strong> (<em>float</em>) – Never scheduled packets error to insert, in percentage.
+Only for source streams (optional default=0.0)</p></li>
+<li><p><strong>never_scheduled_error_packets</strong> (<em>int</em>) – Number of slots that make the never scheduled error.
+Only for source streams (optional minimum=2, default=2)</p></li>
+<li><p><strong>data_error</strong> (<em>bool</em>) – Send garbage data with crc, nothing received and never scheduled
+errors if set. If not set, do not send any data.</p></li>
+<li><p><strong>metadata_enable</strong> (<em>bool</em>) – Indicates if metadata should be sent alongside the audio data
+(source streams), this metadata will be auto-generated if the format is not qwav or
+extracted from the qwav file. Indicates if metadata is expected in the sink stream.
+(optional default=False)</p></li>
+<li><p><strong>metadata_format</strong> (<em>str</em>) – Metadata format to be used, this only applies is metadata is
+enabled, valid values are “standard” and “zeagle”. Only for source streams
+(optional default “standard”)</p></li>
+<li><p><strong>stream</strong> (<em>int</em>) – Parent stream, the sco services supports one tx and one rx channel,
+for the second stream in the service this provides the parent sco stream index</p></li>
+<li><p><strong>service_tag</strong> (<em>int</em>) – ISO processing service tag, if not provided one will be
+computed (optional)</p></li>
+<li><p><strong>wallclock_accuracy</strong> (<em>float</em>) – Wallclock simulation accuracy in parts per million.
+This allows the wallclock simulation to not run at the same rate as TIMER_TIME kymera
+clock, sco insertion/extraction is synchronised with wallclock accuracy</p></li>
+<li><p><strong>wallclock_handle</strong> (<em>int</em>) – (optional default 0x254)</p></li>
+<li><p><strong>wallclock_offset</strong> (<em>int</em>) – Wallclock offset in bytes (optional default 0)</p></li>
+<li><p><strong>role</strong> (<em>str</em>) – Bluetooth link role, “master” or “slave”.</p></li>
+<li><p><strong>air_compression_factor</strong> (<em>int</em>) – SPS to/from-air compression factor,
+this parameter is passed to the UUT and not used by KATS, (mandatory, 1 or 2)</p></li>
+<li><p><strong>air_buffer_size</strong> (<em>int</em>) – SPS to/from-air buffer size in octets,
+this parameter is passed to the UUT and not used by KATS (optional)</p></li>
+<li><p><strong>air_packet_length</strong> (<em>int</em>) – SPS to/from-air packet length in octets
+this parameter is passed to the UUT and not used by KATS (mandatory)</p></li>
+<li><p><strong>tesco</strong> (<em>int</em>) – SPS BT link TeSCO (interval between transmissions)
+this parameter is used by KATS to compute insertion time and passed to the UUT
+(mandatory, 2, 4, 6, 8, 10, 12, 14, 16, 18)</p></li>
+<li><p><strong>wesco</strong> (<em>int</em>) – SPS BT link WeSCO (retransmission window), this is only used to compute to air
+and from air latency parameters, those parameters are directly passed to the UUT and
+not used in any other case (mandatory)</p></li>
+<li><p><strong>slot_occupancy</strong> (<em>int</em>) – Number of slots on the BT physical channel taken by one packet,
+this parameters is used to compute the exact slot to insert or extract data
+(optional, default=1, 1 or 3)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.check_active">
+<code class="sig-name descname">check_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.check_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.check_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the end of file has been reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>End of file</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.consume">
+<code class="sig-name descname">consume</code><span class="sig-paren">(</span><em class="sig-param">input_num</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.consume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start service and create stream</p>
+<p>TODO: If stream_type of a SCO Processing Service instance is easily available,
+raise a RuntimeError if we are trying to start two instances with the same
+stream_type and hci_handle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.eof_detected">
+<code class="sig-name descname">eof_detected</code><span class="sig-paren">(</span><em class="sig-param">input_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.eof_detected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.eof_detected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.get_endpoint_id">
+<code class="sig-name descname">get_endpoint_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.get_endpoint_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.get_endpoint_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.get_hci_handle">
+<code class="sig-name descname">get_hci_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.get_hci_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.get_hci_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get hci handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>hci handle</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.get_sco_service">
+<code class="sig-name descname">get_sco_service</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.get_sco_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.get_sco_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sco service instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sco service</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService" title="kse.kalsim.hydra_service.sco_processing_service.HydraScoProcessingService">HydraScoProcessingService</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'sco'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start streaming</p>
+<p>Notes:
+Before we start streaming:</p>
+<ul class="simple">
+<li><p>we check if Audio FW is ready to supply or consume data - check_for_channels_ready()</p></li>
+<li><p>start BT clock if Audio ready</p></li>
+<li><p>Audio FW ready is indicated by a ‘run state’ message which should have
+already been handled by SCO Processing Service</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – <ul class="simple">
+<li><p>If Audio FW not ready to process data</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco.StreamHydraSco.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco.html#StreamHydraSco.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco.StreamHydraSco.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop stream</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.sco_error">
+<span id="kse-kalsim-stream-hydra-sco-error-module"></span><h2>kse.kalsim.stream.hydra.sco_error module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.sco_error" title="Permalink to this headline">¶</a></h2>
+<p>Hydra sco error insertion library</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.sco_error.ScoError">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.sco_error.</code><code class="sig-name descname">ScoError</code><span class="sig-paren">(</span><em class="sig-param">rnd=None</em>, <em class="sig-param">packet_number=1</em>, <em class="sig-param">per=0</em>, <em class="sig-param">ber=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco_error.html#ScoError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco_error.ScoError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Utility class to generate sco errors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rnd</strong> (<em>random.Random</em>) – Random module instance</p></li>
+<li><p><strong>packet_number</strong> (<em>int</em>) – Number of packets (transmissions) in each packet</p></li>
+<li><p><strong>per</strong> (<em>float</em>) – Packet error rate, in percentage</p></li>
+<li><p><strong>ber</strong> (<em>float</em>) – Bit error rate, in percentage</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco_error.ScoError.bit_to_byte">
+<em class="property">static </em><code class="sig-name descname">bit_to_byte</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco_error.html#ScoError.bit_to_byte"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco_error.ScoError.bit_to_byte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of bits into a list of unsigned bytes</p>
+<p>THis will obviously return a list 8 times smaller the size of the input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Input bit data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Unsigned byte data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco_error.ScoError.byte_to_bit">
+<em class="property">static </em><code class="sig-name descname">byte_to_bit</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco_error.html#ScoError.byte_to_bit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco_error.ScoError.byte_to_bit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of unsigned bytes into a list of bits</p>
+<p>THis will obviously return a list 8 times bigger the size of the input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Input unsigned byte data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Bit data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.stream.hydra.sco_error.ScoError.insert_error">
+<code class="sig-name descname">insert_error</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/sco_error.html#ScoError.insert_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.sco_error.ScoError.insert_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert error data</p>
+<p>This method expects and returns data in byte (unsigned mode).
+It is up to the caller to convert before and after call to any other format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data_bit</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Input unsigned byte data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data (list[int]): Output unsigned data
+packets (list[list[int]]): Packet unsigned byte data
+bit_error (list[int]): Bit error data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.tester">
+<span id="kse-kalsim-stream-hydra-tester-module"></span><h2>kse.kalsim.stream.hydra.tester module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.tester" title="Permalink to this headline">¶</a></h2>
+<p>Hydra tester streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.tester.StreamHydraTester">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.tester.</code><code class="sig-name descname">StreamHydraTester</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/tester.html#StreamHydraTester"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.tester.StreamHydraTester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData" title="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.tester.StreamHydraTester.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'tester'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.tester.StreamHydraTester.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.tester.StreamHydraTester.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.tester.StreamHydraTester.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra.timestamped">
+<span id="kse-kalsim-stream-hydra-timestamped-module"></span><h2>kse.kalsim.stream.hydra.timestamped module<a class="headerlink" href="#module-kse.kalsim.stream.hydra.timestamped" title="Permalink to this headline">¶</a></h2>
+<p>Hydra timestamped streams</p>
+<dl class="class">
+<dt id="kse.kalsim.stream.hydra.timestamped.StreamHydraTimestamped">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.stream.hydra.timestamped.</code><code class="sig-name descname">StreamHydraTimestamped</code><span class="sig-paren">(</span><em class="sig-param">stream_type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/stream/hydra/timestamped.html#StreamHydraTimestamped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.stream.hydra.timestamped.StreamHydraTimestamped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData" title="kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData"><code class="xref py py-class docutils literal notranslate"><span class="pre">kse.kalsim.stream.hydra.audio_data.StreamHydraAudioData</span></code></a></p>
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.timestamped.StreamHydraTimestamped.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'timestamped'</em><a class="headerlink" href="#kse.kalsim.stream.hydra.timestamped.StreamHydraTimestamped.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kalsim.stream.hydra.timestamped.StreamHydraTimestamped.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kalsim.stream.hydra.timestamped.StreamHydraTimestamped.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim.stream.hydra">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim.stream.hydra" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.stream.packet.html" class="btn btn-neutral float-right" title="kse.kalsim.stream.packet package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kalsim.stream.html" class="btn btn-neutral" title="kse.kalsim.stream package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

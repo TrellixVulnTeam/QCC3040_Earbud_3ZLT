@@ -1,0 +1,1 @@
+gatt_role_selection_server/gatt_role_selection_server_db.dbi_: gatt_role_selection_server/gatt_role_selection_server_db.dbi gatt_role_selection_server/gatt_role_selection_server_uuids.h

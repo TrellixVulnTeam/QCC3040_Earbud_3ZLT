@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse package" href="kse.html"/>
+        <link rel="next" title="kse.kalsim.capability package" href="kse.kalsim.capability.html"/>
+        <link rel="prev" title="kse.instrument.kalsim package" href="kse.instrument.kalsim.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kse.kalsim package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.kalsim.kalsim_shell">kse.kalsim.kalsim_shell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-kse.kalsim">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+    <li>kse.kalsim package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kalsim.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kalsim-package">
+<h1>kse.kalsim package<a class="headerlink" href="#kse-kalsim-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.capability.html">kse.kalsim.capability package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.capability.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.capability.common.html">kse.kalsim.capability.common package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common.delay">kse.kalsim.capability.common.delay module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#kse-kalsim-capability-common-fir-filter-module">kse.kalsim.capability.common.fir_filter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common.multi_sink_file">kse.kalsim.capability.common.multi_sink_file module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common.multi_source_file">kse.kalsim.capability.common.multi_source_file module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common.pass_through">kse.kalsim.capability.common.pass_through module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common.splitter">kse.kalsim.capability.common.splitter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common.sum">kse.kalsim.capability.common.sum module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.capability.common.html#module-kse.kalsim.capability.common">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.capability.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.capability.html#module-kse.kalsim.capability.capability_base">kse.kalsim.capability.capability_base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.capability.html#module-kse.kalsim.capability.capability_factory">kse.kalsim.capability.capability_factory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.capability.html#module-kse.kalsim.capability">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.component.html">kse.kalsim.component package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.component.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.component.html#module-kse.kalsim.component.hydra_ftp_server">kse.kalsim.component.hydra_ftp_server module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.component.html#module-kse.kalsim.component.pstore">kse.kalsim.component.pstore module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.component.html#module-kse.kalsim.component">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.endpoint.html">kse.kalsim.endpoint package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.endpoint.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html">kse.kalsim.endpoint.hydra package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.a2dp">kse.kalsim.endpoint.hydra.a2dp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.file">kse.kalsim.endpoint.hydra.file module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.iso">kse.kalsim.endpoint.hydra.iso module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.l2cap">kse.kalsim.endpoint.hydra.l2cap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.sco">kse.kalsim.endpoint.hydra.sco module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.tester">kse.kalsim.endpoint.hydra.tester module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra.timestamped">kse.kalsim.endpoint.hydra.timestamped module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.endpoint.hydra.html#module-kse.kalsim.endpoint.hydra">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.endpoint.html#module-kse.kalsim.endpoint">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.graph.html">kse.kalsim.graph package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.graph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.graph.html#module-kse.kalsim.graph.graph">kse.kalsim.graph.graph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.graph.html#module-kse.kalsim.graph">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.hydra_service.html">kse.kalsim.hydra_service package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.audio_data_service">kse.kalsim.hydra_service.audio_data_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.audio_sink_service">kse.kalsim.hydra_service.audio_sink_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.audio_source_service">kse.kalsim.hydra_service.audio_source_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.constants">kse.kalsim.hydra_service.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.download_service">kse.kalsim.hydra_service.download_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.file_manager_service">kse.kalsim.hydra_service.file_manager_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.iso_processing_service">kse.kalsim.hydra_service.iso_processing_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.protocol">kse.kalsim.hydra_service.protocol module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.sco_processing_service">kse.kalsim.hydra_service.sco_processing_service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service.util">kse.kalsim.hydra_service.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.hydra_service.html#module-kse.kalsim.hydra_service">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.library.html">kse.kalsim.library package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.library.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.library.html#module-kse.kalsim.library.period">kse.kalsim.library.period module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.library.html#module-kse.kalsim.library">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.stream.html">kse.kalsim.stream package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.stream.hydra.html">kse.kalsim.stream.hydra package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.a2dp">kse.kalsim.stream.hydra.a2dp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.audio_data">kse.kalsim.stream.hydra.audio_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.file">kse.kalsim.stream.hydra.file module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.hw">kse.kalsim.stream.hydra.hw module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.hydra">kse.kalsim.stream.hydra.hydra module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.i2s">kse.kalsim.stream.hydra.i2s module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.iso">kse.kalsim.stream.hydra.iso module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.l2cap">kse.kalsim.stream.hydra.l2cap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.pcm">kse.kalsim.stream.hydra.pcm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.sco">kse.kalsim.stream.hydra.sco module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.sco_error">kse.kalsim.stream.hydra.sco_error module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.tester">kse.kalsim.stream.hydra.tester module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra.timestamped">kse.kalsim.stream.hydra.timestamped module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.hydra.html#module-kse.kalsim.stream.hydra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.stream.packet.html">kse.kalsim.stream.packet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.packet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.packet.html#module-kse.kalsim.stream.packet.packetiser">kse.kalsim.stream.packet.packetiser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.stream.packet.html#module-kse.kalsim.stream.packet">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#module-kse.kalsim.stream.kalcmd_stream">kse.kalsim.stream.kalcmd_stream module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#module-kse.kalsim.stream.kalsim_helper">kse.kalsim.stream.kalsim_helper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#module-kse.kalsim.stream.kalsim_stream">kse.kalsim.stream.kalsim_stream module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#module-kse.kalsim.stream.stream_factory">kse.kalsim.stream.stream_factory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.stream.html#module-kse.kalsim.stream">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.kalsim.uut.html">kse.kalsim.uut package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.uut.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.uut.hydra.html">kse.kalsim.uut.hydra package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.hydra.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.hydra.html#module-kse.kalsim.uut.hydra.uut">kse.kalsim.uut.hydra.uut module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.hydra.html#module-kse.kalsim.uut.hydra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.uut.kalsim.html">kse.kalsim.uut.kalsim package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.kalsim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.kalsim.html#module-kse.kalsim.uut.kalsim.io">kse.kalsim.uut.kalsim.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.kalsim.html#module-kse.kalsim.uut.kalsim.message">kse.kalsim.uut.kalsim.message module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.kalsim.html#module-kse.kalsim.uut.kalsim.timer">kse.kalsim.uut.kalsim.timer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kalsim.uut.kalsim.html#module-kse.kalsim.uut.kalsim">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.uut.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.uut.html#module-kse.kalsim.uut.uut">kse.kalsim.uut.uut module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kse.kalsim.uut.html#module-kse.kalsim.uut">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kalsim.kalsim_shell">
+<span id="kse-kalsim-kalsim-shell-module"></span><h2>kse.kalsim.kalsim_shell module<a class="headerlink" href="#module-kse.kalsim.kalsim_shell" title="Permalink to this headline">¶</a></h2>
+<p>Kalsim shell</p>
+<dl class="class">
+<dt id="kse.kalsim.kalsim_shell.KalsimShell">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kalsim.kalsim_shell.</code><code class="sig-name descname">KalsimShell</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#KalsimShell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.KalsimShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Kalsim shell</p>
+<p>This basically initialises a kalsim/kalcmd/kalaccess environment with multiple options,
+then instantiates some middleware libraries and invokes a repl to let the user
+send commands interactively</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repl</strong> (<em>str</em>) – Read Evaluate Print Loop tool</p></li>
+<li><p><strong>platform</strong> (<em>str</em>) – Chip platform</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kalsim.kalsim_shell.KalsimShell.clean_up">
+<code class="sig-name descname">clean_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#KalsimShell.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.KalsimShell.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect kalsim, kalcmd and kalaccess</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.kalsim_shell.KalsimShell.help">
+<code class="sig-name descname">help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#KalsimShell.help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.KalsimShell.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a help screen</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.kalsim_shell.KalsimShell.initialise">
+<code class="sig-name descname">initialise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#KalsimShell.initialise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.KalsimShell.initialise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise kalsim shell environment</p>
+<p>This includes launching the selected combination of kalcmd, kalsim and kalaccess
+components and starting several middleware components as uut, stream, kymera, endpoint
+and capability handlers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.kalsim_shell.KalsimShell.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#KalsimShell.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.KalsimShell.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect kalsim, kalcmd and kalaccess and recrete the connetions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kalsim.kalsim_shell.KalsimShell.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#KalsimShell.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.KalsimShell.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executing shell</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.kalsim.kalsim_shell.create_argparser">
+<code class="sig-prename descclassname">kse.kalsim.kalsim_shell.</code><code class="sig-name descname">create_argparser</code><span class="sig-paren">(</span><em class="sig-param">description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#create_argparser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.create_argparser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>description</strong> (<em>str</em>) – Parser description</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Argument parser</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>argparse.ArgumentParser</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="kse.kalsim.kalsim_shell.main">
+<code class="sig-prename descclassname">kse.kalsim.kalsim_shell.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kalsim/kalsim_shell.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kalsim.kalsim_shell.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Script entry point</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kalsim">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kalsim" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kalsim.capability.html" class="btn btn-neutral float-right" title="kse.kalsim.capability package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.instrument.kalsim.html" class="btn btn-neutral" title="kse.instrument.kalsim package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

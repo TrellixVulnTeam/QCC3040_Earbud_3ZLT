@@ -1,0 +1,212 @@
+"""
+Copyright (c) 2020 Qualcomm Technologies International, Ltd.
+
+%%version
+"""
+
+from __future__ import print_function
+import os
+
+Import('p_env')
+
+# ADK version Python
+p_env.Tool('python')
+
+def dos2unix(src):
+    """ Convert DOS style pathnames to the Unix style preferred by Make """
+    dst = src.split()
+    dst = [os.path.expandvars(f) for f in dst]
+    dst = [os.path.normpath(f) for f in dst]
+    dst = [os.path.splitdrive(f)[1] for f in dst]
+    dst = ' '.join(dst).replace('\\', '/')
+
+    return dst
+
+def filter_files(root, env):
+    """ Filter source files by extension """
+
+    env['C_FILES'] = []
+    env['ASM_FILES'] = []
+    for file in env['source_files']:
+        file = os.path.relpath(file, start=root).replace('\\', '/')
+        fl = file.lower() # For case insensitive tests
+        if fl.endswith(".c"):
+            env.Append(C_FILES = file)
+        elif fl.endswith(".asm"):
+            env.Append(ASM_FILES = file)
+
+# Initialise folder locations
+PROJECT_ROOT = os.path.dirname(os.getcwd()).replace('\\', '/')
+print("PROJECT_ROOT is " + PROJECT_ROOT)
+
+try:
+    TOOLS_ROOT = p_env['TOOLS_ROOT']
+except KeyError:
+    print("Variable TOOLS_ROOT has not been defined. It should be set to "
+          "the location of the tools folder.")
+    exit(1)
+print("TOOLS_ROOT is " + TOOLS_ROOT)
+
+try:
+    ADK_ROOT = p_env['ADK_ROOT']
+except KeyError:
+    print("Variable ADK_ROOT has not been defined. It should be set to "
+          "the location of the ADK folder.")
+    exit(1)
+print("ADK_ROOT is " + ADK_ROOT)
+
+build_output_folder = p_env['BUILDOUTPUT_PATH']
+if not build_output_folder:
+    build_output_folder = '..'
+
+# Setup paths for the build
+SRCDIR              = dos2unix(os.getcwd())
+p_env['MAKE_TOOLS'] = PROJECT_ROOT + '/tools/make'
+INSTALL_DIR         = build_output_folder + '/../installed_libs'
+LIB_DIR             = INSTALL_DIR + '/lib/os/' + p_env['CHIP_TYPE']
+ADK_INTERFACE       = INSTALL_DIR + '/include'
+ADK_INTERFACE_FW    = ADK_INTERFACE + '/firmware_' + p_env['CHIP_TYPE']
+ADK_INTERFACE_STD   = ADK_INTERFACE + '/standard'
+TRAPSETS_HEADER     = ADK_INTERFACE_FW + '/trapsets.h'
+INSTALL_OS          = '#/installed_libs'
+INSTALL_OS_LIBS     = INSTALL_OS + '/lib'
+INSTALL_OS_HDRS     = INSTALL_OS + '/include'
+INSTALL_OS_USB      = LIB_DIR.replace(INSTALL_DIR, INSTALL_OS)
+BUILD_DIR           = build_output_folder + '/build/' + p_env['CHIP_TYPE']
+p_env['LIBSFILE']   = BUILD_DIR + '/LinkerLibs.txt'
+
+# Expand ellipses in LIBPATHS and INCPATHS to include subdirectories recursively
+p_env.Replace(CPPPATH=['.'])
+for f in p_env.get('INCPATHS', '').split():
+    if f.endswith('...'):
+        for root, dir, file in os.walk(f[:-3]):
+            p_env.AppendUnique(CPPPATH=root)
+    else:
+        p_env.AppendUnique(CPPPATH=f)
+
+p_env.Replace(LIBPATH=[])
+for f in p_env.get('LIBPATHS', '').split():
+    if f.endswith('...'):
+        for root, dir, file in os.walk(f[:-3]):
+            p_env.AppendUnique(LIBPATH=root)
+    else:
+        p_env.AppendUnique(LIBPATH=f)
+
+# Output library file
+OUTPUT_LIB = LIB_DIR + '/lib' + p_env['CHIP_TYPE'] + '.a'
+USB_LIB = LIB_DIR + '/libusb_early_init.a'
+
+# Install equivalents
+OUTPUT_INSTALL = OUTPUT_LIB.replace(INSTALL_DIR, INSTALL_OS)
+USB_INSTALL = USB_LIB.replace(INSTALL_DIR, INSTALL_OS)
+
+# Convert definitions into a list
+#p_env.Replace(DEFS=p_env['DEFS'].split())
+# !! Definitions from the project file are discarded !!
+p_env.Replace(DEFS=[])
+
+MINIM_OPT = '-minim'
+
+CHIP_NAME = 'qcc514x_apps'
+
+print("BUILDING FOR " + p_env['CHIP_TYPE'])
+
+CHIP_NAME_OPT = '-k' + CHIP_NAME
+
+WARNING_OPTS = p_env.get('WARNING_FLAGS',
+                         '-Wall -WAccuracyLoss -WnoPointerUnaligned ' + \
+                         '-WnoConstantTest -WnoDeclarationMadeGlobal ' + \
+                         '-WnoExplicitQualifier')
+
+PREINCLUDES       = Split(p_env['PREINCLUDES'])
+PREINCLUDE_OPTS   = ' -preinclude '.join([''] + PREINCLUDES)
+# Set the ASM include paths to match the compiler include paths. This takes
+# CPPPATH defined below and applies the same path mangling as for include
+# files, but inserts -A instead of -I
+ASM_CPPPATH       = '$( ${_concat("-A", CPPPATH, "", __env__, RDirs)} $)'
+ASM_PREINCLUDE_OPTS = ' -Xa -include -Xa '.join([''] + PREINCLUDES)
+
+# Always optimise for speed
+OPTIMISE_OPTS = p_env.get('RELEASE_OPTIMISE_FLAGS', '-Xc -o2')
+p_env.Append(DEFS=['RELEASE_BUILD'])
+
+COMPILE_FLAGS = '-g -Xa -apply-b179745-workaround ' + \
+                ' '.join([MINIM_OPT, WARNING_OPTS, PREINCLUDE_OPTS,
+                          ASM_CPPPATH, ASM_PREINCLUDE_OPTS, OPTIMISE_OPTS])
+
+# Filter source files according to extension
+filter_files(SRCDIR, p_env)
+
+# Ensure object files are created separately from source files, and
+# don't create copies of the source files in the build folder
+p_env.VariantDir(BUILD_DIR, SRCDIR, duplicate=0)
+for var in ['C_FILES', 'ASM_FILES']:
+    # Use keyword argument unpacking to use the value of var as the keyword
+    kw = {var: [os.path.join(BUILD_DIR, s).replace('\\', '/') for s in p_env[var]]}
+    p_env.Replace(**kw)
+
+# Assign the default target so that not everything gets built by default
+# (Only required when building separately)
+#p_env.Default([OUTPUT_INSTALL, USB_INSTALL])
+
+p_env.Command(TRAPSETS_HEADER, 'gen/build_defs.h',
+            '$python $MAKE_TOOLS/create_trapsets_header.py $SOURCE $TARGET')
+
+# Extract the USB early file from the source file list
+USB_EARLY_C = os.path.join(BUILD_DIR, 'customer/core/init/init_usb_early_init.c').replace('\\', '/')
+p_env['C_FILES'].remove(USB_EARLY_C)
+
+# Interface files
+INCLUDE_TARGETS = [TRAPSETS_HEADER]
+for src, tgt in [('../../common/interface/app/acl/acl_if.h', '$(ADK_INTERFACE_FW)/app/acl/acl_if.h'), ('../../common/interface/app/adc/adc_if.h', '$(ADK_INTERFACE_FW)/app/adc/adc_if.h'), ('../../common/interface/app/audio/audio_if.h', '$(ADK_INTERFACE_FW)/app/audio/audio_if.h'), ('../../common/interface/app/bitserial/bitserial_if.h', '$(ADK_INTERFACE_FW)/app/bitserial/bitserial_if.h'), ('../../common/interface/app/bluestack/att_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/att_prim.h'), ('../../common/interface/app/bluestack/bluetooth.h', '$(ADK_INTERFACE_FW)/app/bluestack/bluetooth.h'), ('../../common/interface/app/bluestack/dm_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/dm_prim.h'), ('../../common/interface/app/bluestack/hci.h', '$(ADK_INTERFACE_FW)/app/bluestack/hci.h'), ('../../common/interface/app/bluestack/l2cap_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/l2cap_prim.h'), ('../../common/interface/app/bluestack/mdm_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/mdm_prim.h'), ('../../common/interface/app/bluestack/rfcomm_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/rfcomm_prim.h'), ('../../common/interface/app/bluestack/sdc_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/sdc_prim.h'), ('../../common/interface/app/bluestack/sds_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/sds_prim.h'), ('../../common/interface/app/bluestack/types.h', '$(ADK_INTERFACE_FW)/app/bluestack/types.h'), ('../../common/interface/app/bluestack/vendor_specific_hci.h', '$(ADK_INTERFACE_FW)/app/bluestack/vendor_specific_hci.h'), ('../../common/interface/app/bluestack/vsdm_prim.h', '$(ADK_INTERFACE_FW)/app/bluestack/vsdm_prim.h'), ('../../common/interface/app/capacitive_sensor/capacitive_sensor_if.h', '$(ADK_INTERFACE_FW)/app/capacitive_sensor/capacitive_sensor_if.h'), ('../../common/interface/app/charger/charger_if.h', '$(ADK_INTERFACE_FW)/app/charger/charger_if.h'), ('../../common/interface/app/charger_comms/charger_comms_if.h', '$(ADK_INTERFACE_FW)/app/charger_comms/charger_comms_if.h'), ('../../common/interface/app/debug_partition/debug_partition_data_if.h', '$(ADK_INTERFACE_FW)/app/debug_partition/debug_partition_data_if.h'), ('../../common/interface/app/debug_partition/debug_partition_if.h', '$(ADK_INTERFACE_FW)/app/debug_partition/debug_partition_if.h'), ('../../common/interface/app/dormant/dormant_if.h', '$(ADK_INTERFACE_FW)/app/dormant/dormant_if.h'), ('../../common/interface/app/feature/feature_if.h', '$(ADK_INTERFACE_FW)/app/feature/feature_if.h'), ('../../common/interface/app/file/file_if.h', '$(ADK_INTERFACE_FW)/app/file/file_if.h'), ('../../common/interface/app/flash_ops/flash_ops_if.h', '$(ADK_INTERFACE_FW)/app/flash_ops/flash_ops_if.h'), ('../../common/interface/app/image_upgrade/image_upgrade_if.h', '$(ADK_INTERFACE_FW)/app/image_upgrade/image_upgrade_if.h'), ('../../common/interface/app/infrared/infrared_if.h', '$(ADK_INTERFACE_FW)/app/infrared/infrared_if.h'), ('../../common/interface/app/lcd/lcd_if.h', '$(ADK_INTERFACE_FW)/app/lcd/lcd_if.h'), ('../../common/interface/app/led/led_if.h', '$(ADK_INTERFACE_FW)/app/led/led_if.h'), ('../../common/interface/app/marshal/marshal_if.h', '$(ADK_INTERFACE_FW)/app/marshal/marshal_if.h'), ('../../common/interface/app/message/subsystem_if.h', '$(ADK_INTERFACE_FW)/app/message/subsystem_if.h'), ('../../common/interface/app/message/system_message.h', '$(ADK_INTERFACE_FW)/app/message/system_message.h'), ('../../common/interface/app/mic_bias/mic_bias_if.h', '$(ADK_INTERFACE_FW)/app/mic_bias/mic_bias_if.h'), ('../../common/interface/app/operator/operator_if.h', '$(ADK_INTERFACE_FW)/app/operator/operator_if.h'), ('../../common/interface/app/partition/partition_if.h', '$(ADK_INTERFACE_FW)/app/partition/partition_if.h'), ('../../common/interface/app/pio/pio_if.h', '$(ADK_INTERFACE_FW)/app/pio/pio_if.h'), ('../../common/interface/app/ps/ps_if.h', '$(ADK_INTERFACE_FW)/app/ps/ps_if.h'), ('../../common/interface/app/psu/psu_if.h', '$(ADK_INTERFACE_FW)/app/psu/psu_if.h'), ('../../common/interface/app/ra_partition/ra_partition_if.h', '$(ADK_INTERFACE_FW)/app/ra_partition/ra_partition_if.h'), ('../../common/interface/app/ringtone/ringtone_if.h', '$(ADK_INTERFACE_FW)/app/ringtone/ringtone_if.h'), ('../../common/interface/app/ringtone/ringtone_notes.h', '$(ADK_INTERFACE_FW)/app/ringtone/ringtone_notes.h'), ('../../common/interface/app/sd_mmc/sd_mmc_if.h', '$(ADK_INTERFACE_FW)/app/sd_mmc/sd_mmc_if.h'), ('../../common/interface/app/status/status_if.h', '$(ADK_INTERFACE_FW)/app/status/status_if.h'), ('../../common/interface/app/stream/stream_if.h', '$(ADK_INTERFACE_FW)/app/stream/stream_if.h'), ('../../common/interface/app/uart/uart_if.h', '$(ADK_INTERFACE_FW)/app/uart/uart_if.h'), ('../../common/interface/app/usb/usb_common_if.h', '$(ADK_INTERFACE_FW)/app/usb/usb_common_if.h'), ('../../common/interface/app/usb/usb_hub_if.h', '$(ADK_INTERFACE_FW)/app/usb/usb_hub_if.h'), ('../../common/interface/app/usb/usb_if.h', '$(ADK_INTERFACE_FW)/app/usb/usb_if.h'), ('../../common/interface/app/vm/vm_if.h', '$(ADK_INTERFACE_FW)/app/vm/vm_if.h'), ('../../common/interface/app/voltsense/voltsense_if.h', '$(ADK_INTERFACE_FW)/app/voltsense/voltsense_if.h'), ('bt/qbluestack/adapter/qbl_adapter_types.h', '$(ADK_INTERFACE_FW)/app/bluestack/qbl_adapter_types.h'), ('bt/qbluestack/port/qbl_types.h', '$(ADK_INTERFACE_FW)/app/bluestack/qbl_types.h'), ('core/hydra/hydra_macros.h', '$(ADK_INTERFACE_FW)/hydra_macros.h'), ('core/hydra/hydra_types.h', '$(ADK_INTERFACE_STD)/hydra_types.h'), ('core/hydra_log/hydra_log.h', '$(ADK_INTERFACE_FW)/hydra_log.h'), ('core/hydra_log/hydra_log_disabled.h', '$(ADK_INTERFACE_FW)/hydra_log_disabled.h'), ('core/hydra_log/hydra_log_firm.h', '$(ADK_INTERFACE_FW)/hydra_log_firm.h'), ('core/hydra_log/hydra_log_firm_modules.h', '$(ADK_INTERFACE_FW)/hydra_log_firm_modules.h'), ('core/hydra_log/hydra_log_soft.h', '$(ADK_INTERFACE_FW)/hydra_log_soft.h'), ('core/include/macros.h', '$(ADK_INTERFACE_STD)/macros.h'), ('core/include/types.h', '$(ADK_INTERFACE_STD)/types.h'), ('core/pmalloc/pmalloc.h', '$(ADK_INTERFACE_FW)/pmalloc.h'), ('core/pmalloc/pmalloc_trace.h', '$(ADK_INTERFACE_FW)/pmalloc_trace.h'), ('customer/core/trap_api/csrtypes.h', '$(ADK_INTERFACE_STD)/csrtypes.h'), ('gen/core/hydra_log/hydra_log_subsystems.h', '$(ADK_INTERFACE_FW)/hydra_log_subsystems.h'), ('gen/customer/core/trap_api/acl.h', '$(ADK_INTERFACE_FW)/acl.h'), ('gen/customer/core/trap_api/adc.h', '$(ADK_INTERFACE_FW)/adc.h'), ('gen/customer/core/trap_api/api.h', '$(ADK_INTERFACE_FW)/api.h'), ('gen/customer/core/trap_api/audio_anc.h', '$(ADK_INTERFACE_FW)/audio_anc.h'), ('gen/customer/core/trap_api/audio_clock.h', '$(ADK_INTERFACE_FW)/audio_clock.h'), ('gen/customer/core/trap_api/audio_mclk.h', '$(ADK_INTERFACE_FW)/audio_mclk.h'), ('gen/customer/core/trap_api/audio_power.h', '$(ADK_INTERFACE_FW)/audio_power.h'), ('gen/customer/core/trap_api/audio_pwm.h', '$(ADK_INTERFACE_FW)/audio_pwm.h'), ('gen/customer/core/trap_api/bdaddr_.h', '$(ADK_INTERFACE_FW)/bdaddr_.h'), ('gen/customer/core/trap_api/bitserial_api.h', '$(ADK_INTERFACE_FW)/bitserial_api.h'), ('gen/customer/core/trap_api/boot.h', '$(ADK_INTERFACE_FW)/boot.h'), ('gen/customer/core/trap_api/capacitivesensor.h', '$(ADK_INTERFACE_FW)/capacitivesensor.h'), ('gen/customer/core/trap_api/charger.h', '$(ADK_INTERFACE_FW)/charger.h'), ('gen/customer/core/trap_api/chargercomms.h', '$(ADK_INTERFACE_FW)/chargercomms.h'), ('gen/customer/core/trap_api/codec_.h', '$(ADK_INTERFACE_FW)/codec_.h'), ('gen/customer/core/trap_api/crypto.h', '$(ADK_INTERFACE_FW)/crypto.h'), ('gen/customer/core/trap_api/csb.h', '$(ADK_INTERFACE_FW)/csb.h'), ('gen/customer/core/trap_api/csb_.h', '$(ADK_INTERFACE_FW)/csb_.h'), ('gen/customer/core/trap_api/debug_partition_api.h', '$(ADK_INTERFACE_FW)/debug_partition_api.h'), ('gen/customer/core/trap_api/dormant.h', '$(ADK_INTERFACE_FW)/dormant.h'), ('gen/customer/core/trap_api/energy.h', '$(ADK_INTERFACE_FW)/energy.h'), ('gen/customer/core/trap_api/feature.h', '$(ADK_INTERFACE_FW)/feature.h'), ('gen/customer/core/trap_api/file.h', '$(ADK_INTERFACE_FW)/file.h'), ('gen/customer/core/trap_api/font.h', '$(ADK_INTERFACE_FW)/font.h'), ('gen/customer/core/trap_api/host.h', '$(ADK_INTERFACE_FW)/host.h'), ('gen/customer/core/trap_api/i2c.h', '$(ADK_INTERFACE_FW)/i2c.h'), ('gen/customer/core/trap_api/imageupgrade.h', '$(ADK_INTERFACE_FW)/imageupgrade.h'), ('gen/customer/core/trap_api/infrared.h', '$(ADK_INTERFACE_FW)/infrared.h'), ('gen/customer/core/trap_api/inquiry.h', '$(ADK_INTERFACE_FW)/inquiry.h'), ('gen/customer/core/trap_api/kalimba.h', '$(ADK_INTERFACE_FW)/kalimba.h'), ('gen/customer/core/trap_api/lcd.h', '$(ADK_INTERFACE_FW)/lcd.h'), ('gen/customer/core/trap_api/led.h', '$(ADK_INTERFACE_FW)/led.h'), ('gen/customer/core/trap_api/loader.h', '$(ADK_INTERFACE_FW)/loader.h'), ('gen/customer/core/trap_api/marshal.h', '$(ADK_INTERFACE_FW)/marshal.h'), ('gen/customer/core/trap_api/message.h', '$(ADK_INTERFACE_FW)/message.h'), ('gen/customer/core/trap_api/message_.h', '$(ADK_INTERFACE_FW)/message_.h'), ('gen/customer/core/trap_api/micbias.h', '$(ADK_INTERFACE_FW)/micbias.h'), ('gen/customer/core/trap_api/native.h', '$(ADK_INTERFACE_FW)/native.h'), ('gen/customer/core/trap_api/nfc.h', '$(ADK_INTERFACE_FW)/nfc.h'), ('gen/customer/core/trap_api/operator.h', '$(ADK_INTERFACE_FW)/operator.h'), ('gen/customer/core/trap_api/operator_.h', '$(ADK_INTERFACE_FW)/operator_.h'), ('gen/customer/core/trap_api/os.h', '$(ADK_INTERFACE_FW)/os.h'), ('gen/customer/core/trap_api/otp.h', '$(ADK_INTERFACE_FW)/otp.h'), ('gen/customer/core/trap_api/panic.h', '$(ADK_INTERFACE_FW)/panic.h'), ('gen/customer/core/trap_api/partition.h', '$(ADK_INTERFACE_FW)/partition.h'), ('gen/customer/core/trap_api/pio.h', '$(ADK_INTERFACE_FW)/pio.h'), ('gen/customer/core/trap_api/ps.h', '$(ADK_INTERFACE_FW)/ps.h'), ('gen/customer/core/trap_api/psu.h', '$(ADK_INTERFACE_FW)/psu.h'), ('gen/customer/core/trap_api/qspi.h', '$(ADK_INTERFACE_FW)/qspi.h'), ('gen/customer/core/trap_api/ra_partition_api.h', '$(ADK_INTERFACE_FW)/ra_partition_api.h'), ('gen/customer/core/trap_api/sdmmc.h', '$(ADK_INTERFACE_FW)/sdmmc.h'), ('gen/customer/core/trap_api/sink.h', '$(ADK_INTERFACE_FW)/sink.h'), ('gen/customer/core/trap_api/sink_.h', '$(ADK_INTERFACE_FW)/sink_.h'), ('gen/customer/core/trap_api/source.h', '$(ADK_INTERFACE_FW)/source.h'), ('gen/customer/core/trap_api/source_.h', '$(ADK_INTERFACE_FW)/source_.h'), ('gen/customer/core/trap_api/sram.h', '$(ADK_INTERFACE_FW)/sram.h'), ('gen/customer/core/trap_api/status.h', '$(ADK_INTERFACE_FW)/status.h'), ('gen/customer/core/trap_api/stream.h', '$(ADK_INTERFACE_FW)/stream.h'), ('gen/customer/core/trap_api/test.h', '$(ADK_INTERFACE_FW)/test.h'), ('gen/customer/core/trap_api/test2.h', '$(ADK_INTERFACE_FW)/test2.h'), ('gen/customer/core/trap_api/test2_.h', '$(ADK_INTERFACE_FW)/test2_.h'), ('gen/customer/core/trap_api/transform.h', '$(ADK_INTERFACE_FW)/transform.h'), ('gen/customer/core/trap_api/transform_.h', '$(ADK_INTERFACE_FW)/transform_.h'), ('gen/customer/core/trap_api/usb.h', '$(ADK_INTERFACE_FW)/usb.h'), ('gen/customer/core/trap_api/usb_hub.h', '$(ADK_INTERFACE_FW)/usb_hub.h'), ('gen/customer/core/trap_api/util.h', '$(ADK_INTERFACE_FW)/util.h'), ('gen/customer/core/trap_api/vm.h', '$(ADK_INTERFACE_FW)/vm.h'), ('gen/customer/core/trap_api/vm_.h', '$(ADK_INTERFACE_FW)/vm_.h'), ('gen/customer/core/trap_api/voltsense.h', '$(ADK_INTERFACE_FW)/voltsense.h')]:
+    if tgt.startswith('$(ADK_INTERFACE_FW)'):
+        tgt = tgt.replace('$(ADK_INTERFACE_FW)', ADK_INTERFACE_FW)
+    elif tgt.startswith('$(ADK_INTERFACE_STD)'):
+        tgt = tgt.replace('$(ADK_INTERFACE_STD)', ADK_INTERFACE_STD)
+    else:
+        print('Unrecognised path: ' + tgt)
+        Exit(1)
+    INCLUDE_TARGETS.append(tgt)
+    p_env.Command(tgt, src,
+                  '$python $MAKE_TOOLS/install_adk_header.py $SOURCE $TARGET')
+
+INCLUDE_INSTALL = []
+for tgt in INCLUDE_TARGETS:
+    install = p_env.File(tgt.replace(ADK_INTERFACE, INSTALL_OS_HDRS))
+    INCLUDE_INSTALL.append(install)
+    p_env.Command(install, tgt, Copy('$TARGET', '$SOURCE'))
+
+# Assembler objects require special handling because the Library builder
+# only understands C, C++, D or Fortran sources.
+ASM_OBJECTS = []
+for src in p_env['ASM_FILES']:
+    ASM_OBJECTS.extend(p_env.AsmObject(src))
+
+# There are too many objects to fit on the command line, so explicitly
+# enumerate all the object files and place in a file
+C_OBJECTS = []
+for src in p_env['C_FILES']:
+    C_OBJECTS.extend(p_env.Object(src))
+
+p_env.Textfile(p_env['LIBSFILE'], [f.path.replace('\\', '/') for f in C_OBJECTS + ASM_OBJECTS], LINESEPARATOR=' ')
+
+p_env.Command(OUTPUT_LIB, p_env['LIBSFILE'], '$AR $ARFLAGS $TARGET @$SOURCE')
+p_env.Library(target = USB_LIB, source = USB_EARLY_C)
+
+p_env.Depends(OUTPUT_LIB, INCLUDE_TARGETS + C_OBJECTS + ASM_OBJECTS)
+
+p_env.Command(OUTPUT_INSTALL, OUTPUT_LIB, Copy('$TARGET', '$SOURCE'))
+p_env.Command(USB_INSTALL, USB_LIB, Copy('$TARGET', '$SOURCE'))
+
+p_env.Depends(OUTPUT_INSTALL, INCLUDE_INSTALL)
+
+# Cannot clean INSTALL_OS because it may contain private libraries and
+# header files
+p_env.Clean(OUTPUT_LIB, [INSTALL_DIR, BUILD_DIR,
+                         ADK_INTERFACE_FW.replace(ADK_INTERFACE, INSTALL_OS_HDRS),
+                         ADK_INTERFACE_STD.replace(ADK_INTERFACE, INSTALL_OS_HDRS)])
+
+# Translate options variable names into SCons versions
+p_env.Replace(CFLAGS=COMPILE_FLAGS)
+p_env.Append(CPPDEFINES=p_env['DEFS'])
+p_env.Replace(CPPFLAGS=[CHIP_NAME_OPT])

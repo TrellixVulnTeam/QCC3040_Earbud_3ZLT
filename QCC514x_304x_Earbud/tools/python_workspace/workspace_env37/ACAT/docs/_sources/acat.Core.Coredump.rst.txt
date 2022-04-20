@@ -1,0 +1,8 @@
+
+Coredump
+==========================================================================
+
+This module can be imported from ``ACAT.Core.Coredump``.
+
+.. automodule:: ACAT.Core.Coredump
+   :members:

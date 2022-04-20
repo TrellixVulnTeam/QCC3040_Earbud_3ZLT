@@ -1,0 +1,39 @@
+"""
+Copyright (c) 2019 - 2020 Qualcomm Technologies International, Ltd.
+
+BSP build script
+"""
+
+from __future__ import print_function
+import os
+import sys
+import logging
+
+import maker.exceptions as bdex
+
+Import('p_env')
+
+# Initialise folder locations
+PROJECT_ROOT = os.getcwd().replace('\\', '/')
+logging.debug("PROJECT_ROOT is " + PROJECT_ROOT)
+
+is_audio = (p_env.get('SUBSYSTEM_NAME') == 'audio')
+output_filename = p_env['OUTPUT']
+if is_audio:
+    elf_path = os.path.abspath(os.path.join(PROJECT_ROOT, output_filename))
+    core = 'audio/p0'
+else:
+    per_config_depend = p_env.get('BUILDOUTPUT_PATH', p_env['per_config_depend'])
+    elf_path = os.path.join(os.path.dirname(p_env['WORKSPACE']), per_config_depend, p_env['OUTPUT'] + '.elf')
+    core = 'app/p1'
+
+# Announce symbol file to MDE
+attribs = {
+    'type':   'info',
+    'config': 'prebuilt_image',
+    'core':   core,
+    'module': 'build'
+])
+bdex.log_buildproc_output('elfpath', attribs, elf_path)
+
+print("Nothing to build for 'prebuilt_image' project")

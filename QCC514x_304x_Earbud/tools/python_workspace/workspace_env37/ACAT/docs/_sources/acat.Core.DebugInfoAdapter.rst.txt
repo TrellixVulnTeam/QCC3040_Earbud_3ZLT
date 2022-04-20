@@ -1,0 +1,8 @@
+
+DebugInfoAdapter
+==========================================================================
+
+This module can be imported from ``ACAT.Core.DebugInfoAdapter``.
+
+.. automodule:: ACAT.Core.DebugInfoAdapter
+   :members:

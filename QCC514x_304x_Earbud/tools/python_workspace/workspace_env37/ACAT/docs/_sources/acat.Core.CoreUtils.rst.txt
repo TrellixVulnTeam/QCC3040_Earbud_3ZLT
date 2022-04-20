@@ -1,0 +1,8 @@
+
+CoreUtils
+==========================================================================
+
+This module can be imported from ``ACAT.Core.CoreUtils``.
+
+.. automodule:: ACAT.Core.CoreUtils
+   :members:

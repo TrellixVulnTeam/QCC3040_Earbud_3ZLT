@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid></uuid>
+        <devkit></devkit>
+        <checksum></checksum>
+        <version></version>
+        <build></build>
+        <target>amd64</target>
+    </ext_id>
+    <ext_info>
+        <name>Extensions to docs</name>
+        <description>Adds document packages</description>
+    </ext_info>
+    <doc type="move">
+       <folder name="help">./doc/qch/subsystem_config.qch</folder>
+       <folder name="help">./doc/qch/adk.qch</folder>
+       <folder name="help">./doc/qch/apps.qch</folder>
+       <folder name="help">./doc/qch/libs.qch</folder>
+       <folder name="help">./doc/qch/os.qch</folder>
+    </doc>
+</root>

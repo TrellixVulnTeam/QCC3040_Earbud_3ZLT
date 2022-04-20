@@ -1,0 +1,98 @@
+.. _graph_htbp:
+
+=====================================
+TESTER stream and BASIC_PASS operator
+=====================================
+
+.. image:: _static/pt_tester.svg
+
+This example uses the config file ``pt_tester.cfg.json`` which is located in the 
+``config`` directory in your project workspace.
+The config file holds the following content::
+
+    {
+        "stream": [
+            {
+                "interface": "tester",
+                "type": "source",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "resource/153_Prompts_176.4_kHz_Music_Detected_48k.sbc",
+                    "sample_rate": 0,
+                    "sample_width": 8,
+                    "frame_size": 72
+                }
+            },
+            {
+                "interface": "tester",
+                "type": "sink",
+                "kwargs": {
+                    "backing": "file",
+                    "filename": "tmp/pt_tester_0.sbc",
+                    "sample_rate": 8000,
+                    "sample_width": 8
+                }
+            }
+        ],
+        "endpoint": [
+            {
+                "interface": "tester",
+                "type": "source",
+                "kwargs": {
+                    "stream": 0
+                }
+            },
+            {
+                "interface": "tester",
+                "type": "sink",
+                "kwargs": {
+                    "stream": 1
+                }
+            }
+        ],
+        "operator": [
+            {
+                "interface": "BASIC_PASS",
+                "args": [
+                    [
+                        "CHANGE_INPUT_DATA_TYPE",
+                        [
+                            0
+                        ]
+                    ],
+                    [
+                        "CHANGE_OUTPUT_DATA_TYPE",
+                        [
+                            0
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "graph": [
+            [
+                "stream0",
+                "endpoint0"
+            ],
+            [
+                "endpoint0",
+                "operator0i0"
+            ],
+            [
+                "operator0o0",
+                "endpoint1"
+            ],
+            [
+                "endpoint1",
+                "stream1"
+            ]
+        ]
+    }
+
+In KSE shell, run::
+
+   >>> from kse.framework.library.file_util import load
+   >>> data = load('config/pt_tester.cfg.json')
+   >>> graph.play(data)
+
+The resulting file named ``pt_tester_0.sbc`` is located in the ``tmp`` directory.

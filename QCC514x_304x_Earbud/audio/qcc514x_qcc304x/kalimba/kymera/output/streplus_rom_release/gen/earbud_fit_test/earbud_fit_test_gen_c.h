@@ -1,0 +1,73 @@
+// -----------------------------------------------------------------------------
+// Copyright (c) 2021                  Qualcomm Technologies International, Ltd.
+//
+#ifndef __EARBUD_FIT_TEST_GEN_C_H__
+#define __EARBUD_FIT_TEST_GEN_C_H__
+
+#ifndef ParamType
+typedef unsigned ParamType;
+#endif
+
+// CodeBase IDs
+#define EARBUD_FIT_TEST_EARBUD_FIT_TEST_16K_CAP_ID	0x00CA
+#define EARBUD_FIT_TEST_EARBUD_FIT_TEST_16K_ALT_CAP_ID_0	0x40A2
+#define EARBUD_FIT_TEST_EARBUD_FIT_TEST_16K_SAMPLE_RATE	16000
+#define EARBUD_FIT_TEST_EARBUD_FIT_TEST_16K_VERSION_MAJOR	1
+
+// Constant Definitions
+#define EARBUD_FIT_TEST_CONSTANT_IN_OUT_EAR_CTRL		0x00000003
+
+
+// Runtime Config Parameter Bitfields
+
+
+// System Mode
+#define EARBUD_FIT_TEST_SYSMODE_STANDBY		0
+#define EARBUD_FIT_TEST_SYSMODE_FULL   		1
+#define EARBUD_FIT_TEST_SYSMODE_MAX_MODES		2
+
+// System Control
+#define EARBUD_FIT_TEST_CONTROL_MODE_OVERRIDE		0x2000
+
+// In/Out of Ear Status
+#define EARBUD_FIT_TEST_IN_OUT_EAR_CTRL_IN_EAR 		0x0001
+#define EARBUD_FIT_TEST_IN_OUT_EAR_CTRL_OUT_EAR		0x0000
+
+// Fit Quality
+#define EARBUD_FIT_TEST_FIT_QUALITY_FLAG_FIT_BAD 		0x0000
+#define EARBUD_FIT_TEST_FIT_QUALITY_FLAG_FIT_GOOD		0x0001
+
+// Fit Quality Event
+#define EARBUD_FIT_TEST_FIT_EVENT_EVENT_CLEAR   		0x0000
+#define EARBUD_FIT_TEST_FIT_EVENT_EVENT_DETECTED		0x0001
+#define EARBUD_FIT_TEST_FIT_EVENT_EVENT_SENT    		0x0002
+
+// Statistics Block
+typedef struct _tag_EARBUD_FIT_TEST_STATISTICS
+{
+	ParamType OFFSET_CUR_MODE;
+	ParamType OFFSET_OVR_CONTROL;
+	ParamType OFFSET_IN_OUT_EAR_CTRL;
+	ParamType OFFSET_FIT_QUALITY_FLAG;
+	ParamType OFFSET_FIT_EVENT;
+	ParamType OFFSET_FIT_TIMER;
+	ParamType OFFSET_POWER_REF;
+	ParamType OFFSET_POWER_INT_MIC;
+	ParamType OFFSET_POWER_RATIO;
+}EARBUD_FIT_TEST_STATISTICS;
+
+typedef EARBUD_FIT_TEST_STATISTICS* LP_EARBUD_FIT_TEST_STATISTICS;
+
+// Parameters Block
+typedef struct _tag_EARBUD_FIT_TEST_PARAMETERS
+{
+	ParamType OFFSET_POWER_SMOOTH_FACTOR;
+	ParamType OFFSET_FIT_THRESHOLD;
+	ParamType OFFSET_EVENT_GOOD_FIT;
+}EARBUD_FIT_TEST_PARAMETERS;
+
+typedef EARBUD_FIT_TEST_PARAMETERS* LP_EARBUD_FIT_TEST_PARAMETERS;
+
+unsigned *EARBUD_FIT_TEST_GetDefaults(unsigned capid);
+
+#endif // __EARBUD_FIT_TEST_GEN_C_H__

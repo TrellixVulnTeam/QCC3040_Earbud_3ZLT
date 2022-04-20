@@ -1,0 +1,8 @@
+
+LiveSpi
+==========================================================================
+
+This module can be imported from ``ACAT.Core.LiveSpi``.
+
+.. automodule:: ACAT.Core.LiveSpi
+   :members:

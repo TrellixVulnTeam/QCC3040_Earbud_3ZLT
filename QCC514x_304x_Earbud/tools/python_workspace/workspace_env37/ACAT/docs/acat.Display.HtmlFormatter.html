@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HtmlFormatter &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="InteractiveFormatter" href="acat.Display.InteractiveFormatter.html"/>
+        <link rel="prev" title="Formatter" href="acat.Display.Formatter.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#display">Display</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.Formatter.html">Formatter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">HtmlFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.InteractiveFormatter.html">InteractiveFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.PlainTextFormatter.html">PlainTextFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.table.html">table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>HtmlFormatter</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Display.HtmlFormatter.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="htmlformatter">
+<h1>HtmlFormatter<a class="headerlink" href="#htmlformatter" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Display.HtmlFormatter</span></code>.</p>
+<span class="target" id="module-ACAT.Display.HtmlFormatter"></span><p>HTML Formatter.</p>
+<dl class="class">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">HtmlFormatter</code><span class="sig-paren">(</span><em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the Formatter interface to provide html output.</p>
+<p>Creates table of content for each section. Each section is displayed in
+different html section with a title. The sections are separated with lines.</p>
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.alert">
+<code class="sig-name descname">alert</code><span class="sig-paren">(</span><em class="sig-param">alert_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.alert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise a alert.</p>
+<p>important information that we want to be highlighted.  For example,
+<code class="docutils literal notranslate"><span class="pre">pmalloc</span> <span class="pre">pools</span> <span class="pre">exhausted</span></code> or <code class="docutils literal notranslate"><span class="pre">chip</span> <span class="pre">has</span> <span class="pre">panicked</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alert_str</strong> (<em>str</em>) – The message to display in String.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">error_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise an error.</p>
+<p>This signifies some problem with the analysis tool itself, e.g. an
+analysis can’t complete for some reason.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>error_str</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.flush">
+<code class="sig-name descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output all logged events.</p>
+<p>Events such as body text, alerts, errors etc. will be saved into the
+given file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.output">
+<code class="sig-name descname">output</code><span class="sig-paren">(</span><em class="sig-param">string_to_output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normal body text. Lists/dictionaries will be compacted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string_to_output</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.output_raw">
+<code class="sig-name descname">output_raw</code><span class="sig-paren">(</span><em class="sig-param">string_to_output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.output_raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.output_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unformatted text output. Useful when displaying tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string_to_output</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.output_svg">
+<code class="sig-name descname">output_svg</code><span class="sig-paren">(</span><em class="sig-param">string_to_output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.output_svg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.output_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normal body text. Lists/dictionaries will be compacted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string_to_output</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.section_end">
+<code class="sig-name descname">section_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.section_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.section_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a section.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.section_reset">
+<code class="sig-name descname">section_reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.section_reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.section_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the section formatting, ending all open sections.</p>
+<p>This is provided so that in case of an error we can continue safely.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.HtmlFormatter.section_start">
+<code class="sig-name descname">section_start</code><span class="sig-paren">(</span><em class="sig-param">header_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#HtmlFormatter.section_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.HtmlFormatter.section_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a new section. Sections can be nested.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>header_str</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Display.HtmlFormatter.Section">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">Section</code><span class="sig-paren">(</span><em class="sig-param">title</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">level=1</em>, <em class="sig-param">proc='P0'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to encapsulate a section.</p>
+<p>In html a section is represented as header followed by a series of divs.</p>
+<p>Create a new section. When called publicly, the parent and level
+parameters must not be given and the result will be a top level
+section. The parameters are filled in when creating subsections which
+users of this class should do by calling the subsection method on an
+existing section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Plain text title.</p></li>
+<li><p><strong>parent</strong> – Pointer to the parent object.</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – Nesting depth of this object.</p></li>
+<li><p><strong>proc</strong> – processor being documented.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.add_alert">
+<code class="sig-name descname">add_alert</code><span class="sig-paren">(</span><em class="sig-param">content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.add_alert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.add_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used for adding an alert to the report.</p>
+<p>Note that this function handles just the in-line alert message. The
+links at the top of the document are handled by the caller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – HTML of the alert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.add_error">
+<code class="sig-name descname">add_error</code><span class="sig-paren">(</span><em class="sig-param">content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.add_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.add_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used for adding an error report to the report.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – HTML of the error message.</p>
+</dd>
+</dl>
+<p>Note that this function handles just the in-line error message. The
+links at the top of the document are handled by the caller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.add_report">
+<code class="sig-name descname">add_report</code><span class="sig-paren">(</span><em class="sig-param">content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.add_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.add_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used for adding content to the report.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – HTML to be added to the report.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.content_to_html">
+<code class="sig-name descname">content_to_html</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.content_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.content_to_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert section to html format.</p>
+<p>Note that this always returns either an empty string or a string
+containing one or more HTML block level element so it must not be
+wrapped in anything that can’t contain such elements (most notably
+<code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tags).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.get_links">
+<code class="sig-name descname">get_links</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.get_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.get_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the menu pertaining to this section.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.get_parent">
+<code class="sig-name descname">get_parent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.get_parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.get_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parent of this section.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Display.HtmlFormatter.Section.subsection">
+<code class="sig-name descname">subsection</code><span class="sig-paren">(</span><em class="sig-param">title</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#Section.subsection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.Section.subsection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a subsection of this section.</p>
+<p>This creates a new section as a subsection of this one. Once that has
+been done, the add_report method of this section must not be called.
+It’s still safe to call add_alert and add_error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>title</strong> (<em>str</em>) – Plain text title.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_alert">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_alert</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_alert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html alert.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_div">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_div</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">cls</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_div"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_div" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to create special html elements like report, error,
+alert etc.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_error">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_error</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_heading">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_heading</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">level</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_heading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_heading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html heading.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_line">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_line</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html line</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_line_before">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_line_before</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_line_before"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_line_before" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html line before the string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_link_to_tag">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_link_to_tag</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">input_id</em>, <em class="sig-param">proc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_link_to_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_link_to_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a link to a specific tag</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_list_item">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_list_item</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_list_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_list_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_manual_format">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_manual_format</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_manual_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_manual_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Someone has manually formatted a section but we don’t think they want
+monospaced text</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_pre">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_pre</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_pre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_pre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an unformated text section.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_report">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_report</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html report element.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_simple_element">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_simple_element</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">tag</em>, <em class="sig-param">attr_str=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_simple_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_simple_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a simple HTML element containing the input string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – </p></li>
+<li><p><strong>tag</strong> – </p></li>
+<li><p><strong>attr_str</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_tag">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_tag</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">input_id</em>, <em class="sig-param">proc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a html tag which can be used to jump to a specific section.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.html_unordered_list">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">html_unordered_list</code><span class="sig-paren">(</span><em class="sig-param">items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#html_unordered_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.html_unordered_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an unordered html list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.normalise_tag_id">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">normalise_tag_id</code><span class="sig-paren">(</span><em class="sig-param">input_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#normalise_tag_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.normalise_tag_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes special characters from the tag ID.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ACAT.Display.HtmlFormatter.plain_to_html">
+<code class="sig-prename descclassname">ACAT.Display.HtmlFormatter.</code><code class="sig-name descname">plain_to_html</code><span class="sig-paren">(</span><em class="sig-param">plain_text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Display/HtmlFormatter.html#plain_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Display.HtmlFormatter.plain_to_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to display plain text. Replaces all the special characters.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Display.InteractiveFormatter.html" class="btn btn-neutral float-right" title="InteractiveFormatter" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Display.Formatter.html" class="btn btn-neutral" title="Formatter" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

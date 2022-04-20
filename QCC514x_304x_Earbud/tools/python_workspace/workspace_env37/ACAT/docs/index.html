@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to ACAT’s documentation! &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="#"/>
+        <link rel="next" title="Add an Analysis" href="add_analysis.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>Welcome to ACAT’s documentation!</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-acat-s-documentation">
+<h1>Welcome to ACAT’s documentation!<a class="headerlink" href="#welcome-to-acat-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The Qualcomm Audio Coredump Analysis Tool (ACAT), is a Python-based
+debugging tool for both Qualcomm Kymera TM Capability and Framework
+code, which uses the Kymera framework on the DSP to analyze both Coredumps
+and live-running chips.  ACAT has two modes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Automatic</strong>: ACAT runs all analyses without further prompting (By
+calling the <code class="docutils literal notranslate"><span class="pre">run_all()</span></code> function). Results are outputted to a text or
+html file, or the Command Prompt window.</p></li>
+<li><p><strong>Interactive</strong>: This mode provides a real-time debugging facility.
+ACAT accepts Python commands and runs the selected analysis only.</p></li>
+</ul>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="add_analysis.html#analysis-base-classes">Analysis Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="add_analysis.html#chipdata-class">ChipData class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add_analysis.html#debuginfo-class">DebugInfo class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add_analysis.html#formatter-class">Formatter class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="add_analysis.html#analysis-example">Analysis example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#run-all-function">run_all() function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#help-analysis-name-command">help(ANALYSIS_NAME) command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#sanitycheck-class">SanityCheck class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#stackinfo-class">StackInfo class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#stream-class">Stream class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#stream-run-all-function">stream.run_all() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#stream-plot-transforms-buffers-function">stream.plot_transforms_buffers() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#stream-create-graph-img-function">stream.create_graph_img() function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#operator-manager-opmgr-class">Operator Manager (Opmgr) class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#opmgr-get-operator-function">opmgr.get_operator() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#opmgr-find-capability-function">opmgr.find_capability() function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#buffer-class">Buffer class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#memory-pool-information-poolinfo-class">Memory pool information (poolinfo) class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#poolinfo-get-watermarks-function">poolinfo.get_watermarks() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analyses.html#poolinfo-clear-watermarks-function">poolinfo.clear_watermarks() function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#scratch-memory-scratchmem-class">Scratch memory (ScratchMem) class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#scratch-memory-sharedmem-class">Scratch memory (SharedMem) class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#heap-memory-heapmem-class">Heap memory (HeapMem) class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#profiler-class">Profiler class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#cbops-class">CBOPs class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#debuglog-class">DebugLog class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyses.html#scheduler-sched-class">Scheduler (Sched) class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#get-a-variable-interactive-mode">Get a variable (Interactive mode)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#get-function">get() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#chipdata-get-var-strict-function">chipdata.get_var_strict() function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#casting">Casting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#casting-variable-as-a-pointer">Casting variable as a pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#de-referencing-pointers">De-referencing pointers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#create-a-python-virtual-environment">Create a Python Virtual Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-the-wheel">From the wheel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#full-installation">Full Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-graphviz">Install Graphviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#access-acat-in-an-adk-installation">Access ACAT in an ADK Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="run.html#acat-operating-modes">ACAT operating modes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="run.html#acat-automatic-mode">ACAT automatic mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="run.html#acat-interactive-mode">ACAT interactive mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="run.html#run-acat-on-multiple-cores">Run ACAT on multiple cores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html#run-acat-on-a-coredump">Run ACAT on a Coredump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html#run-acat-on-a-live-chip">Run ACAT on a live chip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html#downloadable-capabilities">Downloadable capabilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.AANC.html">AANC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Analysis.html">Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Buffers.html">Buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Cbops.html">Cbops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DebugLog.html">DebugLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.DmProfiler.html">DmProfiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Dorm.html">Dorm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fats.html">Fats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Fault.html">Fault</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.FaultOld1.html">FaultOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld1.html">HeapMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld2.html">HeapMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMemOld3.html">HeapMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld1.html">HeapPmMemOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld2.html">HeapPmMemOld2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld3.html">HeapPmMemOld3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMemOld4.html">HeapPmMemOld4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.IPC.html">IPC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Patches.html">Patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PatchesOld1.html">PatchesOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfo.html">PoolInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.PoolInfoOld1.html">PoolInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Profiler.html">Profiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.RtpDecode.html">RtpDecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheck.html">SanityCheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SanityCheckOld1.html">SanityCheckOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Sched.html">Sched</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SchedOld1.html">SchedOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.ScratchMem.html">ScratchMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SharedMem.html">SharedMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.SourceSync.html">SourceSync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Splitter.html">Splitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfo.html">StackInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.StackInfoOld1.html">StackInfoOld1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Heap.html">Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapMem.html">HeapMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.HeapPmMem.html">HeapPmMem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Analysis.Opmgr.html">Opmgr</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#core">Core</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.MulticoreSupport.html">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.Formatter.html">Formatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.HtmlFormatter.html">HtmlFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.InteractiveFormatter.html">InteractiveFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.PlainTextFormatter.html">PlainTextFormatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Display.table.html">table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="acat.Interpreter.Automatic.html">Automatic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Interpreter.Interactive.html">Interactive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Interpreter.Interpreter.html">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<div class="admonition copyrightsection">
+<p class="admonition-title">Copyright</p>
+<p>© 2021 Qualcomm Technologies, Inc. and/or its affiliated companies. All Rights Reserved.</p>
+<p>Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries. Other products and brand names may be trademarks or registered trademarks of their respective owners.</p>
+<p>References in this documentation to &quot;Qualcomm&quot; may mean Qualcomm Incorporated, Qualcomm Technologies, Inc., and/or other subsidiaries or business units within the Qualcomm corporate structure, as applicable. Qualcomm Incorporated includes Qualcomm's licensing business, QTL, and the vast majority of its patent portfolio. Qualcomm Technologies, Inc., a wholly-owned subsidiary of Qualcomm Incorporated, operates, along with its subsidiaries, substantially all of Qualcomm's engineering, research and development functions, and substantially all of its product and services businesses, including its semiconductor business, QCT.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="add_analysis.html" class="btn btn-neutral float-right" title="Add an Analysis" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+kse.kalsim.endpoint package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   kse.kalsim.endpoint.hydra
+
+Module contents
+---------------
+
+.. automodule:: kse.kalsim.endpoint
+   :members:
+   :undoc-members:
+   :show-inheritance:

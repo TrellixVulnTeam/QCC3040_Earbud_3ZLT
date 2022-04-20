@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Graph &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="Helpers" href="helpers.html"/>
+        <link rel="next" title="Stream" href="helper_stream.html"/>
+        <link rel="prev" title="Kymera" href="helper_kymera.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Graph examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">Graphs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="helpers.html">Helpers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="helper_uut.html">UUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helper_kymera.html">Kymera</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helper_stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helper_endpoint.html">Endpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helper_capability.html">Capability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">Command-line tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+        <li><a href="helpers.html">Helpers</a> &raquo;</li>
+      
+    <li>Graph</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/helper_graph.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graph">
+<span id="helper-graph"></span><h1>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h1>
+<p>Graphs are container objects for <a class="reference internal" href="helper_endpoint.html#helper-endpoint"><span class="std std-ref">Endpoint</span></a>, <a class="reference internal" href="helper_stream.html#helper-stream"><span class="std std-ref">Stream</span></a> and
+<a class="reference internal" href="helper_capability.html#helper-capability"><span class="std std-ref">Capability</span></a>.</p>
+<p>Suported operations are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.load" title="kse.kalsim.graph.graph.Graph.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.load()</span></code></a> to load a graph configuration</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.create" title="kse.kalsim.graph.graph.Graph.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.create()</span></code></a> to create a graph based on the
+configuration provided</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.config" title="kse.kalsim.graph.graph.Graph.config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.config()</span></code></a> to configure a graph</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.connect" title="kse.kalsim.graph.graph.Graph.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.connect()</span></code></a> to connect all elements in a graph</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.start" title="kse.kalsim.graph.graph.Graph.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.start()</span></code></a> to start streaming</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.check_active" title="kse.kalsim.graph.graph.Graph.check_active"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.check_active()</span></code></a> to check if streams has finished</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.stop" title="kse.kalsim.graph.graph.Graph.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.stop()</span></code></a> to stop streaming</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.disconnect" title="kse.kalsim.graph.graph.Graph.disconnect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.disconnect()</span></code></a> to disconnect all elements in a graph</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.destroy" title="kse.kalsim.graph.graph.Graph.destroy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.destroy()</span></code></a> to destroy a graph</p></li>
+<li><p><a class="reference internal" href="kse.kalsim.graph.html#kse.kalsim.graph.graph.Graph.play" title="kse.kalsim.graph.graph.Graph.play"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kse.kalsim.graph.graph.Graph.play()</span></code></a> to play a graph, which essentially is execute all
+methods above in sequence</p></li>
+</ul>
+</div></blockquote>
+<p>In the shell it is available as <code class="docutils literal notranslate"><span class="pre">graph</span></code></p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="helper_stream.html" class="btn btn-neutral float-right" title="Stream" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="helper_kymera.html" class="btn btn-neutral" title="Kymera" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Graphs &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="User guide" href="user_guide.html"/>
+        <link rel="next" title="Streams" href="graph_stream.html"/>
+        <link rel="prev" title="Getting profiler information with ACAT" href="example_acat_profiler.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Graph examples</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#streams">Streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#endpoints">Endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operators">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connections">Connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-full-graph">Creating a full graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kymera-graph">Kymera Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#playing-a-graph">Playing a Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="graph_stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="graph_endpoint.html">Endpoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="graph_operator.html">Operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">Command-line tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="user_guide.html">User guide</a> &raquo;</li>
+      
+    <li>Graphs</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/graph.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graphs">
+<span id="graph"></span><h1>Graphs<a class="headerlink" href="#graphs" title="Permalink to this headline">¶</a></h1>
+<p>KTE abstracts the concept of a graph, its elements and operations as described in
+<a class="reference internal" href="helper_graph.html#helper-graph"><span class="std std-ref">Graph</span></a>.</p>
+<div class="section" id="streams">
+<h2>Streams<a class="headerlink" href="#streams" title="Permalink to this headline">¶</a></h2>
+<p>Streams are entities to handle the audio data in and out of Kymera. In KSE,
+they are mostly input to and output from the graph. The input streams are called
+source streams and the output streams are called the sink streams.</p>
+<p>Example definition of one source pcm stream backed by the file <code class="docutils literal notranslate"><span class="pre">resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+            <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Full reference in <a class="reference internal" href="graph_stream.html#graph-stream"><span class="std std-ref">Streams</span></a>.</p>
+</div>
+<div class="section" id="endpoints">
+<h2>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this headline">¶</a></h2>
+<p>A Kymera endpoint is a software component in the audio subsystem, representing
+where the audio stream enters or leaves the Kalimba DSP. An endpoint is an
+abstraction of an interface of the DSP, where audio data is either produced or
+consumed. Endpoints handle remote interactions from the DSP, or the hardware
+configuration required to move audio data between an external entity and the
+local DSP buffer.  Endpoints can also perform some limited data processing,
+such as removing DC from incoming or outgoing audio signals. Kymera endpoints
+are usually proxies for Source or Sink objects in the application subsystem
+(or vice versa), and for most purposes, the two can be treated as equivalent.</p>
+<p>Endpoints are of two types:</p>
+<ul class="simple">
+<li><p>Source endpoint. When data flows from the endpoint into the DSP</p></li>
+<li><p>Sink endpoint. When the data flows out of the DSP</p></li>
+</ul>
+<p>Example definition of one pcm source endpoint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;endpoint&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_sync_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_sample_rising_edge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_master_mode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_slot_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_sample_format&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;pcm_master_clock_rate&quot;</span><span class="p">:</span> <span class="mi">512000</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Full reference in <a class="reference internal" href="graph_endpoint.html#graph-endpoint"><span class="std std-ref">Endpoints</span></a>.</p>
+</div>
+<div class="section" id="operators">
+<h2>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h2>
+<p>An operator is an instantiated instance of a capability. A capability can be
+defined as a non-instantiated instance of a re-usable component that can be
+instantiated one or more times in support of use cases. This means, there can
+be one of more instances of an operator running with the same capabilities
+inside Kymera at a time.</p>
+<p>Example definition of one operator with two messages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;BASIC_PASS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;CHANGE_INPUT_DATA_TYPE&quot;</span><span class="p">,</span>
+                <span class="p">[</span>
+                    <span class="mi">1</span>
+                <span class="p">]</span>
+            <span class="p">],</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;CHANGE_OUTPUT_DATA_TYPE&quot;</span><span class="p">,</span>
+                <span class="p">[</span>
+                    <span class="mi">1</span>
+                <span class="p">]</span>
+            <span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Full reference in <a class="reference internal" href="graph_operator.html#graph-operator"><span class="std std-ref">Operators</span></a>.</p>
+</div>
+<div class="section" id="connections">
+<h2>Connections<a class="headerlink" href="#connections" title="Permalink to this headline">¶</a></h2>
+<p>Every element previously defined has terminals. Streams and endpoints have one
+input and one output, operators have a capability dependent number of inputs
+and outputs</p>
+<p>Example definition connection the first stream (stream0) to the first endpoint
+(endpoint0):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;graph&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;stream0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;endpoint0&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>For connections involving operators, the direction and terminal number has to
+be expressed. Here we connect the first output of the first operator to the
+first input of the second operator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;graph&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;operator0o0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;operator1i0&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Rules for connection</p>
+<ul class="simple">
+<li><p>Stream source can be connected to endpoint source</p></li>
+<li><p>Endpoint source can be connected to operator inputs or endpoint sink</p></li>
+<li><p>Operator outputs can be connected to operator inputs or endpoint sink</p></li>
+<li><p>Endpoint sink can be connection to stream sink</p></li>
+</ul>
+</div>
+<div class="section" id="creating-a-full-graph">
+<h2>Creating a full graph<a class="headerlink" href="#creating-a-full-graph" title="Permalink to this headline">¶</a></h2>
+<p>Save the following file in <code class="docutils literal notranslate"><span class="pre">$KATS_WORKSPACE/workspace/config/pt.cfg.json</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;backing&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;tmp/pt_0.wav&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;sample_width&quot;</span><span class="p">:</span> <span class="mi">16</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;endpoint&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sync_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_rising_edge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_mode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_slot_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_format&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_clock_rate&quot;</span><span class="p">:</span> <span class="mi">512000</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;pcm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sync_rate&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_rising_edge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_mode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_slot_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_sample_format&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pcm_master_clock_rate&quot;</span><span class="p">:</span> <span class="mi">512000</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="s2">&quot;BASIC_PASS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;CHANGE_INPUT_DATA_TYPE&quot;</span><span class="p">,</span>
+                    <span class="p">[</span>
+                        <span class="mi">1</span>
+                    <span class="p">]</span>
+                <span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;CHANGE_OUTPUT_DATA_TYPE&quot;</span><span class="p">,</span>
+                    <span class="p">[</span>
+                        <span class="mi">1</span>
+                    <span class="p">]</span>
+                <span class="p">]</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;graph&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;stream0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;endpoint0&quot;</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;endpoint0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;operator0i0&quot;</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;operator0o0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;endpoint1&quot;</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;endpoint1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;stream1&quot;</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="kymera-graph">
+<h2>Kymera Graph<a class="headerlink" href="#kymera-graph" title="Permalink to this headline">¶</a></h2>
+<p>A Kymera graph is a connection of entities that test Kymera operators.</p>
+<img alt="_images/simple_graph.svg" src="_images/simple_graph.svg" /><p>The picture shows a graph in its simplest form:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A source stream</p></li>
+<li><p>A source endpoint</p></li>
+<li><p>An operator</p></li>
+<li><p>A sink endpoint</p></li>
+<li><p>A sink stream</p></li>
+</ul>
+</div></blockquote>
+<p>The source stream connects to the source endpoint, which then connects to the input of the Kalimba
+operator. The output of the operator connects to a sink endpoint, which connects to a sink stream.</p>
+<p>In <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Graph examples</span></a> it is shown how to play different graphs.</p>
+</div>
+<div class="section" id="playing-a-graph">
+<h2>Playing a Graph<a class="headerlink" href="#playing-a-graph" title="Permalink to this headline">¶</a></h2>
+<p>Configuration of a graph can be done interactively on KSE shell, or using a
+JSON configuration file saved inside the workspace, and loaded on KSE shell,
+like in this example. For testing in simulation environments like KSE, the
+source and sink streams are generally file based. The following events occur
+in the given order when a graph in KSE is played:</p>
+<ul>
+<li><p>Creation and start of the components:</p>
+<blockquote>
+<div><ul>
+<li><p>The nodes are first created in the following order:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Streams</p></li>
+<li><p>Endpoints</p></li>
+<li><p>Operators</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>They are configured in the same order as shown below:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Streams</p></li>
+<li><p>Endpoints</p></li>
+<li><p>Operators</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The nodes are then connected according to the configuration.</p></li>
+<li><p>The operators and the endpoints are then started.</p></li>
+<li><p>The sink stream is then started.</p></li>
+<li><p>Finally, the source stream is started.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Keeping the nodes active:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The graph is considered to be active as long as the source streams have not reached their EOF.</p></li>
+<li><p>All the nodes and connections are kept active during this period.</p></li>
+<li><p>When the last of the source stream has reached its EOF, the graph is stopped.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Stopping and destroying the graph:</p>
+<blockquote>
+<div><ul>
+<li><p>The nodes in the graph are stopped in the reverse order of creation.</p></li>
+<li><p>The source streams are stopped.</p></li>
+<li><p>The sink streams are stopped.</p></li>
+<li><p>The operators and the endpoints are stopped.</p></li>
+<li><p>The nodes are disconnected.</p></li>
+<li><p>The nodes are destroyed in the following order:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Operators</p></li>
+<li><p>Endpoints</p></li>
+<li><p>Streams</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>To play the graph in KSE shell, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kse.framework.library.file_util</span> <span class="k">import</span> <span class="n">load</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s1">&#39;config/pt.cfg.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting file named <code class="docutils literal notranslate"><span class="pre">pt_0.wav</span></code> is located in the <code class="docutils literal notranslate"><span class="pre">tmp</span></code> directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is a limitation in KSE in terms of synchronization of the source
+and sink streams. The start of the sink stream has an extra silence
+periods to account the propagation time through the graph. The end of
+the sink stream has an extra silence period to account the amount of
+time for KSE to detect the EOF of the source stream. The lengths of
+these additional silence periods are not known. The problem of
+finding the exact start and end of the signal in the sink side.</p>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="graph_stream.html">Streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph_endpoint.html">Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph_operator.html">Operators</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="graph_stream.html" class="btn btn-neutral float-right" title="Streams" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="example_acat_profiler.html" class="btn btn-neutral" title="Getting profiler information with ACAT" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

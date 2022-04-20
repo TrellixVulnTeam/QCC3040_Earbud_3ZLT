@@ -1,0 +1,22 @@
+kse.kalsim.library package
+==========================
+
+Submodules
+----------
+
+kse.kalsim.library.period module
+--------------------------------
+
+.. automodule:: kse.kalsim.library.period
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: kse.kalsim.library
+   :members:
+   :undoc-members:
+   :show-inheritance:

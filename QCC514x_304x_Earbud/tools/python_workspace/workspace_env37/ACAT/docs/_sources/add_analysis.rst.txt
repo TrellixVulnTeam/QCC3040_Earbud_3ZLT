@@ -1,0 +1,158 @@
+Add an Analysis
+===============
+Analyses help to accelerate the debugging process.
+To add an analysis to a new module that does not have any existing
+analysis:
+
+ 1. Add a new class to the Analysis directory.
+ 2. Include the name of the analysis in the Interactive and Automatic
+    classes under the analyses variable. (Use ``CamelCase``.)
+ 3. Implement a ``run_all()`` function. Runs all of the analyses in
+    automatic mode, by calling each analysis ``run_all()`` function.
+
+The ``run_all()`` function will either:
+
+ * Call all the functions that perform an analysis.
+ * Output the information needed from the analysis.
+
+The ``run_all()`` function calls a separate analysis function for each
+component of the class that wires output, via the Formatter
+(``analyse_<Component Name>``).
+
+.. note::
+ Use ACAT helper functions to organise code.
+
+
+Analysis Base Classes
+---------------------
+To optimise communication with firmware, the ``Analysis`` Base Class
+imports three classes from the Core Module; ``ChipData`` to read memory
+addresses, ``DebugInfo`` to read constants and ``Formatter`` to highlight
+and differentiate the ``Analysis`` outputs.
+
+
+ChipData class
+~~~~~~~~~~~~~~
+The ``ChipData`` class is used to read Memory Addresses. However, as not
+all chips map PM into DM; use the ``get_data_pm()`` function to read PM.
+
+``ChipData`` includes the following functions:
+
+.. list-table:: ChipData functions
+    :widths: 50 50
+    :header-rows: 0
+
+    * - ``is_volatile()``
+      - ``True`` = Live Chip, ``False`` = data is a Coredump.
+    * - ``cast()``
+      - See Casting
+    * - ``get_data()``
+      - Gets the memory address or returns a block of data of specified
+        length (in addressable units), starting with the specified
+        address, for example:
+
+        ``get_data(address, length)``
+    * - ``get_proc_reg()``
+      - Returns the value of the Processor Register, passed as a
+        parameter.
+    * - ``get_all_proc_regs()``
+      - Returns a dictionary containing the contents of all Processor
+        Registers.
+    * - ``get_firmware_id()``
+      - Returns the firmware ID.
+    * - ``get_firmware_id_string()``
+      - Returns the firmware string.
+    * - ``get_var_strict()``
+      - See *Get a variable section (Interactive mode)* in Functions
+        section.
+    * - ``get_reg_strict()``
+      - Returns the content of a register. The class takes a string as a
+        parameter, with the name of the register preceded by ``REGFILE_``,
+        for example:
+
+        ``get_reg_strict('REGFILE_r1')``
+
+
+DebugInfo class
+~~~~~~~~~~~~~~~
+The ``DebugInfo`` class is used to read constants. The ``DebugInfo`` class
+includes the following functions:
+
+.. list-table:: DebugInfo functions
+    :widths: 50 50
+    :header-rows: 0
+
+    * - ``get_constant_strict()``
+      - Searches for the exact name of a constant.
+    * - ``get_var_strict()``
+      - Searches in the list of variables for the specified identifier
+        (Name or address).
+    * - ``get_dm_const()``
+      - Returns the contents of NVMEM.
+    * - ``get_source_info()``
+      - Returns information about a code address (integer) or module name
+        (string) in PM.
+    * - ``get_nearest_label()``
+      - Finds the nearest code label to the specified address.
+    * - ``get_num()``: if only a name is provided.
+      - Returns a Python dictionary, mapping the members of an enumeration
+        to their values.
+    * - If a second argument representing the name of a member of the
+        enumeration or a value is provided.
+      - Returns the member value or name respectively.
+    * - ``get_type_info()``
+      - Returns information about the Type or Type ID available in the
+        type database.
+
+
+Formatter class
+~~~~~~~~~~~~~~~
+``Analyses`` output information via the ``Formatter``, which is used to
+highlight and differentiate the analysis outputs. The ``Formatter``
+includes the following functions:
+
+.. list-table:: Formatter functions
+    :widths: 50 50
+    :header-rows: 0
+
+    * - ``section_start()``
+      - Marks the beginning of a section.
+    * - ``section_end()``
+      - Marks the end of a section.
+    * - ``output()``
+      - Normally used for outputting the contents of an analysis.
+    * - ``alert()``
+      - Special formatting to emphasize the text of an alert.
+
+
+Analysis example
+----------------
+The code sample illustrates a typical analysis.
+
+.. code-block:: python
+
+ class MyAnalysis(Analysis.Analysis):
+
+     def __init__(self, **kwarg):
+         # Call the base class constructor. This call will set all the
+         # values from the dictionary as attributes.
+         Analysis.Analysis.__init__(self, **kwarg)
+
+     def run_all(self):
+         self.formatter.section_start("Feature Info")
+         self.analyse_feature()
+         self.formatter.section_end()
+
+     def analyse_feature(self):
+         """
+         Analyses the feature and outputs the information regarding it.
+         """
+         data = get_feature()
+         self.formatter.output(data)
+
+     def get_feature(self):
+        """Extracts the feature."""
+        address = self.chipdata.get_var_strict('$_feature').address
+        data = self.chipdata.cast(address, 'type')
+
+        return data

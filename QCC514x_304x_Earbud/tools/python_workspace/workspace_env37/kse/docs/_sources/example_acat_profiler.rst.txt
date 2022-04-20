@@ -1,0 +1,53 @@
+.. _graph_acat_profiler:
+
+==========================
+Getting profiler information with ACAT
+==========================
+
+To run this test the acat has to be enabled on invocation ( by adding --acat_use in the command line)
+
+In KSE shell, run::
+
+    >>> def profile_play(filename):
+    >>>     from kse.framework.library.file_util import load
+    >>>     cfg = load(filename)
+    >>>     graph.load(cfg)
+    >>>     graph.create()
+    >>>     graph.config()
+    >>>     graph.connect()
+    >>>     graph.start()
+    >>>     while graph.check_active():
+    >>>         pass
+    >>>     graph.stop()
+    >>>     acat.p0.available_analyses['profiler'].run_all()
+    >>>     graph.disconnect()
+    >>>     graph.destroy()
+
+To get the profile information for e.g. sbc_decoder configuration file run::
+
+    >>> profile_play('config/sbc_decoder.cfg.json')
+
+After few seconds the result on e.g. Strettoplus will be::
+
+    --------
+    Profiler
+    --------
+    Overview:
+    sleep                                                     0.000%
+    sched_loop                                                0.000%
+    total interrupt = int. handler + int. triggered task      0.000%
+        interrupt handler (cannot be nested)                  0.000%
+        interrupt with task at nested level 0                 0.000%
+        interrupt with task at nested level 1                 0.000%
+        interrupt with task at nested level 2                 0.000%
+        interrupt with task at nested level 3                 0.000%
+        interrupt with task at nested level 4                 0.000%
+    sleep + active + int = 0 Remains                        100.000%
+    
+    Kymera and user defined measurements:
+                                              current   peak    KickPd    KickEffic
+    Operator 0x4080 (SBC_DECODER)              5.100%   5.100%  2.667ms   42.857%
+    __________________________________________________________
+    total user defined                         5.100%
+
+.. note:: The displayed measurements can vary slightly between the runs.

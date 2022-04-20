@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; KSP 0.5.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSP 0.5.1 documentation" href="index.html"/>
+        <link rel="next" title="How to Use KSP" href="2_how_to_use.html"/>
+        <link rel="prev" title="Welcome to KSP’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSP
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-kymera-downloadable">Add Kymera downloadable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ksp-install">KSP install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-ensure-environment-variables-are-safe">Step 1: Ensure environment variables are safe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-create-a-python-virtual-environment">Step 2: Create a Python virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-install-the-ksp-from-a-wheel-package">Step 3: Install the KSP from a wheel package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#access-ksp-in-an-adk-installation">Access KSP in an ADK Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2_how_to_use.html">How to Use KSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_scripts.html">Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="z_definitions.html">Terms and definitions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Installation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/1_installation.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="add-kymera-downloadable">
+<h2>Add Kymera downloadable<a class="headerlink" href="#add-kymera-downloadable" title="Permalink to this headline">¶</a></h2>
+<p>To use KSP in a ROM chip, the first step is to add the downloadable into
+the application’s file system.</p>
+<p>For a standard ADK sink application, the user should add the required
+kymera downloadable (<code class="docutils literal notranslate"><span class="pre">download_ksp.dkcs</span></code> or <code class="docutils literal notranslate"><span class="pre">download_ksp.edkcs</span></code>) to
+the <code class="docutils literal notranslate"><span class="pre">customer_ro_filesystem</span></code> or <code class="docutils literal notranslate"><span class="pre">ro_fs</span> <span class="pre">project</span></code>.</p>
+<p>The application with the new downloadable works as before, but now
+supports KSP.</p>
+<p>Downloadable KSP can normally be found in the
+<strong>audio/kalimba_ROM_nnnn/kymera/prebuilt_dkcs</strong> subfolder in the ADK
+installation directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>KSP tool loads and instantiates the operator when needed. The user must not
+change the application code to use KSP.</p>
+</div>
+</div>
+<div class="section" id="ksp-install">
+<h2>KSP install<a class="headerlink" href="#ksp-install" title="Permalink to this headline">¶</a></h2>
+<p>This section covers the manual installation of the KSP package. If using
+KSP from an ADK, refer to <a class="reference internal" href="#access-ksp-in-an-adk-installation"><span class="std std-ref">Access KSP in an ADK Installation</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The installation of KSP described is using the Windows standard command
+prompt, that is <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code>.</p>
+</div>
+<p>The tool is a Python command-line application to read KSP packets sent
+from audio subsystem, and to extract audio/data channels from sniffed
+packets.</p>
+<p>The tool establishes a client to listen and receive data and then starts
+the KSP capability on the chip to sniff and send transform buffers data.</p>
+<p>KSP works on Python 3.6 64-bit, Python 3.7 64-bit, Python 3.8 64-bit and Python
+3.9 64-bit. If it is not installed by default, install it from the
+<a class="reference external" href="https://www.python.org/downloads/">Python Official</a> website. Alternatively, the ADK contains a copy of its Python
+in the tools directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To continue with the installation, the path to the Python interpreter on
+the host PC is required.</p>
+</div>
+<div class="section" id="step-1-ensure-environment-variables-are-safe">
+<h3>Step 1: Ensure environment variables are safe<a class="headerlink" href="#step-1-ensure-environment-variables-are-safe" title="Permalink to this headline">¶</a></h3>
+<p>Python programs are sensitive to the contents of <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and
+<code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> environment variables. It is important to ensure these
+environment variables do not hold any references to any previous versions
+of the KSP and its dependencies.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In most cases, <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> variable should be empty if it exists.
+However, if it is holding any path to a python module, make sure it is
+needed before proceeding to the next step.</p>
+</div>
+</div>
+<div class="section" id="step-2-create-a-python-virtual-environment">
+<h3>Step 2: Create a Python virtual environment<a class="headerlink" href="#step-2-create-a-python-virtual-environment" title="Permalink to this headline">¶</a></h3>
+<p>Python applications come with different requirements and in some cases
+libraries may conflict when they are installed in the same Python
+environment.</p>
+<p>To minimize installation problems, create a separate virtual environment
+for the KSP. See the <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> <a class="reference external" href="https://pypi.org/project/virtualenv/">online documentation</a> for more
+information.</p>
+<p>At the command prompt, change to a directory which becomes the working
+directory for this KSP installation, then create a virtual environment
+(called <code class="docutils literal notranslate"><span class="pre">ksp_env</span></code> in this example) using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&lt;</span><span class="n">CURRENT</span> <span class="n">PATH</span><span class="o">&gt;</span>\ <span class="o">&lt;</span><span class="n">path_to_pathon</span><span class="o">&gt;</span>\<span class="n">python</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">ksp_env</span>
+</pre></div>
+</div>
+<p>After the virtual environment is created, activate it using the following
+command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ksp_env</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+</pre></div>
+</div>
+<p>The command prompt should look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">ksp_env</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">CURRENT</span> <span class="n">PATH</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<p>The virtual environment name before the command prompt shows that the
+activation was successful.</p>
+</div>
+<div class="section" id="step-3-install-the-ksp-from-a-wheel-package">
+<h3>Step 3: Install the KSP from a wheel package<a class="headerlink" href="#step-3-install-the-ksp-from-a-wheel-package" title="Permalink to this headline">¶</a></h3>
+<p>Download the KSP wheel package, its dependencies and use pip to install the
+package, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">KSP</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span><span class="o">-</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>KSP depends on <code class="docutils literal notranslate"><span class="pre">pydbg-default</span></code> and <code class="docutils literal notranslate"><span class="pre">trbtrans</span></code> packages. Above command only
+works successfully if these wheels are available in the same folder as KSP
+wheel.</p>
+</div>
+<p>This installs KSP in the activated python virtual environment.</p>
+</div>
+</div>
+<div class="section" id="access-ksp-in-an-adk-installation">
+<span id="id1"></span><h2>Access KSP in an ADK Installation<a class="headerlink" href="#access-ksp-in-an-adk-installation" title="Permalink to this headline">¶</a></h2>
+<p>From the ADK 20.2, KSP package is available to users. To access the
+correct <code class="docutils literal notranslate"><span class="pre">ksp</span></code> executable, the User must activate the appropriate Python
+Virtual Environment. This environment has a mix-match libraries of the
+Toolkit and the ADK. For the convenience assume the following locations
+for the ADK and Toolkit folders. The names will be different in actual
+installations.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ADK: <code class="docutils literal notranslate"><span class="pre">C:\qtil\QCC_ADK\</span></code>, where the folder <code class="docutils literal notranslate"><span class="pre">audio</span></code> is available.</p></li>
+<li><p>Toolkit: <code class="docutils literal notranslate"><span class="pre">C:\qtil\ADK_Toolkit\</span></code>, where the <code class="docutils literal notranslate"><span class="pre">activate.bat</span></code> script is
+available.</p></li>
+</ul>
+</div></blockquote>
+<p>From the command line, activate the virtual environment in the Toolkit
+<em>from</em> the ADK location. It must activate the right workspace. The output
+is similar to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC_ADK</span><span class="o">&gt;</span><span class="n">C</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">ADK_Toolkit</span>\<span class="n">activate</span><span class="o">.</span><span class="n">bat</span>
+<span class="n">Activating</span> <span class="n">workspace</span><span class="o">..</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">workspace</span><span class="p">:</span><span class="n">Installing</span><span class="o">...</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">workspace</span><span class="p">:</span><span class="n">PIP</span> <span class="n">log</span><span class="p">:</span>
+<span class="n">Looking</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">ADK_Toolkit</span>\<span class="n">tools</span>\<span class="n">python</span>\<span class="n">wheels</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC_ADK</span>\<span class="n">audio</span>\<span class="o">.</span>
+<span class="n">Processing</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC_ADK</span>\<span class="n">audio</span>\<span class="n">acat</span><span class="o">-</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">py2</span><span class="o">.</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span>
+<span class="n">Processing</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC_ADK</span>\<span class="n">audio</span>\<span class="n">kse</span><span class="o">-</span><span class="mf">0.11</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">py2</span><span class="o">.</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span>
+<span class="n">Processing</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">ADK_TOOLKIT</span>\<span class="n">tools</span>\<span class="n">python</span>\<span class="n">wheels</span>\<span class="n">kal_python_tools</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="n">py2</span><span class="o">.</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">win_amd64</span><span class="o">.</span><span class="n">whl</span>
+<span class="n">Processing</span> <span class="n">c</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC_ADK</span>\<span class="n">audio</span>\<span class="n">ksp</span><span class="o">-</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">py2</span><span class="o">.</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span>
+<span class="n">Collecting</span> <span class="n">ipython</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">,</span><span class="o">&gt;=</span><span class="mf">5.2</span><span class="o">.</span><span class="mi">2</span><span class="p">;</span> <span class="n">python_version</span> <span class="o">&gt;=</span> <span class="s2">&quot;3&quot;</span>
+  <span class="n">Using</span> <span class="n">cached</span> <span class="n">ipython</span><span class="o">-</span><span class="mf">7.18</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span> <span class="p">(</span><span class="mi">786</span> <span class="n">kB</span><span class="p">)</span>
+<span class="n">Collecting</span> <span class="n">six</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span><span class="o">&gt;=</span><span class="mf">1.10</span><span class="o">.</span><span class="mi">0</span>
+  <span class="n">Using</span> <span class="n">cached</span> <span class="n">six</span><span class="o">-</span><span class="mf">1.15</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">py2</span><span class="o">.</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span> <span class="p">(</span><span class="mi">10</span> <span class="n">kB</span><span class="p">)</span>
+<span class="n">Collecting</span> <span class="n">jsonschema</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">,</span><span class="o">&gt;=</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">0</span>
+  <span class="n">Using</span> <span class="n">cached</span> <span class="n">jsonschema</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">py2</span><span class="o">.</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span> <span class="p">(</span><span class="mi">56</span> <span class="n">kB</span><span class="p">)</span>
+
+  <span class="o">---</span> <span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span> <span class="o">---</span>
+
+<span class="n">Successfully</span> <span class="n">installed</span> <span class="n">ACAT</span><span class="o">-</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">5</span> <span class="n">KSP</span><span class="o">-</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">2</span> <span class="n">attrs</span><span class="o">-</span><span class="mf">20.2</span><span class="o">.</span><span class="mi">0</span> <span class="n">backcall</span><span class="o">-</span><span class="mf">0.2</span><span class="o">.</span><span class="mi">0</span> <span class="n">colorama</span><span class="o">-</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">4</span> <span class="n">customer</span><span class="o">-</span><span class="n">pydbg</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="mf">0.7</span><span class="o">.</span><span class="mi">1</span> <span class="n">customer</span><span class="o">-</span><span class="n">pydbg</span><span class="o">-</span><span class="n">qcc514x</span><span class="o">-</span><span class="n">qcc304x</span><span class="o">-</span><span class="mf">0.7</span><span class="o">.</span><span class="mi">1</span> <span class="n">decorator</span><span class="o">-</span><span class="mf">4.4</span><span class="o">.</span><span class="mi">2</span> <span class="n">importlib</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span> <span class="n">ipython</span><span class="o">-</span><span class="mf">7.18</span><span class="o">.</span><span class="mi">1</span> <span class="n">ipython</span><span class="o">-</span><span class="n">genutils</span><span class="o">-</span><span class="mf">0.2</span><span class="o">.</span><span class="mi">0</span> <span class="n">jedi</span><span class="o">-</span><span class="mf">0.17</span><span class="o">.</span><span class="mi">2</span> <span class="n">jsonschema</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span> <span class="n">kal</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="mi">8</span> <span class="n">kalcmd2</span><span class="o">-</span><span class="mf">2.8</span><span class="o">.</span><span class="mi">2</span> <span class="n">kse</span><span class="o">-</span><span class="mf">0.11</span><span class="o">.</span><span class="mi">0</span> <span class="n">numpy</span><span class="o">-</span><span class="mf">1.19</span><span class="o">.</span><span class="mi">2</span> <span class="n">parso</span><span class="o">-</span><span class="mf">0.7</span><span class="o">.</span><span class="mi">1</span> <span class="n">pickleshare</span><span class="o">-</span><span class="mf">0.7</span><span class="o">.</span><span class="mi">5</span> <span class="n">prompt</span><span class="o">-</span><span class="n">toolkit</span><span class="o">-</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">8</span> <span class="n">pydbg</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">pygments</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">1</span> <span class="n">pyreadline</span><span class="o">-</span><span class="mf">2.1</span> <span class="n">pyrsistent</span><span class="o">-</span><span class="mf">0.17</span><span class="o">.</span><span class="mi">3</span> <span class="n">setuptools</span><span class="o">-</span><span class="mf">50.3</span><span class="o">.</span><span class="mi">2</span> <span class="n">six</span><span class="o">-</span><span class="mf">1.15</span><span class="o">.</span><span class="mi">0</span> <span class="n">traitlets</span><span class="o">-</span><span class="mf">5.0</span><span class="o">.</span><span class="mi">5</span> <span class="n">trbtrans</span><span class="o">-</span><span class="mf">2.9</span><span class="o">.</span><span class="mi">0</span> <span class="n">wcwidth</span><span class="o">-</span><span class="mf">0.2</span><span class="o">.</span><span class="mi">5</span> <span class="n">wrapt</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mi">1</span> <span class="n">zipp</span><span class="o">-</span><span class="mf">3.3</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>To test whether the <code class="docutils literal notranslate"><span class="pre">ksp</span></code> script is accessible, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ATK</span> <span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">ADK_Toolkit</span>\<span class="p">)</span> <span class="n">C</span><span class="p">:</span>\<span class="n">qtil</span>\<span class="n">QCC_ADK</span><span class="o">&gt;</span><span class="n">ksp</span> <span class="o">--</span><span class="n">version</span>
+<span class="n">Kymera</span> <span class="n">Stream</span> <span class="n">Probe</span> <span class="n">Tool</span><span class="p">,</span> <span class="n">v0</span><span class="o">.</span><span class="mf">4.2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure the <code class="docutils literal notranslate"><span class="pre">ATK</span> <span class="pre">(C:\qtil\ADK_Toolkit\)</span></code> text appears next
+to the command line prompt. The output version maybe different
+depending on the version of the KSP available in that ADK.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2_how_to_use.html" class="btn btn-neutral float-right" title="How to Use KSP" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to KSP’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.5.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

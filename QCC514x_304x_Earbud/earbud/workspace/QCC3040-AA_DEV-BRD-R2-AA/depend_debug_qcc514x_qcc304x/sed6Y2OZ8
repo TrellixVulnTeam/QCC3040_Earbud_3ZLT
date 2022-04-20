@@ -1,0 +1,17 @@
+
+
+
+
+
+
+primary_service {
+    uuid : 0x1802,
+    name : "IMM_ALERT_SERVICE",
+    characteristic {
+        uuid : 0x2A06,
+        name : "IMM_ALERT_LEVEL",
+        flags : [ FLAG_IRQ, FLAG_ENCR_W],
+        properties : [ write_cmd ],
+        value : 0x0
+    }
+},

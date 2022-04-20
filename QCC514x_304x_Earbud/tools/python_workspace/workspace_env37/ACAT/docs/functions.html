@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Functions &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="next" title="Installation" href="installation.html"/>
+        <link rel="prev" title="Analyses" href="analyses.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#get-a-variable-interactive-mode">Get a variable (Interactive mode)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-function">get() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chipdata-get-var-strict-function">chipdata.get_var_strict() function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#casting">Casting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#casting-variable-as-a-pointer">Casting variable as a pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#de-referencing-pointers">De-referencing pointers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Functions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<p>In automatic mode, the ACAT Help file is accessed by running ACAT with
+either no Command Line arguments, or by entering <code class="docutils literal notranslate"><span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">-help</span></code>; use
+the <code class="docutils literal notranslate"><span class="pre">help()</span></code> function to access help in interactive mode.</p>
+<div class="section" id="get-a-variable-interactive-mode">
+<h2>Get a variable (Interactive mode)<a class="headerlink" href="#get-a-variable-interactive-mode" title="Permalink to this headline">¶</a></h2>
+<p>In interactive mode, use either the <code class="docutils literal notranslate"><span class="pre">get()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">chipdata.get_var_strict()</span></code> function to obtain the value of a variable.</p>
+<p>For example, to obtain the value of the <code class="docutils literal notranslate"><span class="pre">total_pool_size</span></code> variable:</p>
+<ul>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">get()</span></code> function:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; get(&#39;total_pool_size&#39;)
+Name: $_total_pool_size
+Address: 0xe01afe
+Value: 0xc30
+Size: 1
+Type: const unsigned int
+</pre></div>
+</div>
+</li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">chipdata.get_var_strict()</span></code> function:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; print chipdata.get_var_strict(&#39;$_total_pool_size&#39;)
+Name: $_total_pool_size
+Address: 0xe01afe
+Value: 0xc30
+Size: 1
+Type: const 2 unsigned int
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="section" id="get-function">
+<h3>get() function<a class="headerlink" href="#get-function" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> function accepts spelling mistakes or incomplete variable names
+and may return suggestions for similar or incorrectly spelt search terms:
+always check that the correct variable is returned.</p>
+<p>The variable name is passed as either a string or an address, the <code class="docutils literal notranslate"><span class="pre">get()</span></code>
+function returns and prints information about the specified variable, using the
+structure:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Name</p></li>
+<li><p>Address</p></li>
+<li><p>Value</p></li>
+<li><p>Size (In words)</p></li>
+<li><p>Type</p></li>
+<li><p>Parent</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="chipdata-get-var-strict-function">
+<h3>chipdata.get_var_strict() function<a class="headerlink" href="#chipdata-get-var-strict-function" title="Permalink to this headline">¶</a></h3>
+<p>To avoid the risk of incorrectly selecting similarly named variables during an
+analysis, use the <code class="docutils literal notranslate"><span class="pre">chipdata.get_var_strict()</span></code> function to search for exact
+variable names or addresses.</p>
+<p>This function returns an error if the requested variable name is modified in
+the firmware or entered incorrectly. Unlike <code class="docutils literal notranslate"><span class="pre">get()</span></code>, this function does not
+return alternate or similarly named variables.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function belongs to the base class <code class="docutils literal notranslate"><span class="pre">ChipData</span></code>, which is an
+interface implemented by all derived classes.</p>
+</div>
+</div>
+</div>
+<div class="section" id="casting">
+<h2>Casting<a class="headerlink" href="#casting" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to Cast Pointer Values (pointer References), to any type.</p>
+<p>For example, to get the contents of the location pointed-to by the
+<code class="docutils literal notranslate"><span class="pre">first_event</span></code> member of the <code class="docutils literal notranslate"><span class="pre">casual_events_queue</span></code> structure:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Determine the type that is pointed-to. Inspect the contents of the
+parent structure, using:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; get(&#39;casual_events_queue&#39;)
+first_event is a member of the structure:
+Name: $_casual_events_queue.first_event
+Address: 0xffaa99
+Value: 0x6b00
+Size: 1
+Type: struct tTimerStruct*
+Parent: $_casual_events_queue
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">first_event</span></code> is a pointer of type <code class="docutils literal notranslate"><span class="pre">tTimerStruct</span></code>.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>To interpret the <code class="docutils literal notranslate"><span class="pre">tTimerStruct</span></code> type, cast to it using:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; cast_value = chipdata.cast(0x6b00, &#39;tTimerStruct&#39;)
+&gt; print cast_value
+Name: struct tTimerStruct
+Address: 0x6b00
+Value: [&#39;0x0&#39;, &#39;0x120f8&#39;, &#39;0x0&#39;, &#39;0x615f&#39;, &#39;0x0&#39;, &#39;0x7c57a6&#39;, &#39;0x0&#39;,
+&#39;0x7c57a6&#39;]
+Size: 24
+Type: struct tTimerStruct
+Members:
+    Name: struct tTimerStruct.next
+    Address: 0x6b00
+    Value: 0x0
+    Size: 4
+    Type: struct tTimerStuctTag*
+    Parent: struct tTimerStruct
+    ----
+    Name: struct tTimerStruct.timer_id
+    Address: 0x6b04
+    Value: 0x120f8
+    Size: 4
+    Type: tTimerId
+    Parent: struct tTimerStruct
+    ----
+    Name: struct tTimerStruct.data_pointer
+    Address: 0x6b08
+    Value: 0x0
+    Size: 4
+    Type: [unknown type]*
+    Parent: struct tTimerStruct
+    ----
+    Name: struct tTimerStruct.TimedEventFunction
+    Address: 0x6b0c
+    Value: 0x615f
+    Size: 4
+    Type: struct tTimerEventFunction*
+    Parent: struct tTimerStruct
+    ----
+    Name: struct tTimerStruct.variant
+    Address: 0x6b10
+    Value: [&#39;0x0&#39;, &#39;0x7c57a6&#39;, &#39;0x0&#39;, &#39;0x7c57a6&#39;]
+    Size: 8
+    Type: union
+    Parent: struct tTimerStruct
+    Members:
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="casting-variable-as-a-pointer">
+<h3>Casting variable as a pointer<a class="headerlink" href="#casting-variable-as-a-pointer" title="Permalink to this headline">¶</a></h3>
+<p>If a variable is given as a Pointer, then the Pointer value is used to
+represent the Variable Address or its structure in memory and must be Cast
+to the respective type.</p>
+<p>When Cast, the associated memory contents are displayed in accordance with
+to the structure definition.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Cast does not perform any check on the underlying data type.</p>
+</div>
+</div>
+<div class="section" id="de-referencing-pointers">
+<h3>De-referencing pointers<a class="headerlink" href="#de-referencing-pointers" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">chipdata.cast()</span></code> function is used to dereference Pointers.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="analyses.html" class="btn btn-neutral" title="Analyses" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

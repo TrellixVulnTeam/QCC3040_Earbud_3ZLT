@@ -1,0 +1,7 @@
+[console_scripts]
+acat = ACAT:main
+acat_runner = ACAT:acat_runner_script
+
+[html_documents]
+docs = ACAT:get_documents
+

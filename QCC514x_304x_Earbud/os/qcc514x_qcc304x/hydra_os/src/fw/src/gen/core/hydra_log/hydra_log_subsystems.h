@@ -1,0 +1,36 @@
+#define HYDRA_LOG_FIRM_MODULES_X(x)\
+    x(sched_oxygen) \
+    x(hydra_log) \
+    x(pl_timers) \
+    x(appcmd) \
+    x(itime_kal) \
+    x(trap_version) \
+    x(bitserial) \
+    x(buffer) \
+    x(bus_interrupt) \
+    x(cache) \
+    x(crt) \
+    x(dorm) \
+    x(excep) \
+    x(fault) \
+    x(id) \
+    x(int) \
+    x(io) \
+    x(ipc) \
+    x(hal) \
+    x(ledctrl) \
+    x(kal_utils) \
+    x(longtimer) \
+    x(marshal) \
+    x(memprot) \
+    x(optim) \
+    x(panic) \
+    x(pio) \
+    x(piodebounce) \
+    x(pioint) \
+    x(pmalloc) \
+    x(slt) \
+    x(utils) \
+    x(trap_api) \
+    x(init) \
+

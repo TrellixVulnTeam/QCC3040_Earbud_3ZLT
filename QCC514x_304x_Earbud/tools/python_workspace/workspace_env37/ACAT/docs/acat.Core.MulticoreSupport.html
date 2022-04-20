@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MulticoreSupport &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="up" title="Code Documentation" href="code_documentation.html"/>
+        <link rel="next" title="TypeDependencies" href="acat.Core.TypeDependencies.html"/>
+        <link rel="prev" title="LiveSpi" href="acat.Core.LiveSpi.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#analysis">Analysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="code_documentation.html#core">Core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Arch.html">Arch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.ChipData.html">ChipData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreTypes.html">CoreTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.CoreUtils.html">CoreUtils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Coredump.html">Coredump</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfo.html">DebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DebugInfoAdapter.html">DebugInfoAdapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.DownloadedCapability.html">DownloadedCapability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.Graphviz.html">Graphviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.KerDebugInfo.html">KerDebugInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveChip.html">LiveChip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveKalcmd.html">LiveKalcmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.LiveSpi.html">LiveSpi</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MulticoreSupport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.TypeDependencies.html">TypeDependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.argument_parser.html">argument_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.compression.html">compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.constants.html">constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.logger.html">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.patch.html">patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="acat.Core.exceptions.html">exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#display">Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_documentation.html#interpreter">Interpreter</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="code_documentation.html">Code Documentation</a> &raquo;</li>
+      
+    <li>MulticoreSupport</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/acat.Core.MulticoreSupport.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="multicoresupport">
+<h1>MulticoreSupport<a class="headerlink" href="#multicoresupport" title="Permalink to this headline">¶</a></h1>
+<p>This module can be imported from <code class="docutils literal notranslate"><span class="pre">ACAT.Core.MulticoreSupport</span></code>.</p>
+<span class="target" id="module-ACAT.Core.MulticoreSupport"></span><p>Processor Interface.</p>
+<p>Module responsible to enable dual core support.</p>
+<dl class="class">
+<dt id="ACAT.Core.MulticoreSupport.Functions">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.MulticoreSupport.</code><code class="sig-name descname">Functions</code><span class="sig-paren">(</span><em class="sig-param">chipdata</em>, <em class="sig-param">debuginfo</em>, <em class="sig-param">formatter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Functions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the functions used in Interactive mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chipdata</strong> – </p></li>
+<li><p><strong>debuginfo</strong> – </p></li>
+<li><p><strong>formatter</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Functions.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">identifier</em>, <em class="sig-param">elf_id=None</em>, <em class="sig-param">datalen=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Functions.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Functions.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a variable, register or range of addresses.</p>
+<p>‘identifier’ can be an address, or the name of a register or variable
+(note constant names are not handled). If it’s a name, we attempt to
+find the closest match in our lists of registers and variables.
+However, please note that there is a ‘search’ function to conduct
+searches, i.e. search(‘<em>[IDENTIFIER]</em>’), and it’s advised to use that
+instead of ‘get’.</p>
+<p>If the identifier is ambiguous, an AmbiguousSymbolError exception may
+be thrown.</p>
+<p>Like <cite>get_var</cite>, it’s also possible to pass in a data length to request
+a slice of data (this only makes sense for things in DM).</p>
+<p>Obviously there are things that could go wrong here, especially if
+the user passes in a random number and we try to guess what it points
+to. That’s why we only provide this function in Interactive mode!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – Could be name or address</p></li>
+<li><p><strong>elf_id</strong> – The bundle elf id if the variable is in a downloadable
+capability.</p></li>
+<li><p><strong>datalen</strong> – If the identifier is an address the data length is
+specified by this input.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a DataSym (which may be a Variable) or a SourceInfo (if a
+code address was supplied).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Functions.get_reg">
+<code class="sig-name descname">get_reg</code><span class="sig-paren">(</span><em class="sig-param">identifier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Functions.get_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Functions.get_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get register.</p>
+<p>Like Analysis.get_reg_strict(), except it’s not strict (!)
+‘identifier’ can be a register name, or address. If it’s a name,
+we attempt to find the closest match in our list of registers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a DataSym instance.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.AmbiguousSymbolError" title="ACAT.Core.exceptions.AmbiguousSymbolError"><strong>AmbiguousSymbolError</strong></a> – If more than one match is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Functions.get_var">
+<code class="sig-name descname">get_var</code><span class="sig-paren">(</span><em class="sig-param">identifier</em>, <em class="sig-param">elf_id=None</em>, <em class="sig-param">datalen=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Functions.get_var"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Functions.get_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a variable.</p>
+<p>Like Analysis.get_var_strict(), except it’s not strict (!)
+‘identifier’ can be a variable name, or address. If it’s a name,
+we attempt to find the closest match in our list of variables.</p>
+<p>In this case the user can also provide a data length; if it is set,
+we return a slice of data, ‘datalen’ addressable units long starting at
+the address specified by ‘identifier’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – Could be name or address.</p></li>
+<li><p><strong>elf_id</strong> (<em>int</em><em>, </em><em>optional</em>) – The bundle elf id if the variable is
+in a downloadable capability.</p></li>
+<li><p><strong>datalen</strong> – If the identifier is an address the data length is
+specified by this input.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A Variable.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="acat.Core.exceptions.html#ACAT.Core.exceptions.AmbiguousSymbolError" title="ACAT.Core.exceptions.AmbiguousSymbolError"><strong>AmbiguousSymbolError</strong></a> – If more than one match is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Functions.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">phrase</em>, <em class="sig-param">ignore_case=True</em>, <em class="sig-param">elf_id=None</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Functions.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Functions.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform search in registers and variable.</p>
+<p>The search phrase can only contain * as wildcard. For example:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>search(‘pcm*’)  Will find all the constants/variables/registers</dt><dd><p>which start with <cite>pcm</cite>.</p>
+</dd>
+<dt>search(‘<em>pcm</em>’) Will find all the constants/variables/registers</dt><dd><p>which contains <cite>pcm</cite>.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>When the verbose is disabled(by default), the output will be a
+python dictionary, otherwise the method prints the result in a
+human readable form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phrase</strong> (<em>str</em>) – A searching phrase in string. The phrase can
+contain * as wildcard.</p></li>
+<li><p><strong>ignore_case</strong> (<em>bool</em><em>, </em><em>optional</em>) – A flag to indicate whether the
+search should be case sensitive or not.</p></li>
+<li><p><strong>elf_id</strong> – The bundle elf id if the variable is in a downloadable
+capability.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Instead of returning an object
+prints the results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of the results.
+None: If it’s in verbose mode.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ACAT.Core.MulticoreSupport.Processor">
+<em class="property">class </em><code class="sig-prename descclassname">ACAT.Core.MulticoreSupport.</code><code class="sig-name descname">Processor</code><span class="sig-paren">(</span><em class="sig-param">chipdata</em>, <em class="sig-param">debuginfo</em>, <em class="sig-param">processor</em>, <em class="sig-param">formatter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates objects with specific information for all the cores.</p>
+<p>The formatter is included because of the differences between the
+Automatic and Interactive modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coredump_lines</strong> – </p></li>
+<li><p><strong>build_output_path</strong> – </p></li>
+<li><p><strong>processor</strong> – </p></li>
+<li><p><strong>formatter</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Processor.get_analysis">
+<code class="sig-name descname">get_analysis</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Processor.get_analysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Processor.get_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the analysis asked by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the analyses.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Processor.get_patch_id">
+<code class="sig-name descname">get_patch_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Processor.get_patch_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Processor.get_patch_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the relevant variable and return the patch ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An integer, zero if there is no patch detected.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Processor.is_booted">
+<code class="sig-name descname">is_booted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Processor.is_booted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Processor.is_booted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the processor is booted.</p>
+<p>The booted state is decided by the STACK_POINTER value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the processor was booted, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ACAT.Core.MulticoreSupport.Processor.run_all">
+<code class="sig-name descname">run_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACAT/Core/MulticoreSupport.html#Processor.run_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACAT.Core.MulticoreSupport.Processor.run_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute all the analyses available to this processor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acat.Core.TypeDependencies.html" class="btn btn-neutral float-right" title="TypeDependencies" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="acat.Core.LiveSpi.html" class="btn btn-neutral" title="LiveSpi" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

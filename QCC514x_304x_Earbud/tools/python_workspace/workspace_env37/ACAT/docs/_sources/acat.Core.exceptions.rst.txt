@@ -1,0 +1,8 @@
+
+exceptions
+==========================================================================
+
+This module can be imported from ``ACAT.Core.exceptions``.
+
+.. automodule:: ACAT.Core.exceptions
+   :members:

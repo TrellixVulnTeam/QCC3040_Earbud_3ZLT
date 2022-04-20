@@ -1,0 +1,200 @@
+
+=====
+Shell
+=====
+
+The shell is the preferred tool for interactive usage, as in prototyping.
+
+**Features**
+
+Depending on the selected REPL (Read-Evaluate-Print-Loop) different features are available.
+In the case of *IPython* (default) those are:
+
+    * Command completion through the TAB key
+    * Command history with the UP and DOWN keys
+    * Introspection with ``object?`` or deep intropection with ``object??``
+    * Execution of scripts with ``run -i <script_name>``
+    * Syntax highlighting
+    * Multiline edit support
+    * Execution of shell commands with ``!cmd`` as ``!dir``
+
+**Logging**
+
+Log configuration is located in ``$KATS_WORKSPACE/config/log_shell.cfg.json``.
+
+Log output is placed in ``$KATS_WORKSPACE/log/shell.log.txt``.
+
+Log level is selected with ``--log_level <val>`` command-line argument.
+The default is 30 (WARNING) which does not produce much output, while 20 (INFO) will produce
+complete log information.
+
+
+Basic usage
+-----------
+
+To obtain help::
+
+    >>> khelp()
+
+Available objects are
+
+    * :ref:`uut <helper_uut>`. Abstraction supporting messages, timers, interrupts and memory access
+    * :ref:`kymera <helper_kymera>` api
+    * :ref:`endpoint <helper_endpoint>` factory
+    * :ref:`capability <helper_capability>` factory
+    * :ref:`stream <helper_stream>` factory
+    * :ref:`graph <helper_graph>` helper
+    * :class:`kalcmd <kse.instrument.kalcmd.kalcmd.Kalcmd>`. Kalcmd instrument interface to kalcmd2/kalsim
+    * :class:`hydra_protocol <kse.kalsim.hydra_service.protocol.HydraProtocol>`. Hydra protocol interface
+    * :class:`hydra_cap_download <kse.kalsim.hydra_service.download_service.HydraCapabilityDownloadService>`. Hydra capability download interface
+    * :class:`acat <kse.instrument.acat.acat.Acat>`. ACAT instance (requires to be enabled on invocation)
+
+To reset your environment, close and respawn kalsim/kalcmd2::
+
+    >>> reset()
+
+First steps
+-----------
+
+To generate a simulated timer and poll for its expiration::
+
+   >>> import time
+   >>> id = uut.timer_add_relative(5) # add simulated timer in 5 seconds
+   >>> while not uut.timer_check_expired(id):
+   >>>     print('not expired yet')
+   >>>     time.sleep(0.5)
+   >>> print('timer %s expired' % (id))
+
+To generate a simulated timer with expiration callback::
+
+   >>> id = None
+   >>> def timer_expired(timer_id):
+   >>>     print('timer %s expired, expecting %s' % (timer_id, id))
+   >>> id = uut.timer_add_relative(5, timer_expired) # add simulated timer in 5 seconds
+
+To lists capabilities available in running Kymera.
+The result depends on the selected platform and e.g. downloaded capabilities present
+in addition to the built-in capabilities::
+
+    >>> kymera.opmgr_get_capid_list()
+        [0x0001,
+         0x0003,
+         0x0004,
+         ...
+         ...
+         ...
+         0x3ff7,
+         0x3ff5,
+         0x00cb]
+
+To run ``BASIC_PASS_THROUGH`` operator life cycle:
+
+    >>> op_id=kymera.opmgr_create_operator(1)
+    >>> kymera.opmgr_start_operators([op_id])
+    >>> kymera.opmgr_stop_operators([op_id])
+    >>> kymera.opmgr_destroy_operators([op_id])
+
+Graph
+-----
+
+The shell has access to the graph helper, which allows easy graph play (creation, configuration,
+connection, start, stop, disconnect and destruction) of a kymera graph.
+
+The following commands will play a graph file::
+
+    >>> from kse.framework.library.file_util import load
+    >>> data = load('config/pt.cfg.json')
+    >>> graph.play(data)
+
+More information in :ref:`graph`.
+
+.. _simple_basic_pass_with_streams_and_endpoints:
+
+BASIC_PASS with streams and endpoints
+-------------------------------------
+
+Create a source stream::
+
+    >>> config = {
+        'hydra_type': 'audio_slot',
+        'hydra_bac_handle': 0,
+        'hydra_audioslot': 0,
+        'stream_flow_control_drive': 'kalsim',
+        'stream_flow_control_block_size': 1,
+        'stream_format': 16,
+        'stream_backing': 'file',
+        'stream_filename':"resource/153_Prompts_176.4_kHz_Music_Detected_8k.raw",
+        'stream_flow_control_rate': 8000,
+    }
+    >>> st_source = stream.get_instance('hydra', 'source', **config)
+    >>> st_source.create()
+    >>> st_source.config()
+
+Create a sink stream::
+
+    >>> config = {
+        'hydra_type': 'audio_slot',
+        'hydra_bac_handle': 0,
+        'hydra_audioslot': 0,
+        'stream_flow_control_drive': 'kalsim',
+        'stream_flow_control_block_size': 1,
+        'stream_format': 16,
+        'stream_backing': 'file',
+        'stream_filename': "tmp/kalsim_pass_through.raw",
+        'stream_flow_control_rate': 8000,
+    }
+    >>> st_sink = stream.get_instance('hydra', 'sink', **config)
+    >>> st_sink.create()
+    >>> st_sink.config()
+
+Create endpoints::
+
+    >>> ep_source=kymera.stream_if_get_source('pcm', [0, 0])
+    >>> kymera.stream_if_configure_sid(ep_source, 'pcm_master_clock_rate', 512000)
+    >>> kymera.stream_if_configure_sid(ep_source, 'pcm_master_mode', 1)
+    >>> kymera.stream_if_configure_sid(ep_source, 'pcm_sample_format', 1)
+    >>> kymera.stream_if_configure_sid(ep_source, 'pcm_sync_rate', 8000)
+    >>> kymera.stream_if_configure_sid(ep_source, 'pcm_slot_count', 4)
+    >>> ep_sink = kymera.stream_if_get_sink('pcm', [0, 0])
+
+Create BASIC_PASS operator::
+
+   >>> op = kymera.opmgr_create_operator(1)
+   >>> kymera.opmgr_operator_message(op, [10, 1])
+   >>> kymera.opmgr_operator_message(op, [11, 1])
+
+Connect endpoints::
+
+    >>> kymera.stream_if_connect(ep_source, op | 0xa000)
+    >>> kymera.stream_if_connect(op | 0x2000, ep_sink)
+
+Start streaming::
+
+    >>> st_sink.start()
+    >>> kymera.opmgr_start_operators([op])
+    >>> st_source.start()
+
+* Wait for 2 minutes and check that the stream is not active::
+
+    >>> st_source.check_active()
+
+Stop streaming::
+
+    >>> st_source.stop()
+    >>> st_source.destroy()
+    >>> st_sink.stop()
+    >>> st_sink.destroy()
+
+Release resources::
+
+    >>> kymera.opmgr_stop_operators([op])
+    >>> kymera.opmgr_destroy_operators([op])
+    >>> kymera.stream_if_close_source(ep_source)
+    >>> kymera.stream_if_close_sink(ep_sink)
+
+Command-line options
+--------------------
+
+See :ref:`command_line_kse_shell`
+
+

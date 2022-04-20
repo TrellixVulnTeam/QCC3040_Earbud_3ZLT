@@ -1,0 +1,1 @@
+gatt_fast_pair_server/gatt_fast_pair_server_db.dbi_: gatt_fast_pair_server/gatt_fast_pair_server_db.dbi gatt_fast_pair_server/gatt_fast_pair_server_uuids.h

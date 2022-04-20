@@ -1,0 +1,54 @@
+
+===
+ADK
+===
+
+ADK is when KSE is used inside an ADK.
+This is only supported on Windows hosts.
+
+Installation
+============
+
+The installation of a full Qualcomm ADK should be available on
+your computer (it includes MDE, ADK Toolkit and ADK).
+If you don’t have these tools installed, please see the dedicated
+documentation about the Qualcomm ADK for help.
+
+KSE is automatically installed the first time it is used inside the ADK.
+After installation its workspace is located in ``C:\qtil\<ADK_version>\audio\kse\workspace``
+
+Sample firmware for the KSE is provided in the ADK installation.
+
+Execution
+=========
+
+**Command line**
+
+Open a cmd prompt, change to the ADK directory you are working in and activate
+the virtual environment located inside the ADK Toolkit directory::
+
+    C:\> cd C:\qtil\<ADK_version>
+    C:\> C:\qtil\<ADK_Toolkit_version>\activate.bat
+
+
+Set the workspace for the KSE shell by the following command::
+
+    C:\> set KATS_WORKSPACE=C:\qtil\<ADK_version>\audio\kse\workspace
+
+Launch the kse_shell by executing e.g. the following command:
+
+For platform Strettoplus::
+
+    C:\> kse_shell --platform streplus --ks_path kalsim_qcc514x_audio.exe --ks_firmware C:\qtil\<ADK_version>\audio\qcc514x_qcc304x\kalimba\kymera\output\streplus_rom_kalsim_kalcmd2_release\build\debugbin\kymera_streplus_audio --log_level 20
+
+For platform Maorgen1::
+
+    C:\> kse_shell --platform maorgen1 --ks_path kalsim_qcc516x_audio.exe --ks_firmware C:\qtil\<ADK_version>\audio\qcc516x_qcc306x\kalimba\kymera\output\maorgen1_rom_kalsim_kalcmd2_release\build\debugbin\kymera_maor_audio --log_level 20
+
+For platform Maor::
+
+    C:\> kse_shell --platform maor --ks_path kalsim_qcc517x_audio.exe --ks_firmware C:\qtil\<ADK_version>\audio\qcc517x_qcc307x\kalimba\kymera\output\maor_rom_kalsim_kalcmd2_release\build\debugbin\kymera_maor_audio --log_level 20
+
+**MDE**
+
+Please follow instructions in :ref:`mde`.

@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kymera.endpoint.common package &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="index.html"/>
+        <link rel="up" title="kse.kymera.endpoint package" href="kse.kymera.endpoint.html"/>
+        <link rel="next" title="kse.kymera.kymera package" href="kse.kymera.kymera.html"/>
+        <link rel="prev" title="kse.kymera.endpoint package" href="kse.kymera.endpoint.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kse.html">kse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="kse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kse.core.html">kse.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.framework.html">kse.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.instrument.html">kse.instrument package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kse.kalsim.html">kse.kalsim package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="kse.kymera.html">kse.kymera package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="kse.kymera.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kse.kymera.html#module-kse.kymera">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kse.library.html">kse.library package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kse.html#module-kse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="kse.html">kse package</a> &raquo;</li>
+      
+        <li><a href="kse.kymera.html">kse.kymera package</a> &raquo;</li>
+      
+        <li><a href="kse.kymera.endpoint.html">kse.kymera.endpoint package</a> &raquo;</li>
+      
+    <li>kse.kymera.endpoint.common package</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/kse.kymera.endpoint.common.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kse-kymera-endpoint-common-package">
+<h1>kse.kymera.endpoint.common package<a class="headerlink" href="#kse-kymera-endpoint-common-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.codec">
+<span id="kse-kymera-endpoint-common-codec-module"></span><h2>kse.kymera.endpoint.common.codec module<a class="headerlink" href="#module-kse.kymera.endpoint.common.codec" title="Permalink to this headline">¶</a></h2>
+<p>Generic Codec endpoint class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.common.codec.EndpointCodecHydra">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.codec.</code><code class="sig-name descname">EndpointCodecHydra</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/codec.html#EndpointCodecHydra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.codec.EndpointCodecHydra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Kymera Codec Endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>instance</strong> (<em>int</em>) – Codec instance</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – 0 for left, 1 for right, 2 for both</p></li>
+<li><p><strong>codec_input_rate</strong> (<em>int</em>) – Sample clock rate in hertzs (only for source endpoints)</p></li>
+<li><p><strong>codec_output_rate</strong> (<em>int</em>) – Sample clock rate in hertzs (only for sink endpoints)</p></li>
+<li><p><strong>codec_input_gain</strong> (<em>int</em>) – Input gain scale in 3 dB steps</p></li>
+<li><p><strong>int</strong><strong>)</strong> (<em>codec_sidetone_source_mask</em>) – Output gain scale in 3 dB steps</p></li>
+<li><p><strong>raw_input_gain</strong> (<em>int</em>) – <p>INput finer control gain</p>
+<ul>
+<li><p>bit 15 Enable fine gain</p></li>
+<li><p>bit 15=1</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bits 8:0 digital gain in -30 dB steps, 1 max attenuation, 511 max gain)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>bit 15=0</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bits 8:6 analog gain, 0 max attenuation, 5 unity, 7 max gain</p></li>
+<li><p>bits 3:0 digital gain in legacy mode</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p></li>
+<li><p><strong>raw_output_gain</strong> (<em>int</em>) – <p>Output finer control gain</p>
+<ul>
+<li><p>bit 15 Enable fine gain</p></li>
+<li><p>bit 15=1</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bits 8:0 digital gain in -30 dB steps, 1 max attenuation, 511 max gain)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>bit 15=0</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bits 8:6 analog gain, 0 max attenuation, 5 unity, 7 max gain</p></li>
+<li><p>bits 3:0 digital gain in legacy mode</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p></li>
+<li><p><strong>codec_output_gain_boost_enable</strong> (<em>int</em>) – 0 for disable, 1 for enable</p></li>
+<li><p><strong>codec_sidetone_gain</strong> (<em>int</em>) – <p>Gain applied to all the sidetone channels.
+BlueCore5 and prior (values 0 to 7 valid), BlueCore6 (values 0 to 9 valid)-9,
+BlueCore7 (values 0 to 15 valid)</p>
+<blockquote>
+<div><ul>
+<li><p>0  -32.6 dB</p></li>
+<li><p>1  -30.1 dB</p></li>
+<li><p>2  -26.6 dB</p></li>
+<li><p>3  -24.1 dB</p></li>
+<li><p>4  -20.6 dB</p></li>
+<li><p>5  -18.1 dB</p></li>
+<li><p>6  -14.5 dB</p></li>
+<li><p>7  -12   dB</p></li>
+<li><p>8   -8.5 dB</p></li>
+<li><p>9   -6.0 dB</p></li>
+<li><p>10  -2.5 dB</p></li>
+<li><p>11   0   dB</p></li>
+<li><p>12  +3.5 dB</p></li>
+<li><p>13  +6.0 dB</p></li>
+<li><p>14  +9.5 dB</p></li>
+<li><p>15 +12.0 dB</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>codec_sidetone_enable</strong> (<em>int</em>) – Enable for sidetone on both channels, 0 for disable,
+1 for enable</p></li>
+<li><p><strong>codec_mic_input_enable</strong> (<em>int</em>) – 0 for disable, 1 for 9 dB extra gain</p></li>
+<li><p><strong>codec_low_power_output_stage_enable</strong> (<em>int</em>) – 0 for disable, 1 enable</p></li>
+<li><p><strong>codec_quality_mode</strong> (<em>int</em>) – 0 for telephony, 1 for normal, 2 for high,
+3 for bypass in Amp (input only)</p></li>
+<li><p><strong>codec_output_interp_filter_mode</strong> (<em>int</em>) – <ul>
+<li><p>0 long FIR mode (not available at 96 KHz)</p></li>
+<li><p>1 short FIR mode (for reduced latency requirements, but less good band stop
+rejection),</p></li>
+<li><p>2 narrow FIR mode to meet G.722 requirements</p></li>
+</ul>
+</p></li>
+<li><p><strong>codec_output_power_mode</strong> (<em>int</em>) – <ul>
+<li><p>0 16 ohm normal power</p></li>
+<li><p>1 32 ohm normal power</p></li>
+<li><p>2 32 ohm low power</p></li>
+</ul>
+</p></li>
+<li><p><strong>codec_sidetone_source</strong> (<em>int</em>) – <ul>
+<li><p>0 ADC instance 0 or Digital Mic instance 0. Channel A goes into DAC A and channel B
+goes into DAC B.</p></li>
+<li><p>1 ADC instance 1 or Digital mic instance 1. Channel C goes into DAC A and channel D
+goes into DAC B.</p></li>
+<li><p>2 Digital mic instance 2. DMIC channel E goes into DAC A and DMIC channel F goes into
+DAC B.</p></li>
+<li><p>3 Digital mic instance 3. DMIC channel G goes into DAC A and DMIC channel H goes into
+DAC B</p></li>
+</ul>
+</p></li>
+<li><p><strong>codec_sidetone_source_point</strong> (<em>int</em>) – <p>Source point for sidetone data from ADC.</p>
+<ul>
+<li><p>0 ADC data is taken before digital gain.</p></li>
+<li><p>1 ADC data is taken after digital gain.</p></li>
+</ul>
+</p></li>
+<li><p><strong>codec_sidetone_injection_point</strong> (<em>int</em>) – <p>Injection point for sidetone data to DAC.</p>
+<ul>
+<li><p>0 Sidetone data is inserted at interpolation stage in DAC (before digital gain)</p></li>
+<li><p>1 Sidetone data is inserted at gain stage in DAC</p></li>
+</ul>
+</p></li>
+<li><p><strong>int</strong><strong>)</strong> – <p>Mask that selects at most 2 ADC/MIC sources whose sum will
+be used as sidetone source for a particular DAC channel.</p>
+<blockquote>
+<div><ul>
+<li><p>0x00 No sidetone source. As good as sidetone is not enabled, 0x01 Channel
+A(ADC A/ DMIC A) is the sidetone source</p></li>
+<li><p>0x02 Channel B (ADC B/ DMIC B) is the sidetone source</p></li>
+<li><p>0x03 (Channel A + Channel B) is the sidetone source</p></li>
+<li><p>0x81 (Channel A + Channel H) is the sidetone source gain of a particular sidetone
+channel.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>codec_individual_sidetone_gain</strong> (<em>int</em>) – &gt; Gain of a particular sidetone channel.
+In contrast, when codec_sidetone_gain is used, gain of all sidetone channels is
+changed simultaneously.
+Values are as for codec_sidetone_gain enable/disable sidetone signal for a particular
+DAC.</p></li>
+<li><p><strong>codec_individual_sidetone_enable</strong> (<em>int</em>) – Enable/disable sidetone signal for a particular
+DAC channel.
+In contrast, codec_sidetone_enable is used to enable/disable sidetone signal for all
+DAC channels. 0 disable, 1 enable</p></li>
+<li><p><strong>codec_adc_data_source_point</strong> (<em>int</em>) – <p>Adc data source selection</p>
+<ul>
+<li><p>0 ADC data is taken from output of IIR filter (as on CSR8670)</p></li>
+<li><p>1 ADC data is taken from output of digital gain filter.</p></li>
+</ul>
+</p></li>
+<li><p><strong>codec_adc_route</strong> (<em>int</em>) – Choose order of ADC chain. 0, Final IIR filter is before digital
+gain stage (as on CSR8670), 1  Final IIR filter is after digital gain stage.</p></li>
+<li><p><strong>codec_sidetone_invert</strong> (<em>int</em>) – 0 do not invert, 1 invert</p></li>
+<li><p><strong>codec_g722_filter_enable</strong> (<em>int</em>) – Enables optional G.722 filter that improves noise
+performance</p></li>
+<li><p><strong>codec_g722_fir_enable</strong> (<em>int</em>) – Enables optional FIR filter inside G.722 filter that droops
+the response slightly. 0 disable, 1 enable</p></li>
+<li><p><strong>codec_input_termination</strong> (<em>int</em>) – <ul>
+<li><p>0 dual differential (LINEIN1_PN, LINEIN2_PN)</p></li>
+<li><p>1 dual single ended (LINEIN1_P, LINEIN2_P)</p></li>
+<li><p>2 single ended inverted (LINEIN1_N, LINEIN2_N)</p></li>
+<li><p>3 single differential (MICIN1_PN)</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.codec.EndpointCodecHydra.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/codec.html#EndpointCodecHydra.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.codec.EndpointCodecHydra.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.codec.EndpointCodecHydra.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/codec.html#EndpointCodecHydra.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.codec.EndpointCodecHydra.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.codec.EndpointCodecHydra.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'codec'</em><a class="headerlink" href="#kse.kymera.endpoint.common.codec.EndpointCodecHydra.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.codec.EndpointCodecHydra.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kymera.endpoint.common.codec.EndpointCodecHydra.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.digital_mic">
+<span id="kse-kymera-endpoint-common-digital-mic-module"></span><h2>kse.kymera.endpoint.common.digital_mic module<a class="headerlink" href="#module-kse.kymera.endpoint.common.digital_mic" title="Permalink to this headline">¶</a></h2>
+<p>Generic DIGMIC endpoint class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.digital_mic.</code><code class="sig-name descname">EndpointDigitalMicHydra</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/digital_mic.html#EndpointDigitalMicHydra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Kymera DIGMIC Endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>instance</strong> (<em>int</em>) – Digital Mic instance</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – Channel 0 to 1</p></li>
+<li><p><strong>digital_mic_input_rate</strong> (<em>int</em>) – Sample rate in Hertzs</p></li>
+<li><p><strong>digital_mic_input_gain</strong> (<em>int</em>) – <p>Input gain</p>
+<ul>
+<li><p>bit 15 Enable fine gain</p></li>
+<li><p>bit 15=1</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bits 8:0 digital gain in -30 dB steps, 1 max attenuation, 511 max gain)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>bit 15=0</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bits 3:0 digital gain in legacy mode</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p></li>
+<li><p><strong>digital_mic_sidetone_gain</strong> (<em>int</em>) – <p>Gain applied to all the sidetone channels.</p>
+<ul>
+<li><p>0  -32.6 dB</p></li>
+<li><p>1  -30.1 dB</p></li>
+<li><p>2  -26.6 dB</p></li>
+<li><p>3  -24.1 dB</p></li>
+<li><p>4  -20.6 dB</p></li>
+<li><p>5  -18.1 dB</p></li>
+<li><p>6  -14.5 dB</p></li>
+<li><p>7  -12   dB</p></li>
+<li><p>8   -8.5 dB</p></li>
+<li><p>9   -6.0 dB</p></li>
+<li><p>10  -2.5 dB</p></li>
+<li><p>11   0   dB</p></li>
+<li><p>12  +3.5 dB</p></li>
+<li><p>13  +6.0 dB</p></li>
+<li><p>14  +9.5 dB</p></li>
+<li><p>15 +12.0 dB</p></li>
+</ul>
+</p></li>
+<li><p><strong>digital_mic_sidetone_enable</strong> (<em>int</em>) – Enable for sidetone on both channels, 0 for disable</p></li>
+<li><p><strong>digital_mic_clock_rate</strong> (<em>int</em>) – <p>Digital interface clock rate in KHz</p>
+<ul>
+<li><p>500 for 500 KHz</p></li>
+<li><p>1000 for 1 MHz</p></li>
+<li><p>2000 for 2 MHz</p></li>
+<li><p>4000 for 4 MHz</p></li>
+</ul>
+</p></li>
+<li><p><strong>digital_mic_sidetone_source_point</strong> (<em>int</em>) – <p>Source point for sidetone data from ADC.</p>
+<ul>
+<li><p>0 ADC data is taken before digital gain.</p></li>
+<li><p>1 ADC data is taken after digital gain.</p></li>
+</ul>
+</p></li>
+<li><p><strong>digital_mic_individual_sidetone_gain</strong> (<em>int</em>) – Gain of a particular sidetone channel.
+In contrast, when digital_mic_sidetone_gain is used, gain of all sidetone channels is
+changed simultaneously.
+Values are as for digital_mic_sidetone_gain enable/disable sidetone signal for a
+particular DAC.</p></li>
+<li><p><strong>digital_mic_data_source_point</strong> (<em>int</em>) – <p>Digital mic data source selection</p>
+<ul>
+<li><p>0 Digital mic data is taken from output of IIR filter</p></li>
+<li><p>1 Digital mic data is taken from output of digital gain filter.</p></li>
+</ul>
+</p></li>
+<li><p><strong>digital_mic_route</strong> (<em>int</em>) – Choose order of ADC chain. 0, Final IIR filter is before digital
+gain stage, 1  Final IIR filter is after digital gain stage.</p></li>
+<li><p><strong>digital_mic_g722_filter_enable</strong> (<em>int</em>) – Enables optional G.722 filter that improves noise
+performance</p></li>
+<li><p><strong>digital_mic_g722_fir_enable</strong> (<em>int</em>) – Enables optional FIR filter inside G.722 filter that
+droops the response slightly. 0 disable, 1 enable</p></li>
+<li><p><strong>digital_mic_amp_sel</strong> (<em>int</em>) – Configure LO_AMP_SEL and HI_AMP_SEL values of DMIC instance.
+External digital mic devices usually have a sigma-delta modulator providing one bit per
+sampling interval. This key controls how these are converted to the 3-bit value used
+internally. Usually logic 1 is translated to 7 and logic 0 is translated to 0.
+The lower 16 bits sets the LO_AMP_SEL and the higher 16 bits select the HI_AMP_SEL.
+The two values with a maximum of 7 and minimum of 0, should be set to be symmetrical
+around the value of 3.5 (such as 0,7 or 1,6 or 2,5 or 3,4 or 4,3 or 5,2 or 6,1 or 7,0).
+If the two values do not add to 7, a DC bias appears in the signal</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/digital_mic.html#EndpointDigitalMicHydra.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/digital_mic.html#EndpointDigitalMicHydra.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'digital_mic'</em><a class="headerlink" href="#kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kymera.endpoint.common.digital_mic.EndpointDigitalMicHydra.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.i2s">
+<span id="kse-kymera-endpoint-common-i2s-module"></span><h2>kse.kymera.endpoint.common.i2s module<a class="headerlink" href="#module-kse.kymera.endpoint.common.i2s" title="Permalink to this headline">¶</a></h2>
+<p>Generic I2S endpoint class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.common.i2s.EndpointI2sHydra">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.i2s.</code><code class="sig-name descname">EndpointI2sHydra</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/i2s.html#EndpointI2sHydra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.i2s.EndpointI2sHydra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Generic I2S Endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>instance</strong> (<em>int</em>) – I2S instance</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – Time slot 0 to 1</p></li>
+<li><p><strong>i2s_sync_rate</strong> (<em>int</em>) – Sample clock rate in hertzs</p></li>
+<li><p><strong>i2s_master_clock_rate</strong> (<em>int</em>) – Master clock rate in hertzs</p></li>
+<li><p><strong>i2s_master_mode</strong> (<em>int</em>) – 1 for Master mode, 0 for Slave mode</p></li>
+<li><p><strong>i2s_justify_mode</strong> (<em>int</em>) – 0 left justified, 1 right justified</p></li>
+<li><p><strong>i2s_left_justify_delay</strong> (<em>int</em>) – If using Left Justified format
+- 0 (MSB of SD data occurs in the first SCLK period following WS transition)
+- 1 (MSB of SD data occurs in the second SCLK period)</p></li>
+<li><p><strong>i2s_channel_polarity</strong> (<em>int</em>) – 0 data is left channel when WS is high,
+1 data is right channel with WS is high</p></li>
+<li><p><strong>i2s_audio_attenuation_enable</strong> (<em>int</em>) – Audio attenuation enable, 1 for enable, 0 for disable</p></li>
+<li><p><strong>i2s_audio_attenuation</strong> (<em>int</em>) – Audio attenuation, 0 to 15 in 6dB steps</p></li>
+<li><p><strong>i2s_justify_resolution</strong> (<em>int</em>) – <p>Justify resolution:</p>
+<ul>
+<li><p>0 16 bit</p></li>
+<li><p>1 20 bit</p></li>
+<li><p>2 24 bit</p></li>
+</ul>
+</p></li>
+<li><p><strong>i2s_crop_enable</strong> (<em>int</em>) – Crop enable, 1 for enable, 0 for disable</p></li>
+<li><p><strong>i2s_bits_per_sample</strong> (<em>int</em>) – <p>Bits per sample:</p>
+<ul>
+<li><p>0 16 bit</p></li>
+<li><p>1 20 bit</p></li>
+<li><p>2 24 bit</p></li>
+</ul>
+</p></li>
+<li><p><strong>i2s_tx_start_sample</strong> (<em>int</em>) – 0 during low wclk phase, 1 during high wclk phase</p></li>
+<li><p><strong>i2s_rx_start_sample</strong> (<em>int</em>) – 0 during low wclk phase, 1 during high wclk phase</p></li>
+<li><p><strong>audio_mute_enable</strong> (<em>int</em>) – Mute endpoint, 1 for enable, 0 for disable</p></li>
+<li><p><strong>audio_sample_size</strong> (<em>int</em>) – <p>Selects the size (width or resolution) of the audio sample on an
+audio interface.</p>
+<p>This setting controls the width of the internal data path, not just the number of bits
+per slot (on digital interfaces).
+All interfaces support the following settings:</p>
+<blockquote>
+<div><ul>
+<li><p>16: 16-bit sample size</p></li>
+<li><p>24: 24-bit sample size</p></li>
+</ul>
+</div></blockquote>
+<p>For the PCM interface, the following extra settings are supported for backward
+compatibility:</p>
+<blockquote>
+<div><ul>
+<li><p>0: 13 bits in a 16 bit slot</p></li>
+<li><p>1: 16 bits in a 16 bit slot (same as 16)</p></li>
+<li><p>2: 8 bits in a 16 bit slot</p></li>
+<li><p>3: 8 bits in an 8 bit slot</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.i2s.EndpointI2sHydra.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/i2s.html#EndpointI2sHydra.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.i2s.EndpointI2sHydra.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.i2s.EndpointI2sHydra.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/i2s.html#EndpointI2sHydra.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.i2s.EndpointI2sHydra.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.i2s.EndpointI2sHydra.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'i2s'</em><a class="headerlink" href="#kse.kymera.endpoint.common.i2s.EndpointI2sHydra.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.i2s.EndpointI2sHydra.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kymera.endpoint.common.i2s.EndpointI2sHydra.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.mapping">
+<span id="kse-kymera-endpoint-common-mapping-module"></span><h2>kse.kymera.endpoint.common.mapping module<a class="headerlink" href="#module-kse.kymera.endpoint.common.mapping" title="Permalink to this headline">¶</a></h2>
+<p>Mapping support for endpoints</p>
+<dl class="function">
+<dt id="kse.kymera.endpoint.common.mapping.map_endpoint">
+<code class="sig-prename descclassname">kse.kymera.endpoint.common.mapping.</code><code class="sig-name descname">map_endpoint</code><span class="sig-paren">(</span><em class="sig-param">interface</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/mapping.html#map_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.mapping.map_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remap kymera endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interface</strong> (<em>str</em>) – Interface type</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint (source or sink)</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Endpoint parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Modified (remapped) endpoint parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.pcm">
+<span id="kse-kymera-endpoint-common-pcm-module"></span><h2>kse.kymera.endpoint.common.pcm module<a class="headerlink" href="#module-kse.kymera.endpoint.common.pcm" title="Permalink to this headline">¶</a></h2>
+<p>Generic PCM endpoint class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.common.pcm.EndpointPcmHydra">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.pcm.</code><code class="sig-name descname">EndpointPcmHydra</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/pcm.html#EndpointPcmHydra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.pcm.EndpointPcmHydra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Kymera PCM Endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>instance</strong> (<em>int</em>) – PCM instance</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – Time slot, 0 to pcm_slot_count-1</p></li>
+<li><p><strong>pcm_sync_rate</strong> (<em>int</em>) – Sample clock rate in hertzs</p></li>
+<li><p><strong>pcm_master_clock_rate</strong> (<em>int</em>) – Master clock rate in hertzs</p></li>
+<li><p><strong>pcm_master_mode</strong> (<em>int</em>) – 1 for Master mode, 0 for Slave mode</p></li>
+<li><p><strong>pcm_slot_count</strong> (<em>int</em>) – Number of slots, 0 for automatic from pcm_sync_rate and
+pcm_master_clock_rate, 1-4 for explicit value</p></li>
+<li><p><strong>pcm_manchester_mode</strong> (<em>int</em>) – Manchester mode, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_short_sync_mode</strong> (<em>int</em>) – Short sync, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_manchester_slave_mode</strong> (<em>int</em>) – Manchester slave, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_sign_extend_mode</strong> (<em>int</em>) – Sign extend, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_lsb_first_mode</strong> (<em>int</em>) – LSB first, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_tx_tristate_mode</strong> (<em>int</em>) – Tx tristate, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_tx_tristate_rising_edge_mode</strong> (<em>int</em>) – Tx tristate rising edge, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_sync_suppress_enable</strong> (<em>int</em>) – Sync suppress, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_gci_mode</strong> (<em>int</em>) – GCI mode, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_mute_enable</strong> (<em>int</em>) – Mute, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_long_length_sync</strong> (<em>int</em>) – Long length sync, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_sample_rising_edge</strong> (<em>int</em>) – Sample rising, 1 for enable, 0 for disable</p></li>
+<li><p><strong>pcm_rx_rate_delay</strong> (<em>int</em>) – Rx rate delay, 0 to 7</p></li>
+<li><p><strong>pcm_sample_format</strong> (<em>int</em>) – <p>Sample format:</p>
+<ul>
+<li><p>0 for 13 bits in 16-bit slot</p></li>
+<li><p>1 for 16 bits in 16-bit slot</p></li>
+<li><p>2 for 8 bits in 16-bit slot</p></li>
+<li><p>3 for 8 bits in 8-bit slot</p></li>
+</ul>
+</p></li>
+<li><p><strong>pcm_manchester_mode_rx_offset</strong> (<em>int</em>) – Manchester mode rx offset, 0 to 3</p></li>
+<li><p><strong>pcm_audio_gain</strong> (<em>int</em>) – Audio gain, 0 to 7</p></li>
+<li><p><strong>audio_mute_enable</strong> (<em>int</em>) – Mute endpoint, 1 for enable, 0 for disable</p></li>
+<li><p><strong>audio_sample_size</strong> (<em>int</em>) – <p>Selects the size (width or resolution) of the audio sample on an
+audio interface.</p>
+<p>This setting controls the width of the internal data path, not just the number of bits
+per slot (on digital interfaces).
+All interfaces support the following settings:</p>
+<blockquote>
+<div><ul>
+<li><p>16: 16-bit sample size</p></li>
+<li><p>24: 24-bit sample size</p></li>
+</ul>
+</div></blockquote>
+<p>For the PCM interface, the following extra settings are supported for backward
+compatibility:</p>
+<blockquote>
+<div><ul>
+<li><p>0: 13 bits in a 16 bit slot</p></li>
+<li><p>1: 16 bits in a 16 bit slot (same as 16)</p></li>
+<li><p>2: 8 bits in a 16 bit slot</p></li>
+<li><p>3: 8 bits in an 8 bit slot</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.pcm.EndpointPcmHydra.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/pcm.html#EndpointPcmHydra.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.pcm.EndpointPcmHydra.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.pcm.EndpointPcmHydra.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/pcm.html#EndpointPcmHydra.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.pcm.EndpointPcmHydra.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.pcm.EndpointPcmHydra.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'pcm'</em><a class="headerlink" href="#kse.kymera.endpoint.common.pcm.EndpointPcmHydra.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.pcm.EndpointPcmHydra.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kymera.endpoint.common.pcm.EndpointPcmHydra.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.spdif">
+<span id="kse-kymera-endpoint-common-spdif-module"></span><h2>kse.kymera.endpoint.common.spdif module<a class="headerlink" href="#module-kse.kymera.endpoint.common.spdif" title="Permalink to this headline">¶</a></h2>
+<p>Generic SPDIF endpoint class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.common.spdif.EndpointSpdifHydra">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.spdif.</code><code class="sig-name descname">EndpointSpdifHydra</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/spdif.html#EndpointSpdifHydra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.spdif.EndpointSpdifHydra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Kymera SPDIF Endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint “source” or “sink”</p></li>
+<li><p><strong>instance</strong> (<em>int</em>) – SPDIF instance</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – Time slot 0 to 1</p></li>
+<li><p><strong>spdif_output_rate</strong> (<em>int</em>) – <p>Transmit sample clock rate in hertzs (only for sink endpoints)</p>
+<ul>
+<li><p>32000</p></li>
+<li><p>44100</p></li>
+<li><p>48000</p></li>
+<li><p>88200</p></li>
+<li><p>96000</p></li>
+<li><p>176400</p></li>
+<li><p>192000</p></li>
+</ul>
+</p></li>
+<li><p><strong>spdif_chnl_sts_report_mode</strong> (<em>int</em>) – <p>Specifies the channels for which notification of status
+changes will be sent.
+On BlueCore devices up to CSR8675, this notification is sent to the Kalimba
+DSP as KAL_MSG_SPDIF_CHNL_STS_EVENT. On devices running Kymera, this is sent from the
+SPDIF_DECODE operator to the application as a MessageFromOperator (NEW_CHANNEL_STATUS).</p>
+<blockquote>
+<div><ul>
+<li><p>0: No Channel status</p></li>
+<li><p>1: Channel status A</p></li>
+<li><p>2: Channel status B</p></li>
+<li><p>3: Both channels. (Not supported)</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>spdif_output_chnl_sts_dup_en</strong> (<em>int</em>) – <p>Output channel status duplicate enable</p>
+<ul>
+<li><p>0: Channel B carries its own channel status</p></li>
+<li><p>1: Channel A channel status is duplicated on channel B</p></li>
+</ul>
+</p></li>
+<li><p><strong>spdif_output_chnl_sts_word</strong> (<em>int</em>) – <p>192-bit output channel status word, divided into 12
+words of 16 bits each. Each word can be individually set.</p>
+<ul>
+<li><p>Bits [31:16]: channel status word index:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>0: Min value</p></li>
+<li><p>11: Max value</p></li>
+<li><p>Any other value: Entire channel status is made 0.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Bits [15:0]: value</p></li>
+</ul>
+</p></li>
+<li><p><strong>spdif_auto_rate_detect</strong> (<em>int</em>) – <p>Input auto rate detect enable</p>
+<ul>
+<li><p>0: SPDIF RX rate is not automatically detected</p></li>
+<li><p>1: SPDIF RX rate is automatically detected and changed (required in most use cases)</p></li>
+</ul>
+</p></li>
+<li><p><strong>spdif_output_clk_source</strong> (<em>int</em>) – <p>Output click source selection</p>
+<ul>
+<li><p>0 (SYSTEM_ROOT_CLK): Interface clock derived from fixed internal root
+clock (as on pre-CSRA681xx devices).</p></li>
+<li><p>1 (MCLK): Interface clock derived from MCLK source configured with
+AudioMasterClockConfigure(). Before the interface can be used,
+Source/SinkMasterClockEnable() must be called per interface.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/spdif.html#EndpointSpdifHydra.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure endpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/spdif.html#EndpointSpdifHydra.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create endpoint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'spdif'</em><a class="headerlink" href="#kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['crescendo', 'stre', 'streplus', 'maorgen1', 'maor']</em><a class="headerlink" href="#kse.kymera.endpoint.common.spdif.EndpointSpdifHydra.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common.static">
+<span id="kse-kymera-endpoint-common-static-module"></span><h2>kse.kymera.endpoint.common.static module<a class="headerlink" href="#module-kse.kymera.endpoint.common.static" title="Permalink to this headline">¶</a></h2>
+<p>Static endpoint class</p>
+<dl class="class">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic">
+<em class="property">class </em><code class="sig-prename descclassname">kse.kymera.endpoint.common.static.</code><code class="sig-name descname">EndpointStatic</code><span class="sig-paren">(</span><em class="sig-param">kymera</em>, <em class="sig-param">endpoint_type</em>, <em class="sig-param">endpoint_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/static.html#EndpointStatic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kats.core.endpoint_base.EndpointBase</span></code></p>
+<p>Static Endpoint</p>
+<p>This is an endpoint that never gets created or destroyed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kymera</strong> (<em>kats.kymera.kymera.kymera_base.KymeraBase</em>) – Instance of class Kymera</p></li>
+<li><p><strong>endpoint_type</strong> (<em>str</em>) – Type of endpoint source or sink</p></li>
+<li><p><strong>endpoint_id</strong> (<em>int</em>) – Endpoint identifier</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic.config">
+<code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/static.html#EndpointStatic.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static endpoint configuration is not supported</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">*_</em>, <em class="sig-param">**__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/static.html#EndpointStatic.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>We don’t need to worry about creating static endpoints.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/static.html#EndpointStatic.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>We don’t need to worry about destroying static endpoints.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic.get_id">
+<code class="sig-name descname">get_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kse/kymera/endpoint/common/static.html#EndpointStatic.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get endpoint id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Endpoint id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic.interface">
+<code class="sig-name descname">interface</code><em class="property"> = 'static'</em><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic.interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="kse.kymera.endpoint.common.static.EndpointStatic.platform">
+<code class="sig-name descname">platform</code><em class="property"> = ['common']</em><a class="headerlink" href="#kse.kymera.endpoint.common.static.EndpointStatic.platform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-kse.kymera.endpoint.common">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kse.kymera.endpoint.common" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kse.kymera.kymera.html" class="btn btn-neutral float-right" title="kse.kymera.kymera package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kse.kymera.endpoint.html" class="btn btn-neutral" title="kse.kymera.endpoint package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

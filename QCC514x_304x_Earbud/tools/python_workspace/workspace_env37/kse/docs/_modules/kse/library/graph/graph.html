@@ -1,0 +1,1321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.library.graph.graph &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.library.graph.graph</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.library.graph.graph</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Graph library&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">groupby</span>
+
+<span class="kn">from</span> <span class="nn">kats.core.endpoint_base</span> <span class="k">import</span> <span class="n">ENDPOINT_TYPE_SOURCE</span><span class="p">,</span> <span class="n">ENDPOINT_TYPE_SINK</span>
+<span class="kn">from</span> <span class="nn">kats.core.stream_base</span> <span class="k">import</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">,</span> <span class="n">STREAM_TYPE_SINK</span>
+<span class="kn">from</span> <span class="nn">kats.framework.library.schema</span> <span class="k">import</span> <span class="n">DefaultValidatingDraft4Validator</span>
+
+<span class="n">STREAM</span> <span class="o">=</span> <span class="s1">&#39;stream&#39;</span>
+<span class="n">STREAM_TYPE</span> <span class="o">=</span> <span class="s1">&#39;type&#39;</span>
+<span class="n">STREAM_INTERFACE</span> <span class="o">=</span> <span class="s1">&#39;interface&#39;</span>
+<span class="n">STREAM_ARGS</span> <span class="o">=</span> <span class="s1">&#39;args&#39;</span>
+<span class="n">STREAM_KWARGS</span> <span class="o">=</span> <span class="s1">&#39;kwargs&#39;</span>
+
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s1">&#39;endpoint&#39;</span>
+<span class="n">ENDPOINT_TYPE</span> <span class="o">=</span> <span class="s1">&#39;type&#39;</span>
+<span class="n">ENDPOINT_INTERFACE</span> <span class="o">=</span> <span class="s1">&#39;interface&#39;</span>
+<span class="n">ENDPOINT_ARGS</span> <span class="o">=</span> <span class="s1">&#39;args&#39;</span>
+<span class="n">ENDPOINT_KWARGS</span> <span class="o">=</span> <span class="s1">&#39;kwargs&#39;</span>
+
+<span class="n">OPERATOR</span> <span class="o">=</span> <span class="s1">&#39;operator&#39;</span>
+<span class="n">OPERATOR_INTERFACE</span> <span class="o">=</span> <span class="s1">&#39;interface&#39;</span>
+<span class="n">OPERATOR_ARGS</span> <span class="o">=</span> <span class="s1">&#39;args&#39;</span>
+<span class="n">OPERATOR_KWARGS</span> <span class="o">=</span> <span class="s1">&#39;kwargs&#39;</span>
+<span class="n">OPERATOR_CREATE</span> <span class="o">=</span> <span class="s1">&#39;create&#39;</span>
+
+<span class="n">KOPERATOR</span> <span class="o">=</span> <span class="s1">&#39;koperator&#39;</span>
+<span class="n">KOPERATOR_INTERFACE</span> <span class="o">=</span> <span class="s1">&#39;interface&#39;</span>
+<span class="n">KOPERATOR_ARGS</span> <span class="o">=</span> <span class="s1">&#39;args&#39;</span>
+<span class="n">KOPERATOR_KWARGS</span> <span class="o">=</span> <span class="s1">&#39;kwargs&#39;</span>
+
+<span class="n">GRAPH</span> <span class="o">=</span> <span class="s1">&#39;graph&#39;</span>
+<span class="n">SYNC</span> <span class="o">=</span> <span class="s1">&#39;sync&#39;</span>
+
+<span class="n">INPUT_DATA_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">STREAM</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">,</span> <span class="n">STREAM_INTERFACE</span><span class="p">],</span>
+                <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="n">STREAM_TYPE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">STREAM_TYPE_SOURCE</span><span class="p">,</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">],</span>
+                    <span class="p">},</span>
+                    <span class="n">STREAM_INTERFACE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="n">STREAM_ARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                    <span class="p">},</span>
+                    <span class="n">STREAM_KWARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{}</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="n">ENDPOINT</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">,</span> <span class="n">ENDPOINT_INTERFACE</span><span class="p">],</span>
+                <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="n">ENDPOINT_TYPE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ENDPOINT_TYPE_SOURCE</span><span class="p">,</span> <span class="n">ENDPOINT_TYPE_SINK</span><span class="p">],</span>
+                    <span class="p">},</span>
+                    <span class="n">ENDPOINT_INTERFACE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="n">ENDPOINT_ARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                    <span class="p">},</span>
+                    <span class="n">ENDPOINT_KWARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{}</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="n">OPERATOR</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">OPERATOR_INTERFACE</span><span class="p">],</span>
+                <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="n">OPERATOR_INTERFACE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">],</span>
+                    <span class="p">},</span>
+                    <span class="n">OPERATOR_ARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                    <span class="p">},</span>
+                    <span class="n">OPERATOR_KWARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{}</span>
+                    <span class="p">},</span>
+                    <span class="n">OPERATOR_CREATE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="n">OPERATOR_ARGS</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                            <span class="p">},</span>
+                            <span class="n">OPERATOR_KWARGS</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{}</span>
+                            <span class="p">},</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="n">KOPERATOR</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">KOPERATOR_INTERFACE</span><span class="p">],</span>
+                <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="n">KOPERATOR_INTERFACE</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="n">KOPERATOR_ARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[]</span>
+                    <span class="p">},</span>
+                    <span class="n">KOPERATOR_KWARGS</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{}</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="n">GRAPH</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;minItems&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;maxItems&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="n">SYNC</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;minItems&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;uniqueItems&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">NODE_INPUT</span> <span class="o">=</span> <span class="s1">&#39;i&#39;</span>
+<span class="n">NODE_OUTPUT</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span>
+
+<span class="n">OPERATOR_INPUT</span> <span class="o">=</span> <span class="n">NODE_INPUT</span>
+<span class="n">OPERATOR_OUTPUT</span> <span class="o">=</span> <span class="n">NODE_OUTPUT</span>
+
+<span class="n">KOPERATOR_INPUT</span> <span class="o">=</span> <span class="n">NODE_INPUT</span>
+<span class="n">KOPERATOR_OUTPUT</span> <span class="o">=</span> <span class="n">NODE_OUTPUT</span>
+
+<span class="n">GRAPH_FROM</span> <span class="o">=</span> <span class="s1">&#39;from&#39;</span>
+<span class="n">GRAPH_TO</span> <span class="o">=</span> <span class="s1">&#39;to&#39;</span>
+
+
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Representation of a graph terminal</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        node_type (str): Node type, one of &#39;stream&#39;, &#39;endpoint&#39;, &#39;operator&#39; or &#39;koperator&#39;</span>
+<span class="sd">        node_index (int): Zero based node index</span>
+<span class="sd">        node_modifier (list/None): Terminal information as [&#39;i&#39;, 0] or [&#39;o&#39;, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">node_index</span><span class="p">,</span> <span class="n">node_modifier</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span> <span class="o">=</span> <span class="n">node_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_index</span> <span class="o">=</span> <span class="n">node_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_modifier</span> <span class="o">=</span> <span class="n">node_modifier</span> <span class="k">if</span> <span class="n">node_modifier</span> <span class="k">else</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Node.get_type"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Node.get_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get terminal type</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Terminal type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span></div>
+
+<div class="viewcode-block" id="Node.get_index"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Node.get_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get zero based terminal index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Terminal node index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_index</span></div>
+
+<div class="viewcode-block" id="Node.get_modifier"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Node.get_modifier">[docs]</a>    <span class="k">def</span> <span class="nf">get_modifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get terminal modifiers</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int/None): Modifier to get or None for all</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            any/list[any]: Terminal node modifier/s</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_modifier</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_modifier</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_index</span><span class="p">)]</span> <span class="o">+</span>
+                       <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">ent</span><span class="p">)</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_modifier</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Graph"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph">[docs]</a><span class="k">class</span> <span class="nc">Graph</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generic graph library</span>
+
+<span class="sd">    This class handles all elements in a class (streams, endpoints, operators and koperators).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (dict): Input data configuration</span>
+<span class="sd">        koperator_enable (bool): Enable koperators</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">koperator_enable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_koperator_enable</span> <span class="o">=</span> <span class="n">koperator_enable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_sync</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;validating against kalsim schema&#39;</span><span class="p">)</span>
+        <span class="n">DefaultValidatingDraft4Validator</span><span class="p">(</span><span class="n">INPUT_DATA_SCHEMA</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_check_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Verify that a node name complies with the formula</span>
+
+<span class="sd">        - streamX and that index X exists in the configuration</span>
+<span class="sd">        - endpointX and that index X exists in the configuration</span>
+<span class="sd">        - operatorXinY and that index X exists in the configuration</span>
+<span class="sd">        - operatorXoY and that index X exists in the configuration</span>
+<span class="sd">        - koperatorXinY and that index X exists in the configuration</span>
+<span class="sd">        - koperatorXoY and that index X exists in the configuration</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (str): Node name</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the node is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>  <span class="c1"># unicode to str in python 2</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">isalpha</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">STREAM</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid node </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stream_num</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> not found in configuration&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid node </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_endpoint_num</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> not found in configuration&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">OPERATOR</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">OPERATOR_INPUT</span><span class="p">,</span> <span class="n">OPERATOR_OUTPUT</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid node </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_operator_num</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> not found in configuration&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_koperator_enable</span> <span class="ow">and</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">KOPERATOR</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">KOPERATOR_INPUT</span><span class="p">,</span> <span class="n">KOPERATOR_OUTPUT</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid node </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_koperator_num</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> not found in configuration&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_from_koperator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connections from a koperator validation</span>
+
+<span class="sd">            - koperator should be output</span>
+<span class="sd">            - koperator to stream source or koperator input</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            edge (list[dict,dict]): From and to nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># from koperator has to be output</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">KOPERATOR_OUTPUT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> out connections are not allowed&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">])))</span>
+
+        <span class="c1"># NOTE It would be good to check output does not exceed maximum for this koperator</span>
+        <span class="c1"># unfortunately that requires connecting to capability_factory.get_class which is</span>
+        <span class="c1"># kalsim specific</span>
+
+        <span class="c1"># from koperator maximum output connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_out_connections</span><span class="p">(</span><span class="n">KOPERATOR</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">(),</span>
+                                                    <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connects to multiple points&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">])))</span>
+
+        <span class="c1"># from koperator to stream must be stream source</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="n">stream_type</span> <span class="o">!=</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connected to </span><span class="si">%s</span><span class="s1"> only can connect to stream source&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># from koperator to koperator must be koperator input</span>
+        <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">KOPERATOR</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">KOPERATOR_INPUT</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connected to </span><span class="si">%s</span><span class="s1"> only can connect to an input&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># no other cases allowed</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connected to </span><span class="si">%s</span><span class="s1"> only can connect to </span><span class="si">%s</span><span class="s1"> or </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                 <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]),</span>
+                 <span class="n">KOPERATOR</span><span class="p">,</span>
+                 <span class="n">STREAM</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_from_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connections from a stream validation</span>
+
+<span class="sd">            - stream source to endpoint source</span>
+<span class="sd">            - stream sink to koperator input</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            edge (list[dict,dict]): From and to nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+
+        <span class="c1"># from streams maximum output connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_out_connections</span><span class="p">(</span><span class="n">STREAM</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connects to multiple points&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span> <span class="n">stream_type</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">stream_type</span> <span class="o">==</span> <span class="n">STREAM_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="c1"># from stream source can only be connected to endpoint source</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">ENDPOINT</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect to endpoint source&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">stream_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+            <span class="n">_</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">endpoint_type</span> <span class="o">!=</span> <span class="n">ENDPOINT_TYPE_SOURCE</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) only can connect to endpoint source&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">stream_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]),</span>
+                     <span class="n">endpoint_type</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># from stream sink can only be connected to koperator input</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">KOPERATOR</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect to koperator&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">stream_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">KOPERATOR_INPUT</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect to koperator input&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">stream_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_from_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connections from an endpoint validation</span>
+
+<span class="sd">            - endpoint source to operator input or endpoint sink</span>
+<span class="sd">            - endpoint sink to stream sink</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            edge (list[dict,dict]): From and to nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+
+        <span class="c1"># from endpoints maximum output connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_out_connections</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connects to multiple points&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span> <span class="n">endpoint_type</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">endpoint_type</span> <span class="o">==</span> <span class="n">ENDPOINT_TYPE_SOURCE</span><span class="p">:</span>
+            <span class="c1"># from endpoint source can only be connected to operator or sink endpoint</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">endpoint_to_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint:disable=broad-except</span>
+                <span class="n">endpoint_to_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">OPERATOR</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">OPERATOR_INPUT</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect to operator input&#39;</span> <span class="o">%</span>
+                        <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                         <span class="n">endpoint_type</span><span class="p">,</span>
+                         <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">ENDPOINT</span> <span class="ow">and</span> <span class="n">endpoint_to_type</span> <span class="o">==</span> <span class="n">ENDPOINT_TYPE_SINK</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect operator or endpoint sink&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">endpoint_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># from endpoint sink can only be connected to stream sink</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">STREAM</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect stream&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">endpoint_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+            <span class="n">_</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">stream_type</span> <span class="o">!=</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">) connected to </span><span class="si">%s</span><span class="s1"> only can connect to stream sink&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="n">endpoint_type</span><span class="p">,</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_from_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connections from an operator validation</span>
+
+<span class="sd">            - operator should be output</span>
+<span class="sd">            - operator to endpoint sink</span>
+<span class="sd">            - operator to operator input</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            edge (list[dict,dict]): From and to nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># from operator has to be output</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">OPERATOR_OUTPUT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> out connections are not allowed&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">])))</span>
+
+        <span class="c1"># from operator maximum output connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_out_connections</span><span class="p">(</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">(),</span>
+                                                    <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connects to multiple points&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">])))</span>
+
+        <span class="c1"># from operator to endpoint must be endpoint sink</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">ENDPOINT</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="n">stream_type</span> <span class="o">!=</span> <span class="n">STREAM_TYPE_SINK</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connected to </span><span class="si">%s</span><span class="s1"> only can connect to endpoint sink&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># from operator to operator must be operator input</span>
+        <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">OPERATOR</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">OPERATOR_INPUT</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connected to </span><span class="si">%s</span><span class="s1"> only can connect to an input&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                     <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># no other cases allowed</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> connected to </span><span class="si">%s</span><span class="s1"> only can connect to </span><span class="si">%s</span><span class="s1"> or </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]),</span>
+                 <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]),</span>
+                 <span class="n">ENDPOINT</span><span class="p">,</span>
+                 <span class="n">OPERATOR</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_to_koperator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connections to a koperator validation</span>
+
+<span class="sd">            - koperator should be input and input should be valid</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            edge (list[dict,dict]): From and to nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># to koperator has to be input</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">KOPERATOR_INPUT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> in connections are not allowed&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># to koperator maximum input connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_in_connections</span><span class="p">(</span><span class="n">KOPERATOR</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">(),</span>
+                                                   <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> in connections from multiple points&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># NOTE It would be good to check input does not exceed maximum for this koperator</span>
+        <span class="c1"># unfortunately that requires connecting to capability_factory.get_class which is</span>
+        <span class="c1"># kalsim specific</span>
+
+    <span class="k">def</span> <span class="nf">_validate_to_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="c1"># to streams maximum input connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_in_connections</span><span class="p">(</span><span class="n">STREAM</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node to </span><span class="si">%s</span><span class="s1"> connects from multiple points&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">])))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_to_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="c1"># to endpoints maximum input connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_in_connections</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span>
+                                                   <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node to </span><span class="si">%s</span><span class="s1"> connects from multiple points&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+    <span class="k">def</span> <span class="nf">_validate_to_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connections to an operator validation</span>
+
+<span class="sd">            - operator should be input</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            edge (list[dict,dict]): From and to nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># to operator has to be input</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">OPERATOR_INPUT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node to </span><span class="si">%s</span><span class="s1"> is not allowed, not an input&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+        <span class="c1"># to operator maximum input connections is 1</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node_in_connections</span><span class="p">(</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">(),</span>
+                                                   <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;node </span><span class="si">%s</span><span class="s1"> in connections from multiple points&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">])))</span>
+
+    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">internal_graph</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">GRAPH</span><span class="p">]:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">node_type</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">modifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_node</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">node_type</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">modifier</span><span class="p">)</span>
+
+            <span class="n">node_type</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">modifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_node</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">node_type</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">modifier</span><span class="p">)</span>
+
+            <span class="n">internal_graph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span> <span class="o">=</span> <span class="n">internal_graph</span>
+
+        <span class="n">internal_sync</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">SYNC</span><span class="p">]:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                <span class="n">node_type</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">modifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node_type</span> <span class="o">!=</span> <span class="n">ENDPOINT</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;sync node </span><span class="si">%s</span><span class="s1"> invalid, should be </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">))</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">node_type</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">modifier</span><span class="p">))</span>
+
+            <span class="n">internal_sync</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_sync</span> <span class="o">=</span> <span class="n">internal_sync</span>
+
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">KOPERATOR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_from_koperator</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_from_stream</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">ENDPOINT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_from_endpoint</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">OPERATOR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_from_operator</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">KOPERATOR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_to_koperator</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">STREAM</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_to_stream</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">ENDPOINT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_to_endpoint</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">edge</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">OPERATOR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validate_to_operator</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Graph.get_node_out_connections"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_node_out_connections">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_out_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">node_index</span><span class="p">,</span> <span class="n">output_num</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all connections in the graph from this node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node_type (str): Node type, one of &#39;stream&#39;, &#39;endpoint&#39;, &#39;operator&#39; or &#39;koperator&#39;</span>
+<span class="sd">            node_index (int): Zero based node index</span>
+<span class="sd">            output_num (int): Number of  outputs in node</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[list[int,int]]: Connections</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">node_type</span> <span class="ow">and</span>
+                    <span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">()</span> <span class="o">==</span> <span class="n">node_index</span> <span class="ow">and</span>
+                    <span class="p">(</span><span class="n">output_num</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">NODE_OUTPUT</span> <span class="ow">and</span>
+                                            <span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">output_num</span><span class="p">))):</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Graph.get_node_in_connections"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_node_in_connections">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_in_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">node_index</span><span class="p">,</span> <span class="n">input_num</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all connections in the graph to this node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node_type (str): Node type, one of &#39;stream&#39;, &#39;endpoint&#39;, &#39;operator&#39; or &#39;koperator&#39;</span>
+<span class="sd">            node_index (int): Zero based node index</span>
+<span class="sd">            input_num (int): Number of inputs in node</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[list[int,int]]: Connections</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">node_type</span> <span class="ow">and</span>
+                    <span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">()</span> <span class="o">==</span> <span class="n">node_index</span> <span class="ow">and</span>
+                    <span class="p">(</span><span class="n">input_num</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">NODE_INPUT</span> <span class="ow">and</span>
+                                           <span class="n">entry</span><span class="p">[</span><span class="n">GRAPH_TO</span><span class="p">]</span><span class="o">.</span><span class="n">get_modifier</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">input_num</span><span class="p">))):</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Graph.check_node_in_graph"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.check_node_in_graph">[docs]</a>    <span class="k">def</span> <span class="nf">check_node_in_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">node_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Verifies that a node is in the graph.</span>
+<span class="sd">        Nodes not defined in the graph will not be created</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node_type (str): Node type, one of &#39;stream&#39;, &#39;endpoint&#39;, &#39;operator&#39; or &#39;koperator&#39;</span>
+<span class="sd">            node_index (int): Zero based node index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Node is in graph</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="p">[</span><span class="n">GRAPH_FROM</span><span class="p">,</span> <span class="n">GRAPH_TO</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">node_type</span> <span class="ow">and</span> <span class="n">entry</span><span class="p">[</span><span class="n">ent</span><span class="p">]</span><span class="o">.</span><span class="n">get_index</span><span class="p">()</span> <span class="o">==</span> <span class="n">node_index</span><span class="p">:</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="Graph.get_graph_connections"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_graph_connections">[docs]</a>    <span class="k">def</span> <span class="nf">get_graph_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get graph connections as nodes</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based graph index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list:</span>
+<span class="sd">                Node: From node</span>
+<span class="sd">                Node: To node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_graph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;graph index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_sync_connections"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_sync_connections">[docs]</a>    <span class="k">def</span> <span class="nf">get_sync_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get sync connections as nodes</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based sync index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[Node]: Nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_sync</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_internal_sync</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;sync index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_stream"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_stream">[docs]</a>    <span class="k">def</span> <span class="nf">get_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get stream configuration entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_type (str): Stream type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                str: Interface</span>
+<span class="sd">                str: Type (source or sink)</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">STREAM</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stream_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">stream_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_INTERFACE</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">],</span> \
+                           <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_KWARGS</span><span class="p">]</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;stream_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_stream_node"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_stream_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_stream_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get stream node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_type (str): Stream type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Node: Stream node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">STREAM</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stream_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">stream_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="n">STREAM</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;stream_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_stream_raw"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_stream_raw">[docs]</a>    <span class="k">def</span> <span class="nf">get_stream_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get stream configuration raw entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_type (str): Stream type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Stream entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">STREAM</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stream_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">stream_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;stream_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_stream_num"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_stream_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_stream_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get stream configuration entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_type (str): Stream type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of streams found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">STREAM</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stream_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">stream_type</span><span class="p">:</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">num</span></div>
+
+<div class="viewcode-block" id="Graph.get_stream_method"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_stream_method">[docs]</a>    <span class="k">def</span> <span class="nf">get_stream_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get stream configuration entry for an specific method</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stream_type (str): Stream type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based endpoint index</span>
+<span class="sd">            method (str): Method configuration is requested</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">STREAM</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stream_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">STREAM_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">stream_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">STREAM_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">STREAM_KWARGS</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="p">[],</span> <span class="p">{}</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;stream_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stream_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_endpoint"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_endpoint">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint configuration entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type (str): Endpoint type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based endpoint index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                str: Interface</span>
+<span class="sd">                str: Type (source or sink)</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">ENDPOINT</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">endpoint_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">endpoint_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_INTERFACE</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">],</span> \
+                           <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_KWARGS</span><span class="p">]</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;endpoint_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_endpoint_node"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_endpoint_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type (str): Endpoint type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based endpoint index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Node: Ednpoint node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">ENDPOINT</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">endpoint_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">endpoint_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;endpoint_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_endpoint_raw"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_endpoint_raw">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint configuration raw entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type (str): Endpoint type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based endpoint index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Endpoint entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">ENDPOINT</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">endpoint_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">endpoint_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;endpoint_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_endpoint_num"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_endpoint_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint configuration entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type (str): Endpoint type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of endpoints found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">ENDPOINT</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">endpoint_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">endpoint_type</span><span class="p">:</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">num</span></div>
+
+<div class="viewcode-block" id="Graph.get_endpoint_method"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_endpoint_method">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint configuration entry for an specific method</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint_type (str): Endpoint type (&#39;source&#39; or &#39;sink&#39; or None)</span>
+<span class="sd">            index (int): Zero-based endpoint index</span>
+<span class="sd">            method (str): Method configuration is requested</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">ENDPOINT</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">endpoint_type</span> <span class="ow">or</span> <span class="n">entry</span><span class="p">[</span><span class="n">ENDPOINT_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">endpoint_type</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">ENDPOINT_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">ENDPOINT_KWARGS</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="p">[],</span> <span class="p">{}</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;endpoint_type:</span><span class="si">%s</span><span class="s1"> index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">endpoint_type</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_operator"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_operator">[docs]</a>    <span class="k">def</span> <span class="nf">get_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get operator configuration entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                str: Interface</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">OPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">OPERATOR_INTERFACE</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">OPERATOR_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">OPERATOR_KWARGS</span><span class="p">]</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_operator_node"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_operator_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_operator_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get operator node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Node: Operator node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">OPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_operator_raw"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_operator_raw">[docs]</a>    <span class="k">def</span> <span class="nf">get_operator_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get operator configuration raw entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Operator entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">OPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_operator_num"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_operator_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_operator_num</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get operator configuration entry</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of operators found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">OPERATOR</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Graph.get_operator_method"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_operator_method">[docs]</a>    <span class="k">def</span> <span class="nf">get_operator_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get operator configuration entry for an specific method</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+<span class="sd">            method (str): Method configuration is requested</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">OPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">OPERATOR_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">OPERATOR_KWARGS</span><span class="p">]</span>
+                <span class="k">return</span> <span class="p">[],</span> <span class="p">{}</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_koperator"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_koperator">[docs]</a>    <span class="k">def</span> <span class="nf">get_koperator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kats operator configuration entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                str: Interface</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">KOPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">KOPERATOR_INTERFACE</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">KOPERATOR_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">KOPERATOR_KWARGS</span><span class="p">]</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_koperator_node"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_koperator_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_koperator_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kats operator node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Node: kats operator node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">KOPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="n">KOPERATOR</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_koperator_raw"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_koperator_raw">[docs]</a>    <span class="k">def</span> <span class="nf">get_koperator_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kats operator configuration raw entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: kats operator entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">KOPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_koperator_num"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_koperator_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_koperator_num</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kats operator configuration entry</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of operators found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">KOPERATOR</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Graph.get_koperator_method"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_koperator_method">[docs]</a>    <span class="k">def</span> <span class="nf">get_koperator_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kats operator configuration entry for an specific method</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based operator index</span>
+<span class="sd">            method (str): Method configuration is requested</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                list: Positional arguments</span>
+<span class="sd">                dict: Keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">KOPERATOR</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">KOPERATOR_ARGS</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="n">method</span><span class="p">][</span><span class="n">KOPERATOR_KWARGS</span><span class="p">]</span>
+                <span class="k">return</span> <span class="p">[],</span> <span class="p">{}</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;operator index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_graph"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_graph">[docs]</a>    <span class="k">def</span> <span class="nf">get_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get graph entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based graph index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[[str,str]]: Graph configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">GRAPH</span><span class="p">]</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">GRAPH</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;graph index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_graph_num"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_graph_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_graph_num</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get number of graph entries</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of graphs found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">GRAPH</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Graph.get_sync"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_sync">[docs]</a>    <span class="k">def</span> <span class="nf">get_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get sync entry</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Zero-based sync index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[[str]]: Sync configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">SYNC</span><span class="p">]</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">SYNC</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">entry</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;sync index:</span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Graph.get_sync_num"><a class="viewcode-back" href="../../../../kse.library.graph.html#kse.library.graph.graph.Graph.get_sync_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_sync_num</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get number of sync entries</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of sync found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">SYNC</span><span class="p">])</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

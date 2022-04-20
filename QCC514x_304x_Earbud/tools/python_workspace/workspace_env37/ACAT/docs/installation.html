@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; ACAT 1.11.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/qcom.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ACAT 1.11.3 documentation" href="index.html"/>
+        <link rel="next" title="Run" href="run.html"/>
+        <link rel="prev" title="Functions" href="functions.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ACAT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="add_analysis.html">Add an Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyses.html">Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-python-virtual-environment">Create a Python Virtual Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-the-wheel">From the wheel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#full-installation">Full Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-graphviz">Install Graphviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#access-acat-in-an-adk-installation">Access ACAT in an ADK Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms_definitions.html">Terms and Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ACAT</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Installation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-a-python-virtual-environment">
+<h2>Create a Python Virtual Environment<a class="headerlink" href="#create-a-python-virtual-environment" title="Permalink to this headline">¶</a></h2>
+<p>Python applications come with different requirements and in some cases
+libraries may conflict when they are installed in the same Python
+environment.</p>
+<p>To minimize installation problems, create a separate virtual environment
+for the ACAT. See the <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> <a class="reference external" href="https://pypi.org/project/virtualenv/1.7.1.2/">online documentation</a> for more
+information.</p>
+<p>At the command prompt, change to a directory which becomes the working
+directory for this ACAT installation, then create a virtual environment
+(called <code class="docutils literal notranslate"><span class="pre">acat_env</span></code> in this example) using the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&lt;CURRENT PATH&gt;\ &lt;path_to_pathon_3_folder&gt;\python.exe -m venv acat_env
+</pre></div>
+</div>
+<p>After the virtual environment is created, activate it using the following
+command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acat_env\Scripts\activate
+</pre></div>
+</div>
+<p>The command prompt should look like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(acat_env) &lt;CURRENT PATH&gt;&gt;
+</pre></div>
+</div>
+<p>The virtual environment name before the command prompt shows that the
+activation was successful.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some python versions install a very old <code class="docutils literal notranslate"><span class="pre">pip</span></code> library which
+may not work properly with modern wheels and/or pypi servers.
+Upgrade the pip library to its latest version using:
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">pip</span></code>.</p>
+</div>
+</div>
+<div class="section" id="from-the-wheel">
+<h2>From the wheel<a class="headerlink" href="#from-the-wheel" title="Permalink to this headline">¶</a></h2>
+<p>To install the latest released ACAT, use the following command in you
+virtual environment:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m pip install ACAT-x.y.z-py3-none-any.whl
+</pre></div>
+</div>
+<div class="section" id="full-installation">
+<h3>Full Installation<a class="headerlink" href="#full-installation" title="Permalink to this headline">¶</a></h3>
+<p>ACAT has no direct dependency. However, there are some optional
+libraries available which will enable ACAT to offer more functionality.
+As an example there libraries can be <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">graphviz</span></code>.</p>
+<p>Optional dependencies are defined as “recommended” dependencies in the
+wheel package. It means, they can be installed as per user’s preference.</p>
+<p>To install all the recommended packages to enable the full functionality
+of ACAT, use the following installation command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m pip install ACAT-x.y.z-py3-none-any.whl[full]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="install-graphviz">
+<h2>Install Graphviz<a class="headerlink" href="#install-graphviz" title="Permalink to this headline">¶</a></h2>
+<p>By doing the “full” installation, pip will install <code class="docutils literal notranslate"><span class="pre">graphviz</span></code> library as
+well. However, this library requires system wide installation of <code class="docutils literal notranslate"><span class="pre">dot</span></code>
+application, which comes from <a class="reference external" href="https://graphviz.org/download/">Graphviz</a> website.</p>
+<p>The complete installation guide is mentioned in the Graphviz link.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please make sure to add the path to the installation of Graphviz
+is added to your system path. To make sure the installation
+works, open a command prompt and type <code class="docutils literal notranslate"><span class="pre">dot</span></code>. The dot’s
+console should appear without any text. To exit the console,
+press <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">C</span></code>. On some Windows systems <code class="docutils literal notranslate"><span class="pre">dot</span></code> does not
+work out of the box. If the execution of <code class="docutils literal notranslate"><span class="pre">dot</span></code> results in
+error, open <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code> with Administrator privilege and execute
+<code class="docutils literal notranslate"><span class="pre">dot</span> <span class="pre">-c</span></code>. This configures plugins appropriately.</p>
+</div>
+</div>
+<div class="section" id="access-acat-in-an-adk-installation">
+<h2>Access ACAT in an ADK Installation<a class="headerlink" href="#access-acat-in-an-adk-installation" title="Permalink to this headline">¶</a></h2>
+<p>From the ADK 20.2, ACAT wheel package is available to users. To access the
+correct <code class="docutils literal notranslate"><span class="pre">acat</span></code> executable, the user must activate the appropriate Python
+Virtual Environment. This environment has a mix-match libraries of the Toolkit
+and the ADK. For the convenience assume the following locations for the ADK and
+Toolkit folders. The names can be different in actual installations.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ADK: <code class="docutils literal notranslate"><span class="pre">C:\qtil\QCC_ADK\</span></code>, where the <code class="docutils literal notranslate"><span class="pre">audio</span></code> folder is available.</p></li>
+<li><p>Toolkit: <code class="docutils literal notranslate"><span class="pre">C:\qtil\ADK_Toolkit\</span></code>, where the <code class="docutils literal notranslate"><span class="pre">activate.bat</span></code> script is
+available.</p></li>
+</ul>
+</div></blockquote>
+<p>From the command line, activate the virtual environment in the Toolkit
+<em>from</em> the ADK location. It must activate the right workspace. The output
+is similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\qtil\QCC_ADK&gt;C:\qtil\ADK_Toolkit\activate.bat
+Activating workspace..
+INFO:workspace:Installing...
+INFO:workspace:PIP log:
+Looking in links: c:\qtil\ADK_Toolkit\tools\python\wheels, c:\qtil\QCC_ADK\audio\.
+Processing c:\qtil\QCC_ADK\audio\acat-1.10.4-py3-none-any.whl
+Processing c:\qtil\QCC_ADK\audio\kse-0.11.0-py2.py3-none-any.whl
+Processing c:\qtil\ADK_TOOLKIT\tools\python\wheels\kal_python_tools-1.1.8-py2.py3-none-win_amd64.whl
+Processing c:\qtil\QCC_ADK\audio\ksp-0.4.2-py2.py3-none-any.whl
+Collecting ipython&lt;8,&gt;=5.2.2; python_version &gt;= &quot;3&quot;
+  Using cached ipython-7.18.1-py3-none-any.whl (786 kB)
+Collecting six&lt;2,&gt;=1.10.0
+  Using cached six-1.15.0-py2.py3-none-any.whl (10 kB)
+Collecting jsonschema&lt;4,&gt;=2.6.0
+  Using cached jsonschema-3.2.0-py2.py3-none-any.whl (56 kB)
+
+  --- &lt;snip&gt; ---
+
+Successfully installed ACAT-1.10.4 KSP-0.4.2 attrs-20.2.0 backcall-0.2.0 colorama-0.4.4 customer-pydbg-base-0.7.1 customer-pydbg-qcc514x-qcc304x-0.7.1 decorator-4.4.2 importlib-metadata-2.0.0 ipython-7.18.1 ipython-genutils-0.2.0 jedi-0.17.2 jsonschema-3.2.0 kal-python-tools-1.1.8 kalcmd2-2.8.2 kse-0.11.0 numpy-1.19.2 parso-0.7.1 pickleshare-0.7.5 prompt-toolkit-3.0.8 pydbg-default-1.0 pygments-2.7.1 pyreadline-2.1 pyrsistent-0.17.3 setuptools-50.3.2 six-1.15.0 traitlets-5.0.5 trbtrans-2.9.0 wcwidth-0.2.5 wrapt-1.12.1 zipp-3.3.1
+</pre></div>
+</div>
+<p>To test whether the <code class="docutils literal notranslate"><span class="pre">acat</span></code> script is accessible, run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ATK (C:\qtil\ADK_Toolkit\) C:\qtil\QCC_ADK&gt;acat --version
+Audio Coredump Analysis Tool, v1.10.4
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure the <code class="docutils literal notranslate"><span class="pre">ATK</span> <span class="pre">(C:\qtil\ADK_Toolkit\)</span></code> text appears next
+to the command line prompt. The output version maybe different
+depending on the version of the ACAT available in that ADK.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="run.html" class="btn btn-neutral float-right" title="Run" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="functions.html" class="btn btn-neutral" title="Functions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

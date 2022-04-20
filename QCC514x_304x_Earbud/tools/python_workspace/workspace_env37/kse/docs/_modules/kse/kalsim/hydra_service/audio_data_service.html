@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kse.kalsim.hydra_service.audio_data_service &mdash; KSE 0.21.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/qcom.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/kse.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="KSE 0.21.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KSE
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.21.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kse.html">kse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">KSE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+        <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>kse.kalsim.hydra_service.audio_data_service</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kse.kalsim.hydra_service.audio_data_service</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright (c) 2017 Qualcomm Technologies International, Ltd.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1"># Qualcomm Technologies International, Ltd. Confidential and Proprietary.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;Hydra Audio Data Services&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">kats.framework.library.log</span> <span class="k">import</span> <span class="n">log_input</span><span class="p">,</span> <span class="n">log_output</span><span class="p">,</span> <span class="n">log_input_output</span>
+<span class="kn">from</span> <span class="nn">kats.library.registry</span> <span class="k">import</span> <span class="n">get_instance</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="k">import</span> <span class="n">KICK_SERVICE_CONSUMER</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">get_buffer_stats</span>
+
+
+<div class="viewcode-block" id="HydraAudioDataService"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService">[docs]</a><span class="k">class</span> <span class="nc">HydraAudioDataService</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Hydra Audio Data Service</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hydra_protocol (kats.kalsim.hydra_service.protocol.HydraProtocol): Protocol handler</span>
+<span class="sd">        service_type (int): Service type</span>
+<span class="sd">        device_type (int): Device type</span>
+<span class="sd">        service_tag (int): Hydra service tag</span>
+<span class="sd">        data_buffer_size (int): Audio data buffer size in octets</span>
+<span class="sd">        metadata_buffer_size (int): Meta data buffer size in octets</span>
+<span class="sd">        kick_required (int): Signal remote system want to receive kicks</span>
+<span class="sd">        metadata_buffer_size (int): Header length in a metadata buffer record in octets</span>
+<span class="sd">        connect_endpoint (int): Endpoint id provided by the remote subsystem (the endpoint created</span>
+<span class="sd">           by the service start will be connected via ACCMD to this endpoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hydra_protocol</span><span class="p">,</span> <span class="n">service_type</span><span class="p">,</span> <span class="n">device_type</span><span class="p">,</span> <span class="n">service_tag</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_log&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hydra_protocol</span> <span class="o">=</span> <span class="n">hydra_protocol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span> <span class="o">=</span> <span class="n">get_instance</span><span class="p">(</span><span class="s1">&#39;kalcmd&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_service_type</span> <span class="o">=</span> <span class="n">service_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_type</span> <span class="o">=</span> <span class="n">device_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_service_tag</span> <span class="o">=</span> <span class="n">service_tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer_width</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_width</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kick_required</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;kick_required&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_space_handler</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;space_handler&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_started</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">endpoint_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_rd_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_wr_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_rd_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_wr_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">kick_status_bits</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">kick_block_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_msg_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hydra_protocol</span><span class="o">.</span><span class="n">install_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_received</span><span class="p">)</span>
+
+    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_message_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="c1"># Temporary solution - support both message formats until changes are in place</span>
+        <span class="c1"># in crescendo and stre FW to not send the data/space information with the</span>
+        <span class="c1"># KICK_SERVICE_CONSUMER message. When this happens remove the len(msg) == 6 case.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">KICK_SERVICE_CONSUMER</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_service_tag</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space_handler</span><span class="p">:</span>
+                <span class="n">avail</span><span class="p">,</span> <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_stats</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_space_handler</span><span class="p">(</span><span class="n">avail</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HydraAudioDataService.start"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.start">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start audio data service</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If the service has already been started</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;service already started&#39;</span><span class="p">)</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_service_tag</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_buffer_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_buffer_size&#39;</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)),</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metadata_buffer_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metadata_buffer_size&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kick_required&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kick_required</span><span class="p">),</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;device_type&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_type</span><span class="p">),</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metadata_header_length&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metadata_header_length&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;connect_endpoint&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;connect_endpoint&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+        <span class="p">]</span>
+
+        <span class="n">service_tag</span><span class="p">,</span> <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hydra_protocol</span><span class="o">.</span><span class="n">start_service</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_service_type</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start response length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">service_tag</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_service_tag</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;start response service tag:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_started</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">endpoint_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_rd_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_wr_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_rd_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_wr_handle</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">kick_status_bits</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">kick_block_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.stop"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.stop">[docs]</a>    <span class="nd">@log_input</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop audio data service</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If the service as not been previously started</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;service not started&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hydra_protocol</span><span class="o">.</span><span class="n">stop_service</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_service_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_service_tag</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_started</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.check_started"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.check_started">[docs]</a>    <span class="k">def</span> <span class="nf">check_started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if the audio data service is started</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Service already started</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_started</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.kick"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.kick">[docs]</a>    <span class="nd">@log_input_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">kick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Kick firmware to alert new data is available&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hydra_protocol</span><span class="o">.</span><span class="n">kick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">kick_status_bits</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_endpoint_id"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_endpoint_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_endpoint_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get endpoint id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Endpoint id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">endpoint_id</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_data_read_handle"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_data_read_handle">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_read_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get audio data read BAC handle</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Read handle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_rd_handle</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_data_write_handle"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_data_write_handle">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_write_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get audio data write BAC handle</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Write handle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_wr_handle</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_meta_data_read_handle"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_meta_data_read_handle">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data_read_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get meta data read BAC handle</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Read handle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_rd_handle</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_meta_data_write_handle"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_meta_data_write_handle">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_data_write_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get meta data write BAC handle</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Read handle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_wr_handle</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_space"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_space">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get buffer statistics</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Free samples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># FIXME apparently the return of this function does not match firmware state</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hydra_protocol</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;kick consumer length:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">KICK_SERVICE_CONSUMER</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;kick consumer code:0x</span><span class="si">%04x</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_service_tag</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;kick consumer service type:</span><span class="si">%s</span><span class="s1"> invalid&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">payload</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_buffer_stats"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_buffer_stats">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_buffer_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kalcmd buffer statistics</span>
+
+<span class="sd">        Buffer size doesn&#39;t change during the lifetime of the service; to speed things</span>
+<span class="sd">        up we read the buffer size only on the first run and cache it.</span>
+<span class="sd">        The values returned by Kalsim for handle offsets and buffer sizes are in</span>
+<span class="sd">        octets and include all the octets in the buffer, useful or wasted. If the BAC sample</span>
+<span class="sd">        size is configured to 8|16|24_BIT_UNPACKED a part of the buffer is wasted</span>
+<span class="sd">        (e.g. 16_BIT_UNPACKED, only half of the buffer contains useful data - the lower</span>
+<span class="sd">        16 bits of each 32-bit word).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                int: Used bytes</span>
+<span class="sd">                int: Free bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_buffer_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_rd_handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_buffer_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_handle_sample_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_rd_handle</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">get_buffer_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_rd_handle</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">data_wr_handle</span><span class="p">,</span>
+                                <span class="n">buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_buffer_size</span><span class="p">,</span>
+                                <span class="n">buffer_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_buffer_width</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HydraAudioDataService.get_metadata_buffer_stats"><a class="viewcode-back" href="../../../../kse.kalsim.hydra_service.html#kse.kalsim.hydra_service.audio_data_service.HydraAudioDataService.get_metadata_buffer_stats">[docs]</a>    <span class="nd">@log_output</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_metadata_buffer_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get kalcmd metadata buffer statistics</span>
+
+<span class="sd">        Buffer size doesn&#39;t change during the lifetime of the service; to speed things</span>
+<span class="sd">        up we read the buffer size only on the first run and cache it.</span>
+<span class="sd">        The values returned by Kalsim for handle offsets and buffer sizes are in</span>
+<span class="sd">        octets and include all the octets in the buffer, useful or wasted. If the BAC sample</span>
+<span class="sd">        size is configured to 8|16|24_BIT_UNPACKED a part of the buffer is wasted</span>
+<span class="sd">        (e.g. 16_BIT_UNPACKED, only half of the buffer contains useful data - the lower</span>
+<span class="sd">        16 bits of each 32-bit word).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple:</span>
+<span class="sd">                int: Used bytes</span>
+<span class="sd">                int: Free bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_rd_handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kalcmd</span><span class="o">.</span><span class="n">get_handle_sample_size</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_rd_handle</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">get_buffer_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_rd_handle</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">meta_data_wr_handle</span><span class="p">,</span>
+                                <span class="n">buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_size</span><span class="p">,</span>
+                                <span class="n">buffer_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_md_buffer_width</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Qualcomm Technologies, Inc.
+
+    </p>
+  </div>
+    <div class="sphinx-info">
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.qualcomm.com/python-users/sphinx_rtqd_theme">theme</a> provided by Qualcomm Python Users, derived from <a href="https://readthedocs.org">Read the Docs</a>.
+    </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.21.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
