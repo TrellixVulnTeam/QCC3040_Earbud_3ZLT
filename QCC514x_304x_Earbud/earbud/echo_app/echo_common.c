@@ -79,3 +79,13 @@ void Echo_Test_Start(void)
 {	
     MessageSendLater(ECHO_Get_Task_State(), ECHO_MSG_TEST, NULL, D_SEC(1));
 }
+
+void Echo_delay_ms(void)
+{
+
+}
+
+void Echo_delay_us(void)
+{
+
+}
