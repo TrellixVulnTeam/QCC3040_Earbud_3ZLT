@@ -22,44 +22,46 @@
  * 1. PIO BANK DATA LOAD
  * USER Definition
 */
-#define PioCommonPioBank(_pio) ((_pio) / PIOS_PER_BANK)
+//#define PioCommonPioBank(_pio) ((_pio) / PIOS_PER_BANK)
 /*
  * 1-2. SDK Provided
 */
-#define PIO2MASK(pio) (1UL << ((pio) % 32))
+//#define PIO2MASK(pio) (1UL << ((pio) % 32))
 /*
  * 2. PIO MASK LOAD
  * USER Definition
 */
-#define PioCommonPioMask(_pio) (1UL << ((_pio) % PIOS_PER_BANK))
+//#define PioCommonPioMask(_pio) (1UL << ((_pio) % PIOS_PER_BANK))
 /*
  * 2-2. SDK Provided
 */
 
-uint32 PioSetMapPins32Bank(uint16 bank, uint32 mask, uint32 bits);
+//uint32 PioSetMapPins32Bank(uint16 bank, uint32 mask, uint32 bits);
 /*
  * 3. Binding BANK AND MASK
 */
-uint32 PioSetDir32Bank(uint16 bank, uint32 mask, uint32 dir);
+
+//uint32 PioSetDir32Bank(uint16 bank, uint32 mask, uint32 dir);
 /*
  * 4. IO Mode Configuration
  * MASK : OUTPUT
  * 0    : INPUT
 */
-uint32 PioSet32Bank(uint16 bank, uint32 mask, uint32 bits);
+
+//uint32 PioSet32Bank(uint16 bank, uint32 mask, uint32 bits);
 /*
  * 5. PIN LEVEL Configuration
  * MASK : HIGH LEVEL
  * 0    : LOW LEVEL
 */
 
-#if 1
+#if 0
 #define ECHO_PWM_CH0		LED_0
 #define ECHO_PWM_CH1		LED_1
 #define ECHO_PWM_CH2        LED_2
 #endif
 
-#if 0
+#if 1
 #define ECHO_PWM_CH0            2
 #define ECHO_PWM_CH1            3
 #define ECHO_PWM_CH2            4
@@ -87,11 +89,6 @@ static void Echo_Pwm_Read_Start(uint32 period)
 void Echo_Pwm_Init(void)
 {
     Echo_Pwm_Read_Start(2000);
-}
-
-void Echo_Pwm_PIO_Init(void)
-{
-
 }
 
 void Echo_Pwm_Start_Handle(void)
