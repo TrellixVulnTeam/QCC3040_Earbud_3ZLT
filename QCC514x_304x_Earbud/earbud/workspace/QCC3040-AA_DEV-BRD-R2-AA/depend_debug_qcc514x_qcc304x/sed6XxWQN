@@ -1,0 +1,39 @@
+
+
+
+
+primary_service {
+    uuid : 0x1100D10211E19B2300025B00A5A5,
+    name : "GAIA_SERVICE",
+    characteristic {
+        uuid : 0x1101D10211E19B2300025B00A5A5,
+        name : "GAIA_COMMAND_ENDPOINT",
+        flags : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties : [ write ],
+        value : 0x0
+    },
+ characteristic {
+        uuid : 0x1102D10211E19B2300025B00A5A5,
+        name : "GAIA_RESPONSE_ENDPOINT",
+        flags : [ FLAG_IRQ, FLAG_DYNLEN ],
+        properties : [ read, notify ],
+        value : 0x0,
+        client_config
+        {
+            name : "GAIA_RESPONSE_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    },
+ characteristic {
+        uuid : 0x1103D10211E19B2300025B00A5A5,
+        name : "GAIA_DATA_ENDPOINT",
+        flags : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W, FLAG_ENCR_R ],
+        properties : [ write_cmd, notify, read ],
+        value : 0x0,
+        client_config
+        {
+            name : "GAIA_DATA_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+ }
+},

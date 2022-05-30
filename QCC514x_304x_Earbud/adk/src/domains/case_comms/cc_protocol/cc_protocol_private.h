@@ -38,6 +38,13 @@
 /*! \brief Case comms protocol task state. */
 typedef struct
 {
+    /*! chargercomms stream sink for accessing UART chargercomms. */
+    Sink cc_sink;
+} transport_scheme_data;
+
+
+typedef struct
+{
     /*! Case comms protocol task. */
     TaskData task;
 

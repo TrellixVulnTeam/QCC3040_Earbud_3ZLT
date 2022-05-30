@@ -6,16 +6,25 @@ typedef struct
 {
     TaskData task;
     Task client;
-    Sink uart_sink;
-    unsigned               	uart_src_need_drop:1;
-    uint8*					pUartSrcStart;
-    uint8*					pUartSrcEnd;
-    uint16					send_packet_length;
+    bool initialised;
+    Source source;
+    Sink sink;
 }UARTStreamTaskData;
+
 extern UARTStreamTaskData theUARTTask;
-Sink Echo_Sink_UART_Init(Task task);
-bool Echo_UART_Transmit(uint8 *data, uint16 size);
-void Echo_UART_Handler(Task t, MessageId id, Message msg);
-void Echo_UART_Init(Task client);
+
+void Echo_UartSendToSink(const char *cmd);
+bool Echo_UartInit(void);
+void Echo_UartHandler(Task task, MessageId id, Message msg);
+void AppUartInit(Task client);
+
+bool UartSendData(uint8 *data, uint16 size);
+
+
+// UART PIO PIN SETTING
+#define BOARD_UART_TX  18
+#define BOARD_UART_RX  19
+#define BOARD_UART_RTS 0x0
+#define BOARD_UART_CTS 0x0
 
 #endif // ECHO_UART_H

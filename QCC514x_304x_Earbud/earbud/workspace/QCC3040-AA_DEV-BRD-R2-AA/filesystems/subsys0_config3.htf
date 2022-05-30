@@ -4,3 +4,5 @@ file=curator3
 # label.
 XtalLoadCapacitance = 10
 XtalFreqTrim = 0
+
+VCHGMessageEarbud = 0

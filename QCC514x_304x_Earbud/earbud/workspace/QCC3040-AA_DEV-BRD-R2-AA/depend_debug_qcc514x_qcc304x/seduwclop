@@ -1,0 +1,4 @@
+
+
+
+primary_service { uuid : 0x180f, name : "BATTERY_SERVICE", sdp : true, characteristic { uuid : 0x2a19, name : "BATTERY_LEVEL", flags : [ FLAG_IRQ ], properties : [ read , notify ], value : 0x0, presentation_format { name : "BATTERY_LEVEL_PRESENTATION", flags : [ FLAG_IRQ , FLAG_DYNLEN ] }, client_config { name : "BATTERY_LEVEL_CLIENT_CONFIG", flags : [ FLAG_IRQ , FLAG_DYNLEN ] } } },

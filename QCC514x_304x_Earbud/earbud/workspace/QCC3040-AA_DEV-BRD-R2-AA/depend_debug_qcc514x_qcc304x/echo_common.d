@@ -51,6 +51,8 @@ depend_debug_qcc514x_qcc304x/echo_common.o: ..\..\echo_app\echo_common.c \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\app\pio\pio_if.h \
     ..\..\..\adk\src\installed_libs\include\profiles\default_qcc514x_qcc304x\vmtypes.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\vm.h \
+    ..\..\..\adk\src\domains\case_comms\cc_protocol\cc_protocol.h \
+    ..\..\..\adk\src\domains\case_comms\cc_protocol\cc_protocol_trans_test_uart.h \
     ..\..\echo_app\echo_private.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\standard\csrtypes.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\message.h \
@@ -61,5 +63,9 @@ depend_debug_qcc514x_qcc304x/echo_common.o: ..\..\echo_app\echo_common.c \
     ..\..\..\adk\src\installed_libs\include\profiles\default_qcc514x_qcc304x\vmtypes.h \
     ..\..\echo_app\echo_common.h \
     ..\..\echo_app\echo_pwm.h \
-    ..\..\echo_app\echo_debug.h 
+    ..\..\echo_app\echo_uart.h \
+    ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\message.h \
+    ..\..\echo_app\echo_debug.h \
+    ..\..\..\adk\src\installed_libs\include\profiles\default_qcc514x_qcc304x\rtime.h \
+    ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\standard\csrtypes.h 
 

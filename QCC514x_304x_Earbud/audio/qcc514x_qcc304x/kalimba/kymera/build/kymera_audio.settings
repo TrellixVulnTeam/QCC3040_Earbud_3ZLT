@@ -16,4 +16,15 @@
         </item>
     </group>
     <group name="mde#1/kse"/>
+    <group name="mde#1/kse/Run on Device">
+        <item name="watches">
+            <item name="number">0</item>
+        </item>
+        <item name="preferredFormats">
+            <item name="number">0</item>
+        </item>
+        <item name="breakpoints">
+            <item name="number">0</item>
+        </item>
+    </group>
 </settings>

@@ -5,5 +5,14 @@
         <item name="deploy">
             <item name="device">device://tc/usb2tc/106/qcc3040</item>
         </item>
+        <item name="watches">
+            <item name="number">0</item>
+        </item>
+        <item name="preferredFormats">
+            <item name="number">0</item>
+        </item>
+        <item name="breakpoints">
+            <item name="number">0</item>
+        </item>
     </group>
 </settings>

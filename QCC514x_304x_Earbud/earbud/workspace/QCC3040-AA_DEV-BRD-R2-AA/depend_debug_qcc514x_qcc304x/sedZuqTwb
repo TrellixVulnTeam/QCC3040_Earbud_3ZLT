@@ -1,0 +1,43 @@
+
+
+
+
+primary_service {
+    uuid : 0x0000eb10d10211e19b2300025b00a5a5,
+    name : "ROOT_TRANSFER_SERVICE",
+    sdp : FALSE, # Included as an aide memoire. SDP records only of use for BREDR.
+    characteristic {
+        uuid : 0x0000eb11d10211e19b2300025b00a5a5,
+        name : "ROOT_TRANSFER_SERVICE_FEATURES",
+        flags : [ FLAG_IRQ, FLAG_ENCR_R],
+        properties : [ read ],
+        size_value : 0x02,
+        value : 0x0000
+    },
+    characteristic {
+        uuid : 0x0000eb12d10211e19b2300025b00a5a5,
+        name : "ROOT_TRANSFER_SERVICE_STATUS",
+        flags : [ FLAG_IRQ, FLAG_ENCR_R],
+        properties : [ read ],
+        value : 0x00
+    },
+    characteristic {
+        uuid : 0x0000eb13d10211e19b2300025b00a5a5, # Note that this is an Indicate characterisic
+        name : "ROOT_TRANSFER_SERVICE_MIRROR_CONTROL_POINT",
+        flags : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties : [ write, indicate ],
+        value : 0x00,
+        client_config
+        {
+            name : "ROOT_TRANSFER_SERVICE_MIRROR_CONTROL_POINT_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    },
+    characteristic {
+        uuid : 0x0000eb14d10211e19b2300025b00a5a5,
+        name : "ROOT_TRANSFER_SERVICE_KEYS_CONTROL",
+        flags : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties : [ write ],
+        value : 0x00
+    }
+},

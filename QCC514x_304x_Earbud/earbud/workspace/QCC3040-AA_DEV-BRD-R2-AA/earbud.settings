@@ -77,10 +77,96 @@
             </item>
         </item>
         <item name="watches">
-            <item name="number">0</item>
+            <item name="number">2</item>
+            <item name="0">
+                <item name="name">
+                    <item name="">status</item>
+                </item>
+                <item name="synced">
+                    <item name="">false</item>
+                </item>
+                <item name="id">
+                    <item name="core">
+                        <item name=""></item>
+                    </item>
+                    <item name="threadid">
+                        <item name="">18446744073709551615</item>
+                    </item>
+                    <item name="name">
+                        <item name="">status</item>
+                    </item>
+                </item>
+            </item>
+            <item name="1">
+                <item name="name">
+                    <item name="">cmd</item>
+                </item>
+                <item name="synced">
+                    <item name="">false</item>
+                </item>
+                <item name="id">
+                    <item name="core">
+                        <item name=""></item>
+                    </item>
+                    <item name="threadid">
+                        <item name="">18446744073709551615</item>
+                    </item>
+                    <item name="name">
+                        <item name="">cmd</item>
+                    </item>
+                </item>
+            </item>
         </item>
         <item name="preferredFormats">
-            <item name="number">0</item>
+            <item name="number">8</item>
+            <item name="0">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/local/pkt/&lt;unsigned char&gt;</item>
+                <item name="format">char</item>
+            </item>
+            <item name="1">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/local/ipc_recv_prim/ret/&lt;unsigned char&gt;</item>
+                <item name="format">char</item>
+            </item>
+            <item name="2">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/local/ipc_recv_prim/ret</item>
+                <item name="format">hex</item>
+            </item>
+            <item name="3">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/formal/src</item>
+                <item name="format">hex</item>
+            </item>
+            <item name="4">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/active/src</item>
+                <item name="format">hex</item>
+            </item>
+            <item name="5">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/active/pkt/&lt;unsigned char&gt;</item>
+                <item name="format">char</item>
+            </item>
+            <item name="6">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/active/ipc_recv_prim/ret/&lt;unsigned char&gt;</item>
+                <item name="format">char</item>
+            </item>
+            <item name="7">
+                <item name="coreName">app/p1</item>
+                <item name="threadId">0</item>
+                <item name="name">/frame/active/ipc_recv_prim/ret</item>
+                <item name="format">hex</item>
+            </item>
         </item>
         <item name="breakpoints">
             <item name="number">0</item>

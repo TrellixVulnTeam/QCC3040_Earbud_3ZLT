@@ -55,13 +55,13 @@
  * 0    : LOW LEVEL
 */
 
-#if 0
+#if 1
 #define ECHO_PWM_CH0		LED_0
 #define ECHO_PWM_CH1		LED_1
 #define ECHO_PWM_CH2        LED_2
 #endif
 
-#if 1
+#if 0
 #define ECHO_PWM_CH0            2
 #define ECHO_PWM_CH1            3
 #define ECHO_PWM_CH2            4

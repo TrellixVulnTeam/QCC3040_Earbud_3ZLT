@@ -1,0 +1,42 @@
+
+
+
+
+primary_service {
+    uuid : 0xFD92,
+    name : "ROLE_SELECTION_SERVICE",
+    sdp : FALSE, # Included as an aide memoire. SDP records only of use for BREDR.
+    characteristic {
+        uuid : 0x0000eb20d10211e19b2300025b00a5a5,
+        name : "ROLE_SELECTION_MIRRORING_STATE",
+        flags : [ FLAG_IRQ, FLAG_ENCR_R ],
+        properties : [ read, notify ],
+        size_value : 0x01,
+        value : 0x00,
+        client_config
+        {
+            name : "ROLE_SELECTION_MIRRORING_STATE_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    },
+    characteristic {
+        uuid : 0x0000eb21d10211e19b2300025b00a5a5,
+        name : "ROLE_SELECTION_CONTROL",
+        flags : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties : [ write ],
+        value : 0x00
+    },
+    characteristic {
+        uuid : 0x0000eb22d10211e19b2300025b00a5a5,
+        name : "ROLE_SELECTION_FIGURE_OF_MERIT",
+        flags : [ FLAG_IRQ, FLAG_ENCR_R ],
+        properties : [ read, notify ],
+        size_value : 0x02,
+        value : 0x0000,
+        client_config
+        {
+            name : "ROLE_SELECTION_FIGURE_OF_MERIT_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    }
+},

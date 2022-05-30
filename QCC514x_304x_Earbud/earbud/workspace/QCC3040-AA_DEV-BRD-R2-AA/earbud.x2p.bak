@@ -1403,10 +1403,10 @@
     <targets>
         <target name="device"/>
     </targets>
-    <file path="../../echo_app/aul_common.c"/>
-    <file path="../../echo_app/aul_common.h"/>
-    <file path="../../echo_app/aul_debug.h"/>
-    <file path="../../echo_app/aul_private.h"/>
-    <file path="../../echo_app/aul_pwm.c"/>
-    <file path="../../echo_app/aul_pwm.h"/>
+    <file path="../../echo_app/echo_common.c"/>
+    <file path="../../echo_app/echo_common.h"/>
+    <file path="../../echo_app/echo_debug.h"/>
+    <file path="../../echo_app/echo_private.h"/>
+    <file path="../../echo_app/echo_pwm.c"/>
+    <file path="../../echo_app/echo_pwm.h"/>
 </project>

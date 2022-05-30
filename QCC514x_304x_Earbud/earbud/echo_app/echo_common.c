@@ -1,11 +1,16 @@
 #include "vmtypes.h"
 #include "vm.h"
 
+#include "cc_protocol.h"
+#include "cc_protocol_trans_test_uart.h"
+
 #include "echo_private.h"
 #include "echo_common.h"
 #include "echo_pwm.h"
+#include "echo_uart.h"
 
 #include "echo_debug.h"
+#include "rtime.h"
 
 #define ECHO_STATE	st_echo_state
 
@@ -32,13 +37,18 @@ static void Echo_Msg_Handler(Task task, MessageId id, Message message)
         ECHO_DEBUG_PRINT("ECHO_PWM_START");
         Echo_Pwm_Start_Handle();
         break;
-
+    case ECHO_UART_START:
+        ECHO_DEBUG_PRINT("ECHO_UART_START");
+        //Echo_UartInit();
+        break;
     default:
         ECHO_DEBUG_PRINT("Unhandled ECHO MSG %d", id);
         break;
     }
 }
 
+//ccProtocol_TransTransmit
+//ccProtocol_TransSetup;
 bool Echo_Init(Task init_task)
 {
     UNUSED(init_task);
@@ -60,7 +70,21 @@ bool Echo_Init(Task init_task)
 
     ECHO_STATE.task.handler = Echo_Msg_Handler;
 
+    //ccProtocol_TransTransmit(0,1,1,(uint8_t*)"test\r\n",6);
+
+    //RtimeTimeToMsDelay(10);
+
+    //CcProtocol_Transmit(0,1,1,(uint8_t*)"test\r\n",6);
+
     Echo_Pwm_Init();
+    Echo_UartInit();
+
+    for(int i = 0; i < 10; i++)
+    {
+        Echo_UartSendToSink("Hello World!\r\n");
+        RtimeTimeToMsDelay(100000);
+    }
+
 
     return TRUE;
 }

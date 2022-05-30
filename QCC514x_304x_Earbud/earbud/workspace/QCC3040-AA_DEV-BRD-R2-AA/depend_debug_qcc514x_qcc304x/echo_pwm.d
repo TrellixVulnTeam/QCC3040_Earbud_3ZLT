@@ -51,6 +51,7 @@ depend_debug_qcc514x_qcc304x/echo_pwm.o: ..\..\echo_app\echo_pwm.c \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\app\pio\pio_if.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\led.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\app\led\led_if.h \
+    ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\panic.h \
     ..\..\echo_app\echo_private.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\standard\csrtypes.h \
     ..\..\..\os\qcc514x_qcc304x\hydra_os\src\installed_libs\include\firmware_qcc514x_qcc304x\message.h \

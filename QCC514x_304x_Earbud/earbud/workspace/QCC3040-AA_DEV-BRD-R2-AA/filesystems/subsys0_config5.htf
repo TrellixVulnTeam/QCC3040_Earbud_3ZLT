@@ -12,3 +12,4 @@ PioDirectionElements = [04 01]
 # Set PIO 4 to be low
 PioDriveElements = [04 00]
 
+VCHGMessageEnable = 1

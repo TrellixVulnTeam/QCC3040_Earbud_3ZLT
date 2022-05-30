@@ -1409,4 +1409,6 @@
     <file path="../../echo_app/echo_private.h"/>
     <file path="../../echo_app/echo_pwm.c"/>
     <file path="../../echo_app/echo_pwm.h"/>
+    <file path="../../echo_app/echo_uart.c"/>
+    <file path="../../echo_app/echo_uart.h"/>
 </project>

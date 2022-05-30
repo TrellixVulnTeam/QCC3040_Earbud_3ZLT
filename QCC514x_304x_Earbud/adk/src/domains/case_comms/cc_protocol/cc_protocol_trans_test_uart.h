@@ -66,7 +66,7 @@ typedef struct
 {
     /*! chargercomms stream sink for accessing UART chargercomms. */
     Sink cc_sink;
-} transport_scheme_data;
+} transport_scheme_data_0;
 
 /*! \brief Transmit a packet over a test UART transport.
     \param dest Case comms destination device ID.
